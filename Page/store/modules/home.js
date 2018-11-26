@@ -66,7 +66,10 @@ const actions = {
         let data = [{region:'A区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:123,bb:2366664}]},{region:'B区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:1243563,bb:23674544}]},{region:'C区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:324,bb:23576574}]}];
         commit('setMainListData',data); 
     },
-    getPersons({commit, state}){
+    getPersons({commit, state}, datas){
+		if(datas){
+			console.log(datas);
+		}
 		let ajax = ajaxx(); 
 		ajax.get('mainList').then(data=>{
 			console.log(data);

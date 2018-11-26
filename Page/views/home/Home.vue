@@ -73,6 +73,7 @@
 import SearchInput from "../../components/SearchInput.vue";
 import Legend from "../../components/Legend.vue";
 import MainList from "./MainList.vue";
+import {sub, removeSub}from 'postalControl';
 
 import { mapState } from "vuex";
 
@@ -90,8 +91,8 @@ export default {
       handleToggle(){
         this.isHidden = !this.isHidden;
       },
-      getPersons() {
-        this.$store.dispatch('home/getPersons',null);
+      getPersons(data) {
+        this.$store.dispatch('home/getPersons',data);
       },
       getMainListData() {
         this.$store.dispatch('home/getMainListData',null);
@@ -164,8 +165,12 @@ export default {
         MainList,
     },
     mounted(){
-        this.getPersons();
+        /*this.getPersons('aaaa');*/
         this.getMainListData();
+		sub('UI','Home.Sync',(data)=>{
+			console.log(data);
+			this.getPersons(data);
+				});
     }
 };
 </script>

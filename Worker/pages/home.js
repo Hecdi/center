@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import postal from 'postal';
-import {sub, removeSub} from "../smartScheduling.worker";
+import {sub, removeSub} from "postalControl";
 import { areaDB } from "../../lib/storage";
 import ajaxx from "ajax";
 export const initPage = () => {
@@ -14,6 +14,7 @@ export const initPage = () => {
         return Promise.resolve('Home.ready');
     });
 }
+
 export const destroy = () => {
     removeSub('Home.start');
     console.log(postalMap);
@@ -23,5 +24,6 @@ const homeInit = () => {
 	let ajax = ajaxx();
     ajax.get('mainList').then(data=>{
         console.log(data);
+		postal.channel('UI').publish('Home.Sync',data);
     });
 }
