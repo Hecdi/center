@@ -1,0 +1,47 @@
+#nav {
+    position:relative;
+    padding: 0 1rem;
+    color: #fff;
+    height:$navbar-height-px;
+    width:100%;
+    background-color: #313347!important;
+    box-sizing: border-box;
+    overflow: hidden;
+    .navbar-brand{
+        width: 8.35714rem;
+        height: $navbar-height-px;
+        margin-top: 3px;
+        background: url(../assets/logo.png) no-repeat;
+        background-size: 100%;
+        float: left;
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        margin-right: 1rem;
+        font-size: 1.28571rem;
+    }
+    .navbar-departName {
+        margin: 12px 1rem 0 0;
+        float: left;
+        color: #00c0ff;
+        font-size: 1.28571rem;
+        font-weight: 600;
+    }
+    .navbar-nav {
+        padding:0;
+        margin:0;
+        .nav-item{
+            float:left;
+            padding:0 20px;
+            height:$navbar-height-px;
+            line-height:$navbar-height-px;
+            list-style: none;
+            cursor:pointer;
+            &.router-link-active{
+                background-color: #54587a;
+                -moz-box-shadow: 0 -4px 0 0 #6cf inset;
+                -webkit-box-shadow: 0 -4px 0 0 #6cf inset;
+                box-shadow: 0 -4px 0 0 #6cf inset;
+            }
+        }
+    }
+}

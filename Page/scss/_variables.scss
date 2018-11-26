@@ -1,0 +1,74 @@
+//自定义变量
+$navbar-height-px: 50px;
+$navbar-height: 2.5rem;
+$row-height:2.5rem;
+
+$border-width:          1px !default;
+$border-width-wide:     4px;
+$border-color:          #e5e8ed !default;
+
+//项目所需的字体和字号原子类定义
+$font-family: "Helvetica Neue", verdana, "Microsoft YaHei";
+
+/*
+  定义字号
+  xs: 12px
+  sm: 14px
+  md: 16px
+  lg: 18px
+*/
+$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
+$font-size-xs:                ($font-size-base * .75) !default;
+$font-size-sm:                ($font-size-base * .875) !default;
+$font-size-md:				  $font-size-base !default;
+$font-size-lg:                ($font-size-base * 1.125) !default;
+
+$sizes: (
+        "xs":    $font-size-xs,
+        "sm":    $font-size-sm,
+        "md":    $font-size-md,
+        "lg":    $font-size-lg
+    );
+
+// $border-color:        #e5e8ed !default;
+$border-color:        #ced8e8;
+
+
+//font-family
+
+/*
+    定义字体
+    Yahei: 'Microsoft YaHei
+    YaheiBold: MicrosoftYaHei
+
+*/
+
+
+$font-family-Yahei:         'Microsoft YaHei';
+$font-family-YaheiBold:     'MicrosoftYaHei-Bold';
+$font-family-MFlihei:       'MFLiHei_Noncommercial-Regular';
+$font-family-One:    		'Fjalla One';
+$font-family-Medium:		'Orbitron';
+$font-family-rich:      	'Aldrich';
+
+$familys: (
+        "Yahei":    		$font-family-Yahei,
+        "YaheiBold":   		$font-family-YaheiBold,
+        "MFlihei":          $font-family-MFlihei,
+        "One":              $font-family-One,
+        "Medium":           $font-family-Medium,
+        "rich":             $font-family-rich,
+    );
+
+$modal-header-padding: 0.6rem;
+
+$btn-padding-y:  2px;
+
+
+/*
+  自定义颜色
+*/
+
+
+$color-bg-person:#eff4f4;
+$color-person:#505261;

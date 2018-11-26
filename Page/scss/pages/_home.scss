@@ -1,0 +1,92 @@
+@import "../components/legend";
+body > .el-container {
+    margin-bottom: 40px;
+  }
+.home {
+  clear:both;
+  position:relative;
+  .el-aside {
+    background-color: #3f4253;
+    color: #333;
+    text-align: center;
+    overflow:visible;
+    position:relative;
+    .el-autocomplete {
+      width: 100%;
+      padding:6px 10px;
+    }
+    .toggleBtn {
+      position:absolute;
+      top:60px;
+      right:-20px;
+      width: 20px;
+      height:40px;
+      line-height:40px;
+      background: #666;
+      color:#fff;
+      font-size:18px;
+    }
+  }
+  .el-main {
+    color: #333;
+    text-align: center;
+  }
+  .el-container{
+    background-color: #f1f1f1;
+    .home-mian-header{
+      height:60px;
+      line-height:60px;
+      .el-row{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .el-input{
+          width:auto;
+        }
+        .el-radio-group, .el-input{
+          margin-right:10px;
+        }
+      }
+      .legend-panel{
+        text-align: right;
+        justify-content: flex-end;
+        background-color: #f1f1f1;
+      }
+    }
+    .el-main{
+      display: flex;
+      flex-direction:column;
+      padding-top:0;
+      .mainList{
+        flex:1;
+        background-color:white;
+        padding:6px;
+        > .el-row{
+          display: flex;
+          margin-bottom:20px;
+          .region{
+            margin-top:10px;
+            .el-card{
+              height:100%;
+            }
+          }
+          .task{
+            .el-col {
+              margin-top:10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .person-panel{
+      padding:0 10px;
+  }
+  .bg-person{
+    background:$color-bg-person;
+  }
+  .person{
+    color:$color-person;
+    cursor:pointer;
+  }
+}
