@@ -1,6 +1,6 @@
 <template>
   <div class="mainList">
-    <el-row :gutter="20" v-for="item in mainList">
+    <el-row :gutter="20" v-for="item in mainList" v-bind:key="item.region">
         <el-col :span="4" class='region'>
             <el-card shadow="always" >
                 {{item.region}}

@@ -7,7 +7,7 @@
               </el-col>
             </el-row>
             <el-row :gutter="20" v-if="!isHidden" class="person-panel">
-                <el-col :span="6" v-for="person in persons" >
+                <el-col :span="6" v-for="person in persons" v-bind:key="person.value" >
                     <div class="grid-content bg-person person" @click="show" :data-id="person.address">{{person.value}}</div>
                 </el-col>
             </el-row>
@@ -92,7 +92,10 @@ export default {
         this.isHidden = !this.isHidden;
       },
       getPersons(data) {
+        debugger;
+        console.log(data);
         this.$store.dispatch('home/getPersons',data);
+        console.log(data);
       },
       getMainListData() {
         this.$store.dispatch('home/getMainListData',null);

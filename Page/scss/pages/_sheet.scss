@@ -1,0 +1,54 @@
+.sheet-container {
+    width: 100%;
+    .sheet {
+        .el-row {
+            width: 100%;
+        } 
+        .float-left {
+            float: left;
+        }
+        .bread-crumb {
+            padding: 10px;
+        }
+        .seach-input {
+            margin: 0 10px;
+        }
+        .el-date-editor, .el-input {
+            width: 140px;
+            height: 30px;
+            line-height: 30px;
+            .el-input__inner{
+                height: 30px;
+                line-height: 30px;
+            }
+            // .el-input__prefix {
+            //     right: 3px;
+            //     left: 0;
+            // }
+            .el-input__icon {
+                height: 30px;
+                line-height: 30px;
+            }
+        } 
+        .right-col {
+            margin-top:10px;
+        }
+        .el-button {
+            height: 30px;
+            line-height: 30px;
+            padding-top: 2px;
+        }
+        .export-excel {
+            background-color: #fdfdfd;
+            color: #333;
+        }
+    }
+    .sheet-table {
+        thead>.cell {
+            background-color: #666;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+        }
+    }   
+}

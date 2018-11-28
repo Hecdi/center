@@ -67,7 +67,7 @@ const actions = {
         commit('setMainListData',data); 
     },
     getPersons({commit, state}, datas){
-        // debugger;
+        debugger;
 		if(datas){
 			console.log(datas);
 		}
