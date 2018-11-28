@@ -44,11 +44,27 @@
         }
     }
     .sheet-table {
+        margin: 3px;
+        margin-top: 10px;
         thead>.cell {
             background-color: #666;
             height: 30px;
             line-height: 30px;
             color: #fff;
         }
-    }   
+        .is-leaf {
+            background: #666;
+            color: #fff;
+            height: 28px;
+            line-height: 28px;
+            padding: 2px;
+            text-align: center;
+        } 
+        .el-table__row {
+            height: 28px;
+            line-height: 28px;
+            padding: 2px;
+            text-align: center;
+        }
+    }  
 }
