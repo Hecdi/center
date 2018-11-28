@@ -1,10 +1,8 @@
 import ajaxx from "ajax";
 //let ajax = ajaxx(); 
-const getData = (searchKey) =>{
-    return ['123','4312'];
-}
 const initFilter = {
         taskStatus:'0',
+        type:'0',
         ad:'0',
         flightStatus:null,
         type:null,
@@ -69,7 +67,7 @@ const actions = {
         commit('setMainListData',data); 
     },
     getPersons({commit, state}, datas){
-        // debugger;
+        debugger;
 		if(datas){
 			console.log(datas);
 		}
@@ -133,6 +131,9 @@ const actions = {
 
 }
 
+const getData = (searchKey) =>{
+    return ['123','4312'];
+}
 
 export default {
     namespaced:true,

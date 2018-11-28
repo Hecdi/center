@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/home/Home.vue";
+// import Toolbar from "./views/sheet/toolbar.vue";
 
 Vue.use(Router);
 
@@ -21,7 +22,12 @@ export const smartSchedulingRouter = new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
-    }
+    },
+    {
+      path: "/report",
+      name: "about",
+      component: () =>import("./views/sheet/Sheet.vue")
+    },
   ]
 });
 export const smartSchedulingRouter2 = new Router({

@@ -1,13 +1,11 @@
 <template>
   <div class="mainList">
-    <el-row
-v-for="item in mainList"
-:gutter="20">
-			<el-col :span="4" class="region"
->
-				<el-card shadow="always"> {{ item.region }} </el-card>
-      </el-col>
-
+    <el-row :gutter="20" v-for="item in mainList" v-bind:key="item.region">
+        <el-col :span="4" class='region'>
+            <el-card shadow="always" >
+                {{item.region}}
+            </el-card>
+        </el-col>
 			<el-col :span="20" class="task"
 >
 				<el-row :gutter="20">
