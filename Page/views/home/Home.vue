@@ -64,7 +64,6 @@
                     <MainList/>
                 </el-main>
         </el-container>
-    </el-container>
 		<MessageBtn :message-num="getTotal()" />
 		<UrgentReportBtn :message-num="getTotal()" />
   </el-container>
@@ -89,6 +88,9 @@ export default {
       };
     },
     methods: {
+		getTotal(){
+			return 100;
+		},
       handleClick(tab, event) {
         console.log(tab, event);
       },
@@ -170,6 +172,8 @@ export default {
         SearchInput,
         Legend,
         MainList,
+		MessageBtn,
+		UrgentReportBtn,
     },
     mounted(){
       /*this.getPersons('aaaa');*/
