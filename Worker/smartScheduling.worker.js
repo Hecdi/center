@@ -12,6 +12,7 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 onmessage = (event) => {
+	console.log(234);
     if (!event || !event.data) {
         log.info('empty event data');
         return;

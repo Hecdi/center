@@ -3,6 +3,14 @@ import postal from 'postal';
 import {sub, removeSub} from "postalControl";
 import { areaDB } from "../../lib/storage";
 import ajaxx from "ajax";
+
+const homeInit = () => {
+let ajax = ajaxx();
+    ajax.get('mainList').then(data=>{
+        console.log(data);
+		postal.channel('UI').publish('Home.Sync',data);
+    });
+}
 export const initPage = () => {
     return Promise.all([
         (() => {console.log('initHome start')})(),
@@ -17,7 +25,6 @@ export const initPage = () => {
 
 export const destroy = () => {
     removeSub('Home.start');
-    console.log(postalMap);
 }
 
 export const initSocket = (client) =>{
@@ -27,10 +34,3 @@ export const initSocket = (client) =>{
 	});
 }
 
-const homeInit = () => {
-	let ajax = ajaxx();
-    ajax.get('mainList').then(data=>{
-        console.log(data);
-		postal.channel('UI').publish('Home.Sync',data);
-    });
-}
