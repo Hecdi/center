@@ -2,7 +2,8 @@ var argv = require('yargs').argv;
 var entry,title;
 const path = require('path');
 const webpack = require('webpack');
-const SRC_DIR = path.resolve(__dirname, 'smartscheduling');
+const SRC_DIR = path.resolve(__dirname, 'schedule.websitev2');
+const WIDGET_DIR = path.resolve(__dirname, './src/plugins');
 switch(argv.projectName){
   case 'smartScheduling':
     entry = './index.js';
@@ -40,21 +41,25 @@ module.exports = {
     // subpage: 'src/subpage/main.js'
   },
   configureWebpack: {
-    // module: {
-    //   rules: [
-    //     {
-    //       test: /\.worker\.js$/,
-    //       use:{
-    //         loader: "worker-loader",
-    //         options: { inline: false, fallback: false}
-    //       }
-    //     }
-    //   ]
-    // },
+	module: {
+	  rules: [
+		  {
+			  enforce: 'pre',
+			  test: /\.js$/,
+			  exclude: [WIDGET_DIR, /node_modules/],
+			  use: {
+				  loader: 'eslint-loader',
+				  options: {
+					  fix: true,
+				  },
+			  },
+		  },
+	  ]
+	},
     resolve:{
-      modules:[SRC_DIR, 'node_modules', 'common','lib']
+      modules:[SRC_DIR, 'node_modules', 'common','lib', 'Page/components']
     }
   },
-  // lintOnSave: false,
+  lintOnSave: true,
   productionSourceMap: false,
 }

@@ -8,10 +8,10 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 export const smartSchedulingStore =  new Vuex.Store({
-  modules: {
-    home,
-  },
-  strict: debug,
-  plugins: debug ? [createLogger()] : []
-});
+modules: {
+		home,
+	},
+	strict: debug,
+	plugins: debug ? [createLogger()] : []
+})
 

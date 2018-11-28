@@ -11,12 +11,13 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 let app = config.smartScheduling.App ? config.smartScheduling.App : App;
 export const ajaxAPI={...config.smartScheduling.ajaxAPI};
+export const socketAPI={...config.smartScheduling.socketAPI};
 console.log(ajaxAPI);
 remote.setGlobal("ajaxAPI",ajaxAPI);
 new Vue({
-  router: config.smartScheduling.router,
-  store: config.smartScheduling.store,
-  render: h => h(app)
+router: config.smartScheduling.router,
+store: config.smartScheduling.store,
+	render: h => h(app)
 }).$mount("#app");
 
 initWorker();

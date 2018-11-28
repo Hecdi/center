@@ -20,6 +20,13 @@ export const destroy = () => {
     console.log(postalMap);
 }
 
+export const initSocket = (client) =>{
+	client.sub('/web/scheduling/getAreaAndWorkerList', (data) => {
+		console.log('66666666');
+		console.log(data);
+	});
+}
+
 const homeInit = () => {
 	let ajax = ajaxx();
     ajax.get('mainList').then(data=>{

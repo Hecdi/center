@@ -1,4 +1,6 @@
 @import "../components/legend";
+@import "../components/messageBtn";
+@import "../components/urgentReportBtn";
 body > .el-container {
     margin-bottom: 40px;
   }
@@ -73,6 +75,9 @@ body > .el-container {
           .task{
             .el-col {
               margin-top:10px;
+			  .el-card {
+				  border:1px dashed #c7c7c7;
+			  }
             }
           }
         }

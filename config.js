@@ -6,7 +6,15 @@ export default {
         App:App,
         router:smartSchedulingRouter,
         store:smartSchedulingStore,
-        workerEntry:'',
+        socketAPI:[{
+			name: 'schedule',
+			host: '173.100.1.52',
+			port: '9099',
+			channel: 'intelligent_scheduling',
+			headers: {
+				//userId: 'aoc',
+			},
+		}],
         ajaxAPI:{
             path:'http://173.100.1.14:8080/',
             url:{

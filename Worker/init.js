@@ -3,7 +3,7 @@ import postal from 'postal';
 import uuid from 'uuid/v4';
 import { get, truncate } from 'lodash';
 import Logger from '../common/logger';
-import { ajaxAPI } from "../index";
+import { ajaxAPI, socketAPI } from "../index";
 
 const log = new Logger('Worker:init:');
 
@@ -48,13 +48,13 @@ export const init = () => {
     });
 
     let clientId = uuid();
-    console.log(ajaxAPI);
     postal.publish({
         channel: 'Worker',
         topic: 'Start',
         data: {
             clientId,
-            ajaxAPI
+            ajaxAPI,
+			socketAPI,
         },
     });
 

@@ -7,7 +7,8 @@ module.exports = {
     "worker":true,
     "commonjs": true
   },
-  extends: ["plugin:vue/essential", "@vue/prettier"],
+//"@vue/prettier"
+  extends: ["plugin:prettier/recommended","plugin:vue/essential"],
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
@@ -55,9 +56,6 @@ module.exports = {
     "no-class-assign": 2,
     "no-cond-assign": 2,
     "no-mixed-spaces-and-tabs": 0,
-    "react/display-name":0,
-    "react/prop-types":1,
-    "react/jsx-no-undef":1
   },
   parserOptions: {
     parser: "babel-eslint",
