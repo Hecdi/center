@@ -20,20 +20,39 @@
                     </el-form-item>
                 </el-form> -->
             </el-col>
-            <el-col :span="8">
-                <!-- <el-form-item label="oo" :model="form" >
-                  <el-select v-model="formInline.region" placeholder="活动区域">
-                    <el-option label="全部" value="all"></el-option>
-                    <el-option label="人员" value="people"></el-option>
-                    <el-option label="车辆" value=""></el-option>
-                    <el-option label="设备" value=""></el-option>
-                    <el-option label="公司" value=""></el-option>
-                  </el-select>
-                </el-form-item> -->
+            <el-col :span="16">
+                <el-form ref="form" label-width="80px">
+                    <el-form-item :model="formInline" >
+                        <el-select v-model="formInline.region" placeholder="活动区域">
+                          <el-option label="全部" value="all"></el-option>
+                          <el-option label="人员" value="people"></el-option>
+                          <el-option label="车辆" value="car"></el-option>
+                          <el-option label="设备" value="equipment"></el-option>
+                          <el-option label="公司" value="company"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <el-input
+                    placeholder="请输入内容"
+                    prefix-icon="el-icon-search"
+                    v-model="inputSearch"
+                    class="seach-input"
+                ></el-input>
+                <!-- <div class="block"> -->
+                    <span class="demonstration">默认</span>
+                    <!-- {{time}} -->
+                    <el-date-picker
+                      v-model="time"
+                      type="daterange"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期">
+                    </el-date-picker>
+                <!-- </div> -->
             </el-col>
-            <el-col :span="8">
-                <button>单位管理</button>
-                <button>导出</button>
+            <el-col :span="3">
+                <el-button>单位管理</el-button>
+                <el-button>导出</el-button>
             </el-col>
         </el-row>
     </div>
@@ -49,10 +68,12 @@
               region: '',
               type: ''
             },
-            // form: {
-            //   user: '',
-            //   region: ''
-            // }
+            formInline: {
+              user: '',
+              region: ''
+            },
+            inputSearch:'',
+            time: '',
           }
         },
         methods: {

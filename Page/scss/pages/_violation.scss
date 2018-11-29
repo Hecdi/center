@@ -1,6 +1,9 @@
 .violation {
     width: 100%;
     padding: 5px;
+    .tab-button {
+        margin-bottom: 10px;
+    }
     .el-col-5 {
         width: 19%;
         margin-left: 10px;
@@ -51,5 +54,21 @@
             }
         }
 
+    }
+    .el-form,.el-input {
+        .el-form-item,.el-form-item__content {
+            display: inline-block;
+            .el-select {
+                width: 96px;
+            }
+        }
+        .el-input__inner {
+            width: 120px;
+        }
+        .el-date-editor {
+            width: 100px;
+        }
+        display: inline-block;
+        width: 120px;
     }
 }

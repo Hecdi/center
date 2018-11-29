@@ -1,7 +1,8 @@
 <template>
+<div>
     <div class="violation-card">
         <el-col :span="5" v-for="c in card" v-bind:key="c.id">
-            <el-card shadow="hover">
+            <el-card shadow="hover" >
                 <div class="violation-id">
                     <i class="el-icon-location" />
                     <span>Id:{{c.id}} {{c.name}}</span>
@@ -17,9 +18,10 @@
                         <img class="picture" alt="img"/>
                     </div>
                 </div>
-                <div v-if="status=='wait'" class="status" >
+                <div v-if="!status" class="status" >
                     <button>通过</button>
                     <button>不通过</button>
+                    <!-- <span>{{statusValue}}</span> -->
                 </div>
                 <div v-else class="status0">
                     <span>审核状态</span>
@@ -120,13 +122,15 @@
             </el-card>
         </el-col> -->
     </div>
+</div>
 </template>
 
 <script>
     export default{
         data(){
             return {
-                status: "wait00",
+                props:"statusValue",
+                status: true,
                 card:[
                     {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
                     {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
@@ -139,6 +143,12 @@
                     {id:999,name:"绅士手",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
                 ]
             }
+        },
+        methods:{
+            // toggleTabs(tabKey){
+            //     this.status = tabKey;
+            //     this.currentView = tabKey;
+            // }
         }
     }
 </script>
