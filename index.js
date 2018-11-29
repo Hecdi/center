@@ -1,7 +1,7 @@
 import Vue from "vue";
 import config from "./config";
 import ElementUI from "element-ui";
-import "./Page/scss/smartScheduling.scss";
+// import "./Page/scss/smartScheduling.scss";
 import {init as initWorker} from "./Worker/init";
 import { remote } from 'electron';
 
