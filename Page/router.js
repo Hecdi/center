@@ -28,6 +28,11 @@ export const smartSchedulingRouter = new Router({
       name: "about",
       component: () =>import("./views/sheet/Sheet.vue")
     },
+    {
+      path: "/violations",
+      name: "about",
+      component: () =>import("./views/violation/ViolationRecord.vue")
+    },
   ]
 });
 export const smartSchedulingRouter2 = new Router({
