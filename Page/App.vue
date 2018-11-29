@@ -27,7 +27,7 @@ tag="li" to="/operationManual" class="nav-item"> 操作手册 </router-link>
           </ul>
         </div>
       </el-header>
-      <el-container> <RouterView /> </el-container>
+      <el-container> <router-view /> </el-container>
     </el-container>
   </div>
 </template>

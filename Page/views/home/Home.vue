@@ -98,10 +98,7 @@ export default {
         this.isHidden = !this.isHidden;
       },
       getPersons(data) {
-        debugger;
-        console.log(data);
         this.$store.dispatch('home/getPersons',data);
-        console.log(data);
       },
       getMainListData() {
         this.$store.dispatch('home/getMainListData',null);

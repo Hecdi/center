@@ -1,4 +1,4 @@
-import Worker from 'worker-loader!./smartScheduling.worker.js';
+//import Worker from 'worker-loader!./smartScheduling.worker.js';
 import postal from 'postal';
 import uuid from 'uuid/v4';
 import { get, truncate } from 'lodash';
@@ -7,13 +7,14 @@ import { ajaxAPI, socketAPI } from "../index";
 
 const log = new Logger('Worker:init:');
 
-// import Worker from './smartScheduling.worker.js';
+import Worker from './smartScheduling.worker.js';
 // import myWorker from 'worker-loader?./worker';
 // let worker = new myWorker;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 export const init = () => {
     var worker = new Worker();
+	console.log(123);
     worker.onmessage = (event) =>{
         let content = decoder.decode(event.data);
         try {
