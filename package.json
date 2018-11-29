@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.js --Program schedule"
+    "dev": "webpack-dev-server --open --config webpack.dev.js --Program schedule"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.6",
