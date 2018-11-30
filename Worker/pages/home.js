@@ -8,8 +8,8 @@ var homeFilter={};
 
 const homeInit = () => {
 	let ajax = ajaxx();
-	ajax.get('mainList').then(data=>{
-		//console.log(data);
+	ajax.get('getViolationData').then(data=>{
+		console.log(data);
 		//postal.channel('UI').publish('Home.Sync',data);
 	});
 	sub('Worker','Home.Area.SetPersonSearchKey',(key) =>{

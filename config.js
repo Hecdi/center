@@ -15,10 +15,16 @@ export default {
 				//userId: 'aoc',
 			},
 		}],
+        // ajaxAPI:{
+        //     path:'http://173.100.1.14:8080/',
+        //     url:{
+        //         'mainList':'seat?pageSize=10&pageNo=1&orderKey=seatCode&orderBy=asc',
+        //     }
+        // }
         ajaxAPI:{
-            path:'http://173.100.1.14:8080/',
+            path:'http://173.100.1.52:9099/violationRecord/',
             url:{
-                'mainList':'seat?pageSize=10&pageNo=1&orderKey=seatCode&orderBy=asc',
+                'getViolationData':'getViolationData',
             }
         }
     },

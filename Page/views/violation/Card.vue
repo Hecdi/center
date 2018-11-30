@@ -18,7 +18,7 @@
                         <img class="picture" alt="img"/>
                     </div>
                 </div>
-                <div v-if="!status" class="status" >
+                <div v-if="status == 'wait'" class="status" >
                     <button>通过</button>
                     <button>不通过</button>
                     <!-- <span>{{statusValue}}</span> -->
@@ -130,7 +130,7 @@
         data(){
             return {
                 props:"statusValue",
-                status: true,
+                status: '22',
                 card:[
                     {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
                     {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
