@@ -7,12 +7,62 @@ body > .el-container {
 .home {
   clear:both;
   position:relative;
+  //.el-radio-button__inner, .el-button--medium {
+	//padding:8px 10px;
+  //}
   .el-aside {
     background-color: #3f4253;
     color: #333;
     text-align: center;
     overflow:visible;
     position:relative;
+	overflow-y:auto;
+	padding-bottom:40px;
+	.el-input{
+		width:95%;
+	}
+	.persons-panel{
+		.area-panel{
+			background-color: #2f3448;
+			color:#1dd8fe;
+			font-size:16px;
+			font-weight:bold;
+			text-align:left;
+			padding:10px 0;
+		}
+		.bg-person{ background:$color-bg-person;
+		}
+		.personList{
+			padding:0 10px;
+			.person-panel{
+				padding:2px 6px !important;
+			}
+		}
+		.person{
+			color:$color-person;
+			height:30px;
+			line-height:30px;
+			cursor:pointer;
+			padding:0 2px;
+			text-align:left;
+			position:relative;
+			border-radius:4px;
+			font-size:14px;
+			.taskNum{
+				position:absolute;
+				top:5px;
+				right:3px;
+				height:20px;
+				line-height:20px;
+				font-size:14px;
+				width:auto;
+				padding:0 2px;
+				background-color:#35dfff;
+				color:#f1fdfe;
+				border-radius:4px;
+			}
+		}
+	}
     .el-autocomplete {
       width: 100%;
       padding:6px 10px;
@@ -83,15 +133,5 @@ body > .el-container {
         }
       }
     }
-  }
-  .person-panel{
-      padding:0 10px;
-  }
-  .bg-person{
-    background:$color-bg-person;
-  }
-  .person{
-    color:$color-person;
-    cursor:pointer;
   }
 }

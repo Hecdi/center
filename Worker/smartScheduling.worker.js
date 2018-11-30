@@ -12,7 +12,6 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 onmessage = (event) => {
-	console.log(234);
     if (!event || !event.data) {
         log.info('empty event data');
         return;
@@ -34,7 +33,7 @@ const init = ()=>{
 	let mysocket = socket(socketAPI);
     Promise.map([
 		()=>{
-			return postal.channel('ServerConnect').subscribe(`${socketAPI.name}.Network.Connected`,()=>{
+			postal.channel('ServerConnect').subscribe(`${socketAPI[0].name}.Network.Connected`,()=>{
 				mysocket.regist('schedule',(client) => {
 					initHomeSocket(client);
 				});
@@ -67,5 +66,6 @@ postal.channel('Worker').subscribe('Start',(data ={}, msg={}) => {
     });
     init();
 });
+
 
 

@@ -3,13 +3,24 @@
         <el-aside :style="{width:asideWith}">
             <el-row v-if="!isHidden">
               <el-col :span="24">
-                  <SearchInput :data="persons"/>
+				  <el-input
+				  placeholder=""
+				  v-model="searchPerson">
+				  <i slot="suffix" class="el-input__icon el-icon-search"></i>
+				  </el-input>
               </el-col>
             </el-row>
-            <el-row :gutter="20" v-if="!isHidden" class="person-panel">
-                <el-col :span="6" v-for="person in persons" v-bind:key="person.value" >
-                    <div class="grid-content bg-person person" @click="show" :data-id="person.address">{{person.value}}</div>
-                </el-col>
+            <el-row :gutter="20" v-for="person in persons" v-if="!isHidden" class="persons-panel" style="margin:0;">
+				<el-col :span="24"  v-if="person.workerList.length" class="area-panel">{{person.areaName}}</el-col>
+				<el-row :gutter="20"  v-if="!isHidden" style="margin:0;" class="personList">
+					<el-col :span="6" v-for="worker in person.workerList" class="person-panel" >
+						<div class="grid-content bg-person person" @click="show" :data-id="worker.staffId">{{worker.staffName + (worker.workerName?'('+ worker.workerName+')':'')}}
+							<div class='taskNum'>
+								{{worker.taskNumber}}
+							</div>
+						</div>
+					</el-col>
+				</el-row>
             </el-row>
             <div @click="handleToggle" class='toggleBtn'><i class="el-icon-d-arrow-left"></i>
             </div>
@@ -76,7 +87,7 @@ import Legend from '../../components/Legend.vue';
 import MainList from './MainList.vue';
 import MessageBtn from 'MessageBtn.vue';
 import UrgentReportBtn from 'UrgentReportBtn.vue';
-import { sub, removeSub } from 'postalControl';
+import { sub, removeSub, pub} from 'postalControl';
 
 import { mapState } from 'vuex';
 
@@ -120,6 +131,15 @@ export default {
             },
             set(filterOption){
                 this.$store.dispatch(`home/updateFilter`,{name:'searchKey',filterOption:filterOption});
+            }
+        },
+		searchPerson:{
+            get(){
+                    return this.$store.state.home.personSearchKey;
+            },
+            set(personSearchKey){
+				pub('Worker','Home.Area.SetPersonSearchKey', personSearchKey );
+                /*this.$store.dispatch(`home/setPersonSearchKey`, personSearchKey);*/
             }
         },
         taskStatus:{
@@ -172,10 +192,14 @@ export default {
 		MessageBtn,
 		UrgentReportBtn,
     },
-    mounted(){
-      /*this.getPersons('aaaa');*/
-      this.getMainListData();
-      sub('UI','Home.Sync',(data)=>{
+	beforeMount(){
+		/*this.getPersons('aaaa');*/
+		this.getMainListData();
+		/*sub('UI','Home.Sync',(data)=>{*/
+			/*console.log(data);*/
+			/*this.getPersons(data);*/
+		/*});*/
+		sub('UI','Home.Area.Sync',(data)=>{
 			console.log(data);
 			this.getPersons(data);
 		});
