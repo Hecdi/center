@@ -29,7 +29,7 @@ if(argv.Program === 'schedule'){
         ],
     };
     var htmlWebpack = new HtmlWebpackPlugin({
-		title:'机坪运行',
+		title:'智能排班',
 		template: './public/index.html',
 		vue: true,
     });
@@ -57,7 +57,7 @@ module.exports = {
             },
             {
                 enforce: 'pre',
-                test: /\.js$/,
+                test: /\.(js|vue)$/,
                 exclude: [WIDGET_DIR, /node_modules/],
                 use: {
                     loader: 'eslint-loader',

@@ -21,7 +21,10 @@
         <button v-on:click="displayWait">全部</button>
         -->
             <!-- <all/> -->
-        <!-- <el-button v-on:click="getData"></el-button> -->
+        <el-button v-on:click="getData"></el-button>
+        <span v-for="c in cards" v-bind:key="c.id">
+            {{c.belongCompany}}
+        </span>
     </div>
 </template>
 
@@ -29,8 +32,9 @@
     import wait from "./Card.vue";
     import all from "./Card.vue";
     import TopBar from "./TopBar.vue";
-    // import ajaxx from "ajax";
+    import ajaxx from "ajax";
     import { mapActions } from 'vuex';
+    import { mapGetters, mapMutations } from 'vuex';
 
 
     export default {
@@ -39,6 +43,9 @@
             wait,
             all,
             TopBar,
+        },
+        computed:{
+            ...mapGetters({ cards:"processedCards"})
         },
         data() {
             // debugger;
@@ -62,13 +69,13 @@
                 this.status=="待审核"?"全部":"11全部";
                 console.log(this.status);
             },
-            // getData(){
-            //     let ajax = ajaxx();
-	        //     ajax.get('getViolationData').then(data=>{
-            //         let violation = data.data;
-            //         console.log(violation);
-	        //     });
-            // }
-        }
+            getData(){
+                let ajax = ajaxx();
+	            ajax.get('getViolationData').then(data=>{
+                    let violation = data.data;
+                    console.log(violation);
+	            });
+            }
+        },
     }
 </script>

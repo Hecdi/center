@@ -31,7 +31,6 @@
             "semi":true,
             "jsxBracketSameLine":true,
             "arrowParens": "always",
-            //尾部加逗号 trailingComma: "<none|es5|all>"
             "trailingComma": "all",
             "singleQuote": true
         }],

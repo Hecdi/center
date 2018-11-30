@@ -6,29 +6,36 @@ const state = {
     currentStatus: "All",
 }
 
-mutations = {
+const mutations = {
     setData(state,data){
         state.cards = data.violation;
     },
     setCurrentStatus(state,status){
-        state.currentStatus = status;
+   state.currentStatus = status;
     },
 }
 
-getters = {
+const getters = {
     cardsFilteredByStatus: state => state.cards
     .filter(c => state.currentStatus == "All" 
         || c.status == state.currentStatus),
+    processedCards: state=> {
+        let index = 0;
+        return state.cards.slice(index,index+state.cards.length);
+    },
+    getDisplayPersons:(state, getters, rootState) =>{
+        return rootState.filterPersons;
+    },
 }
 
-actions = {
+const actions = {
     getData(context){
         let ajax = ajaxx();
         ajax.get('getViolationData').then(data=>{
             let violation = data.data;
             console.log(violation);
+            context.commit("setData",{violation});
         });
-        context.commit("setData",{violation});
     }
 }
 
