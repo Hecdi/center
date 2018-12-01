@@ -1,27 +1,46 @@
 import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
-import { areaDB, saveToAreaDB, getSearchPersons } from "../../lib/storage";
+import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB } from "../../lib/storage";
 import ajaxx from "ajax";
 
-var homeFilter={};
-
+var homeFilter={
+	personList:{},
+	taskList:{}
+};
 const homeInit = () => {
 	let ajax = ajaxx();
-	ajax.get('mainList').then(data=>{
-		//console.log(data);
-		//postal.channel('UI').publish('Home.Sync',data);
+	ajax.post('personList').then(d=>{
+		console.log(d);
+		saveToPersonDB(d.data).then( data => {
+			getSearchPersons().then((result) => {
+				pub('UI','Home.Area.Sync', result);	
+				pub('UI','Home.Area.All', result);	
+			});
+		});
+	});
+	ajax.post('taskList').then(data=>{
+		console.log(data);
+		saveToTaskDB(true,data.data, homeFilter['taskList']).then(result => {
+			postal.channel('UI').publish('Home.Task.Sync',result);
+		});
 	});
 	sub('Worker','Home.Area.SetPersonSearchKey',(key) =>{
-		homeFilter['searchPersonKey'] = key;
-		getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
+		homeFilter['personList']['searchPersonKey'] = key;
+		getSearchPersons(homeFilter['personList']['searchPersonKey']).then((result) => {
 			pub('UI','Home.Area.Sync', result);	
 		})
 	});
+	sub('Worker','Home.Task.SetTaskFilter',(taskListFilterOpt) =>{
+		homeFilter['taskList'] = taskListFilterOpt;
+		getTaskListFromDB(homeFilter['taskList']).then((result) => {
+			pub('UI','Home.Task.Sync', result);	
+		})
+	});
+	pub('UI','Home.Event.Ready',null);
 }
 export const initPage = () => {
     return Promise.all([
-        (() => {console.log('initHome start')})(),
         (() => {sub('Worker','Home.Start',()=>{
                 console.log('initHome');
                 homeInit();
@@ -36,52 +55,19 @@ export const destroy = () => {
 }
 
 export const initSocket = (client) =>{
-	client.sub('/web/scheduling/getAreaAndWorkerList', (d) => {
+	client.sub('/web/scheduling/getTaskList', (d) => {
 		console.log(d);
-		let data =  [
-			{
-				"areaId": "1",
-				"areaName": "A区",
-				"workerList": 
-				[{
-					"workerId": 102,
-					"workerName": "李大刀",
-					"taskNumber": 0,
-				},{
-					"workerId": 102,
-					"workerName": "李大刀",
-					"taskNumber": 0,
-				},{
-					"workerId": 102,
-					"workerName": "李大刀",
-					"taskNumber": 0,
-				},{
-					"workerId": 102,
-					"workerName": "李大刀",
-					"taskNumber": 0,
-				},
-					{
-						"workerId": 103,
-						"workerName": "王晓四",
-						"taskNumber": 2,
-					}]
-			},
-			{
-				"areaId": "2",
-				"areaName": "B区",
-				"workerList": 
-				[{
-					"workerId": 104,
-					"workerName": "王二小",
-					"taskNumber": 0,
-				},
-					{
-						"workerId": 105,
-						"workerName": "王晓五",
-						"taskNumber": 2,
-					}]
-			}]; 
-		saveToAreaDB(d.data).then( data => {
+		//saveToAreaDB(d.data).then( data => {
+			//getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
+				//pub('UI','Home.Area.Sync', result);	
+			//});
+			//getSearchPersons().then((result) => {
+				//pub('UI','Home.Task.Sync', result);	
+			//});
+		//});
+	});
+	client.sub('/web/scheduling/getAreaAndWorkerList', (d) => {
+		saveToPersonDB(d.data).then( data => {
 			getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				pub('UI','Home.Area.Sync', result);	
 			})

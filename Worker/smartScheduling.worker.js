@@ -32,6 +32,12 @@ const init = ()=>{
 	let socketAPI = remote.getGlobal('socketAPI');
 	let mysocket = socket(socketAPI);
     Promise.map([
+        ()=>{
+            return initHome().then((data)=>{
+                UIChannel.publish(data,null);
+                return Promise.resolve();
+            });
+        },
 		()=>{
 			postal.channel('ServerConnect').subscribe(`${socketAPI[0].name}.Network.Connected`,()=>{
 				mysocket.regist('schedule',(client) => {
@@ -39,12 +45,6 @@ const init = ()=>{
 				});
 			});
 		},
-        ()=>{
-            return initHome().then((data)=>{
-                UIChannel.publish(data,null);
-                return Promise.resolve();
-            });
-        },
     ],f=>f()).then(()=>{
         UIChannel.publish('All.ready',null);
         }

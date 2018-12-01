@@ -1,23 +1,64 @@
 @import "../components/legend";
 @import "../components/messageBtn";
-@import "../components/urgentReportBtn";
+@import "../components/UrgentReportBtn";
+@import "../components/elDialog";
 body > .el-container {
     margin-bottom: 40px;
   }
 .home {
   clear:both;
   position:relative;
-  //.el-radio-button__inner, .el-button--medium {
-	//padding:8px 10px;
-  //}
+  .bg-person{
+	  background:$color-bg-person;
+  }
+  .personList{
+	  padding:0 10px;
+	  overflow:hidden;
+	  .person-panel{
+		  padding:2px 6px !important;
+	  }
+  }
+  .person{
+	  color:$color-person;
+	  height:30px;
+	  line-height:30px;
+	  cursor:pointer;
+	  padding:0 2px;
+	  text-align:left;
+	  position:relative;
+	  border-radius:4px;
+	  font-size:14px;
+	  .taskNum{
+		  position:absolute;
+		  top:5px;
+		  right:3px;
+		  height:20px;
+		  line-height:20px;
+		  font-size:14px;
+		  font-weight:bold;
+		  width:auto;
+		  padding:0 2px;
+		  background-color:#35dfff;
+		  color:#f1fdfe;
+		  border-radius:4px;
+	  }
+  }
   .el-aside {
     background-color: #3f4253;
     color: #333;
     text-align: center;
     overflow:visible;
     position:relative;
-	overflow-y:auto;
 	padding-bottom:40px;
+	.panel{
+		overflow-y:auto;
+		height:100%;
+		.placeHolder{
+			position:relative;
+			height:42px;
+			width:100%;
+		}
+	}
 	.el-input{
 		width:95%;
 	}
@@ -29,38 +70,6 @@ body > .el-container {
 			font-weight:bold;
 			text-align:left;
 			padding:10px 0;
-		}
-		.bg-person{ background:$color-bg-person;
-		}
-		.personList{
-			padding:0 10px;
-			.person-panel{
-				padding:2px 6px !important;
-			}
-		}
-		.person{
-			color:$color-person;
-			height:30px;
-			line-height:30px;
-			cursor:pointer;
-			padding:0 2px;
-			text-align:left;
-			position:relative;
-			border-radius:4px;
-			font-size:14px;
-			.taskNum{
-				position:absolute;
-				top:5px;
-				right:3px;
-				height:20px;
-				line-height:20px;
-				font-size:14px;
-				width:auto;
-				padding:0 2px;
-				background-color:#35dfff;
-				color:#f1fdfe;
-				border-radius:4px;
-			}
 		}
 	}
     .el-autocomplete {
@@ -120,6 +129,25 @@ body > .el-container {
             margin-top:10px;
             .el-card{
               height:100%;
+			  background-color:#eff5fd;
+			  border:1px solid #bbbbbb;
+			  .el-card__body{
+				  display: flex;
+				  flex-direction: column;
+				  align-items: center;
+				  height: 100%;
+				  justify-content: center;
+			  }
+			  .areaName{
+				font-size:18px;
+				font-weight:bold;
+				color:black;
+			  }
+			  .workerName{
+				font-size:16px;
+				font-weight:bold;
+				color:#00a93c;
+			  }
             }
           }
           .task{
@@ -127,6 +155,49 @@ body > .el-container {
               margin-top:10px;
 			  .el-card {
 				  border:1px dashed #c7c7c7;
+				  cursor:pointer;
+				  .el-card__body{
+					padding:0;
+				  }
+				  .el-aside{
+					  background-color:white;
+						padding-left:20px;
+						padding-bottom:10px;
+						text-align: left;
+						font-size:14px;
+						color:#9a9a9a;
+						font-weight:bold;
+					  .first-row{
+						color:#4e66ef;
+					  }
+					  .second-row{
+						  .flightNo{
+							  color:white;
+							  font-size:16px;
+							  background-color:#6178f1;
+						  }
+						  .aircraftNumber{
+							  color:#636363;
+						  }
+					  }
+						  .et{
+							color:#4b506e;
+						  }
+				  }
+				  .el-main{
+					  overflow: hidden;
+					  padding: 0;
+					  align-items: center;
+					  background-color:#3fa7ff;
+					  div{
+						  width:10px;
+						  height:100%;
+						  word-break:break-word;
+						  color:white;
+						  display: flex;
+						  align-items:center;
+					  }
+				  }
 			  }
             }
           }

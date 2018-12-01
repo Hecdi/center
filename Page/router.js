@@ -6,7 +6,7 @@ import Violation from "./views/violation/ViolationRecord.vue";
 Vue.use(Router);
 
 export const smartSchedulingRouter = new Router({
-  mode: "history",
+  //mode: "history",
   routes: [
     {
       path: "/",

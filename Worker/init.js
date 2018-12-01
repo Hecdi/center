@@ -14,7 +14,6 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 export const init = () => {
     var worker = new Worker();
-	console.log(123);
     worker.onmessage = (event) =>{
         let content = decoder.decode(event.data);
         try {
