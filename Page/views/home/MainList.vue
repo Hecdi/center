@@ -25,14 +25,14 @@
 								</el-col>
 							</el-row>
 							<el-row :gutter="10" class="second-row">
-								<el-col :span="20">
+								<el-col :span="24">
 									<label class='flightNo'>{{`${task.flightNo}`}}</label>{{`(${task.correlationFlightNo})|`}}
 									<label class="aircraftNumber">{{task.aircraftNumber}}</label>
 									|<label v-for="(route,index) in task.airRoute"><i v-if="index !=0" class="el-icon-caret-right"></i>{{route}}</label>
 								</el-col>
 							</el-row>
 							<el-row :gutter="10" class="third-row">
-								<el-col :span="20">
+								<el-col :span="24">
 									计{{task.displayScheduleTimeWithDate || task.dispalySTAWithDate || task.displaySTDWithDate}}/
 									<label class="et">预{{`${task.displayEstimatedTimeWithDate || task.dispalyETAWithDate || task.displayETDWithDate}`}}</label>
 								</el-col>

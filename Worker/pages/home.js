@@ -25,11 +25,15 @@ const homeInit = () => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
 	});
+	ajax.get('getViolationData').then(data=>{
+		console.log(data);
+		//postal.channel('UI').publish('Home.Sync',data);
+	});
 	sub('Worker','Home.Area.SetPersonSearchKey',(key) =>{
 		homeFilter['personList']['searchPersonKey'] = key;
 		getSearchPersons(homeFilter['personList']['searchPersonKey']).then((result) => {
 			pub('UI','Home.Area.Sync', result);	
-		})
+		});
 	});
 	sub('Worker','Home.Task.SetTaskFilter',(taskListFilterOpt) =>{
 		homeFilter['taskList'] = taskListFilterOpt;

@@ -16,7 +16,8 @@ module.exports = merge(common, {
         open: false,
         quiet: false,
         disableHostCheck: true,
-		hotOnly:true,
+        hotOnly:true,
+        historyApiFallback: true
     },
     devtool:'cheap-module-eval-source-map',
     plugins: [

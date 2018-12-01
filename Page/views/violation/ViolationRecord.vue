@@ -20,11 +20,11 @@
         <button v-on:click="displayWait">待审核</button>
         <button v-on:click="displayWait">全部</button>
         -->
-            <el-button @click="toggleTabs('wait')">待审核</el-button>
-            <el-button @click="toggleTabs('all')">全部</el-button>
-                 <!-- <Card :statusValue="status"/> -->
-            <wait :is="currentView" keep-alive :statusValue="status"/>
             <!-- <all/> -->
+        <el-button v-on:click="getData"></el-button>
+        <span v-for="c in cards" v-bind:key="c.id">
+            {{c.belongCompany}}
+        </span>
     </div>
 </template>
 
@@ -32,6 +32,10 @@
     import wait from "./Card.vue";
     import all from "./Card.vue";
     import TopBar from "./TopBar.vue";
+    import ajaxx from "ajax";
+    import { mapActions } from 'vuex';
+    import { mapGetters, mapMutations } from 'vuex';
+
 
     export default {
         name:'ViolationRecord',
@@ -39,6 +43,9 @@
             wait,
             all,
             TopBar,
+        },
+        computed:{
+            ...mapGetters({ cards:"processedCards"})
         },
         data() {
             // debugger;
@@ -49,21 +56,26 @@
             };
         },
         methods: {
-          handleClick(tab, event) {
-            console.log(tab, event);
-          },
-          displayWait() {
-              this.status=="待审核"?"全部":"11全部";
-              console.log(this.status);
-          },
-           toggleTabs(tabKey){
-                this.status = tabKey;
-                this.currentView = tabKey;
+            ...mapActions({ 
+                getData: "getData",
+            }),
+            created() {
+                this.getData();
+            },
+            handleClick(tab, event) {
+              console.log(tab, event);
+            },
+            displayWait() {
+                this.status=="待审核"?"全部":"11全部";
+                console.log(this.status);
+            },
+            getData(){
+                let ajax = ajaxx();
+	            ajax.get('getViolationData').then(data=>{
+                    let violation = data.data;
+                    console.log(violation);
+	            });
             }
-        //   displayAll(){
-        //       this.status="全部";
-        //   }
-
-        }
+        },
     }
 </script>
