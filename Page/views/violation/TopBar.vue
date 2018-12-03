@@ -8,12 +8,12 @@
             <el-col :span="15" class="topbar">
                 <el-form ref="form" label-width="80px">
                     <el-form-item :model="formInline" >
-                        <el-select v-model="formInline.region" placeholder="活动区域">
-                          <el-option label="全部" value="all"></el-option>
-                          <el-option label="人员" value="people"></el-option>
-                          <el-option label="车辆" value="car"></el-option>
-                          <el-option label="设备" value="equipment"></el-option>
-                          <el-option label="公司" value="company"></el-option>
+                        <el-select v-model="formInline.region" placeholder="活动区域" v-on:change="changeSelectStatus">
+                          <el-option label="全部" value="1"></el-option>
+                          <el-option label="人员" value="2"></el-option>
+                          <el-option label="车辆" value="3"></el-option>
+                          <el-option label="设备" value="4"></el-option>
+                          <el-option label="公司" value="5"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
@@ -33,7 +33,7 @@
                 </el-date-picker>
             </el-col>
             <el-col :span="4">
-                <el-button @click="dialogVisible = true">单位管理</el-button>
+                <el-button @click="dialogVisible = true" disabled>单位管理</el-button>
                 <el-button>导出</el-button>
             </el-col>
             <div class="dialog">
@@ -91,6 +91,7 @@
 <script>
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
+    import { mapMutations } from 'vuex';
     export default {
         components: {
           // Wait,
@@ -135,6 +136,7 @@
           }
         },
         methods: {
+            // ...mapMutations(["setCurrentStatus"]),
             onSubmit() {
               console.log('submit!');
             },
@@ -157,7 +159,14 @@
             // }
             toggleTabs(value){
                 this.tabs=value;
-            }
+            },
+            setCurrentStatus(data) {
+			    this.$store.dispatch('violation/setCurrentStatus', data);
+		    },
+            changeSelectStatus($event){
+                this.setCurrentStatus(Number($event));
+            },
+            // ...mapMutations(["setCurrentPage","setPageSize"]),
         }
     } 
 </script>

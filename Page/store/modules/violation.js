@@ -3,7 +3,7 @@ import {get } from 'lodash';
 
 const state = {
     cards: [],
-    currentStatus: "All",
+    currentStatus: 1,
     filterCards:[],
 }
 
@@ -12,6 +12,7 @@ const mutations = {
         state.cards = data.data;
     },
     setCurrentStatus(state,status){
+        // debugger;
         state.currentStatus = status;
     },
     filterStatus(state, data){
@@ -21,7 +22,7 @@ const mutations = {
 
 const getters = {
     cardsFilteredByStatus: state => state.cards
-    .filter(c => state.currentStatus == "All" 
+    .filter(c => state.currentStatus == 1 
         || c.status == state.currentStatus),
     processedCards: state=> {
         let index = 0;
@@ -30,7 +31,12 @@ const getters = {
     getDisplayPersons:(state, getters, rootState) =>{
         return rootState.filterPersons;
     },
+    pageCount: (state, getter) => 
+        Math.ceil(getters.cardsFilteredByStatus.length / state.pageSize),
+        // categories: state=> ["1",...state.cards],
 }
+
+
 
 // const actions = {
 //     getData(context){
@@ -47,7 +53,11 @@ const actions = {
     getData({commit,state},data){
         commit('setData',data);
         commit('filterStatus',data);
-    }
+    },
+    setCurrentStatus({commit, state}, data){
+		data = data || [];
+        commit('setCurrentStatus', data);
+    },
 }
 
 export default {
