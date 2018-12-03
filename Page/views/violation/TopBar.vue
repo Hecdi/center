@@ -2,8 +2,8 @@
     <div>
         <el-row>
             <el-col :span="5">
-                <el-button @click="toggleTabs('Wait')">待审核</el-button>
-                <el-button @click="toggleTabs('All')">全部</el-button>
+                <el-button @click="toggleTabs('Card')">待审核</el-button>
+                <el-button @click="toggleTabs('Card')">全部</el-button>
             </el-col>
             <el-col :span="15" class="topbar">
                 <el-form ref="form" label-width="80px">
@@ -78,7 +78,7 @@
             </el-dialog>
             </div>
             <div>
-                <wait :is="currentView" keep-alive :statusValue="currentView"/>
+                <Card :is="currentView" keep-alive :statusValue="currentView"/>
             </div>
         </el-row>
     </div>
@@ -86,13 +86,14 @@
 
 
 <script>
-    import Wait from "./Card.vue";
-    import All from "./Card.vue";
-      export default {
-          components: {
-            Wait,
-            All,
-        },
+    import Card from "./Card.vue";
+    // import All from "./Card.vue";
+    export default {
+        components: {
+          // Wait,
+          // All,
+          Card,
+      },
         data() {
           return {
             labelPosition: 'right',
@@ -112,7 +113,7 @@
                 name: 'placeholder',
             },
             // status: "全部",
-            currentView: 'All',
+            currentView: 'Card',
             companys: [
                 {name:"四川航空",code:"HK323",number:"028-88888888",isEdit:false},
                 {name:"国际航空",code:"HK323",number:"028-88888888",isEdit:false},
