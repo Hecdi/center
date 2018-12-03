@@ -15,9 +15,6 @@ const mutations = {
         state.currentStatus = status;
     },
     filterStatus(state, data){
-         // let newArr = violation.filter(item => item.status!==3);
-                // console.log(newArr);
-        //  let newArr = data.data.filter(item => item.status !== 3);
          state.filterCards = data.data.filter(item=>item.status !== 3);
     }
 }

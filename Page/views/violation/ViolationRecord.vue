@@ -53,8 +53,8 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
                 let violation = data.data;
                 console.log(violation);
                 this.getData(data);
-                let newArr = violation.filter(item => item.status!==3);
-                console.log(newArr);
+                // let newArr = violation.filter(item => item.status!==3);
+                // console.log(newArr);
             });
         },
     }
