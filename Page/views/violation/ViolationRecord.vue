@@ -34,8 +34,7 @@
 // import all from "./Card.vue";
 import TopBar from './TopBar.vue';
 import ajaxx from 'ajax';
-import { mapActions } from 'vuex';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 
     export default {
@@ -66,17 +65,6 @@ import { mapGetters, mapMutations } from 'vuex';
             handleClick(tab, event) {
               console.log(tab, event);
             },
-            displayWait() {
-                this.status=="待审核"?"全部":"11全部";
-                console.log(this.status);
-            },
-            // getData(){
-            //     let ajax = ajaxx();
-	        //     ajax.get('getViolationData').then(data=>{
-            //         let violation = data.data;
-            //         console.log(violation);
-	        //     });
-            // },
             getData(data) {
                 this.$store.dispatch('violation/getData',data);
             },
