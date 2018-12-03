@@ -82,6 +82,7 @@
             </div>
             <div v-else>
                 <all-table/>
+                <page-nation-his/>
             </div>
         </el-row>
     </div>
@@ -91,6 +92,7 @@
 <script>
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
+    import PageNationHis from "./PageNationHis.vue";
     import { mapMutations } from 'vuex';
     export default {
         components: {
@@ -98,6 +100,7 @@
           // All,
           Card,
           AllTable,
+          PageNationHis,
       },
         data() {
           return {

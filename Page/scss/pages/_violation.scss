@@ -146,5 +146,11 @@
             padding: 2px;
             text-align: center;
         }
-    }  
+    }
+    .page-nation {
+        text-align: center;
+        .el-pagination {
+            display: inline-block;
+        }
+    } 
 }
