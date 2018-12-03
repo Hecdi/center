@@ -29,8 +29,8 @@
 </template>
 
 <script>
-    import wait from "./Card.vue";
-    import all from "./Card.vue";
+    // import wait from "./Card.vue";
+    // import all from "./Card.vue";
     import TopBar from "./TopBar.vue";
     import ajaxx from "ajax";
     import { mapActions } from 'vuex';
@@ -40,8 +40,8 @@
     export default {
         name:'ViolationRecord',
         components: {
-            wait,
-            all,
+            // wait,
+            // all,
             TopBar,
         },
         computed:{
@@ -77,5 +77,6 @@
 	            });
             }
         },
+        
     }
 </script>

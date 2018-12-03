@@ -11,7 +11,7 @@ href="javascript:void(0)" /> <span class="navbar-departName">
 </span>
           <ul class="nav navbar-nav">
             <router-link
-              tag="li" to="/" class="nav-item" exact> 排班 </router-link>
+      tag="li" to="/" class="nav-item" exact> 排班 </router-link>
                           <router-link
               tag="li" to="/checkIn" class="nav-item"> 点到 </router-link>
                           <router-link
@@ -21,7 +21,7 @@ href="javascript:void(0)" /> <span class="navbar-departName">
                           <router-link
               tag="li" to="/report" class="nav-item"> 报表 </router-link>
                           <router-link
-              tag="li" to="/statistics" class="nav-item"> 统计 </router-link>
+         tag="li" to="/statistics" class="nav-item"> 统计 </router-link>
                           <router-link
               tag="li" to="/operationManual" class="nav-item"> 操作手册 </router-link>
           </ul>
