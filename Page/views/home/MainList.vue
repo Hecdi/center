@@ -4,14 +4,14 @@
         <el-col :span="3" class='region'>
             <el-card shadow="always" >
                 <div class='areaName'>{{item.areaName}}</div>
-				<div class='workerName' v-for="worker in item.workerList">
+				<div class='workerName' v-for="worker in item.workerList" :key="worker.staffId">
 					{{worker.staffName}}
 				</div>
             </el-card>
         </el-col>
 		<el-col :span="21" class="task"  >
 			<el-row :gutter="20">
-				<el-col :span="12" v-for="task in item.taskList"  >
+				<el-col :span="12" v-for="task in item.taskList" :key="task.taskId" >
 					<el-card shadow="always" :v-id="task.taskId" @click.native="showDeatil(task.taskId)"> 
 						<el-container>
 						<el-aside width="95%">
@@ -28,7 +28,7 @@
 								<el-col :span="24">
 									<label class='flightNo'>{{`${task.flightNo}`}}</label>{{`(${task.correlationFlightNo})|`}}
 									<label class="aircraftNumber">{{task.aircraftNumber}}</label>
-									|<label v-for="(route,index) in task.airRoute"><i v-if="index !=0" class="el-icon-caret-right"></i>{{route}}</label>
+									|<label v-for="(route,index) in task.airRoute" :key="route"><i v-if="index !=0" class="el-icon-caret-right"></i>{{route}}</label>
 								</el-col>
 							</el-row>
 							<el-row :gutter="10" class="third-row">
