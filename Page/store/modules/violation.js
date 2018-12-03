@@ -8,10 +8,10 @@ const state = {
 
 const mutations = {
     setData(state,data){
-        state.cards = data.violation;
+        state.cards = data.data;
     },
     setCurrentStatus(state,status){
-   state.currentStatus = status;
+        state.currentStatus = status;
     },
 }
 
@@ -28,14 +28,20 @@ const getters = {
     },
 }
 
+// const actions = {
+//     getData(context){
+//         let ajax = ajaxx();
+//         ajax.get('getViolationData').then(data=>{
+//             let violation = data.data;
+//             console.log(violation);
+//             context.commit("setData",{violation});
+//         });
+//     }
+// }
+
 const actions = {
-    getData(context){
-        let ajax = ajaxx();
-        ajax.get('getViolationData').then(data=>{
-            let violation = data.data;
-            console.log(violation);
-            context.commit("setData",{violation});
-        });
+    getData({commit,state},data){
+        commit('setData',data);
     }
 }
 

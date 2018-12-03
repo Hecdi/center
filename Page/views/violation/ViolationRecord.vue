@@ -69,14 +69,27 @@
                 this.status=="待审核"?"全部":"11全部";
                 console.log(this.status);
             },
-            getData(){
-                let ajax = ajaxx();
-	            ajax.get('getViolationData').then(data=>{
-                    let violation = data.data;
-                    console.log(violation);
-	            });
-            }
+            // getData(){
+            //     let ajax = ajaxx();
+	        //     ajax.get('getViolationData').then(data=>{
+            //         let violation = data.data;
+            //         console.log(violation);
+	        //     });
+            // },
+            getData(data) {
+                this.$store.dispatch('violation/getData',data);
+            },
         },
-        
+        beforeMount(){
+		// sub('UI','Home.Task.Sync',(data)=>{
+		// 	this.getMainListData(data);
+        // });
+            let ajax = ajaxx();
+            ajax.get('getViolationData').then(data=>{
+                let violation = data.data;
+                console.log(violation);
+                this.getData(data);
+            });
+        },
     }
 </script>

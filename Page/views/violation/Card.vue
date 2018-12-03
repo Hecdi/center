@@ -1,17 +1,18 @@
 <template>
 <div>
     <div class="violation-card">
-        <el-col :span="5" v-for="c in card" v-bind:key="c.id">
+        <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
                     <i class="el-icon-location" />
-                    <span>Id:{{c.id}} {{c.name}}</span>
-                    <span class="tag">{{c.type}}</span>
+                    <span>Id:{{c.violationId}} {{c.violationName}}</span>
+                    <span class="tag">{{c.violationCodeName}}</span>
                 </div>
-                <div class="company">{{c.company}}</div>
-                <div class="time">{{c.time}}</div>
+                <div class="company">{{c.airLineName}}</div>
+                <!-- <div class="time">{{getNaturalDate(c.reportTime)}}</div> -->
+                <div class="time">{{c.reportTime}}</div>
                 <div class="decribe">
-                    <div class="decribe-word">违规描述:{{c.describe}}</div>
+                    <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
                     <div class="decribe-img">
                         <img class="picture" alt="img"/>
                         <img class="picture" alt="img"/>
@@ -24,7 +25,7 @@
                     <!-- <span>{{statusValue}}</span> -->
                 </div>
                 <div v-else class="status0">
-                    <span>审核状态</span>
+                    <span>审核状态{{c.status}}</span>
                     <button class="reback">撤回</button>
                 </div>
             </el-card>
@@ -126,24 +127,29 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+    import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+
+
     export default{
         data(){
             return {
                 props:"statusValue",
                 status: '22',
-                card:[
-                    {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:333,name:"王麻子",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:444,name:"哈喽",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:555,name:"刘淇",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:666,name:"李俊",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:777,name:"陈红",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:888,name:"事实上",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                    {id:999,name:"绅士手",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                ]
+                // card:[
+                //     {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:333,name:"王麻子",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:444,name:"哈喽",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:555,name:"刘淇",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:666,name:"李俊",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:777,name:"陈红",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:888,name:"事实上",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                //     {id:999,name:"绅士手",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
+                // ]
             }
         },
+        computed: mapState('violation', ['cards']),
         methods:{
             // toggleTabs(tabKey){
             //     this.status = tabKey;
