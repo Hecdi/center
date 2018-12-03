@@ -10,7 +10,7 @@
                 </div>
                 <div class="company">{{c.airLineName}}</div>
                 <!-- <div class="time">{{getNaturalDate(c.reportTime)}}</div> -->
-                <div class="time">{{c.reportTime}}</div>
+                <div class="time">{{c.reportTime|currency}}</div>
                 <div class="decribe">
                     <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
                     <div class="decribe-img">
@@ -30,105 +30,13 @@
                 </div>
             </el-card>
         </el-col>
-        <!-- <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-goods" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-close" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-goods" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-close" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col> -->
     </div>
 	</div>
 </template>
 
 <script>
     import { mapState } from 'vuex';
-    // import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
 
 
     export default{
@@ -149,7 +57,14 @@
                 // ]
             }
         },
-        computed: mapState('violation', ['cards']),
+        computed: {
+            ...mapState('violation', ['cards']),
+        },
+        filters:{
+            currency(value){
+                return getNaturalDate(value);
+            }
+        },
         methods:{
             // toggleTabs(tabKey){
             //     this.status = tabKey;
