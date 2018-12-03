@@ -4,6 +4,7 @@ import {get } from 'lodash';
 const state = {
     cards: [],
     currentStatus: "All",
+    filterCards:[],
 }
 
 const mutations = {
@@ -13,6 +14,12 @@ const mutations = {
     setCurrentStatus(state,status){
         state.currentStatus = status;
     },
+    filterStatus(state, data){
+         // let newArr = violation.filter(item => item.status!==3);
+                // console.log(newArr);
+        //  let newArr = data.data.filter(item => item.status !== 3);
+         state.filterCards = data.data.filter(item=>item.status !== 3);
+    }
 }
 
 const getters = {
@@ -42,6 +49,7 @@ const getters = {
 const actions = {
     getData({commit,state},data){
         commit('setData',data);
+        commit('filterStatus',data);
     }
 }
 

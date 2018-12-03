@@ -18,34 +18,6 @@
 </template>
 
 <script>
-// export default {
-// 	data() {
-// 		return {
-// 			tableData: [
-// 				{
-// 					date: '2016',
-// 					name: '王虎',
-// 					address: '上海',
-// 				},
-// 				{
-// 					date: '05-04',
-// 					name: '小虎',
-// 					address: '普陀区',
-// 				},
-// 				{
-// 					date: '2016',
-// 					name: '王小',
-// 					address: '金沙江路',
-// 				},
-// 				{
-// 					date: '2013',
-// 					name: '王虎',
-// 					address: '1516',
-// 				},
-// 			],
-// 		};
-// 	},
-// };
 import { mapState } from 'vuex';
 
  export default{
@@ -53,17 +25,6 @@ import { mapState } from 'vuex';
             return {
                 props:"statusValue",
                 status: '22',
-                // card:[
-                //     {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:333,name:"王麻子",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:444,name:"哈喽",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:555,name:"刘淇",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:666,name:"李俊",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:777,name:"陈红",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:888,name:"事实上",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                //     {id:999,name:"绅士手",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
-                // ]
             }
         },
         computed: {

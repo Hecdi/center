@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="violation-card">
-        <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
+        <el-col :span="5" v-for="c in filterCards" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
                     <i class="el-icon-location" />
@@ -22,12 +22,7 @@
                 <div class="status" >
                     <button>通过{{c.status}}</button>
                     <button>不通过</button>
-                    <!-- <span>{{statusValue}}</span> -->
                 </div>
-                <!-- <div v-else class="status0">
-                    <span>审核状态{{c.status}}</span>
-                    <button class="reback">撤回</button>
-                </div> -->
             </el-card>
         </el-col>
     </div>
@@ -58,7 +53,7 @@
             }
         },
         computed: {
-            ...mapState('violation', ['cards']),
+            ...mapState('violation', ['filterCards']),
         },
         filters:{
             currency(value){
