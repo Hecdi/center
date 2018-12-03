@@ -2,8 +2,8 @@
     <div>
         <el-row>
             <el-col :span="5">
-                <el-button @click="toggleTabs('Card')">待审核</el-button>
-                <el-button @click="toggleTabs('Card')">全部</el-button>
+                <el-button @click="toggleTabs('wait')">待审核</el-button>
+                <el-button @click="toggleTabs('all')">全部</el-button>
             </el-col>
             <el-col :span="15" class="topbar">
                 <el-form ref="form" label-width="80px">
@@ -77,8 +77,11 @@
                 </span>
             </el-dialog>
             </div>
-            <div>
+            <div v-if="tabs!=='all'">
                 <Card :is="currentView" keep-alive :statusValue="currentView"/>
+            </div>
+            <div v-else>
+                <all-table/>
             </div>
         </el-row>
     </div>
@@ -87,12 +90,13 @@
 
 <script>
     import Card from "./Card.vue";
-    // import All from "./Card.vue";
+    import AllTable from "./AllTable.vue";
     export default {
         components: {
           // Wait,
           // All,
           Card,
+          AllTable,
       },
         data() {
           return {
@@ -127,6 +131,7 @@
                 {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
             ],
             // isEdit: false,
+             tabs:"all",
           }
         },
         methods: {
@@ -146,9 +151,12 @@
             closeEdit(item){
                 item.isEdit = false;
             },
-            toggleTabs(tabKey){
-                this.status = tabKey;
-                this.currentView = tabKey;
+            // toggleTabs(tabKey){
+            //     this.status = tabKey;
+            //     this.currentView = tabKey;
+            // }
+            toggleTabs(value){
+                this.tabs=value;
             }
         }
     } 

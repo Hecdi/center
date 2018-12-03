@@ -15,7 +15,7 @@ export const smartSchedulingRouter = new Router({
     },
     {
       path: "/report",
-      name: "sheet",
+      name: "about",
       component: Sheet,
   },
   {

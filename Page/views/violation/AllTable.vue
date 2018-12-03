@@ -1,45 +1,54 @@
 <template>
-  <div>
-    <div class="violation-card">
-        <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
-            <el-card shadow="hover" >
-                <div class="violation-id">
-                    <i class="el-icon-location" />
-                    <span>Id:{{c.violationId}} {{c.violationName}}</span>
-                    <span class="tag">{{c.violationCodeName}}</span>
-                </div>
-                <div class="company">{{c.airLineName}}</div>
-                <!-- <div class="time">{{getNaturalDate(c.reportTime)}}</div> -->
-                <div class="time">{{c.reportTime|currency}}</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status" >
-                    <button>通过{{c.status}}</button>
-                    <button>不通过</button>
-                    <!-- <span>{{statusValue}}</span> -->
-                </div>
-                <!-- <div v-else class="status0">
-                    <span>审核状态{{c.status}}</span>
-                    <button class="reback">撤回</button>
-                </div> -->
-            </el-card>
-        </el-col>
-    </div>
-	</div>
+  <div class="sheet-table">
+    <el-table :data="cards" stripe style="width: 100%">
+      <el-table-column prop="violationId" label="序号" width="80" />
+      <el-table-column prop="violationCodeName" label="违规类型" width="80" />
+      <el-table-column prop="violationCode" label="人员编号" width="80" />
+      <el-table-column prop="violationName" label="违规人员" width="150" />
+      <el-table-column prop="violationName1" label="车辆编号" width="80" />
+      <el-table-column prop="violationName2" label="设备编号" width="80" />
+      <el-table-column prop="airLineName" label="所属单位" width="180" />
+      <el-table-column prop="violationDescription" label="违规描述" width="180" />
+      <el-table-column prop="date" label="图像记录" width="180" />
+      <el-table-column prop="reportTime" label="上报时间" width="180" />
+      <el-table-column prop="status" label="状态" width="80" />
+      <el-table-column prop="date1" label="操作" width="80" />
+    </el-table>
+  </div>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
-    import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+// export default {
+// 	data() {
+// 		return {
+// 			tableData: [
+// 				{
+// 					date: '2016',
+// 					name: '王虎',
+// 					address: '上海',
+// 				},
+// 				{
+// 					date: '05-04',
+// 					name: '小虎',
+// 					address: '普陀区',
+// 				},
+// 				{
+// 					date: '2016',
+// 					name: '王小',
+// 					address: '金沙江路',
+// 				},
+// 				{
+// 					date: '2013',
+// 					name: '王虎',
+// 					address: '1516',
+// 				},
+// 			],
+// 		};
+// 	},
+// };
+import { mapState } from 'vuex';
 
-
-    export default{
+ export default{
         data(){
             return {
                 props:"statusValue",
@@ -60,11 +69,11 @@
         computed: {
             ...mapState('violation', ['cards']),
         },
-        filters:{
-            currency(value){
-                return getNaturalDate(value);
-            }
-        },
+        // filters:{
+        //     currency(value){
+        //         return getNaturalDate(value);
+        //     }
+        // },
         methods:{
             // toggleTabs(tabKey){
             //     this.status = tabKey;
