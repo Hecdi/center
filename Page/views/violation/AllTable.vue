@@ -1,10 +1,10 @@
 <template>
-  <div class="sheet-table">
+  <div class="all-table">
     <el-table :data="cards" stripe style="width: 100%">
       <el-table-column prop="violationId" label="序号" width="80" />
       <el-table-column prop="violationCodeName" label="违规类型" width="80" />
       <el-table-column prop="violationCode" label="人员编号" width="80" />
-      <el-table-column prop="violationName" label="违规人员" width="150" />
+      <el-table-column prop="violationName" label="违规人员" width="130" />
       <el-table-column prop="violationName1" label="车辆编号" width="80" />
       <el-table-column prop="violationName2" label="设备编号" width="80" />
       <el-table-column prop="airLineName" label="所属单位" width="180" />
