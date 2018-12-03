@@ -10,11 +10,11 @@
 				  </el-input>
 			  </el-col>
 			</el-row>
-			<div class="panel">
-				<el-row :gutter="20" v-for="person in persons" v-if="!isHidden" class="persons-panel" style="margin:0;">
+			<div class="panel" v-if="!isHidden">
+				<el-row :gutter="20" v-for="person in persons" :key="person.areaId"  class="persons-panel" style="margin:0;">
 					<el-col :span="24"  v-if="person.workerList.length" class="area-panel">{{person.areaName}}</el-col>
-					<el-row :gutter="20"  v-if="!isHidden" style="margin:0;" class="personList">
-						<el-col :span="6" v-for="worker in person.workerList" class="person-panel" >
+					<el-row :gutter="20"  style="margin:0;" class="personList">
+						<el-col :span="6" v-for="worker in person.workerList" :key="worker.staffId" class="person-panel" >
 							<div class="grid-content bg-person person" @click="show" :data-id="worker.staffId">{{worker.staffName + (worker.workerName?'('+ worker.workerName+')':'')}}
 								<div class='taskNum'>
 									{{worker.taskNumber}}
@@ -86,8 +86,8 @@
 
 <script>
 // @ is an alias to /src
-import SearchInput from '../../components/SearchInput.vue';
-import Legend from '../../components/Legend.vue';
+/*import SearchInput from '../../components/SearchInput.vue';*/
+import Legend from 'Legend.vue';
 import MainList from './MainList.vue';
 import MessageBtn from 'MessageBtn.vue';
 import UrgentReportBtn from 'UrgentReportBtn.vue';
@@ -197,12 +197,12 @@ export default {
 
     },
     components: {
-        SearchInput,
-        Legend,
+        /*SearchInput,*/
         MainList,
 		MessageBtn,
 		UrgentReportBtn,
 		DialogAddTask,
+        Legend,
     },
 	beforeMount(){
 		sub('UI','Home.Task.Sync',(data)=>{

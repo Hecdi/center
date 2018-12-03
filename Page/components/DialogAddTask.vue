@@ -6,7 +6,7 @@
 	  width="1000px"
 	  :before-close="handleClose">
 	  <el-row :gutter="10"  class="personList">
-			<el-col :span="2" v-for="worker in allPersons" class="person-panel">
+			<el-col :span="2" v-for="worker in allPersons" :key="worker.staffId"  class="person-panel">
 				<div class="grid-content bg-person person" @click="show" :data-id="worker.staffId">{{worker.staffName + (worker.workerName?'('+ worker.workerName+')':'')}}
 					<div class='taskNum'>
 						{{worker.taskNumber}}
