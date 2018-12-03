@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <div class="violation-card">
         <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
             <el-card shadow="hover" >
@@ -123,12 +123,12 @@
             </el-card>
         </el-col> -->
     </div>
-</div>
+	</div>
 </template>
 
 <script>
     import { mapState } from 'vuex';
-    import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    // import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
 
 
     export default{
