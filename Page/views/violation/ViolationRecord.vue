@@ -43,17 +43,25 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
             getData(data) {
                 this.$store.dispatch('violation/getData',data);
             },
-        },
-        beforeMount(){
-		// sub('UI','Home.Task.Sync',(data)=>{
-		// 	this.getMainListData(data);
-        // });
-            let ajax = ajaxx();
-            ajax.get('getViolationData').then(data=>{
+            refreshData(){
+                let ajax = ajaxx();
+                ajax.get('getViolationData').then(data=>{
                 let violation = data.data;
                 console.log(violation);
                 this.getData(data);
-            });
+                })
+            },
+        },
+        beforeMount(){
+            // let ajax = ajaxx();
+            // ajax.get('getViolationData').then(data=>{
+            //     let violation = data.data;
+            //     console.log(violation);
+            //     this.getData(data);
+            //     // let newArr = violation.filter(item => item.status!==3);
+            //     // console.log(newArr);
+            // });
+            this.refreshData();
         },
     }
 </script>

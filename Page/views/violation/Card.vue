@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="violation-card">
-        <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
+        <el-col :span="5" v-for="c in filterCards" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
                     <i class="el-icon-location" />
@@ -19,24 +19,24 @@
                         <img class="picture" alt="img"/>
                     </div>
                 </div>
-                <div v-if="status == 'wait'" class="status" >
-                    <button>通过</button>
-                    <button>不通过</button>
-                    <!-- <span>{{statusValue}}</span> -->
+                <div class="status" >
+                    <button @click="submitStatus(c,1)">通过{{c.status}}</button>
+                    <button @click="changeStatus(c)">不通过</button>
                 </div>
-                <div v-else class="status0">
-                    <span>审核状态{{c.status}}</span>
-                    <button class="reback">撤回</button>
-                </div>
+                <i class="icon iconfont icon-ziyuan"></i>
+                <i class="icon iconfont icon-user"></i>
             </el-card>
+
         </el-col>
     </div>
 	</div>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import { mapState,mapMutations } from 'vuex';
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    import ajaxx from 'ajax';
+
 
 
     export default{
@@ -58,7 +58,7 @@
             }
         },
         computed: {
-            ...mapState('violation', ['cards']),
+            ...mapState('violation', ['filterCards']),
         },
         filters:{
             currency(value){
@@ -66,10 +66,26 @@
             }
         },
         methods:{
-            // toggleTabs(tabKey){
-            //     this.status = tabKey;
-            //     this.currentView = tabKey;
-            // }
+            ...mapMutations({changeStatus:"violation/changeStatus"}),
+            handleChangeStatus(value){
+                this.changeStatus(value);
+                console.log(value);
+            },
+		    submitStatus(param,value) {
+		    	console.log(param);
+                let ajax = ajaxx();
+                let id = param.id;
+                let status = value;
+                let subParam = `{"id":"${id}","status":${status}}`;
+                console.log(subParam);
+		    	ajax.post('updateState', subParam).then((data) => {
+                    console.log(data);
+                    ajax.get('getViolationData').then((data)=>{
+                    console.log(data);
+                })
+                });
+                
+		    },
         }
     }
 </script>

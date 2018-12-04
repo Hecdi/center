@@ -2,18 +2,18 @@
     <div>
         <el-row>
             <el-col :span="5">
-                <el-button @click="toggleTabs('Card')">待审核</el-button>
-                <el-button @click="toggleTabs('Card')">全部</el-button>
+                <el-button @click="toggleTabs('wait')">待审核</el-button>
+                <el-button @click="toggleTabs('all')">全部</el-button>
             </el-col>
             <el-col :span="15" class="topbar">
                 <el-form ref="form" label-width="80px">
-                    <el-form-item :model="formInline" >
-                        <el-select v-model="formInline.region" placeholder="活动区域">
-                          <el-option label="全部" value="all"></el-option>
-                          <el-option label="人员" value="people"></el-option>
-                          <el-option label="车辆" value="car"></el-option>
-                          <el-option label="设备" value="equipment"></el-option>
-                          <el-option label="公司" value="company"></el-option>
+                    <el-form-item >
+                        <el-select v-model="area" placeholder="活动区域" v-on:change="changeSelectStatus">
+                          <el-option label="全部" value="1"></el-option>
+                          <el-option label="人员" value="2"></el-option>
+                          <el-option label="车辆" value="3"></el-option>
+                          <el-option label="设备" value="4"></el-option>
+                          <el-option label="公司" value="5"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
@@ -22,19 +22,29 @@
                     prefix-icon="el-icon-search"
                     v-model="inputSearch"
                     class="seach-input"
+                    v-on:click="searchAll(e)"
                 ></el-input>
                 <span class="demonstration">时间段</span>
-                <el-date-picker
+                <!-- <el-date-picker
                     v-model="time"
                     type="datetimerange"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期">
+                </el-date-picker> -->
+                <el-date-picker
+                    v-model="time"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="timestamp">
                 </el-date-picker>
             </el-col>
             <el-col :span="4">
-                <el-button @click="dialogVisible = true">单位管理</el-button>
-                <el-button>导出</el-button>
+                <el-button @click="dialogVisible = true" disabled>单位管理</el-button>
+                <el-button @click="exportExcel">导出</el-button>
             </el-col>
             <div class="dialog">
             <el-dialog
@@ -77,8 +87,12 @@
                 </span>
             </el-dialog>
             </div>
-            <div>
+            <div v-if="tabs!=='all'">
                 <Card :is="currentView" keep-alive :statusValue="currentView"/>
+            </div>
+            <div v-else>
+                <all-table/>
+                <page-nation-his/>
             </div>
         </el-row>
     </div>
@@ -87,12 +101,18 @@
 
 <script>
     import Card from "./Card.vue";
-    // import All from "./Card.vue";
+    import AllTable from "./AllTable.vue";
+    import PageNationHis from "./PageNationHis.vue";
+    import { mapMutations } from 'vuex';
+    import ajaxx from 'ajax';
+
     export default {
         components: {
           // Wait,
           // All,
           Card,
+          AllTable,
+          PageNationHis,
       },
         data() {
           return {
@@ -102,10 +122,11 @@
               region: '',
               type: ''
             },
-            formInline: {
-              user: '',
-              region: ''
-            },
+            // formInline: {
+            //   user: '',
+            //   region: ''
+            // },
+            area: '',
             inputSearch:'',
             time: '',
             dialogVisible: false,
@@ -127,9 +148,11 @@
                 {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
             ],
             // isEdit: false,
+             tabs:"all",
           }
         },
         methods: {
+            // ...mapMutations(["setCurrentStatus"]),
             onSubmit() {
               console.log('submit!');
             },
@@ -146,10 +169,44 @@
             closeEdit(item){
                 item.isEdit = false;
             },
-            toggleTabs(tabKey){
-                this.status = tabKey;
-                this.currentView = tabKey;
+            // toggleTabs(tabKey){
+            //     this.status = tabKey;
+            //     this.currentView = tabKey;
+            // }
+            toggleTabs(value){
+                this.tabs=value;
+            },
+            setCurrentStatus(data) {
+			    this.$store.dispatch('violation/setCurrentStatus', data);
+		    },
+            changeSelectStatus($event){
+                this.setCurrentStatus(Number($event));
+            },
+            searchAll($event){
+                console.log($event.target.value);
+            },
+            exportExcel(){
+                let ajax = ajaxx();
+                let violationCode = this.area;
+                let timeArr = this.time;
+                // let timeArr = time.join(",");
+                // console.log(time);
+                // let timeArr = ['a','b'];
+                let startDate = timeArr[0];
+                let endDate = timeArr[1];
+                
+
+                let inputSearch = this.inputSearch;
+                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+                console.log(param);
+                ajax.post('findByTimeAndCode', param).then((data) => {
+                    console.log(data);
+                   
+                });
+
             }
+
+            // ...mapMutations(["setCurrentPage","setPageSize"]),
         }
     } 
 </script>

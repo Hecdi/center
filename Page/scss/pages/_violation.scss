@@ -47,6 +47,9 @@
         }
         .status {
             text-align: center;
+            button {
+                cursor: pointer;
+            }
         }
         .status0 {
             text-align: center;
@@ -120,4 +123,38 @@
             }
         }
     }
+    .all-table {
+        margin: 3px;
+        margin-top: 10px;
+        thead>.cell {
+            background-color: #666;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+        }
+        .is-leaf {
+            background: #666;
+            color: #fff;
+            height: 28px;
+            line-height: 28px;
+            padding: 2px;
+            text-align: center;
+        } 
+        .el-table__row {
+            height: 28px;
+            line-height: 28px;
+            padding: 2px;
+            text-align: center;
+        }
+    }
+    .page-nation {
+        display: none;
+        text-align: center;
+        .el-pagination {
+            display: inline-block;
+        }
+        position: fixed;
+        bottom: 30px;
+        margin-left: 27%;
+    } 
 }

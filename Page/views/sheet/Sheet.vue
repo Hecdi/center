@@ -1,19 +1,19 @@
 <template>
   <div class="sheet-container">
 		<ToolBar />
-		<table />
+		<table-dis />
 	</div>
 </template>
 
 <script>
 import ToolBar from './ToolBar.vue';
-import Table from './Table.vue';
+import TableDis from './TableDis.vue';
 
 export default {
 	name: 'Sheet',
 	components: {
 		ToolBar,
-		Table,
+		TableDis,
 	},
 };
 </script>

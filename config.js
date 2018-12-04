@@ -23,6 +23,8 @@ export default {
                 'taskDetail':'web/scheduling/taskDetail',
                 'getViolationData':'violationRecord/getViolationData',
 				'urgentReport':'deviationReport/getDeviationReportData',
+                'updateState':'violationRecord/updateState',
+                'findByTimeAndCode':'violationRecord/findByTimeAndCode',
             }
         }
     },
