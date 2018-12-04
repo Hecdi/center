@@ -23,7 +23,13 @@
                     <button @click="submitStatus(c,1)">通过{{c.status}}</button>
                     <button @click="changeStatus(c)">不通过</button>
                 </div>
+                <li>
+                <i class="icon iconfont icon-ziyuan"></i>
+                <i class="icon iconfont icon-user"></i>
+                <div class="iconfont icon-return1"></div>
+                </li>
             </el-card>
+
         </el-col>
     </div>
 	</div>
