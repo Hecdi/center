@@ -148,9 +148,13 @@
         }
     }
     .page-nation {
+        display: none;
         text-align: center;
         .el-pagination {
             display: inline-block;
         }
+        position: fixed;
+        bottom: 30px;
+        margin-left: 27%;
     } 
 }

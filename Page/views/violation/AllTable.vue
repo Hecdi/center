@@ -14,7 +14,8 @@
       <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80"/>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">撤回</el-button>
+        <!-- <template> -->
+          <el-button size="mini" @click="handleChangeStatus(3)">撤回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -22,8 +23,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import moment from 'moment';
+// import ajaxx from 'ajax';
+
 
 
 export default {
@@ -37,6 +40,11 @@ export default {
     ...mapState("violation", ["cards"])
   },
   methods: {
+    ...mapMutations({changeStatus:"violation/changeStatus"}),
+        handleChangeStatus(value){
+            this.changeStatus(value);
+            console.log(value);
+        },
     indexMethod(index) {
       return index + 1;
     },
@@ -50,6 +58,7 @@ export default {
         }
         return moment(date).format("YYYY-MM-DD HH:mm");
     },
+    
     statusFormat(row,column){
         if(row.status == 1){
             return "通过";

@@ -23,11 +23,8 @@
                     <button @click="submitStatus(c,1)">通过{{c.status}}</button>
                     <button @click="changeStatus(c)">不通过</button>
                 </div>
-                <li>
                 <i class="icon iconfont icon-ziyuan"></i>
                 <i class="icon iconfont icon-user"></i>
-                <div class="iconfont icon-return1"></div>
-                </li>
             </el-card>
 
         </el-col>
@@ -81,11 +78,13 @@
                 let status = value;
                 let subParam = `{"id":"${id}","status":${status}}`;
                 console.log(subParam);
-                // subParam = JSON.stringify(subParam);
-                console.log(subParam);
 		    	ajax.post('updateState', subParam).then((data) => {
-		    		console.log(data);
-		    	});
+                    console.log(data);
+                    ajax.get('getViolationData').then((data)=>{
+                    console.log(data);
+                })
+                });
+                
 		    },
         }
     }

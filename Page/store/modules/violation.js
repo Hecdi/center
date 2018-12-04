@@ -17,7 +17,7 @@ const mutations = {
         console.log(state.currentStatus);
     },
     filterStatus(state, data) {
-        state.filterCards = data.data.filter(item => item.status !== 3);
+        state.filterCards = data.data.filter(item => item.status == 3);
     },
     addProduct(state, product) {
         let line  = state.lines.find(line => line.product.id == product.id);

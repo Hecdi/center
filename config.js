@@ -23,6 +23,7 @@ export default {
                 'taskDetail':'web/scheduling/taskDetail',
                 'getViolationData':'violationRecord/getViolationData',
                 'updateState':'violationRecord/updateState',
+                'findByTimeAndCode':'violationRecord/findByTimeAndCode',
             }
         }
     },
