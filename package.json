@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "debug": "^4.1.0",
+    "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.11",
     "lokijs": "^1.5.5",

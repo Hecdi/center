@@ -24,7 +24,11 @@ export const smartSchedulingRouter = new Router({
     name: "about",
     component: Violation,
   },
-  
+  {
+    path: "/statistics",
+    name: "statistics",
+    component: Statistics,
+  },
 
   ]
 });
