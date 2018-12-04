@@ -4,6 +4,7 @@
 	background-color:#e4e4e4;
 	overflow:scroll;
 	.el-card__body{
+		height:125px;
 		section{
 			height:22px;
 		}
@@ -25,6 +26,7 @@
 		white-space:nowrap;
 	}
 	.Row2{
+		white-space:nowrap;
 	}
 	.Row3{
 		display:flex;
