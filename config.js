@@ -22,6 +22,7 @@ export default {
                 'personList':'web/scheduling/getAreaAndWorkerListAll',
                 'taskDetail':'web/scheduling/taskDetail',
                 'getViolationData':'violationRecord/getViolationData',
+                'updateState':'violationRecord/updateState',
             }
         }
     },

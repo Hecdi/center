@@ -20,8 +20,8 @@
                     </div>
                 </div>
                 <div class="status" >
-                    <button>通过{{c.status}}</button>
-                    <button>不通过</button>
+                    <button @click="submitStatus(c,1)">通过{{c.status}}</button>
+                    <button @click="changeStatus(c)">不通过</button>
                 </div>
             </el-card>
         </el-col>
@@ -30,8 +30,10 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import { mapState,mapMutations } from 'vuex';
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    import ajaxx from 'ajax';
+
 
 
     export default{
@@ -61,10 +63,24 @@
             }
         },
         methods:{
-            // toggleTabs(tabKey){
-            //     this.status = tabKey;
-            //     this.currentView = tabKey;
-            // }
+            ...mapMutations({changeStatus:"violation/changeStatus"}),
+            handleChangeStatus(value){
+                this.changeStatus(value);
+                console.log(value);
+            },
+		    submitStatus(param,value) {
+		    	console.log(param);
+                let ajax = ajaxx();
+                let id = param.id;
+                let status = value;
+                let subParam = `{"id":"${id}","status":${status}}`;
+                console.log(subParam);
+                // subParam = JSON.stringify(subParam);
+                console.log(subParam);
+		    	ajax.post('updateState', subParam).then((data) => {
+		    		console.log(data);
+		    	});
+		    },
         }
     }
 </script>
