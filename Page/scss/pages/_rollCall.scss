@@ -1,0 +1,19 @@
+@import "../components/personSelect";
+ .rollCall{
+	.dialogPersonDetail {
+		.el-dialog__body{
+			padding :25px 10px;
+		}
+		.el-dialog__body{
+			margin :0 10px;
+			.row {
+				padding-left:10px;
+				margin-bottom:10px;
+				.el-radio+.el-radio{
+					margin-left:20px;
+				}
+			}
+		}
+
+	}
+ }
