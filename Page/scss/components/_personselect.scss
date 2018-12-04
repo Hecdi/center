@@ -1,0 +1,23 @@
+.personSelect{
+	.el-tab-pane{
+		border:1px dashed #B3B7BB;
+		padding: 20px 10px 10px 10px;
+	}
+	.el-button {
+		margin-left:10px;
+		margin-right:0;
+		margin-bottom:10px;
+		background: #DBE9FE;
+		border: 1px solid #7FB1FF;
+		border-radius: 3px;
+		color:#1F407B;
+		i{
+			color:#009eff;
+		}
+		&.active,&:hover{
+			background-color:#0064FF;
+			color:#fff;
+		}
+	}
+
+}

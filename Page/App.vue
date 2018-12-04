@@ -11,7 +11,7 @@ href="javascript:void(0)"/> <span class="navbar-departName"> 机坪摆渡电气�
           <ul class="nav navbar-nav">
             <router-link 
 tag="li" to="/" class="nav-item" exact> 排班 </router-link>
-						<router-link tag="li" to="/checkIn" 
+						<router-link tag="li" to="/rollCall" 
 class="nav-item"
 > 点到 </router-link>
 						<router-link tag="li" to="/urgentReport" 
