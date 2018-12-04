@@ -1,41 +1,18 @@
-.urgentReport{
-	flex:1;
-	padding:10px 25px;
-	background-color:#e4e4e4;
-	.Row1{
-		display:flex;
-		flex-direction:row;
-		justify-content:space-between;
-		position:relative;
-	}
-	.No{
-		position:absolute;
-		left:20px;
-	}
-	.Ud1{
-		width:50px;
-		background-color:#00B8FF;
-		color:white;
-		text-align:center;
-	}
-	.Row3{
-		display:flex;
-		flex-direction:row;
-		height:23px;
-	}
-	.Row4{
-		display:flex;
-		flex-direction:row;
-	}
-	.el-icon-caret-right{
-		line-height:23px;
-		height:23px;
-	}
-	.el-col{
-		margin:5px 2.5px;
-	}
-	#app{
-		height:auto;
-	}
+.urgentReportBtn{
+    position: fixed; 
+ bottom:6px;
+ font-size:14px;
+ left:6px;
+    padding:0 6px;
+ border-radius: 3px;
+ .el-button{
+  padding:6px 10px;
+  font-size:20px;
+  span{
+   font-size:18px;
+  }
+ }
+ .el-badge__content.is-fixed{
+  right:24px;
+ }
 }
-
