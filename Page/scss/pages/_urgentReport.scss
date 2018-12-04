@@ -3,6 +3,11 @@
 	padding:10px 25px;
 	background-color:#e4e4e4;
 	overflow:scroll;
+	.el-card__body{
+		section{
+			height:22px;
+		}
+	}
 	.Row1{
 		display:flex;
 		flex-direction:row;
