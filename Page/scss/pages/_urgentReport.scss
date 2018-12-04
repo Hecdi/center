@@ -1,0 +1,44 @@
+.urgentReport{
+	flex:1;
+	padding:10px 25px;
+	background-color:#e4e4e4;
+	overflow:scroll;
+	.el-card__body{
+		section{
+			height:22px;
+		}
+	}
+	.Row1{
+		display:flex;
+		flex-direction:row;
+		align-items:baseline;
+		position:relative;
+	}   
+	.No{
+		padding-left:5px;
+	}
+	.Dname{
+		position:absolute;
+		right:0px;
+		background-color:#50b7f7;
+		text-align:center;
+		white-space:nowrap;
+	}
+	.Row2{
+	}
+	.Row3{
+		display:flex;
+		flex-direction:row;
+		align-items:baseline;
+	}
+	.Row4{
+		display:flex;
+		flex-direction:row;
+		align-items:baseline;
+	}
+	.el-col{
+		margin-top:2.5px;
+		margin-bottom:2.5px;
+	}
+}
+

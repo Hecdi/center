@@ -1,31 +1,6 @@
 <template>
   <div class="violation">
 		<top-bar />
-		<!--
-			<el-tabs v-model="activeName" @tab-click="handleClick">
-			    <el-tab-pane label="待审核" name="first">
-			        <Card/>
-			    </el-tab-pane>
-			    <el-tab-pane label="全部记录" name="second">
-			        <Card/>
-			    </el-tab-pane>
-			</el-tabs>
-		-->
-		<!-- <Card/> -->
-		<!-- <el-radio-group class="tab-button"> -->
-		<!--
-			<el-radio-button label="待审核" v-on:click="displayWait"></el-radio-button>
-			    <el-radio-button label="全部" v-on:click="displayAll"></el-radio-button> ->
-			    <el-radio-button label="待审核" v-model="status"></el-radio-button>
-			    <el-radio-button label="全部" v-model="status"></el-radio-button>
-			</el-radio-group>
-			<!-
-			<button v-on:click="displayWait">待审核</button>
-			<button v-on:click="displayWait">全部</button>
-		-->
-		<!-- <all/> -->
-		<!-- <el-button @click="getData" />
-		<span v-for="c in cards" v-bind:key="c.id"> {{ c.belongCompany }} </span> -->
   </div>
 </template>
 
@@ -68,17 +43,25 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
             getData(data) {
                 this.$store.dispatch('violation/getData',data);
             },
-        },
-        beforeMount(){
-		// sub('UI','Home.Task.Sync',(data)=>{
-		// 	this.getMainListData(data);
-        // });
-            let ajax = ajaxx();
-            ajax.get('getViolationData').then(data=>{
+            refreshData(){
+                let ajax = ajaxx();
+                ajax.get('getViolationData').then(data=>{
                 let violation = data.data;
                 console.log(violation);
                 this.getData(data);
-            });
+                })
+            },
+        },
+        beforeMount(){
+            // let ajax = ajaxx();
+            // ajax.get('getViolationData').then(data=>{
+            //     let violation = data.data;
+            //     console.log(violation);
+            //     this.getData(data);
+            //     // let newArr = violation.filter(item => item.status!==3);
+            //     // console.log(newArr);
+            // });
+            this.refreshData();
         },
     }
 </script>

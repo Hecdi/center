@@ -84,6 +84,8 @@ export const formatDate = (date, opt, empty) => {
 			return (month >= 10 ? month : '0' + month) + '' + (day >= 10 ? day : '0' + day);
 		case 'YYYY-MM-DD':
 			return year + '-' + (month >= 10 ? month : '0' + month) + '-' + (day >= 10 ? day : '0' + day);
+		case 'YYYY-MM-DD HH:mm':
+			return year + '-' + (month >= 10 ? month : '0' + month) + '-' + (day >= 10 ? day : '0' + day) + ' ' +(hour >= 10 ? hour : '0' + hour) + ':' + (minute >= 10 ? minute : '0' + minute);
 		default:
 			return empty;
 	}

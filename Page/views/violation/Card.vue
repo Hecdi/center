@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="violation-card">
-        <el-col :span="5" v-for="c in cards" v-bind:key="c.id">
+        <el-col :span="5" v-for="c in filterCards" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
                     <i class="el-icon-location" />
@@ -10,7 +10,7 @@
                 </div>
                 <div class="company">{{c.airLineName}}</div>
                 <!-- <div class="time">{{getNaturalDate(c.reportTime)}}</div> -->
-                <div class="time">{{c.reportTime}}</div>
+                <div class="time">{{c.reportTime|currency}}</div>
                 <div class="decribe">
                     <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
                     <div class="decribe-img">
@@ -19,116 +19,24 @@
                         <img class="picture" alt="img"/>
                     </div>
                 </div>
-                <div v-if="status == 'wait'" class="status" >
-                    <button>通过</button>
-                    <button>不通过</button>
-                    <!-- <span>{{statusValue}}</span> -->
+                <div class="status" >
+                    <button @click="submitStatus(c,1)">通过{{c.status}}</button>
+                    <button @click="changeStatus(c)">不通过</button>
                 </div>
-                <div v-else class="status0">
-                    <span>审核状态{{c.status}}</span>
-                    <button class="reback">撤回</button>
-                </div>
+                <i class="icon iconfont icon-ziyuan"></i>
+                <i class="icon iconfont icon-user"></i>
             </el-card>
+
         </el-col>
-        <!-- <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-goods" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-close" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-goods" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col>
-        <el-col :span="5">
-            <el-card shadow="hover">
-                <div class="violation-id">
-                    <i class="el-icon-close" />
-                    <span>Id:222 章三</span>
-                    <span class="tag">人员</span>
-                </div>
-                <div class="company">成都航空公司</div>
-                <div class="time">2018-11-22</div>
-                <div class="decribe">
-                    <div class="decribe-word">违规描述</div>
-                    <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                    </div>
-                </div>
-                <div class="status">
-                    <button>通过</button>
-                    <button>不通过</button>
-                </div>
-            </el-card>
-        </el-col> -->
     </div>
 	</div>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
-    // import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    import { mapState,mapMutations } from 'vuex';
+    import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
+    import ajaxx from 'ajax';
+
 
 
     export default{
@@ -149,12 +57,35 @@
                 // ]
             }
         },
-        computed: mapState('violation', ['cards']),
+        computed: {
+            ...mapState('violation', ['filterCards']),
+        },
+        filters:{
+            currency(value){
+                return getNaturalDate(value);
+            }
+        },
         methods:{
-            // toggleTabs(tabKey){
-            //     this.status = tabKey;
-            //     this.currentView = tabKey;
-            // }
+            ...mapMutations({changeStatus:"violation/changeStatus"}),
+            handleChangeStatus(value){
+                this.changeStatus(value);
+                console.log(value);
+            },
+		    submitStatus(param,value) {
+		    	console.log(param);
+                let ajax = ajaxx();
+                let id = param.id;
+                let status = value;
+                let subParam = `{"id":"${id}","status":${status}}`;
+                console.log(subParam);
+		    	ajax.post('updateState', subParam).then((data) => {
+                    console.log(data);
+                    ajax.get('getViolationData').then((data)=>{
+                    console.log(data);
+                })
+                });
+                
+		    },
         }
     }
 </script>
