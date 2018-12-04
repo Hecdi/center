@@ -22,6 +22,7 @@ export default {
                 'personList':'web/scheduling/getAreaAndWorkerListAll',
                 'taskDetail':'web/scheduling/taskDetail',
                 'getViolationData':'violationRecord/getViolationData',
+				'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，get
             }
         }
     },
