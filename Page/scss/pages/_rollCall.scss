@@ -1,5 +1,80 @@
 @import "../components/personSelect";
  .rollCall{
+	 flex:1;
+	 padding:10px;
+	 background-color:#e2e7eb;
+	 .header{
+		 height:40px;
+		 .el-col{
+			 height:40px;
+			 color:#333333;	
+			 font-size:14px;
+			 font-weight:bold;
+			 .stick {
+				 position:relative;
+				 display:inline-block;
+				 width:3px;
+				 height:12px;
+				 line-height:40px;
+				 background: #0566FF;
+				 box-shadow: 0 0 4px 0 #B9CDFD;
+				 border-radius: 1px;
+				 margin-right:6px;
+			 }
+		 }
+		 .option{
+			text-align:right;
+		 }
+	 }
+	 .content{
+		 position:relative;
+		 background-color:#fff;
+		 border-radius: 4px;
+		 padding:20px 10px;
+		 .el-tabs__item{
+			padding:5px !important;
+			.el-button{
+				background-color:#E6E6E6;
+				color:#666;
+				padding:4px;
+				i {
+					font-size:20px;
+					color:#fff;
+				}	
+			}
+		 }
+		 .el-tabs__nav, .el-tabs__item,.el-tabs__header,.el-tabs__nav-wrap{
+			border:none;
+		 }
+		 .is-active {
+			 .el-button{
+				 background-color:#0566FF; 
+				 color:#fff;
+				 i {
+					 font-size:20px;
+				 }	
+			 }
+		 }
+		 .el-tabs__content{
+			 .el-button{
+				 margin-left:10px;
+				 margin-right:0;
+				 margin-bottom:10px;
+				 background: #DBE9FE;
+				 border: 1px solid #7FB1FF;
+				 border-radius: 3px;
+				 color:#1F407B;
+				 i{
+					 color:#009eff;
+				 }
+				 &.active,&:hover{
+					 background-color:#0064FF;
+					 color:#fff;
+				 }
+
+			}
+		 }
+	 }
 	.dialogPersonDetail {
 		.el-dialog__body{
 			padding :25px 10px;
