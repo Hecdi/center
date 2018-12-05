@@ -118,16 +118,12 @@
                 switch(condition) {
                     case "人员":
                         return "iconfont icon-user";
-                        break;
                     case "设备":
                         return "iconfont icon-user";
-                        break;
                     case "公司":
                         return "iconfont icon-return1";
-                        break;
                     case "车辆":
                         return "iconfont icon-feiji";
-                        break;
                 }
             },
             tagColor(value){
@@ -135,16 +131,12 @@
                 switch(status) {
                     case "人员":
                         return "tag-user";
-                        break;
                     case "设备":
                         return "tag-device";
-                        break;
                     case "公司":
                         return "tag-company";
-                        break;
                     case "车辆":
                         return "tag-car";
-                        break;
                 }
             }
         }
