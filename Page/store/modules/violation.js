@@ -12,20 +12,11 @@ const mutations = {
         state.cards = data.data;
     },
     setCurrentStatus(state, status) {
-        // debugger;
         state.currentStatus = status;
         console.log(state.currentStatus);
     },
     filterStatus(state, data) {
         state.filterCards = data.data.filter(item => item.status == 3);
-    },
-    addProduct(state, product) {
-        let line  = state.lines.find(line => line.product.id == product.id);
-        if (line != null) {
-            line.quantity++;
-        } else {
-            state.lines.push({ product: product, quantity:1 });
-        }
     },
     changeStatus(state,value){
         let filterCards = state.filterCards;
@@ -50,9 +41,6 @@ const getters = {
         let index = 0;
         return state.cards.slice(index, index + state.cards.length);
     },
-    // changeStatus: state=> {
-        
-    // },
     getDisplayPersons: (state, getters, rootState) => {
         return rootState.filterPersons;
     },
@@ -60,29 +48,6 @@ const getters = {
         Math.ceil(getters.cardsFilteredByStatus.length / state.pageSize),
     // categories: state=> ["1",...state.cards],
 }
-
-
-// mutations: {
-//     addProduct(state, product) {
-//         let line  = state.lines.find(line => line.product.id == product.id);
-//         if (line != null) {
-//             line.quantity++;
-//         } else {
-//             state.lines.push({ product: product, quantity:1 });
-//         }
-//     },
-
-
-// const actions = {
-//     getData(context){
-//         let ajax = ajaxx();
-//         ajax.get('getViolationData').then(data=>{
-//             let violation = data.data;
-//             console.log(violation);
-//             context.commit("setData",{violation});
-//         });
-//     }
-// }
 
 const actions = {
     getData({ commit, state }, data) {
