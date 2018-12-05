@@ -40,6 +40,7 @@
           v-model="searchFlight"
           suffix-icon="el-icon-search"
         />
+		<button @click="handleSearchFlight">搜索</button>
       </el-col>
       <el-col :span="8">
         <span style="color:#939393">任务时限:</span>
@@ -68,10 +69,10 @@
       <el-table-column prop="aircraftNumber" label="机尾号"/>
       <el-table-column prop="seat" label="机位"/>
       <el-table-column prop="aircraftType" label="机型"/>
-      <el-table-column prop="ETA" label="预计到达"/>
-      <el-table-column prop="STA" label="计划到达"/>
-      <el-table-column prop="ETD" label="预计起飞"/>
-      <el-table-column prop="STD" label="计划起飞"/>
+      <el-table-column prop="estimatedArriveTime" label="预计到达"/>
+      <el-table-column prop="scheduleArriveTime" label="计划到达"/>
+      <el-table-column prop="estimatedDepartureTime" label="预计起飞"/>
+      <el-table-column prop="scheduleDepartureTime" label="计划起飞"/>
     </el-table>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dialogAddTaskVisible = false;">提交</el-button>
@@ -80,7 +81,9 @@
   </el-dialog>
 </template>
 <script>
-import { mapState } from "vuex";
+
+import ajaxx from 'ajax';
+import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: "DialogAddTask",
@@ -91,7 +94,7 @@ export default {
 	  input10: "",
 	  temporaryTaskType: "",
 	  searchFlight: "",
-      flights: [
+      flight: [
         {
           flightId: "254652",
           flightNo: "CA5553",
@@ -165,9 +168,32 @@ export default {
     },
     handleRowClick(row) {
       this.$refs.multipleTable.toggleRowSelection(row);
-    }
+	},
+	getFlightSearchData(data) {
+        this.$store.dispatch('home/getFlightSearchData',data);
+    },
+	refreshData(){
+        let ajax = ajaxx();
+        ajax.post('tempTaskModelList').then(data=>{
+		let value = data.data;
+		console.log(value);
+        // console.log(violation);
+        // this.getData(data);
+        })
+	},
+	handleSearchFlight(){
+		let ajax = ajaxx();
+		let condition = this.searchFlight;
+		let param = {"searchCondition":condition};
+		console.log(param);
+        ajax.post('getFlightForTemporaryTask',param).then(data=>{
+		let value = data.data;
+		this.getFlightSearchData(value);
+        })
+	}
   },
   computed: {
+	...mapState('home', ['flights']),
     dialogAddTaskVisible: {
       get() {
         return this.$store.state.home.dialogAddTaskVisible;
@@ -177,6 +203,9 @@ export default {
       }
     },
     ...mapState("home", ["allPersons", "timeLimitOpts"])
-  }
+  },
+  	beforeMount(){
+        this.refreshData();
+    },
 };
 </script>

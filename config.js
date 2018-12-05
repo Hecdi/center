@@ -26,6 +26,8 @@ export default {
 				'urgentReport':'deviationReport/getDeviationReportData',
                 'updateState':'violationRecord/updateState',
                 'findByTimeAndCode':'violationRecord/findByTimeAndCode',
+                'getFlightForTemporaryTask':'web/scheduling/getFlightForTemporaryTask', //航班搜索 post
+                'tempTaskModelList':'web/scheduling/tempTaskModelList', //临时任务获取接口 post
             }
         }
     },
