@@ -41,6 +41,7 @@ const state = {
         }],
     mainList:[],
     filterOption:{...initFilter},
+    flights: [],
 }
 
 const mutations = {
@@ -66,7 +67,11 @@ const mutations = {
 		mapKeys(obj,(v,k)=>{
 			state[k]=v;
 		});
-	}
+    },
+    setFlightData(state, data) {
+        state.flights = data;
+        console.log(state);
+    },
 }
 
 const getters = {
@@ -97,7 +102,10 @@ const actions = {
     },
 	update({commit, state},obj){
 		commit('update', obj);
-	}
+    },
+    getFlightSearchData({ commit, state }, data) {
+        commit('setFlightData', data);
+    },
 }
 
 

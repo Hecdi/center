@@ -4,9 +4,9 @@
         <el-col :span="5" v-for="c in filterCards" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
-                    <i class="el-icon-location" />
+                    <i  :class="iconType(c.violationCodeName)" />
                     <span>Id:{{c.violationId}} {{c.violationName}}</span>
-                    <span class="tag">{{c.violationCodeName}}</span>
+                    <span class="tag" :class="tagColor(c.violationCodeName)">{{c.violationCodeName}}</span>
                 </div>
                 <div class="company">{{c.airLineName}}</div>
                 <!-- <div class="time">{{getNaturalDate(c.reportTime)}}</div> -->
@@ -14,17 +14,17 @@
                 <div class="decribe">
                     <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
                     <div class="decribe-img">
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
-                        <img class="picture" alt="img"/>
+                        <img class="picture" alt="img" :src="img"/>
+                        <img class="picture" alt="img" :src="img"/>
+                        <img class="picture" alt="img" :src="img"/>
                     </div>
                 </div>
                 <div class="status" >
                     <button @click="submitStatus(c,1)">通过{{c.status}}</button>
                     <button @click="changeStatus(c)">不通过</button>
                 </div>
-                <i class="icon iconfont icon-ziyuan"></i>
-                <i class="icon iconfont icon-user"></i>
+                <!-- <i class="icon iconfont icon-ziyuan"></i>
+                <i class="icon iconfont icon-user"></i> -->
             </el-card>
 
         </el-col>
@@ -36,6 +36,7 @@
     import { mapState,mapMutations } from 'vuex';
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
     import ajaxx from 'ajax';
+    import img from "../../assets/logo.png";
 
 
 
@@ -44,6 +45,33 @@
             return {
                 props:"statusValue",
                 status: '22',
+                img: img,
+                // iconType: (value)=> {
+                //     let condition = value;
+                //     switch(condition){
+                //         case "人员":
+                //          "iconfont icon-user";
+                //             break;
+                //         case "设备":
+                //             "iconfont icon-user";
+                //             break;
+                //         case "公司":
+                //             "iconfont icon-return";
+                //             break;
+                //         case "车辆":
+                //             "iconfont icon-user";
+                //             break;
+                //         case "人员":
+                //             "iconfont icon-user";
+                //             break;
+                //         }
+                //     },
+                
+                // iconType: function(value){
+                //     return {
+
+                //     }
+                // }
                 // card:[
                 //     {id:1111,name:"章三",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
                 //     {id:222,name:"里斯",type:"人员",company:"成都航空公司",time:"2018-11-22",desctibe:"违规闯入禁入区域"},
@@ -84,8 +112,33 @@
                     console.log(data);
                 })
                 });
-                
-		    },
+            },
+            iconType(value){
+                let condition = value;
+                switch(condition) {
+                    case "人员":
+                        return "iconfont icon-user";
+                    case "设备":
+                        return "iconfont icon-user";
+                    case "公司":
+                        return "iconfont icon-return1";
+                    case "车辆":
+                        return "iconfont icon-feiji";
+                }
+            },
+            tagColor(value){
+                let status = value;
+                switch(status) {
+                    case "人员":
+                        return "tag-user";
+                    case "设备":
+                        return "tag-device";
+                    case "公司":
+                        return "tag-company";
+                    case "车辆":
+                        return "tag-car";
+                }
+            }
         }
     }
 </script>
