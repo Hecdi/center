@@ -5,11 +5,11 @@
       <el-table-column prop="violationCodeName" label="违规类型" width="80"/>
       <el-table-column prop="violationCode" label="人员编号" width="80"/>
       <el-table-column prop="violationName" label="违规人员" width="130"/>
-      <el-table-column prop="violationName1" label="车辆编号" width="80"/>
-      <el-table-column prop="violationName2" label="设备编号" width="80"/>
+      <el-table-column prop="violationName1" label="车辆编号" min-width="80"/>
+      <el-table-column prop="violationName2" label="设备编号" min-width="80"/>
       <el-table-column prop="airLineName" label="所属单位" width="180"/>
-      <el-table-column prop="violationDescription" label="违规描述" width="180"/>
-      <el-table-column prop="date" label="图像记录" width="180"/>
+      <el-table-column prop="violationDescription" label="违规描述" min-width="180"/>
+      <el-table-column prop="date" label="图像记录" min-width="80"/>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
       <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80"/>
       <el-table-column label="操作">
