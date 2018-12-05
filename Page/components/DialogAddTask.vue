@@ -69,10 +69,10 @@
       <el-table-column prop="aircraftNumber" label="机尾号"/>
       <el-table-column prop="seat" label="机位"/>
       <el-table-column prop="aircraftType" label="机型"/>
-      <el-table-column prop="estimatedArriveTime" label="预计到达"/>
-      <el-table-column prop="scheduleArriveTime" label="计划到达"/>
-      <el-table-column prop="estimatedDepartureTime" label="预计起飞"/>
-      <el-table-column prop="scheduleDepartureTime" label="计划起飞"/>
+      <el-table-column prop="estimatedArriveTime" :formatter="dateFormat" label="预计到达"/>
+      <el-table-column prop="scheduleArriveTime" :formatter="dateFormat" label="计划到达"/>
+      <el-table-column prop="estimatedDepartureTime" :formatter="dateFormat" label="预计起飞"/>
+      <el-table-column prop="scheduleDepartureTime" :formatter="dateFormat" label="计划起飞"/>
     </el-table>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dialogAddTaskVisible = false;">提交</el-button>
@@ -83,7 +83,9 @@
 <script>
 
 import ajaxx from 'ajax';
+import moment from 'moment';
 import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
+import { getNaturalDate }  from 'date';
 
 export default {
   name: "DialogAddTask",
@@ -171,6 +173,13 @@ export default {
 	},
 	getFlightSearchData(data) {
         this.$store.dispatch('home/getFlightSearchData',data);
+	},
+	dateFormat:function(row, column) {
+        var date = row[column.property];
+        if (date == undefined) {
+            return "";
+        }
+        return moment(date).format("YYYY-MM-DD HH:mm");
     },
 	refreshData(){
         let ajax = ajaxx();
