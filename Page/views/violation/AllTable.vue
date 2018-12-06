@@ -1,8 +1,21 @@
 <template>
   <div class="all-table">
-    <el-table :data="cards" stripe style="width: 100%">
+    <el-table :data="cards" stripe style="width: 100%"
+    :cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
-      <el-table-column prop="violationCodeName" label="违规类型" width="80"/>
+      <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
+      <el-table-column
+      prop="violationCodeName"
+      label="违规类型"
+      width="80"
+      
+      filter-placement="bottom-end">
+      <template slot-scope="scope">
+        <el-tag
+          :type="violationTypeBg1(scope.row.violationCodeName)"
+          disable-transitions>{{scope.row.violationCodeName}}</el-tag>
+      </template>
+    </el-table-column>
       <el-table-column prop="violationCode" label="人员编号" width="80"/>
       <el-table-column prop="violationName" label="违规人员" width="130"/>
       <el-table-column prop="violationName1" label="车辆编号" min-width="80"/>
@@ -15,7 +28,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
         <!-- <template> -->
-          <el-button size="mini" @click="handleChangeStatus(scope.row,3)">撤回</el-button>
+          <el-button size="mini" @click="changeStatus(scope.row,3)">撤回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -60,7 +73,39 @@ export default {
         }
         return moment(date).format("YYYY-MM-DD HH:mm");
     },
-    
+    filterTag(value, row) {
+        return row.violationCodeName === value;
+      },
+    violationTypeBg({row,rowIndex,column,columnIndex}){
+      // debugger;
+      let value = row.violationCodeName;
+      if(value && columnIndex == 2){
+        switch(value){
+          case "人员":
+          return "vl-people";
+          case "车辆":
+          return "vl-car";
+          case "设备": 
+          return "vl-tool";
+          case "公司":
+          return "vl-company";
+        }
+      }
+    },
+    violationTypeBg1(value){
+      if(value){
+        switch(value){
+          case "人员":
+          return "vl-people";
+          case "车辆":
+          return "vl-car";
+          case "设备": 
+          return "vl-tool";
+          case "公司":
+          return "vl-company";
+        }
+      }
+    },
     statusFormat(row,column){
         if(row.status == 1){
             return "通过";

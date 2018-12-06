@@ -27,9 +27,11 @@ const mutations = {
         //     }
         // },
         let index  = filterCards.findIndex(c => c.id == value.id);
+        console.log(index);
             if (index > -1) {
                 filterCards.splice(index, 1);
             }
+        
     }
 }
 

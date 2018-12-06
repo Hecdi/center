@@ -1,9 +1,11 @@
 <template>
     <div>
-        <el-row>
+        <el-row class="">
             <el-col :span="5">
-                <el-button @click="toggleTabs('wait')">待审核</el-button>
-                <el-button @click="toggleTabs('all')">全部</el-button>
+                <button class="tab-btn wait" @click="toggleTabs('wait')">待审核</button>
+                <button class="tab-btn all" @click="toggleTabs('all')">全部</button>
+                <!-- <el-button @click="toggleTabs('wait')">待审核</el-button>
+                <el-button @click="toggleTabs('all')">全部</el-button> -->
             </el-col>
             <el-col :span="15" class="topbar">
                 <el-form ref="form" label-width="80px">
@@ -36,17 +38,34 @@
                 </el-date-picker>
             </el-col>
             <el-col :span="4">
-                <el-button @click="dialogVisible = true" disabled>单位管理</el-button>
+                <el-button @click="dialogVisible = true" >单位管理</el-button>
                 <el-button @click="exportExcel">导出</el-button>
             </el-col>
             <div class="dialog">
+                <!-- <el-dialog
+                    :visible.sync="dialogVisible"
+                    width="60%"
+                    :before-close="handleClose">
+                <el-carousel indicator-position="outside">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3>{{ item }}</h3>
+                </el-carousel-item>
+                </el-carousel>
+                    <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
+                    </span>
+                </el-dialog> -->
+                <ShowImg :dialogVisible="dialogVisible"/>
+            </div>
+
+            <!-- <div class="dialog">
             <el-dialog
                 title="单位管理"
                 :visible.sync="dialogVisible"
                 width="30%"
                 :before-close="handleClose"
                 >
-                <!-- <span>这是一段信息</span> -->
+                <span>这是一段信息</span>
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="单位编号">
                       <el-input v-model="form.name"></el-input>
@@ -79,7 +98,7 @@
                   <el-button type="primary" @click="dialogVisible = false">提交</el-button>
                 </span>
             </el-dialog>
-            </div>
+            </div> -->
             <div v-if="tabs!=='all'">
                 <Card :is="currentView" keep-alive :statusValue="currentView"/>
             </div>
@@ -96,6 +115,7 @@
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
     import PageNationHis from "./PageNationHis.vue";
+    import ShowImg from "./ShowImg.vue";
     import { mapMutations } from 'vuex';
     import ajaxx from 'ajax';
 
@@ -106,6 +126,7 @@
           Card,
           AllTable,
           PageNationHis,
+          ShowImg,
       },
         data() {
           return {
@@ -205,3 +226,21 @@
         }
     } 
 </script>
+
+<style>
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+</style>

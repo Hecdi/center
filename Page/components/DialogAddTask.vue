@@ -146,7 +146,8 @@ export default {
 		}
 		console.log(row);
 		return moment(date).format("YYYY-MM-DD HH:mm");
-    },
+	},
+	
 	refreshData(){
         let ajax = ajaxx();
         ajax.post('tempTaskModelList').then(data=>{
