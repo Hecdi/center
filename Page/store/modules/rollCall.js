@@ -1,5 +1,5 @@
 import ajaxx from "ajax";
-import {get, mapKeys, extend} from 'lodash';
+import { mapKeys, extend, forEach,get,set,assignIn} from 'lodash';
 import { sub, removeSub, pub} from 'postalControl';
 
 
@@ -9,7 +9,7 @@ const state = {
 		"staffName": "刘杰",
 		"workerName": null,
 		"workerId": null,
-		"groupLeader": 1,
+		"groupLeader": -1,
 		"nonArrivalReason": 1,
 		"deptId": "depc37237f086fc4b90afa43780946dba68",
 		"deptName": null,
@@ -18,9 +18,11 @@ const state = {
 		"leaveStartTime":'',
 		"leaveEndTime":'',
 	},
+	fixPerson:{},
 	team: [],
-	currentTeam: '', 
-	dialogPersonDetailVisible: true,
+	currentTeam: 'dep73be05fd11ad4ba9be547f732081d258', 
+	dialogPersonDetailVisible: false,
+	module: [],
 
 }
 
@@ -48,7 +50,32 @@ const mutations = {
 			//state['currentPerson'][k] = 
 		//})
 	//},
+	setPerson(state){
+		let fixPerson = get(state,'fixPerson');
+		assignIn(fixPerson,get(state,'currentPerson'));
+		//set(state,'fixPerson', assignIn({},fixPerson,get(state,'currentPerson')));
+		set(state,'dialogPersonDetailVisible', false);
+	},
+	setCurrentPerson(state,{currentPerson, fixPerson}){
+		state['currentPerson'] = currentPerson;
+		state['fixPerson'] = fixPerson;
+		state['dialogPersonDetailVisible'] = true;
+	},
+	updateArray(state, obj){
+		mapKeys(obj,(v,k)=>{
+			state[k].splice(0, state[k].length)
+			for(let i=0;i< v.length;i++){
+				state[k].push(v[i]);
+			}
+		});
+	},
 	update(state, obj){
+		mapKeys(obj,(v,k)=>{
+			state[k] = v;
+			//state[k]=v;
+		});
+	},
+	updateObj(state, obj){
 		mapKeys(obj,(v,k)=>{
 			state[k] = extend(state[k],v);
 			//state[k]=v;
@@ -56,10 +83,18 @@ const mutations = {
 	}
 }
 
+const resonMap = {
+	1:'病假',
+	2:'事假',
+	3:'缺席',
+	4:'下班',
+	5:'换人',
+}
+
 const getters = {
-	//getDisplayPersons:(state, getters, rootState) =>{
-	//return rootState.filterPersons;
-	//},
+	getReason:(state, getters, rootState) => (code) =>{
+		return resonMap[code];
+	},
 	// getFilter:(state, getters, rootState) =>{
 	//     return {
 	//         taskstatus:state => st
@@ -84,7 +119,13 @@ const actions = {
 	//},
 	update({commit, state},obj){
 		commit('update', obj);
-	}
+	},
+	updateArray({commit, state},obj){
+		commit('updateArray', obj);
+	},
+	updateObj({commit, state},obj){
+		commit('updateObj', obj);
+	},
 }
 
 

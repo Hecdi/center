@@ -28,7 +28,7 @@
 					workerId:this.currentWorkerId,
 				});
 			}
-		}
+		},
 	} 
 </script>
 
