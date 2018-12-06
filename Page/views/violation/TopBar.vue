@@ -191,8 +191,10 @@
 
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+                let params = {"violationCode":violationCode,"startDate":startDate,"endDate":endDate,"violationValue":inputSearch};
                 console.log(param);
-                ajax.post('findByTimeAndCode', param).then((data) => {
+                console.log(params)
+                ajax.post('findByTimeAndCode', params).then((data) => {
                     console.log(data);
                    
                 });

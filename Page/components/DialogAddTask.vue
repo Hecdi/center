@@ -163,6 +163,23 @@ export default {
         // this.getData(data);
         })
 	},
+	submitSuccess(){
+		this.$message({
+			showClose: true,
+          message: '恭喜你，新增临时任务成功',
+		  type: 'success',
+		  duration: 500,
+        //   dangerouslyUseHTMLString: true,
+        //   message: '<strong>这是 <i>HTML</i> 片段</strong>'
+        });
+	},
+	submitError(){
+		this.$message({
+			showClose: true,
+          	message: '新增临时任务失败',
+          	type: 'error'
+		})
+	},
 	handleSearchFlight(){
 		let ajax = ajaxx();
 		let condition = this.searchFlight;
@@ -211,8 +228,11 @@ export default {
 			if(code == 1000){
 				// this.handlGettTaskModelList();
 				console.log('sssss');
+				this.submitSuccess();
 			} else {
 				this.dialogAddTaskVisible = false;
+				this.submitError()
+				// this.submitSuccess();
 				return console.log('eeeeee');
 			}
 		})
