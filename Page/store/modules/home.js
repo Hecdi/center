@@ -42,6 +42,8 @@ const state = {
     mainList:[],
     filterOption:{...initFilter},
     flights: [],
+    tempWorkerList: [],
+    tempGuaranteeList: [],
 }
 
 const mutations = {
@@ -72,6 +74,11 @@ const mutations = {
         state.flights = data;
         console.log(state);
     },
+    setTempList(state,data){
+        state.tempWorkerList = data.workerList;
+        state.tempGuaranteeList = data.guaranteeList;
+
+    }
 }
 
 const getters = {
@@ -106,6 +113,9 @@ const actions = {
     getFlightSearchData({ commit, state }, data) {
         commit('setFlightData', data);
     },
+    getTaskModelList({ commit, state}, data) {
+        commit('setTempList',data);
+    }
 }
 
 

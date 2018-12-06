@@ -7,8 +7,8 @@
     :before-close="handleClose"
   >
     <el-row :gutter="10" class="personList">
-      <el-col :span="2" v-for="worker in allPersons" :key="worker.staffId" class="person-panel">
-        <div class="grid-content bg-person person" @click="show" :data-id="worker.staffId">
+      <el-col :span="2" v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
+        <div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName ==worker.staffId  }" @click="show(worker.staffId)" :data-id="worker.staffId">
           {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
           <div class="taskNum">{{ worker.taskNumber }}</div>
         </div>
@@ -20,6 +20,11 @@
         <i class="el-icon-tickets"/>
         <span style="line-height:32px;">临时任务类型</span>
       </el-col>
+	  <el-col :span="12">
+		  	<el-radio-group v-model="tempTaskType" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode" @click="handleTaskType(g)">
+      			<el-radio-button  :label="g.projectCode">{{g.projectName}}</el-radio-button>
+    		</el-radio-group>
+	  </el-col>
       <el-col :span="6">
         <el-input
           size="small"
@@ -55,27 +60,27 @@
       </el-col>
     </el-row>
     <el-table
-      ref="multipleTable"
+		highlight-current-row
       :data="flights"
-      show-overflow-tooltip="true"
       height="250"
-      highlight-current-row
       style="width: 100%"
-      @selection-change="handleSelectionChange"
-      @row-click="handleRowClick"
     >
-      <el-table-column type="selection" label="选择" width="60"/>
+    <el-table-column label="单选" width="65">
+        <template scope="scope">
+            <el-radio :label="scope.$index+1" v-model="templateRadio" @change.native="getTemplateRow(scope.$index,scope.row)"></el-radio>
+        </template>
+    </el-table-column>
       <el-table-column prop="flightNo" label="航班号"/>
       <el-table-column prop="aircraftNumber" label="机尾号"/>
       <el-table-column prop="seat" label="机位"/>
       <el-table-column prop="aircraftType" label="机型"/>
-      <el-table-column prop="estimatedArriveTime" :formatter="dateFormat" label="预计到达"/>
-      <el-table-column prop="scheduleArriveTime" :formatter="dateFormat" label="计划到达"/>
-      <el-table-column prop="estimatedDepartureTime" :formatter="dateFormat" label="预计起飞"/>
-      <el-table-column prop="scheduleDepartureTime" :formatter="dateFormat" label="计划起飞"/>
+      <el-table-column prop="estimatedArriveTime" :formatter="dateFormat" label="预计到达" min-width="160"/>
+      <el-table-column prop="scheduleArriveTime" :formatter="dateFormat" label="计划到达" min-width="160"/>
+      <el-table-column prop="estimatedDepartureTime" :formatter="dateFormat" label="预计起飞" min-width="160"/>
+      <el-table-column prop="scheduleDepartureTime" :formatter="dateFormat" label="计划起飞" min-width="160"/>
     </el-table>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dialogAddTaskVisible = false;">提交</el-button>
+      <el-button type="primary" @click="submitTempTask">提交</el-button>
       <el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
     </span>
   </el-dialog>
@@ -96,63 +101,12 @@ export default {
 	  input10: "",
 	  temporaryTaskType: "",
 	  searchFlight: "",
-      flight: [
-        {
-          flightId: "254652",
-          flightNo: "CA5553",
-          aircraftNumber: "FJ432",
-          seat: "164",
-          aircraftType: "320",
-          ETA: "10:20(20)",
-          STA: "10:20(20)",
-          ETD: "10:20(20)",
-          STD: "10:20(20)"
-        },
-        {
-          flightId: "254651",
-          flightNo: "CA5553",
-          aircraftNumber: "FJ432",
-          seat: "164",
-          aircraftType: "320",
-          ETA: "10:20(20)",
-          STA: "10:20(20)",
-          ETD: "10:20(20)",
-          STD: "10:20(20)"
-        },
-        {
-          flightId: "254658",
-          flightNo: "CA5553",
-          aircraftNumber: "FJ432",
-          seat: "164",
-          aircraftType: "320",
-          ETA: "10:20(20)",
-          STA: "10:20(20)",
-          ETD: "10:20(20)",
-          STD: "10:20(20)"
-        },
-        {
-          flightId: "2546502",
-          flightNo: "CA5553",
-          aircraftNumber: "FJ432",
-          seat: "164",
-          aircraftType: "320",
-          ETA: "10:20(20)",
-          STA: "10:20(20)",
-          ETD: "10:20(20)",
-          STD: "10:20(20)"
-        },
-        {
-          flightId: "2546512",
-          flightNo: "CA5553",
-          aircraftNumber: "FJ432",
-          seat: "164",
-          aircraftType: "320",
-          ETA: "10:20(20)",
-          STA: "10:20(20)",
-          ETD: "10:20(20)",
-          STD: "10:20(20)"
-        }
-      ]
+	  tempTaskType: '',
+	  tempTaskTypeCode: '',
+	  tempTaskTypeName: '',
+	  templateRadio: '',
+	  curentWorker: '',
+	  activeName: '',
     };
   },
   methods: {
@@ -163,7 +117,11 @@ export default {
         })
         .catch(_ => {});
     },
-    show() {},
+    show(value) {
+		this.curentWorker = value;
+		console.log(this.curentWorker);
+		this.activeName = value;
+	},
     handleSelectionChange(val) {
       this.multipleSelection = val;
       console.log(this.multipleSelection);
@@ -174,12 +132,25 @@ export default {
 	getFlightSearchData(data) {
         this.$store.dispatch('home/getFlightSearchData',data);
 	},
+	getTaskModelList(data){
+		this.$store.dispatch('home/getTaskModelList',data);
+	},
+	getTemplateRow(index,row){                                 //获取选中数据
+		this.templateRadio = row.flightId;
+		console.log(this.templateRadio);
+	},
+	handleTaskType(value){
+		this.tempTaskType = value.projectName;
+		this.tempTaskTypeName = value.projectName;
+		this.tempTaskTypeCode = value.projectCode;
+	},
 	dateFormat:function(row, column) {
         var date = row[column.property];
         if (date == undefined) {
             return "";
         }
-        return moment(date).format("YYYY-MM-DD HH:mm");
+		return moment(date).format("YYYY-MM-DD HH:mm");
+		console.log(row);
     },
 	refreshData(){
         let ajax = ajaxx();
@@ -199,10 +170,54 @@ export default {
 		let value = data.data;
 		this.getFlightSearchData(value);
         })
+	},
+	handlGettTaskModelList(){
+		console.log('lisrt');
+		let ajax = ajaxx();
+		ajax.post('tempTaskModelList').then(data => {
+			let result = data.data;
+			this.getTaskModelList(result);
+		})
+	},
+	submitTempTask(){
+		// let param = "111";
+		let ajax = ajaxx();
+		let time = this.timeLimitValue;
+		let workerId = this.curentWorker;
+		let type;
+		let typeName;
+		let typeCode;
+		if(this.temporaryTaskType){
+			type = this.temporaryTaskType; 
+		} else {
+			type = this.tempTaskType;
+			typeCode = this.tempTaskTypeCode;
+			typeName = this.tempTaskTypeName;
+		}
+
+		let flightId = this.templateRadio;
+		let params = {
+			"taskTime": time,
+			"staffIds": workerId,
+			"projectName": type,
+			"flightId": flightId,
+			// "projectCode": 	'111',
+		}
+		console.log(params);
+		ajax.post('taskSubmit',params).then(data => {
+			let code = data.responseCode;
+			if(code == 1000){
+				// this.handlGettTaskModelList();
+				console.log('sssss');
+			} else {
+				this.dialogAddTaskVisible = false;
+				return console.log('eeeeee');
+			}
+		})
 	}
   },
   computed: {
-	...mapState('home', ['flights']),
+	...mapState('home', ['flights','tempGuaranteeList','tempWorkerList']),
     dialogAddTaskVisible: {
       get() {
         return this.$store.state.home.dialogAddTaskVisible;
@@ -214,7 +229,8 @@ export default {
     ...mapState("home", ["allPersons", "timeLimitOpts"])
   },
   	beforeMount(){
-        this.refreshData();
+		this.refreshData();
+		this.handlGettTaskModelList();
     },
 };
 </script>

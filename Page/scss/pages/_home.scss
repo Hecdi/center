@@ -10,7 +10,11 @@ body > .el-container {
   position:relative;
   .bg-person{
 	  background:$color-bg-person;
-  }
+	}
+	.active-person {
+		background: #2e67f6;
+		color: #fff !important;
+	}
   .personList{
 	  padding:0 10px;
 	  overflow:hidden;
