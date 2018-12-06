@@ -67,7 +67,7 @@
       height="250"
       style="width: 100%"
     >
-    <el-table-column label="单选" width="65">
+    <el-table-column label="单选" width="65"  @click.native="checked">
         <template scope="scope">
             <el-radio :label="scope.$index+1" v-model="templateRadio" @change.native="getTemplateRow(scope.$index,scope.row)"></el-radio>
         </template>

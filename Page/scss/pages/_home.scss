@@ -116,7 +116,12 @@ body > .el-container {
         text-align: right;
         justify-content: flex-end;
         background-color: #f1f1f1;
-      }
+			}
+			.icon-search {
+				&:before {
+					content: "\e663"
+				}
+			}
     }
     .el-main{
       display: flex;

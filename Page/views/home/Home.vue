@@ -65,11 +65,11 @@ height="auto">
 					<el-input v-model="search" placeholder=""> <i slot="suffix" class="el-input__icon el-icon-search"
 /> </el-input>
 					<el-button @click="reset" type="primary" 
-size="medium" icon="el-icon-search"
+size="medium" icon="iconfont icon-return1"
 >重置</el-button>
           <el-button 
 type="primary" 
-size="medium" icon="el-icon-search" @click="openAddTask">临时任务</el-button>
+size="medium" icon="iconfont icon-search" @click="openAddTask">临时任务</el-button>
           <el-button 
 type="primary" 
 size="medium" icon="el-icon-search">任务交接</el-button>
