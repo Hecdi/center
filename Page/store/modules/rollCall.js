@@ -83,10 +83,18 @@ const mutations = {
 	}
 }
 
+const resonMap = {
+	1:'病假',
+	2:'事假',
+	3:'缺席',
+	4:'下班',
+	5:'换人',
+}
+
 const getters = {
-	//getTeam:(state, getters, rootState) =>{
-	//return state.team;
-	//},
+	getReason:(state, getters, rootState) => (code) =>{
+		return resonMap[code];
+	},
 	// getFilter:(state, getters, rootState) =>{
 	//     return {
 	//         taskstatus:state => st
