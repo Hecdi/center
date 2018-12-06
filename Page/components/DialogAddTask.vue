@@ -4,7 +4,6 @@
     title="添加临时任务"
     :visible.sync="dialogAddTaskVisible"
     width="1000px"
-    :before-close="handleClose"
   >
     <el-row :gutter="10" class="personList">
       <el-col :span="2" v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
@@ -96,7 +95,7 @@ import { getNaturalDate }  from 'date';
 
 export default {
   name: "DialogAddTask",
-  data() {
+  data(){
     return {
       timeLimitValue: "",
       multipleSelection: [],
@@ -109,16 +108,10 @@ export default {
 	  templateRadio: '',
 	  curentWorker: '',
 	  activeName: '',
-    };
+    }
   },
   methods: {
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
+
     show(value) {
 		this.curentWorker = value;
 		console.log(this.curentWorker);
@@ -150,9 +143,9 @@ export default {
         var date = row[column.property];
         if (date == undefined) {
             return "";
-        }
-		return moment(date).format("YYYY-MM-DD HH:mm");
+		}
 		console.log(row);
+		return moment(date).format("YYYY-MM-DD HH:mm");
     },
 	refreshData(){
         let ajax = ajaxx();
