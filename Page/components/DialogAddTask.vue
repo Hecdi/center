@@ -44,8 +44,10 @@
           placeholder="航班号或者机位号"
           v-model="searchFlight"
           suffix-icon="el-icon-search"
+		  @keyup.native.enter = "handleSearchFlight"
+		  @blur="handleSearchFlight"
         />
-		<button @click="handleSearchFlight">搜索</button>
+		<!-- <button @click="handleSearchFlight">搜索</button> -->
       </el-col>
       <el-col :span="8">
         <span style="color:#939393">任务时限:</span>
