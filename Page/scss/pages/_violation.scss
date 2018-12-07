@@ -13,6 +13,9 @@
         margin-bottom: 10px;
     }
     .violation-card {
+        .el-card {
+            height: 239px;
+        }
         .violation-id {
             font-size: 18px;
             .tag{
@@ -53,6 +56,9 @@
             padding:5px 0px;
             .decribe-word {
                 margin-bottom: 5px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
             .decribe-img {
                 display: flex;
