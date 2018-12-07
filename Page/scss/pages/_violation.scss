@@ -57,6 +57,9 @@
                 margin-right: 5px;
                 // padding: 20px;
             }
+            .el-dialog__header {
+                display: none;
+            }
         }
         .status {
             text-align: center;

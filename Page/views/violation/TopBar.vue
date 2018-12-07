@@ -38,8 +38,8 @@
                 </el-date-picker>
             </el-col>
             <el-col :span="4">
-                <el-button @click="dialogVisible = true" >单位管理</el-button>
-                <el-button @click="exportExcel">导出</el-button>
+                <el-button @click="openShowImg" >单位管理</el-button>
+                <el-button @click="exportExcel" >导出</el-button>
             </el-col>
             <div class="dialog">
                 <!-- <el-dialog
@@ -55,7 +55,7 @@
                     <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
                     </span>
                 </el-dialog> -->
-                <ShowImg :dialogVisible="dialogVisible"/>
+                <ShowImg/>
             </div>
 
             <!-- <div class="dialog">
@@ -220,7 +220,10 @@
                    
                 });
 
-            }
+            },
+            openShowImg() {
+			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+		    },
 
             // ...mapMutations(["setCurrentPage","setPageSize"]),
         }

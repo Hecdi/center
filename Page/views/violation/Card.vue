@@ -13,11 +13,12 @@
                 <div class="time">{{c.reportTime|currency}}</div>
                 <div class="decribe">
                     <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
-                    <div class="decribe-img">
+                    <div class="decribe-img" @click="openShowImg">
                         <img class="picture" alt="img" :src="img"/>
                         <img class="picture" alt="img" :src="img"/>
                         <img class="picture" alt="img" :src="img"/>
                     </div>
+                    <ShowImg/>
                 </div>
                 <div class="status" >
                     <button @click="submitStatus(c,1)">通过{{c.status}}</button>
@@ -37,15 +38,20 @@
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
     import ajaxx from 'ajax';
     import img from "../../assets/logo.png";
+    import ShowImg from './ShowImg.vue';
 
 
 
     export default{
+        components: {
+            ShowImg,
+        },
         data(){
             return {
                 props:"statusValue",
                 status: '22',
                 img: img,
+                dialogVisible: '',
                 // iconType: (value)=> {
                 //     let condition = value;
                 //     switch(condition){
@@ -86,7 +92,7 @@
             }
         },
         computed: {
-            ...mapState('violation', ['filterCards']),
+            ...mapState('violation',['filterCards','showImgDialog']),
         },
         filters:{
             currency(value){
@@ -138,7 +144,12 @@
                     case "车辆":
                         return "tag-car";
                 }
-            }
+            },
+           
+            openShowImg() {
+                //  debugger;
+			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+		    },
         }
     }
 </script>
