@@ -22,8 +22,9 @@ export default {
                 'personList':'web/scheduling/getAreaAndWorkerListAll',
                 'taskDetail':'web/scheduling/taskDetail',
                 'getViolationData':'violationRecord/getViolationData',
-				'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post
+				'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
 				'rollCall.getModule':'attendance/findScheduleDetails',//获取模版，post,需要传token
+				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token
 				'urgentReport':'deviationReport/getDeviationReportData',
                 'updateState':'violationRecord/updateState',
                 'findByTimeAndCode':'violationRecord/findByTimeAndCode',
