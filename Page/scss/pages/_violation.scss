@@ -188,7 +188,7 @@
             padding: 2px;
             text-align: center;
         } 
-        .el-table__row {
+        tr {
             height: 28px;
             line-height: 28px;
             padding: 2px;
@@ -197,6 +197,21 @@
             :hover {
                 border: 1px solid #0096ff !important;
                 background: #e3f3fc !important;
+            }
+        }
+        &>table {
+            tbody {
+                .el-table__row {
+                    height: 28px;
+                    line-height: 28px;
+                    padding: 2px;
+                    text-align: center;
+                    border: 1px solid transparent;
+                    :hover {
+                        border: 1px solid #0096ff !important;
+                        background: #e3f3fc !important;
+                    }
+                } 
             }
         }
         .el-tag--vl-people {
@@ -223,16 +238,16 @@
             color: #fff;
             background-color:#677f95; 
         }
-        td {
-            padding: 6px 0 !important;
-            text-align: center;
-            :hover {
-                border-top: 1px solid #0096ff !important;
-                border-bottom: 1px solid #0096ff !important;
-                background: #e3f3fc !important;
-            }
-            // border: 1px solid transparent;
-        }
+        // td {
+        //     padding: 6px 0 !important;
+        //     text-align: center;
+        //     :hover {
+        //         border-top: 1px solid #0096ff !important;
+        //         border-bottom: 1px solid #0096ff !important;
+        //         background: #e3f3fc !important;
+        //     }
+        //     // border: 1px solid transparent;
+        // }
         // tr {
         //     border: 1px solid transparent !important;
         // }

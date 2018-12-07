@@ -44,7 +44,7 @@
           v-model="searchFlight"
           suffix-icon="el-icon-search"
 		  @keyup.native.enter = "handleSearchFlight"
-		  @blur="handleSearchFlight"
+		  @blur = "handleSearchFlight"
         />
 		<!-- <button @click="handleSearchFlight">搜索</button> -->
       </el-col>
@@ -148,15 +148,15 @@ export default {
 		return moment(date).format("YYYY-MM-DD HH:mm");
 	},
 	
-	refreshData(){
-        let ajax = ajaxx();
-        ajax.post('tempTaskModelList').then(data=>{
-		let value = data.data;
-		console.log(value);
-        // console.log(violation);
-        // this.getData(data);
-        })
-	},
+	// refreshData(){
+  //       let ajax = ajaxx();
+  //       ajax.post('tempTaskModelList').then(data=>{
+	// 	let value = data.data;
+	// 	console.log(value);
+  //       // console.log(violation);
+  //       // this.getData(data);
+  //       })
+	// },
 	submitSuccess(){
 		this.$message({
 			showClose: true,
@@ -180,8 +180,8 @@ export default {
 		let param = {"searchCondition":condition};
 		console.log(param);
         ajax.post('getFlightForTemporaryTask',param).then(data=>{
-		let value = data.data;
-		this.getFlightSearchData(value);
+		    let value = data.data;
+		    this.getFlightSearchData(value);
         })
 	},
 	handlGettTaskModelList(){
@@ -245,7 +245,6 @@ export default {
     ...mapState("home", ["allPersons", "timeLimitOpts"])
   },
   	beforeMount(){
-		this.refreshData();
 		this.handlGettTaskModelList();
     },
 };
