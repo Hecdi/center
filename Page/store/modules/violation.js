@@ -1,10 +1,11 @@
 import ajaxx from "ajax";
-import { get } from 'lodash';
+import {get, mapKeys } from 'lodash';
 
 const state = {
     cards: [],
     currentStatus: 1,
     filterCards: [],
+    showImgDialog: false,
 }
 
 const mutations = {
@@ -18,6 +19,11 @@ const mutations = {
     filterStatus(state, data) {
         state.filterCards = data.data.filter(item => item.status == 3);
     },
+    updateShowImg(state,obj){
+        mapKeys(obj,(v,k) => {
+            state[k] = v;
+        })
+    },
     changeStatus(state,value){
         let filterCards = state.filterCards;
         let allCards = state.cards;
@@ -27,9 +33,11 @@ const mutations = {
         //     }
         // },
         let index  = filterCards.findIndex(c => c.id == value.id);
+        console.log(index);
             if (index > -1) {
                 filterCards.splice(index, 1);
             }
+        
     }
 }
 
@@ -60,7 +68,10 @@ const actions = {
     },
     changeStatus({ commit, state}, data) {
         commit('changeStatus',data);
-    }
+    },
+    updateShowImg({commit,state},obj){
+        commit('updateShowImg',obj);
+    },
 }
 
 export default {

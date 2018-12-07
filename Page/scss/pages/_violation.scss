@@ -2,6 +2,8 @@
     width: 100%;
     padding: 5px;
     font-size:14px;
+    height: 100vh;
+    background: #E4E7EC;
     .tab-button {
         margin-bottom: 10px;
     }
@@ -37,25 +39,35 @@
             }
         }
         .company {
-            color: #333;
-            font-size: 16px;
+            color: #777;
+            font-size: 14px;
         }
         .time {
-            color: #ccc;
+            color: #999;
             font-size: 14px;
         }
         .decribe {
-            border-bottom: 1px dashed #666;
-            margin: 10px 2px;
+            // border-bottom: 1px dashed #666;
+            margin: 10px 0;
             margin-top: 0;
-            padding-bottom: 10px;
+            padding:5px 0px;
+            .decribe-word {
+                margin-bottom: 5px;
+            }
+            .decribe-img {
+                display: flex;
+                justify-content: space-between;
+
+            }
             .picture {
-                height: 50px;
-                width: 70px;
+                height: 70px;
+                width: 80px;
                 border: 1px solid #ccc;
                 background-color: #ccc;
-                margin-right: 5px;
-                // padding: 20px;
+                border-radius: 4px;
+            }
+            .el-dialog__header {
+                display: none;
             }
         }
         .status {
@@ -72,9 +84,32 @@
         }
 
     }
+    button:focus {
+        outline: #fff auto 0 !important;
+    }
+    .tab-btn {
+        height: 24px;
+        line-height: 24px;
+        padding: 0 20px;
+        border-radius: 10px;
+        // margin-top: 12px;
+        margin-right: 10px;  
+    }
+    .active-tab {
+        background-color: #0096ff;
+        color: #fff;
+    }
     .topbar {
         text-align: right;
         margin-right: 10px;
+        .el-input__inner {
+            width: 22rem;
+            height: 30px;
+            line-height: 30px;
+        }
+        .el-date-editor .el-range-separator {
+            line-height: 24px;
+        }
         .el-form,.el-input {
             .el-form-item,.el-form-item__content {
                 display: inline-block;
@@ -88,7 +123,7 @@
                 line-height: 30px;
             }
             .el-date-editor {
-                width: 100px;
+                width: 240px;
             }
             display: inline-block;
             width: 160px;
@@ -158,7 +193,54 @@
             line-height: 28px;
             padding: 2px;
             text-align: center;
+            border: 1px solid transparent;
+            :hover {
+                border: 1px solid #0096ff !important;
+                background: #e3f3fc !important;
+            }
         }
+        .el-tag--vl-people {
+            width:48px;
+            // height:20px;
+            color: #fff;
+            background-color:#ff8500; 
+        }
+        .el-tag--vl-car {
+            width:48px;
+            // height:20px;
+            color: #fff;
+            background-color:#0096ff; 
+        }
+        .el-tag--vl-company {
+            width:48px;
+            // height:20px;
+            color: #fff;
+            background-color:#a346bc; 
+        }
+        .el-tag--vl-tool {
+            width:48px;
+            // height:20px;
+            color: #fff;
+            background-color:#677f95; 
+        }
+        td {
+            padding: 6px 0 !important;
+            text-align: center;
+            :hover {
+                border-top: 1px solid #0096ff !important;
+                border-bottom: 1px solid #0096ff !important;
+                background: #e3f3fc !important;
+            }
+            // border: 1px solid transparent;
+        }
+        // tr {
+        //     border: 1px solid transparent !important;
+        // }
+        // .el-table__body tr>td:hover{
+        //     // background-color: $--table-row-hover-background;
+        //     background: #e3f3fc;
+        //     border: 1px solid #184bff !important;
+        //   }
     }
     .page-nation {
         display: none;

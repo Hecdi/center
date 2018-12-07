@@ -10,7 +10,11 @@ body > .el-container {
   position:relative;
   .bg-person{
 	  background:$color-bg-person;
-  }
+	}
+	.active-person {
+		background: #2e67f6;
+		color: #fff !important;
+	}
   .personList{
 	  padding:0 10px;
 	  overflow:hidden;
@@ -112,7 +116,12 @@ body > .el-container {
         text-align: right;
         justify-content: flex-end;
         background-color: #f1f1f1;
-      }
+			}
+			.icon-search {
+				&:before {
+					content: "\e663"
+				}
+			}
     }
     .el-main{
       display: flex;

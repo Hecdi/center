@@ -81,7 +81,7 @@
 			init(reset){
 				return Promise.map([
 					()=>{
-						return ajax.post('rollCall.getPersons',{deptId:'depc37237f086fc4b90afa43780946dba68',}).then(data =>{
+						return ajax.post('rollCall.getPersons',{deptId:'depc37237f086fc4b90afa43780946dba68',isAgainAttendance:reset}).then(data =>{
 							this.$store.commit('rollCall/updateInit', {team:data});
 								console.log(data);	
 							return Promise.resolve();
