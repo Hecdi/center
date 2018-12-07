@@ -20,9 +20,9 @@
         <span style="line-height:32px;">临时任务类型</span>
       </el-col>
 	  <el-col :span="12">
-		  	<el-radio-group v-model="tempTaskType" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode" @click="handleTaskType(g)">
-      			<el-radio-button  :label="g.projectCode">{{g.projectName}}</el-radio-button>
-    		</el-radio-group>
+		  	<div class="task-group" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode" >
+      			<span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName ==g.projectName  }" @click="handleTaskType(g)">{{g.projectName}}</span>
+    		</div>
 	  </el-col>
       <el-col :span="6">
         <el-input
@@ -107,7 +107,7 @@ export default {
 	  tempTaskTypeName: '',
 	  templateRadio: '',
 	  curentWorker: '',
-	  activeName: '',
+    activeName: '',
     }
   },
   methods: {
@@ -135,7 +135,7 @@ export default {
 		console.log(this.templateRadio);
 	},
 	handleTaskType(value){
-		this.tempTaskType = value.projectName;
+		// this.tempTaskType = value.projectName;
 		this.tempTaskTypeName = value.projectName;
 		this.tempTaskTypeCode = value.projectCode;
 	},
@@ -144,19 +144,9 @@ export default {
         if (date == undefined) {
             return "";
 		}
-		console.log(row);
 		return moment(date).format("YYYY-MM-DD HH:mm");
 	},
 	
-	// refreshData(){
-  //       let ajax = ajaxx();
-  //       ajax.post('tempTaskModelList').then(data=>{
-	// 	let value = data.data;
-	// 	console.log(value);
-  //       // console.log(violation);
-  //       // this.getData(data);
-  //       })
-	// },
 	submitSuccess(){
 		this.$message({
 			showClose: true,
@@ -203,24 +193,33 @@ export default {
 		if(this.temporaryTaskType){
 			type = this.temporaryTaskType; 
 		} else {
-			type = this.tempTaskType;
+			// type = this.tempTaskType;
 			typeCode = this.tempTaskTypeCode;
 			typeName = this.tempTaskTypeName;
 		}
 
+    let code = `"projectName":${typeName},"projectCode":${typeCode}`;
 		let flightId = this.templateRadio;
 		let params = {
 			"taskTime": time,
 			"staffIds": workerId,
-			"projectName": type,
 			"flightId": flightId,
 			// "projectCode": 	'111',
-		}
+    };
+
+    if (type){
+      params.projectName = type;
+    } else {
+      params.projectName = typeName;
+      params.projectCode = typeCode;
+    }
+
 		console.log(params);
 		ajax.post('taskSubmit',params).then(data => {
 			let code = data.responseCode;
 			if(code == 1000){
-				// this.handlGettTaskModelList();
+        // this.handlGettTaskModelList();
+        this.dialogAddTaskVisible = false;
 				console.log('sssss');
 				this.submitSuccess();
 			} else {
