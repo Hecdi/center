@@ -4,7 +4,7 @@
 			<el-tab-pane v-for="item in team" :key="item.squadId" :name="item.squadId" >
 				<el-button slot="label" icon="el-icon-success" round >{{item.squadName}}</el-button>
 				<el-button  @click="setCurrentPerson(person)"
-					v-for="person in item.organization" :class="personStyle(person)" :key="person.staffId"  icon="el-icon-location">
+					v-for="person in item.organization" :class="personStyle(person)" :key="person.staffId"  icon="iconfont icon-user">
 					{{person.staffName}}<span class="tip">{{getReason(person.nonArrivalReason)}}</span>
 					{{`${person.nonArrivalReason == 5 ? person.workerName:''}`}} </el-button>
 			</el-tab-pane>
