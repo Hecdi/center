@@ -22,12 +22,15 @@
       <el-table-column prop="violationName2" label="设备编号" min-width="80"/>
       <el-table-column prop="airLineName" label="所属单位" width="180"/>
       <el-table-column prop="violationDescription" label="违规描述" min-width="180"/>
-      <el-table-column prop="img" label="图像记录" min-width="80"/>
+      <el-table-column prop="img" label="图像记录" min-width="80">
+         <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="changeStatus(scope.row,3)">查看</el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
       <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80"/>
       <el-table-column label="操作">
         <template slot-scope="scope">
-        <!-- <template> -->
           <el-button size="mini" @click="changeStatus(scope.row,3)">撤回</el-button>
         </template>
       </el-table-column>
