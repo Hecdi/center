@@ -1,6 +1,6 @@
 <template>
 	<el-dialog class="dialogPersonDetail" center :title=currentPerson.staffName
-:visible.sync="dialogAddTaskVisible" width="1000px" :before-close="handleClose"
+:visible.sync="dialogPersonDetailVisible" width="1000px" :before-close="handleClose"
 >
 		<el-row :gutter="10" class="row">
 			<el-checkbox v-model="groupLeader"  :true-label=1 :false-label=-1 >设为小组长</el-checkbox>
@@ -34,7 +34,7 @@
 		</el-row>
 		<span slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="submit" >提交</el-button>
-			<el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
+			<el-button @click="dialogPersonDetailVisible = false;">取 消</el-button>
 		</span>
 	</el-dialog>
 </template>
@@ -131,15 +131,15 @@ export default {
 				this.$store.dispatch('rollCall/update',{currentTeam: val});
 			}
 		},
-		dialogAddTaskVisible: {
+		dialogPersonDetailVisible: {
 			get() {
-				return this.dialogPersonDetailVisible;
+				return this.$store.state.rollCall.dialogPersonDetailVisible;
 			},
 			set() {
 				this.$store.dispatch(`rollCall/update`, { dialogPersonDetailVisible: false });
 			},
 		},
-		...mapState('rollCall', ['currentPerson', 'dialogPersonDetailVisible','team','currentTeam']),
+		...mapState('rollCall', ['currentPerson', 'team','currentTeam']),
 	},
 	components:{
 		PersonSelect,	

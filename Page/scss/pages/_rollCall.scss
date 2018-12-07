@@ -32,19 +32,19 @@
 		 border-radius: 4px;
 		 padding:20px 10px;
 		 .el-tabs__item{
-			padding:5px !important;
-			.el-button{
-				background-color:#E6E6E6;
-				color:#666;
-				padding:4px;
-				i {
-					font-size:20px;
-					color:#fff;
-				}	
-			}
+			 padding:5px !important;
+			 .el-button{
+				 background-color:#E6E6E6;
+				 color:#666;
+				 padding:4px;
+				 i {
+					 font-size:20px;
+					 color:#fff;
+				 }	
+			 }
 		 }
 		 .el-tabs__nav, .el-tabs__item,.el-tabs__header,.el-tabs__nav-wrap{
-			border:none;
+			 border:none;
 		 }
 		 .is-active {
 			 .el-button{
@@ -56,7 +56,7 @@
 			 }
 		 }
 		 .el-tabs__content{
-			 			 .el-button{
+			 .el-button{
 				 margin-left:10px;
 				 margin-right:0;
 				 margin-bottom:10px;
@@ -71,7 +71,7 @@
 					 background-color:#DFE1E9;
 					 color:#3A3F43;
 					 i {
-						color:#fff;
+						 color:#fff;
 					 }
 					 .tip{
 						 padding:0;
@@ -99,10 +99,100 @@
 					 color:#fff;
 				 }
 
+			 }
+		 }
+		 .moduleList{
+			.remark{
+				position:absolute;
+				right:10px;
+				top:19px;
+			}
+			.module-head{
+				height:30px;	
+				line-height:30px;
+			}
+			.module-content{
+				height:60px;
+				line-height:60px;
+				overflow:hidden;
+				.workerRow{
+					border-right:1px solid #fff;
+				}
+				.workContent{
+					border-left:1px solid #fff; 
+					border-top: 1px solid #fff;
+					font-size:12px;
+					text-align:center;
+					&.p-blue {
+						background-color:#7bb5ff;
+					}
+					&.p-green{
+						background-color:#61da8c;
+					}
+					&.p-grey {
+						background-color:#dfe1ea;
+					}
+				}
+			}
+			.addPerson{
+				cursor:pointer;	
+			}
+			.ruler {
+				color:#fff;
+				border-left:1px solid #fff;
+				border-right:1px solid #fff;
+				.el-col{
+					font-size:12px;
+					position:relative;
+					color:#393f43;
+					background-color:#393f43;
+					position:relative;
+					&>label{
+						position:absolute;
+						color:#fff;
+						height:30px;
+						top:0;
+						left:-15px;
+					}
+					&:first-child>label{
+						left:2px;
+					}
+
+					&:not(:first-child)::before{
+						content:' ';
+						width:1px;
+						height:8px;
+						position:absolute;
+						bottom:0;
+						left:0;
+						background-color:#fff;
+					}
+					&:last-child::after{
+						content:'09';
+						width:'10px';
+						height:30px;
+						line-height:'30px';
+						position:absolute;
+						color:#fff;
+						top:0;
+						right:2px;
+					}
+				}
+			}
+			.blue {
+				background-color:$color-bg-blue;
+				color:#fff;
+			}
+			.cyan {
+				background-color:$color-bg-cyan;
+				color:#333;
+			}
+			.center {
+				text-align:center;
 			}
 		 }
 	 }
-	.dialogPersonDetail {
+	 .dialogPersonDetail {
 		.el-dialog__body{
 			padding :25px 10px;
 		}
