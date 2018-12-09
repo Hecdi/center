@@ -12,16 +12,16 @@
                 <div class="time">{{c.reportTime|currency}}</div>
                 <div class="decribe">
                     <div class="decribe-word">违规描述:{{c.violationDescription}}</div>
-                    <div class="decribe-img" @click="openShowImg">
+                    <div class="decribe-img" @click="openShowImg" >
                         <img class="picture" alt="img" :src="img"/>
                         <img class="picture" alt="img" :src="img"/>
                         <img class="picture" alt="img" :src="img"/>
                     </div>
-                    <ShowImg/>
+                    <ShowImg :picture="c.picture"/>
                 </div>
                 <div class="status" >
-                    <el-button type="success" size="small" @click="submitStatus(c,1)" plain>成功按钮</el-button>
-                    <el-button type="danger" size="small" @click="changeStatus(c)" plain>成功按钮</el-button>
+                    <el-button type="success" size="small" @click="submitStatus(c,1)">通过</el-button>
+                    <el-button type="danger" size="small" @click="changeStatus(c)" plain>不通过</el-button>
                 </div>
             </el-card>
 
@@ -49,6 +49,7 @@
                 status: '22',
                 img: img,
                 dialogVisible: '',
+                picture: '',
             }
         },
         computed: {
@@ -106,7 +107,8 @@
                 }
             },
             openShowImg() {
-			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+                this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+                console.log(this.picutre)
 		    },
         }
     }

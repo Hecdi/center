@@ -4,8 +4,9 @@
         width="60%"
        >
     <el-carousel indicator-position="outside">
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3>{{ item }}</h3>
+    <el-carousel-item v-for="item in img" :key="item">
+      <!-- <h3>{{ item }}</h3> -->
+      <img src = "key"/>
     </el-carousel-item>
   </el-carousel>
     <span slot="footer" class="dialog-footer">
@@ -17,7 +18,7 @@
 </template>
 
 <style>
-  .el-carousel__item h3 {
+  /* .el-carousel__item h3 {
     color: #475669;
     font-size: 18px;
     opacity: 0.75;
@@ -31,16 +32,14 @@
   
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
-  }
+  } */
 </style>
 
 
 <script>
   import { mapState } from "vuex";
     export default {
-        props: {
-          dialogVisible: Boolean
-        },
+        props:["dialogVisible","picture"],
         watch: {
           visibleSync (val) {
             this.$emit('update:dialogVisible', val)
@@ -48,11 +47,16 @@
         },
         methods: {
           handleChangeVisible(){ 
+          },
+          stringToArrary(value){
+            return value.join(',');
           }
         },
         data () {
+          // console.log(this.picture);
           return {
-            visibleSync: this.dialogVisible
+            visibleSync: this.dialogVisible,
+            //  img:[],
           }
         },
         computed:{
@@ -66,6 +70,10 @@
             this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: false });
           }
         },
-        }
+        img:function(){
+          console.log(this.picture);
+          return this.picture ? this.picture.split(',') :[];
+          },
+        },
     }
 </script>

@@ -21,10 +21,10 @@
       <el-table-column prop="violationName1" label="车辆编号" min-width="80"/>
       <el-table-column prop="violationName2" label="设备编号" min-width="80"/>
       <el-table-column prop="airLineName" label="所属单位" width="180"/>
-      <el-table-column prop="violationDescription" label="违规描述" min-width="180"/>
+      <el-table-column prop="violationDescription" label="违规描述" min-width="180" :show-overflow-tooltip="true"/>
       <el-table-column prop="img" label="图像记录" min-width="80">
          <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="changeStatus(scope.row,3)">查看</el-button>
+          <el-button :picture = "scope.row.picture" size="mini" type="primary" @click="openShowImg()">查看</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
@@ -35,7 +35,11 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="dialog">
+            <ShowImg/>
+        </div>
   </div>
+  
 </template>
 
 <script>
@@ -43,10 +47,15 @@ import { mapState, mapMutations } from "vuex";
 import moment from 'moment';
 // import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
+import ShowImg from './ShowImg.vue';
+
 
 
 
 export default {
+  components: {
+    ShowImg,
+  },
   data() {
     return {
       props: "statusValue",
@@ -117,7 +126,10 @@ export default {
         } else {
             return "待审核";
         }
-    }
+    },
+    openShowImg() {
+			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+		    },
 
   }
 };
