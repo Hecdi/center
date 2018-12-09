@@ -22,6 +22,9 @@
         <!-- <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
         </el-form-item> -->
+        <span :loginErr = "loginErr"  v-if="loginErr" class="login-error">
+            用户名或密码错误
+        </span>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -77,6 +80,7 @@ export default {
           checkPass: '',
           name: '',
         },
+        loginErr: false,
         rules2: {
           pass: [
             { validator: validatePass, trigger: 'blur' }
@@ -110,10 +114,13 @@ export default {
             sessionStorage.setItem("token","session111111");
             if(response == 10000) {
                 that.$router.push('/home')
+            } else {
+                console.log('error submit!!');
+                that.loginErr = true;
+                console.log(that.loginErr);
             }
 			// this.getTaskModelList(result);
 		    })
-            // alert('submit!');
           } else {
             console.log('error submit!!');
             return false;

@@ -39,5 +39,12 @@
         ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
             color:    #fff;
         }
+        .login-error {
+            color: red;
+            font-size: 14px;
+            position: absolute;
+            margin-left: 128px;
+            margin-top: -170px;
+        }
     }
 }
