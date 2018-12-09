@@ -17,10 +17,13 @@ export default {
 		}],
         ajaxAPI:{
 			path:'http://173.100.1.52:9099/',
+			//path:'http://192.168.0.145:9099/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
-                'personList':'web/scheduling/getAreaAndWorkerListAll',
-                'taskDetail':'web/scheduling/taskDetail',
+				'personList':'web/scheduling/getAreaAndWorkerListAll',
+                'home.taskDetail':'web/scheduling/taskDetail',//首页任务详情，post
+                'home.taskSubmit':'web/scheduling/taskSubmit',//首页任务详情里的任务提交，post
+                'home.taskRelease':'web/scheduling/taskRelease',//首页任务详情里的任务发布/不保障，post ，taskState:2未发布，8不保障
                 'getViolationData':'violationRecord/getViolationData',
 				'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
 				'rollCall.getModule':'attendance/findScheduleDetails',//获取模版，post,需要传token

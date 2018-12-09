@@ -50,17 +50,17 @@ height="auto">
             <el-radio-button label="time">时间</el-radio-button>
 					</el-radio-group>
           <el-radio-group v-model="movement">
-            <el-radio-button label="0">所有</el-radio-button>
-            <el-radio-button label="A">进</el-radio-button>
-						<el-radio-button label="D">离</el-radio-button>
-					</el-radio-group>
-					<el-radio-group v-model="flightStatus">
-						<el-radio-button label="0">前站起飞</el-radio-button>
-            <el-radio-button label="1">已登机</el-radio-button>
-          </el-radio-group>
-          <el-radio-group v-model="region">
-						<el-radio-button label="0">国内</el-radio-button>
-						<el-radio-button label="1">国际</el-radio-button>
+            <el-radio-button label=0>所有</el-radio-button>
+			<el-radio-button label="A">进</el-radio-button>
+			<el-radio-button label="D">离</el-radio-button>
+		  </el-radio-group>
+		  <el-radio-group v-model="flightStatus">
+			  <el-radio-button label="前站起飞">前站起飞</el-radio-button>
+			  <el-radio-button label="已登机">已登机</el-radio-button>
+		  </el-radio-group>
+          <el-radio-group v-model="flightIndicator">
+						<el-radio-button label="D">国内</el-radio-button>
+						<el-radio-button label="I">国际</el-radio-button>
 					</el-radio-group>
 					<el-input v-model="search" placeholder=""> <i slot="suffix" class="el-input__icon el-icon-search"
 /> </el-input>
@@ -213,12 +213,12 @@ export default {
 				this.$store.dispatch(`home/updateFilter`, { name: 'flightStatus', filterOption: filterOption });
 			},
 		},
-		region: {
+		flightIndicator: {
 			get() {
-				return this.$store.state.home.filterOption.region;
+				return this.$store.state.home.filterOption.flightIndicator;
 			},
 			set(filterOption) {
-				this.$store.dispatch(`home/updateFilter`, { name: 'region', filterOption: filterOption });
+				this.$store.dispatch(`home/updateFilter`, { name: 'flightIndicator', filterOption: filterOption });
 			},
 		},
 		...mapState('home', ['filterPersons', 'persons', 'filterOption']),
@@ -244,9 +244,14 @@ export default {
 		sub('UI', 'Home.Event.Ready', () => {
 			this.sendTaskListFilter();
 		});
+		sub('UI','All.ready',()=>{
+			pub('Worker','Home.Start',null);
+		})
+		pub('Worker','Home.Start',null);
 	},
 	beforeDestroy() {
 		removeSub('Home');
+		removeSub('All');
 	},
 };
 </script>

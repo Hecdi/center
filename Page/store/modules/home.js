@@ -8,7 +8,7 @@ const initFilter = {
         movement:'0',
         flightStatus:null,
         type:null,
-        region:null,
+        flightIndicator:null,
         searchKey:null,
 }
 const state = {
@@ -17,8 +17,8 @@ const state = {
     checkedTask: null,
     personSearchKey:null,
     dialogAddTaskVisible:false,
+	dialogTaskDetailVisible:false,
     persons:[],
-	allPersons:[{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},],
     filterPersons:[],
 	timeLimitOpts:[{
           value: '10',
@@ -44,6 +44,8 @@ const state = {
     flights: [],
     tempWorkerList: [],
     tempGuaranteeList: [],
+	currentTask:{},
+	taskDetail:{},
 }
 
 const mutations = {
@@ -61,6 +63,7 @@ const mutations = {
     },
     resetFilter(state){
         state.filterOption={...initFilter};
+		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     setMainListData(state,data){
         state.mainList = data;
@@ -77,8 +80,11 @@ const mutations = {
     setTempList(state,data){
         state.tempWorkerList = data.workerList;
         state.tempGuaranteeList = data.guaranteeList;
-
-    }
+    },
+	setCurrentTask(state,data){
+		state.currentTask = data;
+		state.dialogTaskDetailVisible = true;
+	}
 }
 
 const getters = {

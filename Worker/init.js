@@ -66,12 +66,12 @@ export const init = () => {
         });
     });
 
-    postal.channel('UI').subscribe('All.ready', (data = {}, msg = {}) => {
-        postal.publish({
-            channel: 'Worker',
-            topic: 'Home.Start',
-            data: clientId,
-        });
-    });
+    //postal.channel('UI').subscribe('All.ready', (data = {}, msg = {}) => {
+        //postal.publish({
+            //channel: 'Worker',
+            //topic: 'Home.Start',
+            //data: clientId,
+        //});
+    //});
 
 }
