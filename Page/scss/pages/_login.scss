@@ -1,0 +1,43 @@
+.login {
+    margin: auto;
+    .login-bg{
+        background: url(../assets/login.jpg) no-repeat;
+        // background-size: 100vh 100vh;
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        left: -10px;
+        right: -10px;
+        // background-image: url(../images/login/loginBg.872ecdbd.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        filter:blur(3px);
+        -webkit-transition: all 3s ease 0s;
+    }
+    .input-block {
+        display: block;
+        opacity: 1;
+        .login-logo {
+            width: 396px;
+            height: 87px;
+            margin-bottom: 20px;
+            background: url(../assets/logo.png) no-repeat;
+        }
+        .el-form-item {
+            width: 340px;
+            text-align: center;
+        }
+        .el-input__inner {
+            background: rgba($color: #fff, $alpha: 0.3);
+            color: #fff !important;
+        }
+        .el-input__prefix {
+            color: #fff !important;
+        }
+        //修改默认的placeholder颜色
+        ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+            color:    #fff;
+        }
+    }
+}

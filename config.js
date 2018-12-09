@@ -30,7 +30,8 @@ export default {
                 'findByTimeAndCode':'violationRecord/findByTimeAndCode',
                 'getFlightForTemporaryTask':'web/scheduling/getFlightForTemporaryTask', //航班搜索 post
                 'tempTaskModelList':'web/scheduling/tempTaskModelList', //临时任务获取接口 post
-                'taskSubmit':'web/scheduling/createTempTaskSubmit',//临时任务提交接口 post
+                'taskSubmit':'web/scheduling/createTempTaskSubmit',//临时任务提交接口 post,
+                'login':'web/login', //登陆接口， post
             }
         }
     },
