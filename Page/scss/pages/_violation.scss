@@ -105,6 +105,9 @@
         background-color: #0096ff;
         color: #fff;
     }
+    .tooltip {
+        margin: 8px 0;
+    }
     .topbar {
         text-align: right;
         margin-right: 10px;
@@ -200,26 +203,26 @@
             padding: 2px;
             text-align: center;
             border: 1px solid transparent;
-            :hover {
-                border: 1px solid #0096ff !important;
-                background: #e3f3fc !important;
-            }
+            // :hover {
+            //     border: 1px solid #0096ff !important;
+            //     background: #e3f3fc !important;
+            // }
         }
-        &>table {
-            tbody {
-                .el-table__row {
-                    height: 28px;
-                    line-height: 28px;
-                    padding: 2px;
-                    text-align: center;
-                    border: 1px solid transparent;
-                    :hover {
-                        border: 1px solid #0096ff !important;
-                        background: #e3f3fc !important;
-                    }
-                } 
-            }
-        }
+        // &>table {
+        //     tbody {
+        //         .el-table__row {
+        //             height: 28px;
+        //             line-height: 28px;
+        //             padding: 2px;
+        //             text-align: center;
+        //             border: 1px solid transparent;
+        //             :hover {
+        //                 border: 1px solid #0096ff !important;
+        //                 background: #e3f3fc !important;
+        //             }
+        //         } 
+        //     }
+        // }
         .el-tag--vl-people {
             width:48px;
             // height:20px;
@@ -262,6 +265,22 @@
         //     background: #e3f3fc;
         //     border: 1px solid #184bff !important;
         //   }
+        .el-table--enable-row-hover .el-table__body tr>td {
+            padding: 6px 0;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            text-align: center;
+        }
+        .el-table--enable-row-hover .el-table__body tr:hover>td {
+            background-color: #e3f3fc !important;
+            border-top: 1px solid #0096ff;
+            border-bottom: 1px solid #0096ff;
+        }
+        .el-table .cell {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
     .page-nation {
         display: none;
