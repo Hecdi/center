@@ -119,7 +119,7 @@ const getters = {
 			}),
 			d=>d[0].organization,
 			d=>map(d, i=>{
-				return pick(i, staffStatePropitys)
+				return pick(i, staffStatePropitys);
 			})
 		])(get(state,'team'));
 		param.checkIns = flow([
@@ -128,9 +128,11 @@ const getters = {
 			}),
 			d=>d[0].checkIns,
 			d=>map(d, i=>{
-				return pick(i, checkInPropitys)
+				return pick(i, checkInPropitys);
 			})
 		])(get(state,'module'));
+		//param.staffStates = param.staffStates.join();
+		//param.checkIns = param.checkIns.join();
 		return param;
 	} 
 	// getFilter:(state, getters, rootState) =>{

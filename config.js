@@ -16,7 +16,7 @@ export default {
 			},
 		}],
         ajaxAPI:{
-            path:'http://173.100.1.52:9099/',
+			path:'http://173.100.1.52:9099/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
                 'personList':'web/scheduling/getAreaAndWorkerListAll',
