@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-row class="">
+        <el-row class="tooltip">
             <el-col :span="5">
                 <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核</button>
                 <button class="tab-btn all" @click="toggleTabs('all')" v-bind:class="{ 'active-tab':tabActive == 'all'}">全部</button>
