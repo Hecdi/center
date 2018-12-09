@@ -131,6 +131,34 @@ body > .el-container {
         flex:1;
         background-color:white;
         padding:6px;
+		.dialogTaskDetail{
+			.taskInfo{
+				margin-bottom:20px;
+			}
+			.taskPersonList{
+				.el-col{
+					text-align:left;
+					.taskPersonBtn{
+						font-size:12px;
+						margin-left:10px;
+						margin-right:0;
+						margin-bottom:10px;
+						background: #DBE9FE;
+						border: 1px solid #7FB1FF;
+						border-radius: 3px;
+						padding:6px 12px;
+						color:#1F407B;
+						i{
+							color:#009eff;
+						}
+						&.active,&:hover{
+							background-color:#0064FF;
+							color:#fff;
+						}
+					}
+				}
+			}
+		}
         > .el-row{
           display: flex;
           margin-bottom:20px;
@@ -167,6 +195,22 @@ body > .el-container {
 				  cursor:pointer;
 				  .el-card__body{
 					padding:0;
+					position:relative;
+					.flight-status{
+						position:absolute;
+						right:0;
+						top:0;
+						width:60px;
+						height:20px;
+						line-height:20px;
+						background-color:#31b4f1;
+						color:#fff;
+						font-size:12px;
+						text-align:center;
+						transform: rotateZ(45deg);
+						top: 5px;
+						right: -15px;
+					}
 				  }
 				  .el-aside{
 					  background-color:white;

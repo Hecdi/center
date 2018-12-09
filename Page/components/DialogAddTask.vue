@@ -241,7 +241,7 @@ export default {
         this.$store.dispatch(`home/update`, { dialogAddTaskVisible: false });
       }
     },
-    ...mapState("home", ["allPersons", "timeLimitOpts"])
+    ...mapState("home", ["timeLimitOpts"])
   },
   	beforeMount(){
 		this.handlGettTaskModelList();
