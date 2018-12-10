@@ -64,7 +64,7 @@
         width="80">
       </el-table-column>
       <el-table-column
-        prop="alternate"
+        prop="displayFlightIndicator"
         label="性质"
         width="50">
       </el-table-column>

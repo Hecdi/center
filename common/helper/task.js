@@ -36,7 +36,18 @@ const addDisplayField = (row) => {
 	let taskStatusDisplay =   {
 			displayTaskStatus: taskStatusDisplayMap[row.taskStatus]
 		}
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay);
+	let flightIndicatorDisplayMap = {
+		"D": "国内",
+		"I": "国际",
+		"M": "混合",
+		"R": "地区",
+	};
+
+	let flightIndicatorDisplay = {
+		displayFlightIndicator: flightIndicatorDisplayMap[row.flightIndicator]
+	}
+
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);
@@ -64,31 +75,12 @@ const actExp = (row) => {
 				[`disPlayActuralTime`]: formatDate(disPlayActuralTime, 'HHmm(DD)'),
 				[`disPlayExpectedTime`]: formatDate(disPlayExpectedTime, 'HHmm(DD)'), 
 			}
-			// row.disPlayActuralTime = disPlayActuralTime;
-			// row.disPlayExpectedTime = disPlayExpectedTime;
-			// row.push(`"disPlayActuralTime":${disPlayActuralTime}`);
-			// row.push(`"disPlayExpectedTime":${disPlayExpectedTime}`);
 	}
 	return null;
 });
 	let result = extend.apply(null, time);
 	return extend({}, row, result);
 };	
-	// map(row,(item,index) => {
-	// 	let disPlayActuralTime = ata ? ata : atd;
-	// 	let disPlayExpectedTime = eta ? eta : etd;
-	// 	// switch(item){
-	// 	// 	case 'item.ata':
-	// 	// 	return disPlayActuralTime = item.ata;
-	// 	// 	case 'item.atd':
-	// 	// 	return disPlayActuralTime = item.ata;
-	// 	// 	case 'item.eta':
-	// 	// 	return disPlayExpectedTime = item.eta;
-	// 	// 	case 'item.etd':
-	// 	// 	return disPlayExpectedTime = item.eta;
-	// 	// }
-	// })
-	// return row;
 
 
 export const process = (rows) => {
