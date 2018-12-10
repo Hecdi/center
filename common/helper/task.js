@@ -49,8 +49,51 @@ const fixNull = (row) => {
 	return row;
 }
 
+const displayTime = ['eta','etd','ata','atd'];
+
+const actExp = (row) => {
+	let time = map(displayTime, fieldKey=>{
+		if(has(row, fieldKey)){
+			let ata = get(row, "ata");
+			let atd = get(row,'atd');
+			let eta = get(row,'eta');
+			let etd = get(row,'etd');
+			let disPlayActuralTime = ata ? ata : atd;
+			let disPlayExpectedTime = eta ? eta : etd;
+			return { 
+				[`disPlayActuralTime`]: formatDate(disPlayActuralTime, 'HHmm(DD)'),
+				[`disPlayExpectedTime`]: formatDate(disPlayExpectedTime, 'HHmm(DD)'), 
+			}
+			// row.disPlayActuralTime = disPlayActuralTime;
+			// row.disPlayExpectedTime = disPlayExpectedTime;
+			// row.push(`"disPlayActuralTime":${disPlayActuralTime}`);
+			// row.push(`"disPlayExpectedTime":${disPlayExpectedTime}`);
+	}
+	return null;
+});
+	let result = extend.apply(null, time);
+	return extend({}, row, result);
+};	
+	// map(row,(item,index) => {
+	// 	let disPlayActuralTime = ata ? ata : atd;
+	// 	let disPlayExpectedTime = eta ? eta : etd;
+	// 	// switch(item){
+	// 	// 	case 'item.ata':
+	// 	// 	return disPlayActuralTime = item.ata;
+	// 	// 	case 'item.atd':
+	// 	// 	return disPlayActuralTime = item.ata;
+	// 	// 	case 'item.eta':
+	// 	// 	return disPlayExpectedTime = item.eta;
+	// 	// 	case 'item.etd':
+	// 	// 	return disPlayExpectedTime = item.eta;
+	// 	// }
+	// })
+	// return row;
+
+
 export const process = (rows) => {
 	let processer = flow([
+		actExp,
 		addDisplayField,
 		fixNull,
 	]);

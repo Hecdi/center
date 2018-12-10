@@ -325,6 +325,7 @@ export default {
       this.getMainListData(data);
     });
     sub("UI", "Home.Table.Sync", data => {
+			// console.log(data);
       this.getHomeTableData(data);
     });
     sub("UI", "Home.Area.Sync", data => {

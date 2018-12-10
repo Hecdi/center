@@ -13,11 +13,13 @@
         width="50">
       </el-table-column>
       <el-table-column
-        
         label="标志"
         width="50"
-        inline-template>
-        <span prop="flightIndicator">{{flightIndicator}}</span>
+      >
+        <template slot-scope="scope">
+              <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
+               <span class="iconfont icon-user">{{scope.row.flightIndicator}}</span>
+         </template>
       </el-table-column>
       <el-table-column
         prop="movement"
@@ -70,11 +72,23 @@
         prop="displayETD"
         label="计划"
         width="80">
+        <template slot-scope="scope">
+          <span class="ATDETD" >
+           <!-- <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i> -->
+           {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
+          </span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="displayATAWithDate"
         label="实际"
-        width="80">
+        width="180">
+        <template slot-scope="scope">
+          <span class="ATDETD">
+            <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i>
+              {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
+          </span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="taskBindingShiftNames"
@@ -90,6 +104,10 @@
         prop="vip"
         :formatter="deviateFormat"
         label="偏离">
+        <template slot-scope="scope">
+              <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
+               <span class="iconfont icon-user"></span>
+         </template>
       </el-table-column>
     </el-table>
     </div>
@@ -103,7 +121,54 @@ import ajaxx from 'ajax';
 import DialogTaskDetail from './DialogTaskDetail.vue';
 export default {
 	name: 'TableList',
-	computed: mapState('home', ['homeTable']),
+	computed: {
+    ...mapState('home', ['homeTable']),
+    // disActural:{
+         
+    //   get:function(value) {
+    //   if(value.movement=="A"){
+    //       let param={}
+    //       param.ata = value.displayATAWithDate;
+    //       param.eta = value.displayETAWithDate;
+    //       param.arrive = this.ata !== '--'? this.ata : this.eta;
+    //       param.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
+    //       return param;
+    //   } else {
+    //     return 
+    //     this.atd = value.displayATDWithDate;
+    //     this.etd = value.displayETDWithDate;
+    //     // this.actualIcon = "iconfont icon-feiji";
+    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
+    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
+    //   }
+    // },
+    //   set:function(value) {
+    //   if(value.movement=="A"){
+    //     return
+    //      this.ata = value.displayATAWithDate;
+    //      this.eta = value.displayETAWithDate;
+    //      this.arrive = this.ata !== '--'? this.ata : this.eta;
+    //       this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
+    //   } else {
+    //     return 
+    //     this.atd = value.displayATDWithDate;
+    //     this.etd = value.displayETDWithDate;
+    //     // this.actualIcon = "iconfont icon-feiji";
+    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
+    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
+    //   }
+    // }
+    // } 
+    },
+    data(){
+      return {
+        actualIcon: '',
+        actural: '',
+        arrive: '',
+        delivery: '',
+      }
+
+    },
 	methods: {
 		dateFormat:function(row, column) {
         var date = row[column.property];
@@ -114,6 +179,14 @@ export default {
         let riqi = moment(date).format("DD"); 
         return `${time}(${riqi})`;
     },
+    test(val){
+      let ata = val.displayATAWithDate;
+      let atd = val.displayATDWithDate;
+      let eta = val.displayETAWithDate;
+      let etd = val.displayETDWithDate;
+      return ata != '--' ? ata:(atd != '--' ? atd :(eta != '--' ? eta:(etd !='--'?etd:'--')));
+
+    },
     airlineFormat: function(row,column) {
       var airline = row[column.property];
 			return map(airline, (r, i) => {
@@ -121,7 +194,7 @@ export default {
 				// let icon = classNames('icon-arrow text-blue px-1');
 				let end = airline.length - 1;
 				// let iconClassName;
-				let iconClassName = i === end ? undefined : '->';
+				let iconClassName = i === end ? '' : '->';
         return `${city}${iconClassName}`;
         // (
 				// 	<span key={i+1}>
@@ -138,7 +211,22 @@ export default {
       } else {
         return "el-icon-error";
       }
+    },
+    disActural:function(value) {
+      if(value.movement=="A"){
+         this.ata = value.displayATAWithDate;
+         this.eta = value.displayETAWithDate;
+         this.arrive = this.ata !== '--'? this.ata : this.eta;
+          this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
+      } else {
+        this.atd = value.displayATDWithDate;
+        this.etd = value.displayETDWithDate;
+        // this.actualIcon = "iconfont icon-feiji";
+        this.delivery = this.atd !== '--'? this.atd : this.etd;
+        this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
+      }
     }
-	},
+  },
+  
 };
   </script>
