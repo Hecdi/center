@@ -13,7 +13,7 @@
             <router-link tag="li" to="/report" class="nav-item">报表</router-link>
             <router-link tag="li" to="/statistics" class="nav-item">统计</router-link>
             <router-link tag="li" to="/operationManual" class="nav-item">操作手册</router-link>
-            <router-link tag="li" to="/login" class="nav-item">登陆测试</router-link>
+            <!-- <router-link tag="li" to="/login" class="nav-item">登陆测试</router-link> -->
             <router-link tag="li" to="/login" class="nav-item el-icon-circle-close-outline" style="float:right;color:#fff">
               <!-- 00 -->
             </router-link>
