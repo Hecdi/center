@@ -106,7 +106,7 @@
         label="偏离">
         <template slot-scope="scope">
               <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
-               <span class="iconfont icon-user"></span>
+               <span class="iconfont icon-pianlishangbao1"></span>
          </template>
       </el-table-column>
     </el-table>
