@@ -111,15 +111,15 @@ const getters = {
 			checkIns:[],
 		}
 		let staffStatePropitys= ['workerId','deptId','nonArrivalReason','staffName','staffId',
-			'workerName','groupLeader','leaveStartTime','leaveEndTime'];
-		let checkInPropitys= ['deptId','staffName','staffId','workUnit'];
+			'workerName','groupLeader','leaveStartTime','leaveEndTime','squadId','squadName'];
+		let checkInPropitys= ['deptId','staffName','staffId','workUnit','templateId'];
 		param.staffStates = flow([
 			d=>filter(d,i=>{
 				return i.squadId == state.currentTeam;
 			}),
 			d=>d[0].organization,
 			d=>map(d, i=>{
-				return pick(i, staffStatePropitys);
+				return JSON.stringify(pick(i, staffStatePropitys));
 			})
 		])(get(state,'team'));
 		param.checkIns = flow([
@@ -128,11 +128,11 @@ const getters = {
 			}),
 			d=>d[0].checkIns,
 			d=>map(d, i=>{
-				return pick(i, checkInPropitys);
+				return JSON.stringify(pick(i, checkInPropitys));
 			})
 		])(get(state,'module'));
-		//param.staffStates = param.staffStates.join();
-		//param.checkIns = param.checkIns.join();
+		param.staffStates = param.staffStates.join('&');
+		param.checkIns = param.checkIns.join('&');
 		return param;
 	} 
 	// getFilter:(state, getters, rootState) =>{

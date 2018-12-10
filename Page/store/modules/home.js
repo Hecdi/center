@@ -10,6 +10,7 @@ const initFilter = {
         type:null,
         flightIndicator:null,
         searchKey:null,
+		searchPersonKey:null,
 }
 const state = {
     rows: [],
@@ -59,6 +60,9 @@ const mutations = {
     },
     updateFilter(state,data){
         state.filterOption[data.name] = data.filterOption;
+		if(data.name != 'searchPersonKey' && state.filterOption.searchPersonKey){
+			state.filterOption.searchPersonKey = null;
+		}
 		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     resetFilter(state){

@@ -27,7 +27,7 @@
 							</el-col>
 						</el-row>
 					</el-col>
-					<el-col class="cyan center" :span="2">324234</el-col>
+					<el-col class="cyan center" :span="2">{{`${row.workHours?row.workHours+'小时':' '}`}}</el-col>
 				</el-row>
 			</el-tab-pane>
 		</el-tabs>

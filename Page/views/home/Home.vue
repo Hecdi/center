@@ -21,7 +21,7 @@ class="personList"
 						<el-col :span="6" v-for="worker in person.workerList" 
 :key="worker.staffId" class="person-panel"
 >
-							<div class="grid-content bg-person person" @click="show" 
+							<div class="grid-content bg-person person" @dblclick="showSetting" @click="setPersonSearch(worker.staffName)" 
 :data-id="worker.staffId"
 >
                 {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
@@ -74,32 +74,31 @@ size="medium" icon="iconfont icon-search" @click="openAddTask">临时任务</el-
 type="primary" 
 size="medium" icon="el-icon-search">任务交接</el-button>
 					<el-button type="primary" size="medium" 
-icon="el-icon-search"
->冲突检测</el-button>
+icon="el-icon-search">冲突检测</el-button>
         </el-row>
         <el-row class="legend-panel">
-					<legend data="未发布" iconColor="grey" 
+					<Legend data="未发布" iconColor="grey" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="已发布" iconColor="#2a2b2c" 
+					<Legend data="已发布" iconColor="#2a2b2c" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="已受领" iconColor="pink" 
+					<Legend data="已受领" iconColor="pink" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="已到位" iconColor="green" 
+					<Legend data="已到位" iconColor="green" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="进行中" iconColor="yellow" 
+					<Legend data="进行中" iconColor="yellow" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="已完成" iconColor="#7f4832" 
+					<Legend data="已完成" iconColor="#7f4832" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="取消" iconColor="blue" 
+					<Legend data="取消" iconColor="blue" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
-					<legend data="警告" iconColor="black" 
+					<Legend data="警告" iconColor="black" 
 iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
 />
         </el-row>
@@ -150,8 +149,14 @@ export default {
 		getMainListData(data) {
 			this.$store.dispatch('home/getMainListData', data);
 		},
-		show(evt) {
-			console.log(evt.currentTarget.dataset.id);
+		showSetting(){
+			console.log('double click')
+		},
+		setPersonSearch(workerName) {
+			this.$store.dispatch('home/updateFilter',{
+				name : 'searchPersonKey',
+				filterOption:workerName,
+			})
 		},
 		reset() {
 			this.$store.dispatch(`home/resetFilter`, null);
@@ -239,7 +244,7 @@ export default {
 			this.getPersons(data);
 		});
 		sub('UI', 'Home.Area.All', (data) => {
-			/*this.getPersons(data);*/
+			this.getPersons(data);
 		});
 		sub('UI', 'Home.Event.Ready', () => {
 			this.sendTaskListFilter();

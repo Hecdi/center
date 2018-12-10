@@ -46,18 +46,21 @@
 					<el-col :span="14">
 						<div>人员列表：</div>
 						<el-button  @click="setCurrentPerson(person, true)"
-						 v-for="person in Array.from(taskWorkerList)" class="taskPersonBtn" :class="personStyle(person)" :key="person.staffId"  icon="iconfont icon-user">
+						 v-for="person in Array.from(workerList)" class="taskPersonBtn" :class="personStyle(person)" :key="person.staffId"  icon="iconfont icon-user">
 							{{`${person.staffName}${person.workerName?'/'+person.workerName:''}`}}</el-button>
 					</el-col>
 					<el-col :span="10">
 						<div>任务已选人员：</div>
 						<el-button  @click="setCurrentPerson(person)"
-						 v-for="person in Array.from(workerList)" class="taskPersonBtn" :class="personStyle(person)" :key="person.staffId"  icon="iconfont icon-user">
+						 v-for="person in Array.from(taskWorkerList)" class="taskPersonBtn" :class="personStyle(person)" :key="person.staffId"  icon="iconfont icon-user">
 							{{`${person.staffName}${person.workerName?'/'+person.workerName:''}`}}</el-button>
 					</el-col>
 				</el-row>
 			</el-tab-pane>
-			<el-tab-pane label="任务详情" >配置管理</el-tab-pane>
+			<el-tab-pane label="任务详情" >
+				<p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}
+				<span>{{step.operationName}}</span> {{step.staffName}}</p>
+			</el-tab-pane>
 		</el-tabs>
 		<span slot="footer" class="dialog-footer">
 			<el-button type="danger" @click="release(8)">不保障该航班</el-button>
@@ -72,7 +75,7 @@
 	import {ajax} from 'ajax';
 	import moment from 'moment';
 	import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
-	import { getNaturalDate }  from 'date';
+	import { getNaturalDate ,formatDate }  from 'date';
 	import { map }  from 'lodash';
 
 	export default {
@@ -81,6 +84,7 @@
 			return {
 				taskWorkerList:new Set(),
 				workerList:new Set(),
+				guaranteeDataList:[],
 
 			}
 		},
@@ -96,6 +100,9 @@
 					});
 					this.dialogTaskDetailVisible = false;
 				});
+			},
+			formatDate:function(val,opt,empty){
+				return formatDate(val,opt,empty);
 			},
 			personStyle:function(){},
 			submit:function(){
@@ -116,17 +123,42 @@
 			},
 			setCurrentPerson(person,isAdd){
 				if(isAdd){
-					this.taskWorkerList.delete(person);
-					this.workerList.add(person);
-				}else{
-					this.taskWorkerList.add(person);
 					this.workerList.delete(person);
+					this.taskWorkerList.add(person);
+				}else{
+					this.workerList.add(person);
+					this.taskWorkerList.delete(person);
 				}
 				this.$forceUpdate();
 			},
 			getTaskDetail(val){
 				ajax.post('home.taskDetail',{flightTaskId:val.taskId}).then(data=>{
-					this.taskWorkerList=new Set([{
+					//this.workerList = data.workerList;
+					//this.taskWorkerList = data.taskWorkerList;
+					//this.guaranteeDataList= data.GuaranteeDataList;
+					this.guaranteeDataList= [
+						{
+							"operationTime": 1544174180000,
+							"staffName": "system_01",
+							"operationName": "开始"
+						},
+						{
+							"operationTime": 1544174229000,
+							"staffName": "system_01",
+							"operationName": "结束"
+						},
+						{
+							"operationTime": 1544098325000,
+							"staffName": "system_01",
+							"operationName": "领受"
+						},
+						{
+							"operationTime": 1544102026878,
+							"staffName": "system_01",
+							"operationName": "到位"
+						}
+					];
+						this.taskWorkerList=new Set([{
 						"staffId":"23",
 						"staffName":"离散",
 						"jobFlag":"航前",

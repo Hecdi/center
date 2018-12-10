@@ -136,6 +136,12 @@ body > .el-container {
 				margin-bottom:20px;
 			}
 			.taskPersonList{
+			  .taskDetailList{
+				  text-align:left;
+				  span{
+					font-weight:bold;
+				  }
+			  }
 				.el-col{
 					text-align:left;
 					.taskPersonBtn{

@@ -59,8 +59,8 @@ export const destroy = () => {
 }
 
 export const initSocket = (client) =>{
-	client.sub('/web/scheduling/getTaskList', (d) => {
-		console.log(d);
+	client.sub('/user/web/scheduling/changes', (d) => {
+		console.log('task:::',d);
 		//saveToAreaDB(d.data).then( data => {
 			//getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				//pub('UI','Home.Area.Sync', result);	
@@ -70,12 +70,16 @@ export const initSocket = (client) =>{
 			//});
 		//});
 	});
-	client.sub('/web/scheduling/getAreaAndWorkerList', (d) => {
+	client.sub('/user/web/scheduling/getAreaAndWorkerList', (d) => {
+		console.log('area:::', d)
 		saveToPersonDB(d.data).then( data => {
 			getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				pub('UI','Home.Area.Sync', result);	
 			})
 		});
+	});
+	client.sub('/user/web/scheduling/popoMessage', (d) => {
+		console.log('message:::',d)
 	});
 }
 
