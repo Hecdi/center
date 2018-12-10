@@ -5,11 +5,89 @@
 body > .el-container {
     margin-bottom: 40px;
   }
+  .el-popover{
+	  padding-top:0;
+	  padding-right:0;
+	  padding-left:0;
+	  overflow:hidden;
+	  background-color:#f1f1f1;
+	  .el-tabs__content{
+		padding:0 4px;
+		.el-row{
+			height:28px;
+			line-height:28px;
+			margin-bottom:10px;
+			background-color:#fff;
+			border-radius: 4px;
+			.flightNo{
+				background-color:#393f43;
+				color:#fff;
+				padding:0 4px;
+			}
+		}
+	  }
+	  .el-tabs__item{
+		color:#666;
+		background-color:#fff;
+	  }
+	  .el-tabs__item.is-active{
+		background-color:#009eff;
+		color:#fff;
+	  }
+	  .el-tabs__item:first-child {
+		border-top-left-radius:4px;
+	  }
+	  .el-tabs__item:last-child {
+		border-top-right-radius:4px;
+	  }
+  }
 .home {
   clear:both;
   position:relative;
+  .dialogPersonSetting{
+	.el-tabs__header, .el-tabs__nav{
+		border-bottom:1px dashed #289DFF;
+	}
+	.el-tabs__nav{
+		border-top:none;
+	}
+	.el-tab-pane{
+		.row{
+			margin-bottom:10px;
+			.el-checkbox__inner{
+				border-color:#409eff;
+			}
+			.title{
+				font-size:14px;
+				color:#000;
+				font-weight:bold;
+				margin-right:10px;
+			}
+		}
+	}
+	.el-tabs__item{
+		font-size:14px;
+		width:80px;
+		height:30px;
+		line-height:30px;
+		background-color:#e6e6e6;
+		text-align:center;
+		color:#333;
+		padding:0 !important;
+		border-radius: 4px 4px 0 0 !important;
+	}
+	.is-active{
+		background-color:#009eff;
+		border-bottom:none;
+		color:#fff;
+	}
+  }
   .bg-person{
 	  background:$color-bg-person;
+	  &.active{
+		background-color:#1d60dd;
+		color:#fff;
+	  }
 	}
 	.active-person {
 		background: #2e67f6;
