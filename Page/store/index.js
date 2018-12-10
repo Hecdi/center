@@ -14,7 +14,7 @@ const debug = process.env.NODE_ENV !== 'production';
 export const smartSchedulingStore =  new Vuex.Store({
   modules: {
     home,
-	rollCall,
+	  rollCall,
     sheet,
     violation,
   },

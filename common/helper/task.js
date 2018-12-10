@@ -22,7 +22,21 @@ const addDisplayField = (row) => {
 		}
 		return null;
 	});	
-	let mergedFields = concat([{}], upperRow, upperFirstRow);
+
+	let taskStatusDisplayMap = {
+		1:"未发布",
+		2:"已发布",
+		3:"已领受",
+		4:"已到位",
+		5:"进行中",
+		6:"已完成",
+		"-1":"取消",
+		7:"告警",
+	};
+	let taskStatusDisplay =   {
+			displayTaskStatus: taskStatusDisplayMap[row.taskStatus]
+		}
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);

@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
-import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB } from "../../lib/storage";
+import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB } from "../../lib/storage";
 import ajaxx from "ajax";
 
 var homeFilter={
@@ -21,9 +21,13 @@ const homeInit = () => {
 	});
 	ajax.post('taskList').then(data=>{
 		console.log(data);
+		saveHomeTableDB(data.data).then(result => {
+			postal.channel('UI').publish('Home.Table.Sync',result);
+		});
 		saveToTaskDB(true,data.data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
+		
 	});
 	// ajax.get('getViolationData').then(data=>{
 	// 	console.log(data);
@@ -59,8 +63,8 @@ export const destroy = () => {
 }
 
 export const initSocket = (client) =>{
-	client.sub('/web/scheduling/getTaskList', (d) => {
-		console.log(d);
+	client.sub('/user/web/scheduling/changes', (d) => {
+		console.log('task:::',d);
 		//saveToAreaDB(d.data).then( data => {
 			//getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				//pub('UI','Home.Area.Sync', result);	
@@ -70,12 +74,16 @@ export const initSocket = (client) =>{
 			//});
 		//});
 	});
-	client.sub('/web/scheduling/getAreaAndWorkerList', (d) => {
+	client.sub('/user/web/scheduling/getAreaAndWorkerList', (d) => {
+		console.log('area:::', d)
 		saveToPersonDB(d.data).then( data => {
 			getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				pub('UI','Home.Area.Sync', result);	
 			})
 		});
+	});
+	client.sub('/user/web/scheduling/popoMessage', (d) => {
+		console.log('message:::',d)
 	});
 }
 

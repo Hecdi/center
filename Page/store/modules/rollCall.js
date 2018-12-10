@@ -1,27 +1,20 @@
 import ajaxx from "ajax";
-import {get, mapKeys, extend} from 'lodash';
+import { mapKeys, extend, forEach,get,set,assignIn, flow,filter,pick, map} from 'lodash';
 import { sub, removeSub, pub} from 'postalControl';
 
 
 const state = {
 	currentPerson: {
-		"staffId": "uf918517bfec64a8ca29768c666167340",
-		"staffName": "刘杰",
-		"workerName": null,
-		"workerId": null,
-		"groupLeader": 1,
-		"nonArrivalReason": 1,
-		"deptId": "depc37237f086fc4b90afa43780946dba68",
-		"deptName": null,
-		"squadId": "dep73be05fd11ad4ba9be547f732081d258",
-		"squadName": "二分队",
-		"leaveStartTime":'',
-		"leaveEndTime":'',
 	},
+	fixPerson:{},
 	team: [],
 	currentTeam: '', 
-	dialogPersonDetailVisible: true,
-
+	dialogPersonDetailVisible: false,
+	dialogAddPersonVisible: false,
+	module: [],
+	currentRow:'',
+	currentModuleId:'',
+	checkedRemark:'',
 }
 
 const mutations = {
@@ -48,7 +41,51 @@ const mutations = {
 			//state['currentPerson'][k] = 
 		//})
 	//},
+	setCurrentModule(state,currentModuleId){
+		state.currentModuleId = currentModuleId;
+		forEach(state.module,item =>{
+			if(item.templateId == currentModuleId){
+				state.checkedRemark = item.remarks;
+			}
+		})
+	},
+	setPerson(state){
+		let fixPerson = get(state,'fixPerson');
+		assignIn(fixPerson,get(state,'currentPerson'));
+		set(state,'dialogPersonDetailVisible', false);
+	},
+	setCurrentPerson(state,{currentPerson, fixPerson}){
+		state['currentPerson'] = currentPerson;
+		state['fixPerson'] = fixPerson;
+		state['dialogPersonDetailVisible'] = true;
+	},
+	updateInit(state, obj){
+		mapKeys(obj,(v,k)=>{
+			state[k].splice(0, state[k].length)
+			for(let i=0;i< v.length;i++){
+				state[k].push(v[i]);
+			}
+		});
+		let team = get(state,'team',[]);
+		let module = get(state,'module',[]);
+		state.currentTeam = team.length?team[0].squadId:'';
+		state.currentModuleId = module.length?module[0].templateId:'';
+	},
+	updateArray(state, obj){
+		mapKeys(obj,(v,k)=>{
+			state[k].splice(0, state[k].length)
+			for(let i=0;i< v.length;i++){
+				state[k].push(v[i]);
+			}
+		});
+	},
 	update(state, obj){
+		mapKeys(obj,(v,k)=>{
+			state[k] = v;
+			//state[k]=v;
+		});
+	},
+	updateObj(state, obj){
 		mapKeys(obj,(v,k)=>{
 			state[k] = extend(state[k],v);
 			//state[k]=v;
@@ -56,10 +93,48 @@ const mutations = {
 	}
 }
 
+const resonMap = {
+	1:'病假',
+	2:'事假',
+	3:'缺席',
+	4:'下班',
+	5:'换人',
+}
+
 const getters = {
-	//getDisplayPersons:(state, getters, rootState) =>{
-	//return rootState.filterPersons;
-	//},
+	getReason:(state, getters, rootState) => (code) =>{
+		return resonMap[code];
+	},
+	getCommitData:(state,getters, rootState)=>(code) =>{
+		let param = {
+			staffStates:[],
+			checkIns:[],
+		}
+		let staffStatePropitys= ['workerId','deptId','nonArrivalReason','staffName','staffId',
+			'workerName','groupLeader','leaveStartTime','leaveEndTime','squadId','squadName'];
+		let checkInPropitys= ['deptId','staffName','staffId','workUnit','templateId'];
+		param.staffStates = flow([
+			d=>filter(d,i=>{
+				return i.squadId == state.currentTeam;
+			}),
+			d=>d[0].organization,
+			d=>map(d, i=>{
+				return JSON.stringify(pick(i, staffStatePropitys));
+			})
+		])(get(state,'team'));
+		param.checkIns = flow([
+			d=>filter(d,i=>{
+				return i.templateId == state.currentModuleId;
+			}),
+			d=>d[0].checkIns,
+			d=>map(d, i=>{
+				return JSON.stringify(pick(i, checkInPropitys));
+			})
+		])(get(state,'module'));
+		param.staffStates = param.staffStates.join('&');
+		param.checkIns = param.checkIns.join('&');
+		return param;
+	} 
 	// getFilter:(state, getters, rootState) =>{
 	//     return {
 	//         taskstatus:state => st
@@ -84,7 +159,13 @@ const actions = {
 	//},
 	update({commit, state},obj){
 		commit('update', obj);
-	}
+	},
+	updateArray({commit, state},obj){
+		commit('updateArray', obj);
+	},
+	updateObj({commit, state},obj){
+		commit('updateObj', obj);
+	},
 }
 
 

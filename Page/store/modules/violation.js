@@ -1,10 +1,11 @@
 import ajaxx from "ajax";
-import { get } from 'lodash';
+import {get, mapKeys } from 'lodash';
 
 const state = {
     cards: [],
     currentStatus: 1,
     filterCards: [],
+    showImgDialog: false,
 }
 
 const mutations = {
@@ -12,20 +13,16 @@ const mutations = {
         state.cards = data.data;
     },
     setCurrentStatus(state, status) {
-        // debugger;
         state.currentStatus = status;
         console.log(state.currentStatus);
     },
     filterStatus(state, data) {
         state.filterCards = data.data.filter(item => item.status == 3);
     },
-    addProduct(state, product) {
-        let line  = state.lines.find(line => line.product.id == product.id);
-        if (line != null) {
-            line.quantity++;
-        } else {
-            state.lines.push({ product: product, quantity:1 });
-        }
+    updateShowImg(state,obj){
+        mapKeys(obj,(v,k) => {
+            state[k] = v;
+        })
     },
     changeStatus(state,value){
         let filterCards = state.filterCards;
@@ -36,9 +33,11 @@ const mutations = {
         //     }
         // },
         let index  = filterCards.findIndex(c => c.id == value.id);
+        console.log(index);
             if (index > -1) {
                 filterCards.splice(index, 1);
             }
+        
     }
 }
 
@@ -50,9 +49,6 @@ const getters = {
         let index = 0;
         return state.cards.slice(index, index + state.cards.length);
     },
-    // changeStatus: state=> {
-        
-    // },
     getDisplayPersons: (state, getters, rootState) => {
         return rootState.filterPersons;
     },
@@ -60,29 +56,6 @@ const getters = {
         Math.ceil(getters.cardsFilteredByStatus.length / state.pageSize),
     // categories: state=> ["1",...state.cards],
 }
-
-
-// mutations: {
-//     addProduct(state, product) {
-//         let line  = state.lines.find(line => line.product.id == product.id);
-//         if (line != null) {
-//             line.quantity++;
-//         } else {
-//             state.lines.push({ product: product, quantity:1 });
-//         }
-//     },
-
-
-// const actions = {
-//     getData(context){
-//         let ajax = ajaxx();
-//         ajax.get('getViolationData').then(data=>{
-//             let violation = data.data;
-//             console.log(violation);
-//             context.commit("setData",{violation});
-//         });
-//     }
-// }
 
 const actions = {
     getData({ commit, state }, data) {
@@ -95,7 +68,10 @@ const actions = {
     },
     changeStatus({ commit, state}, data) {
         commit('changeStatus',data);
-    }
+    },
+    updateShowImg({commit,state},obj){
+        commit('updateShowImg',obj);
+    },
 }
 
 export default {

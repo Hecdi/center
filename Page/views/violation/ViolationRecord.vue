@@ -5,8 +5,6 @@
 </template>
 
 <script>
-// import wait from "./Card.vue";
-// import all from "./Card.vue";
 import TopBar from './TopBar.vue';
 import ajaxx from 'ajax';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
@@ -15,15 +13,12 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
     export default {
         name:'ViolationRecord',
         components: {
-            // wait,
-            // all,
             TopBar,
         },
         computed:{
             ...mapGetters({ cards:"processedCards"})
         },
         data() {
-            // debugger;
             return {
                 activeName: 'second',
                 status: "全部",

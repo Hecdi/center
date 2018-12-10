@@ -8,17 +8,18 @@ const initFilter = {
         movement:'0',
         flightStatus:null,
         type:null,
-        region:null,
+        flightIndicator:null,
         searchKey:null,
+		searchPersonKey:null,
 }
 const state = {
     rows: [],
     checkedRow: null,
     checkedTask: null,
     personSearchKey:null,
-	dialogAddTaskVisible:false,
+    dialogAddTaskVisible:false,
+	dialogTaskDetailVisible:false,
     persons:[],
-	allPersons:[{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},{staffName:'张三',taskNumber:2,staffId:123,jobFlag:'航前'},],
     filterPersons:[],
 	timeLimitOpts:[{
           value: '10',
@@ -41,6 +42,12 @@ const state = {
         }],
     mainList:[],
     filterOption:{...initFilter},
+    flights: [],
+    tempWorkerList: [],
+    tempGuaranteeList: [],
+	currentTask:{},
+    taskDetail:{},
+    homeTable: [],
 }
 
 const mutations = {
@@ -54,18 +61,42 @@ const mutations = {
     },
     updateFilter(state,data){
         state.filterOption[data.name] = data.filterOption;
+		if(data.name != 'searchPersonKey' && state.filterOption.searchPersonKey){
+			state.filterOption.searchPersonKey = null;
+		}
 		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     resetFilter(state){
         state.filterOption={...initFilter};
+		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     setMainListData(state,data){
         state.mainList = data;
+        console.log(data);
+    },
+    setHomeTableData(state,data){
+        state.homeTable = data;
+        // state.homeTable.splice(0, state['homeTable'].length)
+        // each(data,(item)=>{
+		// 		state['homeTable'].push(item);
+		// 	}
+		// );
     },
 	update(state, obj){
 		mapKeys(obj,(v,k)=>{
 			state[k]=v;
 		});
+    },
+    setFlightData(state, data) {
+        state.flights = data;
+    },
+    setTempList(state,data){
+        state.tempWorkerList = data.workerList;
+        state.tempGuaranteeList = data.guaranteeList;
+    },
+	setCurrentTask(state,data){
+		state.currentTask = data;
+		state.dialogTaskDetailVisible = true;
 	}
 }
 
@@ -91,13 +122,22 @@ const actions = {
         //let data = [{region:'A区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:123,bb:2366664}]},{region:'B区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:1243563,bb:23674544}]},{region:'C区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:324,bb:23576574}]}];
         commit('setMainListData',data); 
     },
+    getHomeTableData({commit,state},data){
+        commit('setHomeTableData',data);
+    },
     getPersons({commit, state}, data){
 		data = data || [];
         commit('getPersons', data);
     },
 	update({commit, state},obj){
 		commit('update', obj);
-	}
+    },
+    getFlightSearchData({ commit, state }, data) {
+        commit('setFlightData', data);
+    },
+    getTaskModelList({ commit, state}, data) {
+        commit('setTempList',data);
+    }
 }
 
 

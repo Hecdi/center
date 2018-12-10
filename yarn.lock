@@ -2116,6 +2116,12 @@ clean-css@4.2.x:
   dependencies:
     source-map "~0.6.0"
 
+clean-webpack-plugin@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/clean-webpack-plugin/download/clean-webpack-plugin-1.0.0.tgz#f184b9c26d12983d639828e0548ae2080e84b6a7"
+  dependencies:
+    rimraf "^2.6.1"
+
 cli-cursor@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/cli-cursor/download/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
@@ -2867,6 +2873,12 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
+
+echarts@^4.2.0-rc.2:
+  version "4.2.0-rc.2"
+  resolved "http://registry.npm.taobao.org/echarts/download/echarts-4.2.0-rc.2.tgz#6a98397aafa81b65cbf0bc15d9afdbfb244df91e"
+  dependencies:
+    zrender "4.0.5"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -7763,3 +7775,7 @@ yargs@^7.0.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+zrender@4.0.5:
+  version "4.0.5"
+  resolved "http://registry.npm.taobao.org/zrender/download/zrender-4.0.5.tgz#6e8f738971ce2cd624aac82b2156729b1c0e5a82"

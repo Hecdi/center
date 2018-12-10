@@ -10,13 +10,17 @@ body > .el-container {
   position:relative;
   .bg-person{
 	  background:$color-bg-person;
-  }
+	}
+	.active-person {
+		background: #2e67f6;
+		color: #fff !important;
+	}
   .personList{
 	  padding:0 10px;
 	  overflow:hidden;
 	  .person-panel{
 		  padding:2px 6px !important;
-	  }
+		}
   }
   .person{
 	  color:$color-person;
@@ -107,21 +111,126 @@ body > .el-container {
         .el-radio-group, .el-input{
           margin-right:10px;
         }
-      }
+			}
+			.is-table {
+				float: left;
+			}
       .legend-panel{
         text-align: right;
         justify-content: flex-end;
-        background-color: #f1f1f1;
-      }
+				background-color: #f1f1f1;	
+			}
+			.icon-search {
+				&:before {
+					content: "\e663"
+				}
+			}
     }
     .el-main{
       display: flex;
       flex-direction:column;
-      padding-top:0;
+			padding-top:0;
+			.flight-table {
+					thead>.cell {
+						background-color: #666;
+						height: 30px;
+						line-height: 30px;
+						color: #fff;
+				}
+				.is-leaf {
+						background: #666;
+						color: #fff;
+						height: 28px;
+						line-height: 28px;
+						padding: 2px 0;
+						text-align: center;
+				} 
+				tr {
+						height: 28px;
+						line-height: 28px;
+						padding: 2px;
+						text-align: center;
+						border: 1px solid transparent;
+				}
+				.el-tag--vl-people {
+						width:48px;
+						// height:20px;
+						color: #fff;
+						background-color:#ff8500; 
+				}
+				.el-tag--vl-car {
+						width:48px;
+						// height:20px;
+						color: #fff;
+						background-color:#0096ff; 
+				}
+				.el-tag--vl-company {
+						width:48px;
+						// height:20px;
+						color: #fff;
+						background-color:#a346bc; 
+				}
+				.el-tag--vl-tool {
+						width:48px;
+						// height:20px;
+						color: #fff;
+						background-color:#677f95; 
+				}
+				.el-table--enable-row-hover .el-table__body tr>td {
+						padding: 6px 0;
+						border-top: 1px solid transparent;
+						border-bottom: 1px solid transparent;
+						text-align: center;
+				}
+				.el-table--enable-row-hover .el-table__body tr:hover>td {
+						background-color: #e3f3fc !important;
+						border-top: 1px solid #0096ff;
+						border-bottom: 1px solid #0096ff;
+				}
+				.el-table .cell {
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+				}
+			}
       .mainList{
         flex:1;
         background-color:white;
         padding:6px;
+		.dialogTaskDetail{
+			.taskInfo{
+				margin-bottom:20px;
+			}
+			.taskPersonList{
+			  .taskDetailList{
+				  text-align:left;
+				  span{
+					font-weight:bold;
+				  }
+			  }
+				.el-col{
+					text-align:left;
+					.taskPersonBtn{
+						font-size:12px;
+						margin-left:10px;
+						margin-right:0;
+						margin-bottom:10px;
+						background: #DBE9FE;
+						border: 1px solid #7FB1FF;
+						border-radius: 3px;
+						padding:6px 12px;
+						color:#1F407B;
+						i{
+							color:#009eff;
+						}
+						&.active,&:hover{
+							background-color:#0064FF;
+							color:#fff;
+						}
+					}
+				}
+			}
+		}
         > .el-row{
           display: flex;
           margin-bottom:20px;
@@ -158,6 +267,22 @@ body > .el-container {
 				  cursor:pointer;
 				  .el-card__body{
 					padding:0;
+					position:relative;
+					.flight-status{
+						position:absolute;
+						right:0;
+						top:0;
+						width:60px;
+						height:20px;
+						line-height:20px;
+						background-color:#31b4f1;
+						color:#fff;
+						font-size:12px;
+						text-align:center;
+						transform: rotateZ(45deg);
+						top: 5px;
+						right: -15px;
+					}
 				  }
 				  .el-aside{
 					  background-color:white;

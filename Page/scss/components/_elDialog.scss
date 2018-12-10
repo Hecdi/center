@@ -36,6 +36,26 @@
 				margin:6px 0;
 				background-color:#ebebeb;
 			}
+			.task-group {
+				display: inline;
+			}
+			.task-type {
+				height: 30px;
+				line-height: 30px;
+				padding:0 10px;
+				margin-right: 10px;
+				display: inline-block;
+				background-color: #fff;
+				border-radius: 4px;
+				border: 1px solid #dcdfe6;
+				color: #606266;
+				cursor: pointer;
+			}
+			.active-task {
+				background: #2E67F6 !important;
+				color: #fff;
+				border: 1px solid #2E67F6;
+			}
 			.addTaskType{
 				width:110px;
 				color:#8b7858;

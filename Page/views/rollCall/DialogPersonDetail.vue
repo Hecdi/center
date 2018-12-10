@@ -1,9 +1,9 @@
 <template>
 	<el-dialog class="dialogPersonDetail" center :title=currentPerson.staffName
-:visible.sync="dialogAddTaskVisible" width="1000px" :before-close="handleClose"
+:visible.sync="dialogPersonDetailVisible" width="1000px" :before-close="handleClose"
 >
 		<el-row :gutter="10" class="row">
-			<el-checkbox v-model="groupLeader" checked="groupLeader" true-label=1 false-label=-1>设为小组长</el-checkbox>
+			<el-checkbox v-model="groupLeader"  :true-label=1 :false-label=-1 >设为小组长</el-checkbox>
 		</el-row>
 		<el-row :gutter="10" class="row">
 			<el-radio-group v-model="nonArrivalReason">
@@ -12,6 +12,7 @@
 				<el-radio :label="3">缺席</el-radio>
 				<el-radio :label="4">下班</el-radio>
 				<el-radio :label="5">换人</el-radio>
+				<el-radio label="">正常上班</el-radio>
 			</el-radio-group>
 		</el-row>
 		<el-row v-if="nonArrivalReason == 5">
@@ -33,7 +34,7 @@
 		</el-row>
 		<span slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="submit" >提交</el-button>
-			<el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
+			<el-button @click="dialogPersonDetailVisible = false;">取 消</el-button>
 		</span>
 	</el-dialog>
 </template>
@@ -52,12 +53,21 @@ export default {
 		}
 	},
 	methods: {
-		submit(val){
-			console.log(val);
+		submit(){
+			if((this.nonArrivalReason == 1 || this.nonArrivalReason ==2)
+			&& (!this.currentPerson.leaveEndTime || !this.currentPerson.leaveStartTime)){
+				this.$store.dispatch('rollCall/updateObj',{currentPerson:{
+					leaveEndTime:this.leaveTime[1],
+					leaveStartTime:this.leaveTime[0],
+				}});
+			}
+			this.$store.commit('rollCall/setPerson');
 		},
-		getChecked(person){
-			console.log(person);
-			this.$store.dispatch('rollCall/update',{currentPerson:person});
+		getChecked({workerName,workerId}){
+			this.$store.dispatch(`rollCall/updateObj`,{currentPerson:{
+				workerName,
+				workerId,
+			}});
 		},
 		checked(flag){
 			console.log(flag);
@@ -69,24 +79,15 @@ export default {
 				})
 				.catch((_) => {});
 		},
-		show() {},
-		handleClick(){},
-		handleSelectionChange(val) {
-			this.multipleSelection = val;
-			console.log(this.multipleSelection);
-		},
-		handleRowClick(row) {
-			this.$refs.multipleTable.toggleRowSelection(row);
-		},
 	},
 	computed: {
 		leaveTime:{
 			get(){
-				return [this.currentPerson.leaveStartTime?this.currentPerson.leaveStartTime:moment(),this.currentPerson.leaveEndTime?this.currentPerson.leaveEndTime:moment().add(8,'h')];
+				return [this.currentPerson.leaveStartTime?this.currentPerson.leaveStartTime:moment().valueOf(),this.currentPerson.leaveEndTime?this.currentPerson.leaveEndTime:moment().add(8,'h').valueOf()];
 			},
 			set(val){
 				console.log(val);
-				this.$store.dispatch('rollCall/update',{currentPerson:{
+				this.$store.dispatch('rollCall/updateObj',{currentPerson:{
 					leaveEndTime:val[1],
 					leaveStartTime:val[0],
 				}});
@@ -97,7 +98,7 @@ export default {
 				return this.currentPerson.groupLeader;
 			},
 			set(val){
-				this.$store.dispatch('rollCall/update',{currentPerson:{groupLeader:val}});
+				this.$store.dispatch('rollCall/updateObj',{currentPerson:{groupLeader:val}});
 			}
 		},
 		nonArrivalReason: {
@@ -117,7 +118,7 @@ export default {
 					param.workerId = '';
 				}
 				console.log(val);
-				this.$store.dispatch('rollCall/update',{currentPerson:param});
+				this.$store.dispatch('rollCall/updateObj',{currentPerson:param});
 			}
 			
 		},
@@ -130,15 +131,15 @@ export default {
 				this.$store.dispatch('rollCall/update',{currentTeam: val});
 			}
 		},
-		dialogAddTaskVisible: {
+		dialogPersonDetailVisible: {
 			get() {
-				return this.dialogPersonDetailVisible;
+				return this.$store.state.rollCall.dialogPersonDetailVisible;
 			},
 			set() {
 				this.$store.dispatch(`rollCall/update`, { dialogPersonDetailVisible: false });
 			},
 		},
-		...mapState('rollCall', ['currentPerson', 'dialogPersonDetailVisible','team','currentTeam']),
+		...mapState('rollCall', ['currentPerson', 'team','currentTeam']),
 	},
 	components:{
 		PersonSelect,	

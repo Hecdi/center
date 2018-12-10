@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.dev.js --Program schedule"
+    "dev": "webpack-dev-server --open --config webpack.dev.js --Program schedule",
+    "release": "webpack --config webpack.prod.js --Program schedule",
+    "dev.deploy": "scp -r release/website/* root@173.100.1.50:/soft/apache-tomcat-8.5.34/webapps/wise/",
+    "dev.release.deploy": "yarn release && yarn dev.deploy"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.6",
     "axios": "^0.18.0",
     "bluebird": "^3.5.3",
     "debug": "^4.1.0",
+    "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.11",
     "lokijs": "^1.5.5",
@@ -34,6 +38,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-2": "6.24.1",
     "babel-preset-vue": "^2.0.2",
+    "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "cssnano": "^4.1.7",
