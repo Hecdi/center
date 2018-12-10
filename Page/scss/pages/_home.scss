@@ -104,7 +104,8 @@ body > .el-container {
       .el-row{
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
+				align-items: center;
+				margin-top: 10px;
         .el-input{
           width:auto;
         }
