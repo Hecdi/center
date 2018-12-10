@@ -25,30 +25,29 @@ class="personList"
 :data-id="worker.staffId"
 >
                 {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
-								<div class="taskNum">{{ worker.taskNumber }}</div>
-							</div>
-						</el-col>
-					</el-row>
-				</el-row>
-				<div class="placeHolder" />
-			</div>
-			<div @click="handleToggle" class="toggleBtn"
-><i class="el-icon-d-arrow-left" /></div>
-		</el-aside>
+                <div class="taskNum">{{ worker.taskNumber }}</div>
+              </div>
+            </el-col>
+          </el-row>
+        </el-row>
+        <div class="placeHolder"/>
+      </div>
+      <div @click="handleToggle" class="toggleBtn">
+        <i class="el-icon-d-arrow-left"/>
+      </div>
+    </el-aside>
     <el-container>
-      <el-header 
-class="home-mian-header" 
-height="auto">
-				<el-row>
-					<el-radio-group v-model="taskStatus">
+      <el-header class="home-mian-header" height="auto">
+        <el-row>
+          <el-radio-group v-model="taskStatus">
             <el-radio-button label="1">未完成</el-radio-button>
             <el-radio-button label="6">已完成</el-radio-button>
-						<el-radio-button label="0">全部</el-radio-button>
+            <el-radio-button label="0">全部</el-radio-button>
           </el-radio-group>
           <el-radio-group v-model="type">
             <el-radio-button label="area">区域</el-radio-button>
             <el-radio-button label="time">时间</el-radio-button>
-					</el-radio-group>
+          </el-radio-group>
           <el-radio-group v-model="movement">
             <el-radio-button label=0>所有</el-radio-button>
 			<el-radio-button label="A">进</el-radio-button>
@@ -76,58 +75,109 @@ size="medium" icon="el-icon-search">任务交接</el-button>
 					<el-button type="primary" size="medium" 
 icon="el-icon-search">冲突检测</el-button>
         </el-row>
+		<span @click="handleTable" class="is-table">
+			<i class="el-icon-star-on" v-if="!isTable" ></i>
+			<i v-else class="el-icon-setting" ></i>
+		</span>
         <el-row class="legend-panel">
-					<Legend data="未发布" iconColor="grey" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="已发布" iconColor="#2a2b2c" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="已受领" iconColor="pink" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="已到位" iconColor="green" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="进行中" iconColor="yellow" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="已完成" iconColor="#7f4832" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="取消" iconColor="blue" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
-					<Legend data="警告" iconColor="black" 
-iconSize="16px" fontSize="16px" icon="el-icon-share" color="red"
-/>
+         <Legend
+            data="未发布"
+            iconColor="grey"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="已发布"
+            iconColor="#2a2b2c"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="已受领"
+            iconColor="pink"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="已到位"
+            iconColor="green"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="进行中"
+            iconColor="yellow"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="已完成"
+            iconColor="#7f4832"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="取消"
+            iconColor="blue"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
+         <Legend
+            data="警告"
+            iconColor="black"
+            iconSize="16px"
+            fontSize="16px"
+            icon="el-icon-share"
+            color="red"
+          />
         </el-row>
       </el-header>
-			<el-main> <MainList /> </el-main>
-		</el-container>
-		<MessageBtn :message-num="getTotal()" />
-		<UrgentReportBtn :message-num="getTotal()" />
-		<DialogAddTask />
+      <el-main v-if="!isTable">
+        <MainList/>
+      </el-main>
+	  <el-main v-else>
+        <TableList/>
+      </el-main>
+    </el-container>
+    <MessageBtn :message-num="getTotal()"/>
+    <UrgentReportBtn :message-num="getTotal()"/>
+    <DialogAddTask/>
   </el-container>
 </template>
 
 <script>
 // @ is an alias to /src
 /*import SearchInput from '../../components/SearchInput.vue';*/
-import Legend from 'Legend.vue';
-import MainList from './MainList.vue';
-import MessageBtn from 'MessageBtn.vue';
-import UrgentReportBtn from 'UrgentReportBtn.vue';
-import DialogAddTask from 'DialogAddTask.vue';
-import { sub, removeSub, pub } from 'postalControl';
+import Legend from "Legend.vue";
+import MainList from "./MainList.vue";
+import MessageBtn from "MessageBtn.vue";
+import UrgentReportBtn from "UrgentReportBtn.vue";
+import DialogAddTask from "DialogAddTask.vue";
+import TableList from "./TableList.vue";
+import { sub, removeSub, pub } from "postalControl";
 
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
 	name: 'Home',
 	data() {
 		return {
 			isHidden: false,
+			isTable: false,
 		};
 	},
 	methods: {
@@ -143,6 +193,9 @@ export default {
 		handleToggle() {
 			this.isHidden = !this.isHidden;
 		},
+		handleTable(){
+			this.isTable = !this.isTable;
+		},
 		getPersons(data) {
 			this.$store.dispatch('home/getPersons', data);
 		},
@@ -157,6 +210,9 @@ export default {
 				name : 'searchPersonKey',
 				filterOption:workerName,
 			})
+		},
+		getHomeTableData(data){
+			this.$store.dispatch('home/getHomeTableData',data);
 		},
 		reset() {
 			this.$store.dispatch(`home/resetFilter`, null);
@@ -235,10 +291,14 @@ export default {
 		UrgentReportBtn,
 		DialogAddTask,
 		Legend,
+		TableList,
 	},
 	beforeMount() {
 		sub('UI', 'Home.Task.Sync', (data) => {
 			this.getMainListData(data);
+		});
+		sub("UI",'Home.Table.Sync',(data)=> {
+			this.getHomeTableData(data);
 		});
 		sub('UI', 'Home.Area.Sync', (data) => {
 			this.getPersons(data);
