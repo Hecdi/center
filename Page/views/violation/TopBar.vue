@@ -37,16 +37,16 @@
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
                 <el-button @click="exportExcel" size="mini" type="primary">导出</el-button>
             </el-col>
-            <el-col :span="0">
+            <!-- <el-col :span="0">
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
-                <el-button @click="exportExcel" size="mini" type="primary">导出</el-button>
-            </el-col>
+                <el-button @clißk="exportExcel" size="mini" type="primary">导出</el-button>
+            </el-col> -->
         </el-row>
         <div class="dialog">
             <ShowImg/>
         </div>
         <div v-if="tabs!=='all'">
-            <Card :is="currentView" keep-alive :statusValue="currentView"/>
+            <Card/>
         </div>
         <div v-else>
             <all-table/>
@@ -133,14 +133,12 @@
                 let timeArr = this.time;
                 let startDate = timeArr[0];
                 let endDate = timeArr[1];
-                
-
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"violationCode":violationCode,"startDate":startDate,"endDate":endDate,"violationValue":inputSearch};
                 console.log(param);
                 console.log(params)
-                ajax.post('findByTimeAndCode', params).then((data) => {
+                ajax.post('getViolationDataForLike', params).then((data) => {
                     console.log(data);
                 });
 
@@ -151,21 +149,3 @@
         }
     } 
 </script>
-
-<style>
-.el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
-  
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
-</style>

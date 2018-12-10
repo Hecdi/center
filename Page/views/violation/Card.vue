@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="violation-card">
-        <el-col :span="5" v-for="c in filterCards" v-bind:key="c.id">
+        <el-col :span="5" v-for="c in waitItems" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
                     <i  :class="iconType(c.violationCodeName)" />
@@ -21,7 +21,7 @@
                 </div>
                 <div class="status" >
                     <el-button type="success" size="small" @click="submitStatus(c,1)">通过</el-button>
-                    <el-button type="danger" size="small" @click="changeStatus(c)" plain>不通过</el-button>
+                    <el-button type="danger" size="small" @click="submitStatus(c,2)" plain>不通过</el-button>
                 </div>
             </el-card>
 
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import { mapState,mapMutations } from 'vuex';
+    import { mapState,mapMutations,mapActions } from 'vuex';
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
     import ajaxx from 'ajax';
     import img from "../../assets/logo.png";
@@ -50,10 +50,11 @@
                 img: img,
                 dialogVisible: '',
                 picture: '',
+                waitItem: '',
             }
         },
         computed: {
-            ...mapState('violation',['filterCards','showImgDialog']),
+            ...mapState('violation',['filterCards','waitItems','showImgDialog']),
         },
         filters:{
             currency(value){
@@ -61,7 +62,10 @@
             }
         },
         methods:{
-            ...mapMutations({changeStatus:"violation/changeStatus"}),
+            ...mapActions({ 
+                getWaitData: "getWaitData",
+            }),
+            // ...mapMutations({changeStatus:"violation/changeStatus"}),
             handleChangeStatus(value){
                 this.changeStatus(value);
                 console.log(value);
@@ -72,13 +76,15 @@
                 let id = param.id;
                 let status = value;
                 let subParam = `{"id":"${id}","status":${status}}`;
+                let subParams = {"id":id,"status": status};
                 console.log(subParam);
-		    	ajax.post('updateState', subParam).then((data) => {
-                    console.log(data);
-                    ajax.get('getViolationData').then((data)=>{
-                    console.log(data);
+                console.log(subParams);
+		    	ajax.post('updateState', subParams).then((data) => {
+                    console.log(data);  
+                    if(data.responseCode == 1000){
+                        this.initWaitData()
+                    }  
                 })
-                });
             },
             iconType(value){
                 let condition = value;
@@ -109,7 +115,24 @@
             openShowImg() {
                 this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
                 console.log(this.picutre)
-		    },
+            },
+            getWaitData(value) {
+                this.$store.dispatch('violation/getWaitData',value);
+            },
+            initWaitData(){
+                 let ajax = ajaxx();
+                 ajax.get("getViolationByState").then((data)=>{
+                     if(data.responseCode == 1000){
+                         this.getWaitData(data.data);
+                     }
+                 })
+            },
+             created() {
+                this.initWaitData();
+            },
+        },
+        beforeMount(){
+            this.initWaitData();
         }
     }
 </script>
