@@ -111,11 +111,14 @@ body > .el-container {
         .el-radio-group, .el-input{
           margin-right:10px;
         }
-      }
+			}
+			.is-table {
+				float: left;
+			}
       .legend-panel{
         text-align: right;
         justify-content: flex-end;
-        background-color: #f1f1f1;
+				background-color: #f1f1f1;	
 			}
 			.icon-search {
 				&:before {

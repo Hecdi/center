@@ -81,7 +81,12 @@ size="medium" icon="el-icon-search">任务交接</el-button>
 icon="el-icon-search"
 >冲突检测</el-button>
         </el-row>
+		<span @click="handleTable" class="is-table">
+			<i class="el-icon-star-on" v-if="!isTable" ></i>
+			<i v-else class="el-icon-setting" ></i>
+		</span>
         <el-row class="legend-panel">
+		
          <Legend
             data="未发布"
             iconColor="grey"
@@ -148,8 +153,11 @@ icon="el-icon-search"
           />
         </el-row>
       </el-header>
-      <el-main>
+      <el-main v-if="!isTable">
         <MainList/>
+      </el-main>
+	  <el-main v-else>
+        <TableList/>
       </el-main>
     </el-container>
     <MessageBtn :message-num="getTotal()"/>
@@ -166,6 +174,7 @@ import MainList from "./MainList.vue";
 import MessageBtn from "MessageBtn.vue";
 import UrgentReportBtn from "UrgentReportBtn.vue";
 import DialogAddTask from "DialogAddTask.vue";
+import TableList from "./TableList.vue";
 import { sub, removeSub, pub } from "postalControl";
 
 import { mapState } from "vuex";
@@ -175,6 +184,7 @@ export default {
 	data() {
 		return {
 			isHidden: false,
+			isTable: false,
 		};
 	},
 	methods: {
@@ -190,11 +200,17 @@ export default {
 		handleToggle() {
 			this.isHidden = !this.isHidden;
 		},
+		handleTable(){
+			this.isTable = !this.isTable;
+		},
 		getPersons(data) {
 			this.$store.dispatch('home/getPersons', data);
 		},
 		getMainListData(data) {
 			this.$store.dispatch('home/getMainListData', data);
+		},
+		getHomeTableData(data){
+			this.$store.dispatch('home/getHomeTableData',data);
 		},
 		show(evt) {
 			console.log(evt.currentTarget.dataset.id);
@@ -276,10 +292,16 @@ export default {
 		UrgentReportBtn,
 		DialogAddTask,
 		Legend,
+		TableList,
 	},
 	beforeMount() {
 		sub('UI', 'Home.Task.Sync', (data) => {
+			console.log(data);
 			this.getMainListData(data);
+		});
+		sub("UI",'Home.Table.Sync',(data)=> {
+			console.log(data);
+			this.getHomeTableData(data);
 		});
 		sub('UI', 'Home.Area.Sync', (data) => {
 			this.getPersons(data);

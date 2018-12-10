@@ -45,7 +45,8 @@ const state = {
     tempWorkerList: [],
     tempGuaranteeList: [],
 	currentTask:{},
-	taskDetail:{},
+    taskDetail:{},
+    homeTable: [],
 }
 
 const mutations = {
@@ -67,6 +68,15 @@ const mutations = {
     },
     setMainListData(state,data){
         state.mainList = data;
+        console.log(data);
+    },
+    setHomeTableData(state,data){
+        state.homeTable = data;
+        // state.homeTable.splice(0, state['homeTable'].length)
+        // each(data,(item)=>{
+		// 		state['homeTable'].push(item);
+		// 	}
+		// );
     },
 	update(state, obj){
 		mapKeys(obj,(v,k)=>{
@@ -75,7 +85,6 @@ const mutations = {
     },
     setFlightData(state, data) {
         state.flights = data;
-        console.log(state);
     },
     setTempList(state,data){
         state.tempWorkerList = data.workerList;
@@ -108,6 +117,9 @@ const actions = {
     getMainListData({commit,state}, data){
         //let data = [{region:'A区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:123,bb:2366664}]},{region:'B区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:1243563,bb:23674544}]},{region:'C区',persons:['招呼','三大','撒的空间','时刻点'],tasks:[{aaa:324,bb:23576574}]}];
         commit('setMainListData',data); 
+    },
+    getHomeTableData({commit,state},data){
+        commit('setHomeTableData',data);
     },
     getPersons({commit, state}, data){
 		data = data || [];
