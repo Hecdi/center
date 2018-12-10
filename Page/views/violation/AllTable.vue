@@ -1,7 +1,8 @@
 <template>
   <div class="all-table">
     <el-table :data="cards" stripe style="width: 100%"
-    :cell-class-name="violationTypeBg">
+    :cell-class-name="violationTypeBg" 
+    >
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
       <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
       <el-table-column
