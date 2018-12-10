@@ -3,44 +3,103 @@
 	padding:10px 25px;
 	background-color:#e4e4e4;
 	overflow:scroll;
-	.el-card__body{
-		height:125px;
-		section{
-			height:22px;
-		}
-	}
 	.Row1{
 		display:flex;
 		flex-direction:row;
-		align-items:baseline;
+		align-items:center;
 		position:relative;
-	}   
+		margin-top:10px;
+	}
+	.icon-feiji{
+		color:#409EFF;
+		transform:rotateZ(-90deg);
+		font-size:14px;
+	}
 	.No{
 		padding-left:5px;
+		width:90px;
+		height:20px;
+		font-weight:bold;
 	}
 	.Dname{
 		position:absolute;
 		right:0px;
 		background-color:#50b7f7;
+		color:#FFFFFF;
 		text-align:center;
 		white-space:nowrap;
+		max-width:150px;
+		height:20px;
+		line-height:20px;
+		font-size:12px;
+		border-radius:3px;
+		padding:0 6px;
 	}
 	.Row2{
-		white-space:nowrap;
+		display:flex;
+		flex-direction:row;
+		align-items:center;
+		color:#666666;
+		position:relative;
+		font-size:12px;
+		margin-top:9px;
+	}
+	.icon-user{
+		font-size:12px;
+	}
+	.Sname{
+		height:14px;
+		padding-left:6px;
+		font-weight:bold;
+	}
+	.Dtime{
+		position:absolute;
+		right:0px;
+		height:14px;
+		font-weight:bold;
 	}
 	.Row3{
 		display:flex;
 		flex-direction:row;
-		align-items:baseline;
+		align-items:center;
+		margin-top:15px;
 	}
-	.Row4{
-		display:flex;
-		flex-direction:row;
-		align-items:baseline;
+	.icon-neirongguanli{
+		color:#808CAA;
+		font-size:13px;
+	}
+	.Content{
+		margin:0;
+	    text-overflow:ellipsis;
+		white-space:nowrap;
+		overflow:hidden;
+		height:15px;
+		line-height:15px;
+		font-size:14px;
+		font-weight:bold;
+		padding-left:5px;
 	}
 	.el-col{
 		margin-top:2.5px;
 		margin-bottom:2.5px;
+	}
+	.el-card{
+		height:129px;
+	}
+	.el-card_body{
+		padding-left:10px;
+	}
+	.Row4{
+		height:15px;
+		line-height:15px;
+		font-size:14px;
+		padding-left:18px;
+	}
+	.Yesphoto{
+		color:#0064FF;
+	}
+	.Nophoto{
+		color:#999999;
 	}
 }
 

@@ -1,28 +1,42 @@
 <template>
-	<section class="urgentReport">
+	<section class="urgentReport" >
 		<el-row :gutter="5" id='card'>
 			<el-col :span="4" v-for="site in sites" :key="site.flightTaskId" >
 				<el-card>
 						<section class="Row1">
-							<i class="el-icon-view"></i>
+							<i class="iconfont icon-feiji"></i>
 							<div class="No">{{site.flightNo}}</div>
 							<div class="Dname">{{site.deviationItemName}}</div>
 						</section>
-						<div class="Row2">{{site.remarks}}</div>
-						<section class="Row3">
-							<i class="el-icon-caret-right"></i>
+						<section class="Row2">
+							<i class="iconfont icon-user"></i>
 							<div class="Sname">{{site.staffName}}</div>
-						</section>
-						<section class="Row4">
-							<i class="el-icon-time"></i>
 							<div class="Dtime">{{site.deviateTime}}</div>
 						</section>
-						<div class="Row5">
-							<i class="el-icon-message"></i>
-						</div>
-				</el-card>
-			</el-col>	
-		</el-row>
+						<section class="Row3">
+							<i class="iconfont icon-neirongguanli"></i>
+							<p class="Content" :title="site.remarks">{{site.remarks}}</p>
+						</section>
+						<section class="Row4">
+							<div v-if="site.imgFile" class="Yesphoto">
+								<el-button type="text" @click="dialogVisible = true">
+									图片详情>
+								</el-button>
+								<el-dialog 
+									title="提示"
+									:visible.sync="dialogVisible">
+									<el-carousel height="150px">
+										<el-carousel-item  :showImg="site.imgFile">
+											<img :src="showImg" />
+										</el-carousel-item>
+									</el-carousel>
+								</el-dialog>
+							</div>
+							<p v-else class="Nophoto">暂无图片</p>
+						</section>
+					</el-card>
+				</el-col>	
+			</el-row>
 	</section>
 </template>
 
@@ -35,6 +49,8 @@ import {formatDate} from "date.js";
 		data(){
 			return {
 				sites:[],
+				dialogVisible:false,
+				showImg: '',
 			}
 		},
 		methods:{
@@ -54,24 +70,28 @@ import {formatDate} from "date.js";
 		},
 		beforeMount(){
 			let ajax = ajaxx();
-		   ajax.get('urgentReport').then(data =>{
+			 ajax.get('urgentReport').then(data =>{
 					console.log(data);
 					this.getData(data.data);
 
 					});
-		   /* ajax.get('urgentReport').then((data)=>{*/
+		  /*ajax.get('urgentReport').then((data)=>{*/
 				/*data = [*/
-					 /*{'undefined1':'撤桥',*/
-					  /*'undefined2':'航后',*/
-					  /*'deviationitemName':'EU2280',*/
+					 /*{'deviationItemName':'撤桥',*/
+					  /*'remarks':'航后',*/
+					  /*'flightNo':'EU2280',*/
 					  /*'staffName':'leo',*/
-					  /*'deviateTime':'2018-12-03'*/
+					  /*'deviateTime':1544075290,*/
+					  /*'conTent':'这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
+					  /*'img':'aaaaaasbbb',*/
 					 /*},*/
-					 /*{'undefined1':'撤桥',*/
-					  /*'undefined2':'航后',*/
-					  /*'deviationitemName':'EU2280',*/
+					 /*{'deviationItemName':'撤桥',*/
+					  /*'remarks':'航后',*/
+					  /*'flightNo':'EU2280',*/
 					  /*'staffName':'leo',*/
-					  /*'deviateTime':'2018-12-03'*/
+					  /*'deviateTime':1544075290,*/
+					  /*'conTent':'这是很长很长的内容很长很长这是很长很长的内容很长很长'*/
+
 					 /*}*/
 				/*];*/
 				/*this.getData(data);*/
