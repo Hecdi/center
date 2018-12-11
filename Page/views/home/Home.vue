@@ -213,6 +213,7 @@
 		</el-popover>
 		<!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
 		<DialogAddTask/>
+		<dialogTaskHandover/>
 		<DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
 		<DialogAlert :messages="messageAlerts"/>
 	</el-container>
@@ -228,6 +229,7 @@
 	import DialogPersonSetting from "./DialogPersonSetting.vue";
 	import DialogAlert from "./DialogAlert.vue";
 	import TableList from "./TableList.vue";
+	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
 
 	import { mapState, mapGetters } from "vuex";
@@ -247,6 +249,9 @@
 		methods: {
 			openAddTask() {
 				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
+			},
+			openTaskHandover(){
+				this.$store.dispatch(`home/updateTaskHandover`, {dialogTaskHandover: true});
 			},
 			showMessageBox() {
 				console.log(123);
@@ -392,6 +397,7 @@
 			MainList,
 			MessageBtn,
 			DialogAddTask,
+			dialogTaskHandover,
 			Legend,
 			TableList,
 			DialogPersonSetting,
