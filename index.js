@@ -30,6 +30,7 @@ router.beforeEach((to, from, next) => {
 			remote.setGlobal("token",localStorage.getItem('token'));
 			remote.setGlobal("userInfo",localStorage.getItem('userInfo'));
 			remote.setGlobal("depId",localStorage.getItem('depId'));
+			initWorker();
            next(
             //    {path: '/'}
            );
@@ -45,4 +46,3 @@ new Vue({
 	render: h => h(app)
 }).$mount("#app");
 
-initWorker();
