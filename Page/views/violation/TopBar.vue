@@ -3,7 +3,7 @@
         <el-row class="tooltip">
             <el-col :span="5">
                 <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核</button>
-                <button class="tab-btn all" @click="toggleTabs('all')" v-bind:class="{ 'active-tab':tabActive == 'all'}">全部</button>
+                <button class="tab-btn all"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
             </el-col>
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
@@ -61,8 +61,10 @@
     import AllTable from "./AllTable.vue";
     import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
-    import { mapMutations } from 'vuex';
+    import { mapMutations, mapActions } from 'vuex';
     import ajaxx from 'ajax';
+    import moment from 'moment';
+
 
     export default {
         components: {
@@ -98,6 +100,9 @@
         },
         methods: {
             // ...mapMutations(["setCurrentStatus"]),
+             ...mapActions({
+      getData: "getData"
+    }),
             onSubmit() {
               console.log('submit!');
             },
@@ -127,21 +132,50 @@
             searchAll($event){
                 console.log($event.target.value);
             },
+             getData(data) {
+                this.$store.dispatch("violation/getData", data);
+            },
             exportExcel(){
                 let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
-                let startDate = timeArr[0];
-                let endDate = timeArr[1];
+                let startDate;
+                let endDate;
+                if(timeArr){
+                    if(timeArr[0] == timeArr[1]){
+                        startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+                        endDate = `${endDate} 23:59:59`;
+                    } else {
+                        startDate = timeArr[0];
+                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss")
+                        endDate = timeArr[1];
+                        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
+                    }  
+                } else {
+                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
-                let params = {"violationCode":violationCode,"startDate":startDate,"endDate":endDate,"violationValue":inputSearch};
+                let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
                 console.log(param);
                 console.log(params)
                 ajax.post('getViolationDataForLike', params).then((data) => {
                     console.log(data);
+                    this.getData(data);
                 });
 
+            },
+            refreshData() {
+                let ajax = ajaxx();
+                ajax.get("getViolationData").then(data => {
+                  let violation = data.data;
+                  console.log(violation);
+                  this.getData(data);
+                });
             },
             openShowImg() {
 			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });

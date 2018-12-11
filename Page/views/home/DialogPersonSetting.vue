@@ -112,10 +112,11 @@
 							}
 						]
 					}]; 
-				this.detail.splice(0, this.detail.length);
+				this.detail=data;
+				/*this.detail.splice(0, this.detail.length);
 				each(data, item=>{
 					this.detail.push(item);
-				})
+				})*/
 			},
 			setLeader(val){
 				this.leader = val;

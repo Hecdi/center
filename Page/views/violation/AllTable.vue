@@ -168,8 +168,11 @@ export default {
       });
     },
     created() {
-      this.getData();
+      this.refreshData();
     }
-  }
+  },
+  // beforeMount(){
+  //     this.getData();
+  // }
 };
 </script>
