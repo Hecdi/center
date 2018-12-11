@@ -219,7 +219,7 @@
     <DialogAddTask/>
 		<dialogTaskHandover/>
     <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
-	<DialogAlert/>
+	<DialogAlert :messages="messageAlerts"/>
   </el-container>
 </template>
 
@@ -246,7 +246,8 @@
 				isTable: false,
 				isDoubleClick: false,
 				currentPerson: null,
-				visible: false
+				visible: false,
+				messageAlerts:[],
 			};
 		},
 		methods: {
@@ -271,7 +272,7 @@
 			},
 			showAlert(){
 				this.$store.dispatch('home/update',{
-				dialogAlertVisible:true,	
+					dialogAlertVisible:true,	
 				});
 			},
 			getPersons(data) {
@@ -422,6 +423,10 @@
 			sub("UI", "Home.Event.Ready", () => {
 				this.sendTaskListFilter();
 			});
+			sub("UI","Home.Message.Alert",(data)=>{
+				this.messageAlerts.push(data);
+				this.showAlert();
+			});	
 			sub("UI", "All.ready", () => {
 				pub("Worker", "Home.Start", null);
 			});
