@@ -6,11 +6,15 @@ const state = {
     currentStatus: 1,
     filterCards: [],
     showImgDialog: false,
+    waitItems: [],
 }
 
 const mutations = {
     setData(state, data) {
         state.cards = data.data;
+    },
+    setWaitData(state,data) {
+        state.waitItems = data;
     },
     setCurrentStatus(state, status) {
         state.currentStatus = status;
@@ -61,6 +65,9 @@ const actions = {
     getData({ commit, state }, data) {
         commit('setData', data);
         commit('filterStatus', data);
+    },
+    getWaitData({ commit, state }, data) {
+        commit ('setWaitData',data);
     },
     setCurrentStatus({ commit, state }, data) {
         data = data || [];

@@ -37,10 +37,14 @@
 				 background-color:#E6E6E6;
 				 color:#666;
 				 padding:4px;
+				 padding-right:10px;
 				 i {
 					 font-size:20px;
 					 color:#fff;
 				 }	
+				 span {
+					 vertical-align: text-top;
+				 }
 			 }
 		 }
 		 .el-tabs__nav, .el-tabs__item,.el-tabs__header,.el-tabs__nav-wrap{
@@ -186,6 +190,7 @@
 			.cyan {
 				background-color:$color-bg-cyan;
 				color:#333;
+				border-top:1px solid #fff;
 			}
 			.center {
 				text-align:center;

@@ -30,8 +30,9 @@
             >
               <div
                 class="grid-content bg-person person"
-                @dblclick="showSetting"
-                @click="setPersonSearch(worker.staffName)"
+                :class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
+                @dblclick="showSetting(worker,person.areaName)"
+                @click="setPersonSearch(worker)"
                 :data-id="worker.staffId"
               >
                 {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
@@ -162,9 +163,61 @@
         <TableList/>
       </el-main>
     </el-container>
-    <MessageBtn :message-num="getTotal()"/>
-    <UrgentReportBtn :message-num="getTotal()"/>
+    <el-popover placement="top-end" offset="5" v-model="visible">
+      <el-tabs type="card" style="width:400px;">
+        <el-tab-pane>
+          <span slot="label">
+            <i class="el-icon-date"></i>警告
+          </span>
+          <el-row :gutter="4" v-for="(message, index) in getMessages(1)" :key="index">
+            <el-col :span="4" style="text-align:center;">
+              <span class="flightNo">{{message.flightNo}}</span>
+            </el-col>
+            <el-col :span="14">{{message.content}}</el-col>
+            <el-col :span="6" style="text-align:right;padding-right:6px;">
+              <el-button size="mini" type="danger">解除警告</el-button>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label">
+            <i class="el-icon-date"></i>偏离上报
+          </span>
+          <el-row :gutter="4" v-for="(message, index) in getMessages(2)" :key="index">
+            <el-col :span="4" style="text-align:center;">
+              <span class="flightNo">{{message.flightNo}}</span>
+            </el-col>
+            <el-col :span="20">{{message.content}}</el-col>
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label">
+            <i class="el-icon-date"></i>提醒
+          </span>
+          <el-row :gutter="4" v-for="(message, index) in getMessages(3)" :key="index">
+            <el-col :span="4" style="text-align:center;">
+              <span class="flightNo">{{message.flightNo}}</span>
+            </el-col>
+            <el-col :span="20">{{message.content}}</el-col>
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label">
+            <i class="el-icon-date"></i>日志
+          </span>
+          <el-row :gutter="4" v-for="(message, index) in getMessages(4)" :key="index">
+            <el-col :span="4" style="text-align:center;">
+              <span class="flightNo">{{message.flightNo}}</span>
+            </el-col>
+            <el-col :span="20">{{message.content}}</el-col>
+          </el-row>
+        </el-tab-pane>
+      </el-tabs>
+      <MessageBtn slot="reference" @click="showMessageBox"/>
+    </el-popover>
+    <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
     <DialogAddTask/>
+    <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
   </el-container>
 </template>
 
@@ -174,30 +227,34 @@
 import Legend from "Legend.vue";
 import MainList from "./MainList.vue";
 import MessageBtn from "MessageBtn.vue";
-import UrgentReportBtn from "UrgentReportBtn.vue";
 import DialogAddTask from "DialogAddTask.vue";
+import DialogPersonSetting from "./DialogPersonSetting.vue";
 import TableList from "./TableList.vue";
 import { sub, removeSub, pub } from "postalControl";
 
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Home",
   data() {
     return {
       isHidden: false,
-      isTable: false
+      isTable: false,
+      isDoubleClick: false,
+      currentPerson: null,
+      visible: false
     };
   },
   methods: {
     openAddTask() {
       this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
     },
+    showMessageBox() {
+      console.log(123);
+      this.visible = !this.visible;
+    },
     getTotal() {
       return 100;
-    },
-    handleClick(tab, event) {
-      console.log(tab, event);
     },
     handleToggle() {
       this.isHidden = !this.isHidden;
@@ -211,19 +268,33 @@ export default {
     getMainListData(data) {
       this.$store.dispatch("home/getMainListData", data);
     },
-    showSetting() {
-      console.log("double click");
+    showSetting(worker, areaName) {
+      this.isDoubleClick = true;
+      this.currentPerson = worker;
+      this.currentAreaName = areaName;
+      this.$store.dispatch(`home/update`, { dialogPersonSettingVisible: true });
     },
-    setPersonSearch(workerName) {
-      this.$store.dispatch("home/updateFilter", {
-        name: "searchPersonKey",
-        filterOption: workerName
-      });
+    setPersonSearch(worker) {
+      let _this = this;
+	console.log(worker);
+      _this.isDoubleClick = false;
+      window.setTimeout(function() {
+        if (!_this.isDoubleClick) {
+          _this.currentPerson = worker;
+          _this.$store.dispatch("home/updateFilter", {
+            name: "searchPersonKey",
+            filterOption: worker.workerName
+              ? worker.workerName
+              : worker.staffName
+          });
+        }
+      }, 300);
     },
     getHomeTableData(data) {
       this.$store.dispatch("home/getHomeTableData", data);
     },
     reset() {
+      this.currentPerson = null;
       this.$store.dispatch(`home/resetFilter`, null);
     },
     sendTaskListFilter() {
@@ -309,16 +380,17 @@ export default {
         });
       }
     },
-    ...mapState("home", ["filterPersons", "persons", "filterOption"])
+    ...mapState("home", ["filterPersons", "persons", "filterOption"]),
+    ...mapGetters("home", ["getMessages"])
   },
   components: {
     /*SearchInput,*/
     MainList,
     MessageBtn,
-    UrgentReportBtn,
     DialogAddTask,
     Legend,
-    TableList
+    TableList,
+    DialogPersonSetting
   },
   beforeMount() {
     sub("UI", "Home.Task.Sync", data => {

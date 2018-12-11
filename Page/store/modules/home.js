@@ -1,5 +1,5 @@
 import ajaxx from "ajax";
-import {get, mapKeys } from 'lodash';
+import {get, mapKeys ,filter } from 'lodash';
 import { sub, removeSub, pub} from 'postalControl';
 
 
@@ -19,8 +19,53 @@ const state = {
     personSearchKey:null,
     dialogAddTaskVisible:false,
 	dialogTaskDetailVisible:false,
+	dialogPersonSettingVisible:false,
     persons:[],
     filterPersons:[],
+	messages:[
+		{
+			taskId:'34234235435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:1,
+			alert:true,
+		},
+		{
+			taskId:'342342353244435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:2,
+			alert:true,
+		},
+		{
+			taskId:'34234235656565435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:3,
+			alert:false,
+		},
+		{
+			taskId:'34234234564564565435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:4,
+			alert:true,
+		},
+		{
+			taskId:'3423425465756756735435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:2,
+			alert:true,
+		},
+		{
+			taskId:'342454645634235435',
+			flightNo:'BL34345',
+			content:'45uksdjfsdjfksdf',
+			type:2,
+			alert: false,
+		},
+	],
 	timeLimitOpts:[{
           value: '10',
           label: '10分钟'
@@ -104,6 +149,11 @@ const getters = {
     getDisplayPersons:(state, getters, rootState) =>{
         return rootState.filterPersons;
     },
+	getMessages:(state, getters, rootState)=> (type) =>{
+		return filter(state.messages, item =>{
+				return item.type == type;
+		})
+	},
     // getFilter:(state, getters, rootState) =>{
     //     return {
     //         taskstatus:state => st
