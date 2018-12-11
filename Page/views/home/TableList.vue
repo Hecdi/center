@@ -16,9 +16,9 @@
         label="标志"
         width="50"
       >
-        <template slot-scope="scope">
+        <template >
               <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
-               <span class="iconfont icon-user">{{scope.row.flightIndicator}}</span>
+               <span class="iconfont icon-user">111</span>
          </template>
       </el-table-column>
       <el-table-column
@@ -102,13 +102,14 @@
       </el-table-column>
       <el-table-column
         prop="vip"
-        :formatter="deviateFormat"
+       
         label="偏离">
-        <template slot-scope="scope">
+        <template>
                <span class="iconfont icon-pianlishangbao1"></span>
          </template>
       </el-table-column>
     </el-table>
+    lzzisme
     </div>
   </template>
 
