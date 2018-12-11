@@ -83,7 +83,7 @@
             @click="openAddTask"
           >临时任务</el-button>
           <el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search" @click="showAlert">冲突检测</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
         </el-row>
         <span @click="handleTable" class="is-table">
           <i class="el-icon-star-on" v-if="!isTable"></i>
@@ -218,7 +218,7 @@
     <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
     <DialogAddTask/>
     <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
-	<DialogAlert/>
+	<DialogAlert :messages="messageAlerts"/>
   </el-container>
 </template>
 
@@ -244,7 +244,8 @@
 				isTable: false,
 				isDoubleClick: false,
 				currentPerson: null,
-				visible: false
+				visible: false,
+				messageAlerts:[],
 			};
 		},
 		methods: {
@@ -266,7 +267,7 @@
 			},
 			showAlert(){
 				this.$store.dispatch('home/update',{
-				dialogAlertVisible:true,	
+					dialogAlertVisible:true,	
 				});
 			},
 			getPersons(data) {
@@ -416,6 +417,10 @@
 			sub("UI", "Home.Event.Ready", () => {
 				this.sendTaskListFilter();
 			});
+			sub("UI","Home.Message.Alert",(data)=>{
+				this.messageAlerts.push(data);
+				this.showAlert();
+			});	
 			sub("UI", "All.ready", () => {
 				pub("Worker", "Home.Start", null);
 			});

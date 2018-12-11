@@ -6,6 +6,7 @@
     :visible.sync="dialogAlertVisible"
     width="1000px"
   >
+  <p v-for="(message, index) in messages" :key="index">{{message.content}}</p>
   </el-dialog>
 </template>
 <script>
@@ -17,11 +18,9 @@
 
 	export default {
 		name: "dialogAlert",
+		props:['messages'],
 		data() {
 			return {
-				leader:null,
-				checkedPanel:'set',
-				detail:[],
 			};
 		},
 		methods: {
@@ -33,7 +32,7 @@
 				},
 				set(){
 					this.$store.dispatch('home/update',{
-						dialogAlertVisible:true,	
+						dialogAlertVisible: false,	
 					});
 				}
 			},

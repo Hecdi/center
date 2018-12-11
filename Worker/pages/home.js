@@ -44,6 +44,9 @@ const homeInit = () => {
 			pub('UI','Home.Task.Sync', result);	
 		})
 	});
+	pub('UI','Home.Message.Alert',{
+		content:'324235345',
+	})
 	pub('UI','Home.Event.Ready',null);
 }
 export const initPage = () => {
