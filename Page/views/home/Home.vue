@@ -1,225 +1,221 @@
 <template>
-  <el-container class="home">
-    <el-aside :style="{ width: asideWith }">
-      <el-row v-if="!isHidden">
-        <el-col :span="24">
-          <el-input v-model="searchPerson" placeholder>
-            <i slot="suffix" class="el-input__icon el-icon-search"/>
-          </el-input>
-        </el-col>
-      </el-row>
-      <div class="panel" v-if="!isHidden">
-        <el-row
-          :gutter="20"
-          v-for="(person,index) in persons"
-          :key="person.areaId+index"
-          class="persons-panel"
-          style="margin:0;"
-        >
-          <el-col
-            :span="24"
-            v-if="person.workerList.length"
-            class="area-panel"
-          >{{ person.areaName }}</el-col>
-          <el-row :gutter="20" style="margin:0;" class="personList">
-            <el-col
-              :span="6"
-              v-for="worker in person.workerList"
-              :key="worker.staffId"
-              class="person-panel"
-            >
-              <div
-                class="grid-content bg-person person"
-                :class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
-                @dblclick="showSetting(worker,person.areaName)"
-                @click="setPersonSearch(worker)"
-                :data-id="worker.staffId"
-              >
-                {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
-                <div class="taskNum">{{ worker.taskNumber }}</div>
-              </div>
-            </el-col>
-          </el-row>
-        </el-row>
-        <div class="placeHolder"/>
-      </div>
-      <div @click="handleToggle" class="toggleBtn">
-        <i class="el-icon-d-arrow-left"/>
-      </div>
-    </el-aside>
-    <el-container>
-      <el-header class="home-mian-header" height="auto">
-        <el-row>
-          <el-radio-group v-model="taskStatus">
-            <el-radio-button label="1">未完成</el-radio-button>
-            <el-radio-button label="6">已完成</el-radio-button>
-            <el-radio-button label="0">全部</el-radio-button>
-          </el-radio-group>
-          <el-radio-group v-model="type">
-            <el-radio-button label="area">区域</el-radio-button>
-            <el-radio-button label="time">时间</el-radio-button>
-          </el-radio-group>
-          <el-radio-group v-model="movement">
-            <el-radio-button label="0">所有</el-radio-button>
-            <el-radio-button label="A">进</el-radio-button>
-            <el-radio-button label="D">离</el-radio-button>
-          </el-radio-group>
-          <el-radio-group v-model="flightStatus">
-            <el-radio-button label="前站起飞">前站起飞</el-radio-button>
-            <el-radio-button label="已登机">已登机</el-radio-button>
-          </el-radio-group>
-          <el-radio-group v-model="flightIndicator">
-            <el-radio-button label="D">国内</el-radio-button>
-            <el-radio-button label="I">国际</el-radio-button>
-          </el-radio-group>
-          <el-input v-model="search" placeholder>
-            <i slot="suffix" class="el-input__icon el-icon-search"/>
-          </el-input>
-          <el-button @click="reset" type="primary" size="medium" icon="iconfont icon-return1">重置</el-button>
-          <el-button
-            type="primary"
-            size="medium"
-            icon="iconfont icon-search"
-            @click="openAddTask"
-          >临时任务</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
-        </el-row>
-        <span @click="handleTable" class="is-table">
-          <i class="el-icon-star-on" v-if="!isTable"></i>
-          <i v-else class="el-icon-setting"></i>
-        </span>
-        <el-row class="legend-panel">
-          <Legend
-            data="未发布"
-            iconColor="grey"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="已发布"
-            iconColor="#2a2b2c"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="已受领"
-            iconColor="pink"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="已到位"
-            iconColor="green"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="进行中"
-            iconColor="yellow"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="已完成"
-            iconColor="#7f4832"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="取消"
-            iconColor="blue"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-          <Legend
-            data="警告"
-            iconColor="black"
-            iconSize="16px"
-            fontSize="16px"
-            icon="el-icon-share"
-            color="red"
-          />
-        </el-row>
-      </el-header>
-      <el-main v-if="!isTable">
-        <MainList/>
-      </el-main>
-      <el-main v-else>
-        <TableList/>
-      </el-main>
-    </el-container>
-    <el-popover placement="top-end" offset="5" v-model="visible">
-      <el-tabs type="card" style="width:400px;">
-        <el-tab-pane>
-          <span slot="label">
-            <i class="el-icon-date"></i>警告
-          </span>
-          <el-row :gutter="4" v-for="(message, index) in getMessages(1)" :key="index">
-            <el-col :span="4" style="text-align:center;">
-              <span class="flightNo">{{message.flightNo}}</span>
-            </el-col>
-            <el-col :span="14">{{message.content}}</el-col>
-            <el-col :span="6" style="text-align:right;padding-right:6px;">
-              <el-button size="mini" type="danger">解除警告</el-button>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane>
-          <span slot="label">
-            <i class="el-icon-date"></i>偏离上报
-          </span>
-          <el-row :gutter="4" v-for="(message, index) in getMessages(2)" :key="index">
-            <el-col :span="4" style="text-align:center;">
-              <span class="flightNo">{{message.flightNo}}</span>
-            </el-col>
-            <el-col :span="20">{{message.content}}</el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane>
-          <span slot="label">
-            <i class="el-icon-date"></i>提醒
-          </span>
-          <el-row :gutter="4" v-for="(message, index) in getMessages(3)" :key="index">
-            <el-col :span="4" style="text-align:center;">
-              <span class="flightNo">{{message.flightNo}}</span>
-            </el-col>
-            <el-col :span="20">{{message.content}}</el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane>
-          <span slot="label">
-            <i class="el-icon-date"></i>日志
-          </span>
-          <el-row :gutter="4" v-for="(message, index) in getMessages(4)" :key="index">
-            <el-col :span="4" style="text-align:center;">
-              <span class="flightNo">{{message.flightNo}}</span>
-            </el-col>
-            <el-col :span="20">{{message.content}}</el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
-      <MessageBtn slot="reference" @click="showMessageBox"/>
-    </el-popover>
-    <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
-    <DialogAddTask/>
-    <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
-	<DialogAlert :messages="messageAlerts"/>
-  </el-container>
+	<el-container class="home">
+		<el-aside :style="{ width: asideWith }">
+			<el-row v-if="!isHidden">
+				<el-col :span="24">
+					<el-input v-model="searchPerson" placeholder>
+						<i slot="suffix" class="el-input__icon el-icon-search"/>
+					</el-input>
+				</el-col>
+			</el-row>
+			<div class="panel" v-if="!isHidden">
+				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index"class="persons-panel"
+					style="margin:0;">
+					<el-col
+						:span="24"
+						v-if="person.workerList && person.workerList.length"
+						class="area-panel"
+						>{{ person.areaName }}
+					</el-col>
+					<el-row :gutter="20" style="margin:0;" class="personList">
+						<el-col
+							:span="6"
+							v-for="worker in person.workerList"
+							:key="worker.staffId"
+							class="person-panel"
+							>
+							<div
+								class="grid-content bg-person person"
+								:class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
+								@dblclick="showSetting(worker,person.areaName)"
+								@click="setPersonSearch(worker)"
+								:data-id="worker.staffId"
+								>
+								{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
+								<div class="taskNum">{{ worker.taskNumber }}</div>
+							</div>
+						</el-col>
+					</el-row>
+				</el-row>
+				<div class="placeHolder"/>
+				</div>
+				<div @click="handleToggle" class="toggleBtn">
+					<i class="el-icon-d-arrow-left"/>
+				</div>
+		</el-aside>
+		<el-container>
+			<el-header class="home-mian-header" height="auto">
+				<el-row>
+					<el-radio-group v-model="taskStatus">
+						<el-radio-button label="1">未完成</el-radio-button>
+						<el-radio-button label="6">已完成</el-radio-button>
+						<el-radio-button label="0">全部</el-radio-button>
+					</el-radio-group>
+					<el-radio-group v-model="type">
+						<el-radio-button label="area">区域</el-radio-button>
+						<el-radio-button label="time">时间</el-radio-button>
+					</el-radio-group>
+					<el-radio-group v-model="movement">
+						<el-radio-button label="0">所有</el-radio-button>
+						<el-radio-button label="A">进</el-radio-button>
+						<el-radio-button label="D">离</el-radio-button>
+					</el-radio-group>
+					<el-radio-group v-model="flightStatus">
+						<el-radio-button label="前站起飞">前站起飞</el-radio-button>
+						<el-radio-button label="已登机">已登机</el-radio-button>
+					</el-radio-group>
+					<el-radio-group v-model="flightIndicator">
+						<el-radio-button label="D">国内</el-radio-button>
+						<el-radio-button label="I">国际</el-radio-button>
+					</el-radio-group>
+					<el-input v-model="search" placeholder>
+						<i slot="suffix" class="el-input__icon el-icon-search"/>
+					</el-input>
+					<el-button @click="reset" type="primary" size="medium" icon="iconfont icon-return1">重置</el-button>
+					<el-button
+						type="primary"
+						size="medium"
+						icon="iconfont icon-search"
+						@click="openAddTask"
+						>临时任务</el-button>
+					<el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
+					<el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
+				</el-row>
+				<span @click="handleTable" class="is-table">
+					<i class="el-icon-star-on" v-if="!isTable"></i>
+					<i v-else class="el-icon-setting"></i>
+				</span>
+				<el-row class="legend-panel">
+					<Legend
+						data="未发布"
+						iconColor="grey"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="已发布"
+						iconColor="#2a2b2c"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="已受领"
+						iconColor="pink"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="已到位"
+						iconColor="green"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="进行中"
+						iconColor="yellow"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="已完成"
+						iconColor="#7f4832"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="取消"
+						iconColor="blue"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+					<Legend
+						data="警告"
+						iconColor="black"
+						iconSize="16px"
+						fontSize="16px"
+						icon="el-icon-share"
+						color="red"
+					/>
+				</el-row>
+			</el-header>
+			<el-main v-if="!isTable">
+				<MainList/>
+			</el-main>
+			<el-main v-else>
+				<TableList/>
+			</el-main>
+		</el-container>
+		<el-popover placement="top-end" offset="5" v-model="visible">
+			<el-tabs type="card" style="width:400px;">
+				<el-tab-pane>
+					<span slot="label">
+						<i class="el-icon-date"></i>警告
+					</span>
+					<el-row :gutter="4" v-for="(message, index) in getMessages(1)" :key="index">
+						<el-col :span="4" style="text-align:center;">
+							<span class="flightNo">{{message.flightNo}}</span>
+						</el-col>
+						<el-col :span="14">{{message.content}}</el-col>
+						<el-col :span="6" style="text-align:right;padding-right:6px;">
+							<el-button size="mini" type="danger">解除警告</el-button>
+						</el-col>
+					</el-row>
+				</el-tab-pane>
+				<el-tab-pane>
+					<span slot="label">
+						<i class="el-icon-date"></i>偏离上报
+					</span>
+					<el-row :gutter="4" v-for="(message, index) in getMessages(2)" :key="index">
+						<el-col :span="4" style="text-align:center;">
+							<span class="flightNo">{{message.flightNo}}</span>
+						</el-col>
+						<el-col :span="20">{{message.content}}</el-col>
+					</el-row>
+				</el-tab-pane>
+				<el-tab-pane>
+					<span slot="label">
+						<i class="el-icon-date"></i>提醒
+					</span>
+					<el-row :gutter="4" v-for="(message, index) in getMessages(3)" :key="index">
+						<el-col :span="4" style="text-align:center;">
+							<span class="flightNo">{{message.flightNo}}</span>
+						</el-col>
+						<el-col :span="20">{{message.content}}</el-col>
+					</el-row>
+				</el-tab-pane>
+				<el-tab-pane>
+					<span slot="label">
+						<i class="el-icon-date"></i>日志
+					</span>
+					<el-row :gutter="4" v-for="(message, index) in getMessages(4)" :key="index">
+						<el-col :span="4" style="text-align:center;">
+							<span class="flightNo">{{message.flightNo}}</span>
+						</el-col>
+						<el-col :span="20">{{message.content}}</el-col>
+					</el-row>
+				</el-tab-pane>
+			</el-tabs>
+			<MessageBtn slot="reference" @click="showMessageBox"/>
+		</el-popover>
+		<!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
+		<DialogAddTask/>
+		<DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
+		<DialogAlert :messages="messageAlerts"/>
+	</el-container>
 </template>
 
 <script>

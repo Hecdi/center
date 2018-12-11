@@ -11,7 +11,7 @@ var homeFilter={
 const homeInit = () => {
 	ajax.post('personList').then(d=>{
 		console.log(d);
-		saveToPersonDB(d.data).then( data => {
+		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
 				pub('UI','Home.Area.Sync', result);	
 				pub('UI','Home.Area.All', result);	
@@ -20,10 +20,10 @@ const homeInit = () => {
 	});
 	ajax.post('taskList').then(data=>{
 		console.log(data);
-		saveHomeTableDB(data.data).then(result => {
+		saveHomeTableDB(data).then(result => {
 			postal.channel('UI').publish('Home.Table.Sync',result);
 		});
-		saveToTaskDB(true,data.data, homeFilter['taskList']).then(result => {
+		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
 		
