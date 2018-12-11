@@ -20,19 +20,22 @@ remote.setGlobal("ajaxAPI",ajaxAPI);
 // let token = storage.getItem("token");
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireAuth)){  // 判断该路由是否需要登录权限
-      if(!sessionStorage.getItem('token') || !localStorage.getItem('token')){
+      if(!localStorage.getItem('token')){
         // if(!localStorage.getItem('token')){
             next({
               path: '/login',
               query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
             })
         }else{
+			remote.setGlobal("token",localStorage.getItem('token'));
+			remote.setGlobal("userInfo",localStorage.getItem('userInfo'));
+			remote.setGlobal("depId",localStorage.getItem('depId'));
            next(
             //    {path: '/'}
            );
       }
     }else {
-      next();
+		next();
     }
   });
 

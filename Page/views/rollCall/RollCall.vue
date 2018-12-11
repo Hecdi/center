@@ -81,14 +81,14 @@
 			init(reset){
 				return Promise.map([
 					()=>{
-						return ajax.post('rollCall.getPersons',{deptId:'depc37237f086fc4b90afa43780946dba68',isAgainAttendance:reset}).then(data =>{
+						return ajax.post('rollCall.getPersons',{deptId:'jpyxzh',isAgainAttendance:reset}).then(data =>{
 							this.$store.commit('rollCall/updateInit', {team:data});
 								console.log(data);	
 							return Promise.resolve();
 						});	
 					},
 					()=>{
-						return ajax.post('rollCall.getModule',{deptId:'depc37237f086fc4b90afa43780946dba68',isAgainAttendance:reset}).then(data =>{
+						return ajax.post('rollCall.getModule',{deptId:'jpyxzh',isAgainAttendance:reset}).then(data =>{
 							this.$store.commit('rollCall/updateInit', {module:data});
 							console.log(data);	
 							return Promise.resolve();

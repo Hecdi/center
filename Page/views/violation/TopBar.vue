@@ -2,7 +2,7 @@
     <div>
         <el-row class="tooltip">
             <el-col :span="5">
-                <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核</button>
+                <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
                 <button class="tab-btn all"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
             </el-col>
             <el-col :span="19" class="topbar">
@@ -61,7 +61,7 @@
     import AllTable from "./AllTable.vue";
     import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
-    import { mapMutations, mapActions } from 'vuex';
+    import { mapMutations, mapActions, mapState } from 'vuex';
     import ajaxx from 'ajax';
     import moment from 'moment';
 
@@ -98,11 +98,15 @@
              tabs:"all",
           }
         },
+        computed: {
+            ...mapState('violation',['filterCards','waitItems','showImgDialog']),
+        },
+        
         methods: {
             // ...mapMutations(["setCurrentStatus"]),
              ...mapActions({
-      getData: "getData"
-    }),
+                    getData: "getData"
+            }),
             onSubmit() {
               console.log('submit!');
             },

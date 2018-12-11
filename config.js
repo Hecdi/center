@@ -40,6 +40,7 @@ export default {
                 'tempTaskModelList':'web/scheduling/tempTaskModelList', //临时任务获取接口 post
                 'taskSubmit':'web/scheduling/createTempTaskSubmit',//临时任务提交接口 post,
                 'login':'web/login', //登陆接口， post
+                'getAssociateReportList':'associate/getAssociateReportList', //任务交接，post
             }
         }
     },

@@ -2,17 +2,16 @@ import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
 import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB } from "../../lib/storage";
-import ajaxx from "ajax";
+import { ajax } from "ajax";
 
 var homeFilter={
 	personList:{},
 	taskList:{}
 };
 const homeInit = () => {
-	let ajax = ajaxx();
 	ajax.post('personList').then(d=>{
 		console.log(d);
-		saveToPersonDB(d.data).then( data => {
+		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
 				pub('UI','Home.Area.Sync', result);	
 				pub('UI','Home.Area.All', result);	
@@ -21,10 +20,10 @@ const homeInit = () => {
 	});
 	ajax.post('taskList').then(data=>{
 		console.log(data);
-		saveHomeTableDB(data.data).then(result => {
+		saveHomeTableDB(data).then(result => {
 			postal.channel('UI').publish('Home.Table.Sync',result);
 		});
-		saveToTaskDB(true,data.data, homeFilter['taskList']).then(result => {
+		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
 		
@@ -45,6 +44,9 @@ const homeInit = () => {
 			pub('UI','Home.Task.Sync', result);	
 		})
 	});
+	pub('UI','Home.Message.Alert',{
+		content:'324235345',
+	})
 	pub('UI','Home.Event.Ready',null);
 }
 export const initPage = () => {

@@ -90,13 +90,13 @@
                 let condition = value;
                 switch(condition) {
                     case "人员":
-                        return "iconfont icon-user";
+                        return "iconfont icon-renyuan yellow";
                     case "设备":
-                        return "iconfont icon-user";
+                        return "iconfont icon-shebei equip-gray";
                     case "公司":
-                        return "iconfont icon-return1";
+                        return "company-purple iconfont icon-plus-company ";
                     case "车辆":
-                        return "iconfont icon-feiji";
+                        return " car-blue iconfont icon-cheliang";
                 }
             },
             tagColor(value){
