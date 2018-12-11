@@ -30,7 +30,7 @@
       <el-table-column prop="img" label="图像记录" min-width="80">
         <template slot-scope="scope">
           <el-button
-            :picture="scope.row.picture"
+            :picture="getImg(scope.row.picture)"
             size="mini"
             type="primary"
             @click="openShowImg()"
@@ -46,7 +46,7 @@
       </el-table-column>
     </el-table>
     <div class="dialog">
-      <ShowImg/>
+      <ShowImg picture ="picture"/>
     </div>
   </div>
 </template>
@@ -64,10 +64,12 @@ export default {
     ShowImg
   },
   data() {
+    console.log(this.img);
     return {
       props: "statusValue",
       status: "22",
-      img: img
+      img: img,
+      picture: '',
     };
   },
   computed: {
@@ -169,6 +171,9 @@ export default {
     },
     created() {
       this.refreshData();
+    },
+    getImg(value){
+      this.picture = value;
     }
   },
   // beforeMount(){
