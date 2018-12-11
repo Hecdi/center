@@ -50,38 +50,37 @@ class="personList"
             <el-radio-button label="time">时间</el-radio-button>
           </el-radio-group>
           <el-radio-group v-model="movement">
-            <el-radio-button label=0>所有</el-radio-button>
-			<el-radio-button label="A">进</el-radio-button>
-			<el-radio-button label="D">离</el-radio-button>
-		  </el-radio-group>
-		  <el-radio-group v-model="flightStatus">
-			  <el-radio-button label="前站起飞">前站起飞</el-radio-button>
-			  <el-radio-button label="已登机">已登机</el-radio-button>
-		  </el-radio-group>
+            <el-radio-button label="0">所有</el-radio-button>
+            <el-radio-button label="A">进</el-radio-button>
+            <el-radio-button label="D">离</el-radio-button>
+          </el-radio-group>
+          <el-radio-group v-model="flightStatus">
+            <el-radio-button label="前站起飞">前站起飞</el-radio-button>
+            <el-radio-button label="已登机">已登机</el-radio-button>
+          </el-radio-group>
           <el-radio-group v-model="flightIndicator">
-						<el-radio-button label="D">国内</el-radio-button>
-						<el-radio-button label="I">国际</el-radio-button>
-					</el-radio-group>
-					<el-input v-model="search" placeholder=""> <i slot="suffix" class="el-input__icon el-icon-search"
-/> </el-input>
-					<el-button @click="reset" type="primary" 
-size="medium" icon="iconfont icon-return1"
->重置</el-button>
-          <el-button 
-type="primary" 
-size="medium" icon="iconfont icon-search" @click="openAddTask">临时任务</el-button>
-          <el-button 
-type="primary" 
-size="medium" icon="el-icon-search">任务交接</el-button>
-					<el-button type="primary" size="medium" 
-icon="el-icon-search">冲突检测</el-button>
+            <el-radio-button label="D">国内</el-radio-button>
+            <el-radio-button label="I">国际</el-radio-button>
+          </el-radio-group>
+          <el-input v-model="search" placeholder>
+            <i slot="suffix" class="el-input__icon el-icon-search"/>
+          </el-input>
+          <el-button @click="reset" type="primary" size="medium" icon="iconfont icon-return1">重置</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            icon="iconfont icon-search"
+            @click="openAddTask"
+          >临时任务</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search">任务交接</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
         </el-row>
-		<span @click="handleTable" class="is-table">
-			<i class="el-icon-star-on" v-if="!isTable" ></i>
-			<i v-else class="el-icon-setting" ></i>
-		</span>
+        <span @click="handleTable" class="is-table">
+          <i class="el-icon-star-on" v-if="!isTable"></i>
+          <i v-else class="el-icon-setting"></i>
+        </span>
         <el-row class="legend-panel">
-         <Legend
+          <Legend
             data="未发布"
             iconColor="grey"
             iconSize="16px"
@@ -89,15 +88,15 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
-            data="已发布"
+          <Legend
+            data="已发布""
             iconColor="#2a2b2c"
             iconSize="16px"
             fontSize="16px"
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="已受领"
             iconColor="pink"
             iconSize="16px"
@@ -105,7 +104,7 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="已到位"
             iconColor="green"
             iconSize="16px"
@@ -113,7 +112,7 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="进行中"
             iconColor="yellow"
             iconSize="16px"
@@ -121,7 +120,7 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="已完成"
             iconColor="#7f4832"
             iconSize="16px"
@@ -129,7 +128,7 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="取消"
             iconColor="blue"
             iconSize="16px"
@@ -137,7 +136,7 @@ icon="el-icon-search">冲突检测</el-button>
             icon="el-icon-share"
             color="red"
           />
-         <Legend
+          <Legend
             data="警告"
             iconColor="black"
             iconSize="16px"
@@ -150,7 +149,7 @@ icon="el-icon-search">冲突检测</el-button>
       <el-main v-if="!isTable">
         <MainList/>
       </el-main>
-	  <el-main v-else>
+      <el-main v-else>
         <TableList/>
       </el-main>
     </el-container>

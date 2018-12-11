@@ -36,7 +36,18 @@ const addDisplayField = (row) => {
 	let taskStatusDisplay =   {
 			displayTaskStatus: taskStatusDisplayMap[row.taskStatus]
 		}
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay);
+	let flightIndicatorDisplayMap = {
+		"D": "国内",
+		"I": "国际",
+		"M": "混合",
+		"R": "地区",
+	};
+
+	let flightIndicatorDisplay = {
+		displayFlightIndicator: flightIndicatorDisplayMap[row.flightIndicator]
+	}
+
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);
@@ -49,8 +60,32 @@ const fixNull = (row) => {
 	return row;
 }
 
+const displayTime = ['eta','etd','ata','atd'];
+
+const actExp = (row) => {
+	let time = map(displayTime, fieldKey=>{
+		if(has(row, fieldKey)){
+			let ata = get(row, "ata");
+			let atd = get(row,'atd');
+			let eta = get(row,'eta');
+			let etd = get(row,'etd');
+			let disPlayActuralTime = ata ? ata : atd;
+			let disPlayExpectedTime = eta ? eta : etd;
+			return { 
+				[`disPlayActuralTime`]: formatDate(disPlayActuralTime, 'HHmm(DD)'),
+				[`disPlayExpectedTime`]: formatDate(disPlayExpectedTime, 'HHmm(DD)'), 
+			}
+	}
+	return null;
+});
+	let result = extend.apply(null, time);
+	return extend({}, row, result);
+};	
+
+
 export const process = (rows) => {
 	let processer = flow([
+		actExp,
 		addDisplayField,
 		fixNull,
 	]);
