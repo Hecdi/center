@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import ajaxx from 'ajax';
+	import {ajax} from 'ajax';
 
 export default {
   data() {
@@ -98,36 +98,35 @@ export default {
       submitForm(formName) {
           let that = this;
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            let ajax = ajaxx();
-            let name = this.$refs[formName].model.name;
-            let pass = this.$refs[formName].model.pass;
-            console.log(name);
-            console.log(pass);
-            let param = {"name":name,"password":pass};
-            console.log(param);
-            ajax.post('login',param).then(data => {
-            let response = data.responseCode;
-            console.log(data);
-            let storage=window.localStorage;
-            storage.setItem("token","sdadadsd1111111111");
-            sessionStorage.setItem("token","session111111");
-            if(response == 10000) {
-                that.$router.push('/home')
-            } else {
-                console.log('error submit!!');
-                that.loginErr = true;
-                console.log(that.loginErr);
-            }
-			// this.getTaskModelList(result);
-		    })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
+			if (valid) {
+				let name = this.$refs[formName].model.name;
+				let pass = this.$refs[formName].model.pass;
+				let param = {"username":name,"password":pass};
+				console.log(param);
+				ajax.post('login',param,(data)=>{
+					let response = data.responseCode;
+					console.log(data);
+					let storage=window.localStorage;
+					if(response == 1000 && data.data) {
+						let userInfo = data.data;
+						storage.setItem("token",userInfo.token);
+						storage.setItem("userId",userInfo.userId);
+						storage.setItem("username",userInfo.username);
+						storage.setItem("depId",userInfo.depId);
+						storage.setItem("userInfo",JSON.stringify(userInfo));
+						that.$router.push('/home')
+					} else {
+						console.log(data.responseMessage);
+						that.loginErr = true;
+					}
+				});
+			} else {
+				console.log('error submit!!');
+				return false;
+			}
+		});
+	  },
+		resetForm(formName) {
         this.$refs[formName].resetFields();
       }
     }
