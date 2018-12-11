@@ -163,7 +163,7 @@
         <TableList/>
       </el-main>
     </el-container>
-    <el-popover placement="top" v-model="visible">
+    <el-popover placement="top-end" offset="5" v-model="visible">
       <el-tabs type="card" style="width:400px;">
         <el-tab-pane>
           <span slot="label">
@@ -213,7 +213,7 @@
           </el-row>
         </el-tab-pane>
       </el-tabs>
-      <MessageBtn slot="reference" :message-num="getTotal()" @click="showMessageBox"/>
+      <MessageBtn slot="reference" @click="showMessageBox"/>
     </el-popover>
     <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
     <DialogAddTask/>
@@ -276,6 +276,7 @@ export default {
     },
     setPersonSearch(worker) {
       let _this = this;
+	console.log(worker);
       _this.isDoubleClick = false;
       window.setTimeout(function() {
         if (!_this.isDoubleClick) {
