@@ -5,7 +5,6 @@
     :title="currentPerson.staffName"
     :visible.sync="dialogPersonSettingVisible"
     width="1000px"
-    :before-close="handleClose"
   >
     <el-tabs type="card" v-model="checkedPanel">
       <el-tab-pane label="人员设置" name="set">
@@ -128,17 +127,13 @@
 				}
 				console.log(param);
 				ajax.post('home.updateStaffState',param,(data)=>{
-					console.log(data);
+					this.$message({
+						type: data.responseCode == 1000 ? "success" : "error",
+						message: data.responseMessage
+					});
 				});
 				this.dialogPersonSettingVisible = false;
 			},
-			handleClose(done) {
-				this.$confirm("确认关闭？")
-					.then(_ => {
-						done();
-					})
-					.catch(_ => {});
-			}
 		},
 		computed: {
 			dialogPersonSettingVisible: {
