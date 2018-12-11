@@ -82,8 +82,8 @@
             icon="iconfont icon-search"
             @click="openAddTask"
           >临时任务</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search" @click="showAlert">冲突检测</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search" @click="openTaskHandover" >任务交接</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search" @click="openAddTask">冲突检测</el-button>
         </el-row>
         <span @click="handleTable" class="is-table">
           <i class="el-icon-star-on" v-if="!isTable"></i>
@@ -217,6 +217,7 @@
     </el-popover>
     <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
     <DialogAddTask/>
+		<dialogTaskHandover/>
     <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
 	<DialogAlert/>
   </el-container>
@@ -232,6 +233,7 @@
 	import DialogPersonSetting from "./DialogPersonSetting.vue";
 	import DialogAlert from "./DialogAlert.vue";
 	import TableList from "./TableList.vue";
+	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
 
 	import { mapState, mapGetters } from "vuex";
@@ -250,6 +252,9 @@
 		methods: {
 			openAddTask() {
 				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
+			},
+			openTaskHandover(){
+				this.$store.dispatch(`home/updateTaskHandover`, {dialogTaskHandover: true});
 			},
 			showMessageBox() {
 				console.log(123);
@@ -395,6 +400,7 @@
 			MainList,
 			MessageBtn,
 			DialogAddTask,
+			dialogTaskHandover,
 			Legend,
 			TableList,
 			DialogPersonSetting,
