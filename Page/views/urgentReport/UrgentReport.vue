@@ -39,7 +39,7 @@
 						<section class="Row4">
 							<div v-if="site.imgFile" class="Yesphoto">
 								<el-button type="text" @click="dialogVisible = true">
-									图片详情>
+									图片详情
 								</el-button>
 								<el-dialog
 									title="提示"
@@ -54,16 +54,16 @@
 							<p v-else class="Nophoto">暂无图片</p>
 						</section>
 					</el-card>
-				</el-col>	
+				</el-col>
 			</el-row>
 	</section>
 	<section v-else>
-		<el-table 
+		<el-table
 			:data = "sites"
 			stripe
 			highlight-current-row
 			style = "width:auto">
-			<el-table-column 
+			<el-table-column
 				type = "index"
 				width = "80px"
 				label = "序号">
@@ -108,9 +108,9 @@
 
 
 <script>
-import moment from "moment";
-import ajaxx from "ajax";
-import {formatDate} from "date.js";
+	import moment from "moment";
+	import ajaxx from "ajax";
+	import {formatDate} from "date.js";
 	export default {
 		name:"card",
 		data(){
@@ -121,7 +121,7 @@ import {formatDate} from "date.js";
 				input1:'',
 				input2:'',
 				time:[],
-				inputSearch:''	
+				inputSearch:''
 			}
 		},
 		methods:{
@@ -129,10 +129,10 @@ import {formatDate} from "date.js";
 				/*this.sites = data.data;*/
 				console.log(data);
 
-			console.log(11112);	
+				console.log(11112);
 				for(var i in data){
-				var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
-				data[i].deviateTime = newDate;	
+					var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
+					data[i].deviateTime = newDate;
 				}
 
 				console.log(data);
@@ -140,7 +140,7 @@ import {formatDate} from "date.js";
 			},
 			exportOnsearch(){
 				let ajax = ajaxx();
-				let timeArr = this.time; 
+				let timeArr = this.time;
 				let startDate;
 				let endDate;
 				if(timeArr){
@@ -156,52 +156,52 @@ import {formatDate} from "date.js";
 					}
 				} else{
 					startDate = new Date(
-								new Date(new Date().toLocaleDateString()).getTime()
-							);
+						new Date(new Date().toLocaleDateString()).getTime()
+					);
 					startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
 					endDate = new Date(
-								new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
-							);
+						new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
+					);
 					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
-			}
+				}
 				let inputSearch = this.inputSearch;
 				let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
 				console.log('new111');
 				console.log(params);
 				ajax.post('urgentReport', params).then((data) => {
-							console.log('new222');
-							console.log(data);
-							this.getData(data);
-						})
-		},
-		beforeMount({
-			let ajax = ajaxx();
-			 ajax.post('urgentReport').then(data =>{
+					console.log('new222');
 					console.log(data);
-					this.getData(data.data);
+					this.getData(data);
+				})
+			},
+		},
+		beforeMount(){
+			let ajax = ajaxx();
+			ajax.post('urgentReport').then(data =>{
+				console.log(data);
+				this.getData(data.data);
 
-					});
-		  /*ajax.get('urgentReport').then((data)=>{*/
-				/*data = [*/
-					 /*{'deviationItemName':'撤桥',*/
-					  /*'remarks':'航后',*/
-					  /*'flightNo':'EU2280',*/
-					  /*'staffName':'leo',*/
-					  /*'deviateTime':1544075290,*/
-					  /*'content':'这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
-					  /*'imgFile':'aaaaaasbbb',*/
-					 /*},*/
-					/*{'deviationItemName':'撤桥',*/
-					  /*'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
-					  /*'flightNo':'EU2280',*/
-					  /*'staffName':'leo',*/
-					  /*'deviateTime':1544075290,*/
-					  /*'conTent':'这是很长很长的内容很长很长这是很长很长的内容很长很长'*/
-					 /*}*/
-				/*];*/
-				/*this.getData(data);*/
+			});
+			/*ajax.get('urgentReport').then((data)=>{*/
+			/*data = [*/
+			/*{'deviationItemName':'撤桥',*/
+			/*'remarks':'航后',*/
+			/*'flightNo':'EU2280',*/
+			/*'staffName':'leo',*/
+			/*'deviateTime':1544075290,*/
+			/*'content':'这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
+			/*'imgFile':'aaaaaasbbb',*/
+			/*},*/
+			/*{'deviationItemName':'撤桥',*/
+			/*'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
+			/*'flightNo':'EU2280',*/
+			/*'staffName':'leo',*/
+			/*'deviateTime':1544075290,*/
+			/*'conTent':'这是很长很长的内容很长很长这是很长很长的内容很长很长'*/
+			/*}*/
+			/*];*/
+			/*this.getData(data);*/
 			/*});*/
 		}
-	}
 	}
 </script>
