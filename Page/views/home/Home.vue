@@ -82,8 +82,8 @@
             icon="iconfont icon-search"
             @click="openAddTask"
           >临时任务</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search" @click="showAlert">任务交接</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search" @click="showAlert">冲突检测</el-button>
         </el-row>
         <span @click="handleTable" class="is-table">
           <i class="el-icon-star-on" v-if="!isTable"></i>
