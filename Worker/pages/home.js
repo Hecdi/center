@@ -2,14 +2,13 @@ import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
 import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB } from "../../lib/storage";
-import ajaxx from "ajax";
+import { ajax } from "ajax";
 
 var homeFilter={
 	personList:{},
 	taskList:{}
 };
 const homeInit = () => {
-	let ajax = ajaxx();
 	ajax.post('personList').then(d=>{
 		console.log(d);
 		saveToPersonDB(d.data).then( data => {

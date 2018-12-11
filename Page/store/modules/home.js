@@ -20,6 +20,7 @@ const state = {
     dialogAddTaskVisible:false,
 	dialogTaskDetailVisible:false,
 	dialogPersonSettingVisible:false,
+	dialogAlertVisible:false,
     persons:[],
     filterPersons:[],
 	messages:[

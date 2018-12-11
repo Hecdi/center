@@ -82,7 +82,7 @@
             icon="iconfont icon-search"
             @click="openAddTask"
           >临时任务</el-button>
-          <el-button type="primary" size="medium" icon="el-icon-search">任务交接</el-button>
+          <el-button type="primary" size="medium" icon="el-icon-search" @click="showAlert">任务交接</el-button>
           <el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
         </el-row>
         <span @click="handleTable" class="is-table">
@@ -218,204 +218,212 @@
     <!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
     <DialogAddTask/>
     <DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
+	<DialogAlert/>
   </el-container>
 </template>
 
 <script>
-// @ is an alias to /src
-/*import SearchInput from '../../components/SearchInput.vue';*/
-import Legend from "Legend.vue";
-import MainList from "./MainList.vue";
-import MessageBtn from "MessageBtn.vue";
-import DialogAddTask from "DialogAddTask.vue";
-import DialogPersonSetting from "./DialogPersonSetting.vue";
-import TableList from "./TableList.vue";
-import { sub, removeSub, pub } from "postalControl";
+	// @ is an alias to /src
+	/*import SearchInput from '../../components/SearchInput.vue';*/
+	import Legend from "Legend.vue";
+	import MainList from "./MainList.vue";
+	import MessageBtn from "MessageBtn.vue";
+	import DialogAddTask from "DialogAddTask.vue";
+	import DialogPersonSetting from "./DialogPersonSetting.vue";
+	import DialogAlert from "./DialogAlert.vue";
+	import TableList from "./TableList.vue";
+	import { sub, removeSub, pub } from "postalControl";
 
-import { mapState, mapGetters } from "vuex";
+	import { mapState, mapGetters } from "vuex";
 
-export default {
-  name: "Home",
-  data() {
-    return {
-      isHidden: false,
-      isTable: false,
-      isDoubleClick: false,
-      currentPerson: null,
-      visible: false
-    };
-  },
-  methods: {
-    openAddTask() {
-      this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
-    },
-    showMessageBox() {
-      console.log(123);
-      this.visible = !this.visible;
-    },
-    getTotal() {
-      return 100;
-    },
-    handleToggle() {
-      this.isHidden = !this.isHidden;
-    },
-    handleTable() {
-      this.isTable = !this.isTable;
-    },
-    getPersons(data) {
-      this.$store.dispatch("home/getPersons", data);
-    },
-    getMainListData(data) {
-      this.$store.dispatch("home/getMainListData", data);
-    },
-    showSetting(worker, areaName) {
-      this.isDoubleClick = true;
-      this.currentPerson = worker;
-      this.currentAreaName = areaName;
-      this.$store.dispatch(`home/update`, { dialogPersonSettingVisible: true });
-    },
-    setPersonSearch(worker) {
-      let _this = this;
-	console.log(worker);
-      _this.isDoubleClick = false;
-      window.setTimeout(function() {
-        if (!_this.isDoubleClick) {
-          _this.currentPerson = worker;
-          _this.$store.dispatch("home/updateFilter", {
-            name: "searchPersonKey",
-            filterOption: worker.workerName
-              ? worker.workerName
-              : worker.staffName
-          });
-        }
-      }, 300);
-    },
-    getHomeTableData(data) {
-      this.$store.dispatch("home/getHomeTableData", data);
-    },
-    reset() {
-      this.currentPerson = null;
-      this.$store.dispatch(`home/resetFilter`, null);
-    },
-    sendTaskListFilter() {
-      pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
-    }
-  },
-  computed: {
-    asideWith() {
-      return this.isHidden ? "0" : "390px";
-    },
-    search: {
-      get() {
-        return this.$store.state.home.filterOption.searchKey;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "searchKey",
-          filterOption: filterOption
-        });
-      }
-    },
-    searchPerson: {
-      get() {
-        return this.$store.state.home.personSearchKey;
-      },
-      set(personSearchKey) {
-        pub("Worker", "Home.Area.SetPersonSearchKey", personSearchKey);
-        /*this.$store.dispatch(`home/setPersonSearchKey`, personSearchKey);*/
-      }
-    },
-    taskStatus: {
-      get() {
-        return this.$store.state.home.filterOption.taskStatus;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "taskStatus",
-          filterOption: filterOption
-        });
-      }
-    },
-    type: {
-      get() {
-        return this.$store.state.home.filterOption.type;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "type",
-          filterOption: filterOption
-        });
-      }
-    },
-    movement: {
-      get() {
-        return this.$store.state.home.filterOption.movement;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "movement",
-          filterOption: filterOption
-        });
-      }
-    },
-    flightStatus: {
-      get() {
-        return this.$store.state.home.filterOption.flightStatus;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "flightStatus",
-          filterOption: filterOption
-        });
-      }
-    },
-    flightIndicator: {
-      get() {
-        return this.$store.state.home.filterOption.flightIndicator;
-      },
-      set(filterOption) {
-        this.$store.dispatch(`home/updateFilter`, {
-          name: "flightIndicator",
-          filterOption: filterOption
-        });
-      }
-    },
-    ...mapState("home", ["filterPersons", "persons", "filterOption"]),
-    ...mapGetters("home", ["getMessages"])
-  },
-  components: {
-    /*SearchInput,*/
-    MainList,
-    MessageBtn,
-    DialogAddTask,
-    Legend,
-    TableList,
-    DialogPersonSetting
-  },
-  beforeMount() {
-    sub("UI", "Home.Task.Sync", data => {
-      this.getMainListData(data);
-    });
-    sub("UI", "Home.Table.Sync", data => {
-      this.getHomeTableData(data);
-    });
-    sub("UI", "Home.Area.Sync", data => {
-      this.getPersons(data);
-    });
-    sub("UI", "Home.Area.All", data => {
-      this.getPersons(data);
-    });
-    sub("UI", "Home.Event.Ready", () => {
-      this.sendTaskListFilter();
-    });
-    sub("UI", "All.ready", () => {
-      pub("Worker", "Home.Start", null);
-    });
-    pub("Worker", "Home.Start", null);
-  },
-  beforeDestroy() {
-    removeSub("Home");
-    removeSub("All");
-  }
-};
+	export default {
+		name: "Home",
+		data() {
+			return {
+				isHidden: false,
+				isTable: false,
+				isDoubleClick: false,
+				currentPerson: null,
+				visible: false
+			};
+		},
+		methods: {
+			openAddTask() {
+				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
+			},
+			showMessageBox() {
+				console.log(123);
+				this.visible = !this.visible;
+			},
+			getTotal() {
+				return 100;
+			},
+			handleToggle() {
+				this.isHidden = !this.isHidden;
+			},
+			handleTable() {
+				this.isTable = !this.isTable;
+			},
+			showAlert(){
+				this.$store.dispatch('home/update',{
+				dialogAlertVisible:true,	
+				});
+			},
+			getPersons(data) {
+				this.$store.dispatch("home/getPersons", data);
+			},
+			getMainListData(data) {
+				this.$store.dispatch("home/getMainListData", data);
+			},
+			showSetting(worker, areaName) {
+				this.isDoubleClick = true;
+				this.currentPerson = worker;
+				this.currentAreaName = areaName;
+				this.$store.dispatch(`home/update`, { dialogPersonSettingVisible: true });
+			},
+			setPersonSearch(worker) {
+				let _this = this;
+				console.log(worker);
+				_this.isDoubleClick = false;
+				window.setTimeout(function() {
+					if (!_this.isDoubleClick) {
+						_this.currentPerson = worker;
+						_this.$store.dispatch("home/updateFilter", {
+							name: "searchPersonKey",
+							filterOption: worker.workerName
+							? worker.workerName
+							: worker.staffName
+						});
+					}
+				}, 300);
+			},
+			getHomeTableData(data) {
+				this.$store.dispatch("home/getHomeTableData", data);
+			},
+			reset() {
+				this.currentPerson = null;
+				this.$store.dispatch(`home/resetFilter`, null);
+			},
+			sendTaskListFilter() {
+				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
+			}
+		},
+		computed: {
+			asideWith() {
+				return this.isHidden ? "0" : "390px";
+			},
+			search: {
+				get() {
+					return this.$store.state.home.filterOption.searchKey;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "searchKey",
+						filterOption: filterOption
+					});
+				}
+			},
+			searchPerson: {
+				get() {
+					return this.$store.state.home.personSearchKey;
+				},
+				set(personSearchKey) {
+					pub("Worker", "Home.Area.SetPersonSearchKey", personSearchKey);
+					/*this.$store.dispatch(`home/setPersonSearchKey`, personSearchKey);*/
+				}
+			},
+			taskStatus: {
+				get() {
+					return this.$store.state.home.filterOption.taskStatus;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "taskStatus",
+						filterOption: filterOption
+					});
+				}
+			},
+			type: {
+				get() {
+					return this.$store.state.home.filterOption.type;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "type",
+						filterOption: filterOption
+					});
+				}
+			},
+			movement: {
+				get() {
+					return this.$store.state.home.filterOption.movement;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "movement",
+						filterOption: filterOption
+					});
+				}
+			},
+			flightStatus: {
+				get() {
+					return this.$store.state.home.filterOption.flightStatus;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "flightStatus",
+						filterOption: filterOption
+					});
+				}
+			},
+			flightIndicator: {
+				get() {
+					return this.$store.state.home.filterOption.flightIndicator;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "flightIndicator",
+						filterOption: filterOption
+					});
+				}
+			},
+			...mapState("home", ["filterPersons", "persons", "filterOption"]),
+			...mapGetters("home", ["getMessages"])
+		},
+		components: {
+			/*SearchInput,*/
+			MainList,
+			MessageBtn,
+			DialogAddTask,
+			Legend,
+			TableList,
+			DialogPersonSetting,
+			DialogAlert,
+		},
+		beforeMount() {
+			sub("UI", "Home.Task.Sync", data => {
+				this.getMainListData(data);
+			});
+			sub("UI", "Home.Table.Sync", data => {
+				this.getHomeTableData(data);
+			});
+			sub("UI", "Home.Area.Sync", data => {
+				this.getPersons(data);
+			});
+			sub("UI", "Home.Area.All", data => {
+				this.getPersons(data);
+			});
+			sub("UI", "Home.Event.Ready", () => {
+				this.sendTaskListFilter();
+			});
+			sub("UI", "All.ready", () => {
+				pub("Worker", "Home.Start", null);
+			});
+			pub("Worker", "Home.Start", null);
+		},
+		beforeDestroy() {
+			removeSub("Home");
+			removeSub("All");
+		}
+	};
 </script>
