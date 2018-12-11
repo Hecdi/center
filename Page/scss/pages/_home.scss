@@ -9,13 +9,20 @@ body > .el-container {
 	  padding-top:0;
 	  padding-right:0;
 	  padding-left:0;
-	  overflow:hidden;
 	  background-color:#f1f1f1;
+	  border:1px solid #bebfc0;
+	  .el-tabs {
+		height:450px;
+		overflow-y:auto;
+	  }
+	  .popper__arrow::after{
+		  border-top-color:#f1f1f1 !important;
+	  }
 	  .el-tabs__content{
 		padding:0 4px;
 		.el-row{
-			height:28px;
-			line-height:28px;
+			height:40px;
+			line-height:40px;
 			margin-bottom:10px;
 			background-color:#fff;
 			border-radius: 4px;
@@ -23,6 +30,7 @@ body > .el-container {
 				background-color:#393f43;
 				color:#fff;
 				padding:0 4px;
+				border-radius:2px;
 			}
 		}
 	  }
@@ -52,6 +60,44 @@ body > .el-container {
 		border-top:none;
 	}
 	.el-tab-pane{
+		.personDetail{
+			height:45px;
+			line-height:45px;
+			border-bottom:1px dashed #979797;
+			margin-bottom:10px;
+			.flightNo{
+				background-color:#393f43;
+				color:#fff;
+				padding:0 4px;
+				border-radius:2px;
+			}
+			.step{
+				text-align:center;
+				width:120px;
+				position:relative;
+				&>p{
+					padding:0;
+					margin:2px;
+					line-height:20px;
+				}
+				&.arrow::after{
+					content:"\E636";
+					position:absolute;
+					right:-50%;
+					top:10px;
+					font-family: element-icons !important;
+					speak: none;
+					font-style: normal;
+					font-weight: 400;
+					font-variant: normal;
+					text-transform: none;
+					line-height: 1;
+					vertical-align: baseline;
+					display: inline-block;
+					-webkit-font-smoothing: antialiased;
+				}
+			}
+		}
 		.row{
 			margin-bottom:10px;
 			.el-checkbox__inner{
