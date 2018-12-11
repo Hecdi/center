@@ -148,7 +148,7 @@
                         endDate = `${endDate} 23:59:59`;
                     } else {
                         startDate = timeArr[0];
-                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss")
+                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
                         endDate = timeArr[1];
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  

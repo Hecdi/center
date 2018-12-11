@@ -1,7 +1,7 @@
 <template>
 <section class="outermostsection" >
 	<section class="outermostheader">
-		<el-row :gutter="20">
+		<el-row :gutter="50">
 			<el-col :span="12">
 				<el-radio-group v-model="radio1">
 					<el-radio-button round label="当前部门" ></el-radio-button>
@@ -9,11 +9,11 @@
 				</el-radio-group>
 			</el-col>
 			<el-col :span="6">
-				<el-input class="input1" placeholder="选择时间段" prefix-icon="el-icon-date" v-model="input1" clearable>
-				</el-input>
+				<el-date-picker v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+				</el-date-picker>
 			</el-col>
 			<el-col :span="6">
-				<el-input placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="input2" clearable>
+				<el-input placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter="exportOnsearch">
 				</el-input>
 			</el-col>
 		</el-row>
@@ -108,6 +108,7 @@
 
 
 <script>
+import moment from "moment";
 import ajaxx from "ajax";
 import {formatDate} from "date.js";
 	export default {
@@ -119,7 +120,8 @@ import {formatDate} from "date.js";
 				radio1:'当前部门',
 				input1:'',
 				input2:'',
-				
+				time:[],
+				inputSearch:''	
 			}
 		},
 		methods:{
@@ -135,11 +137,46 @@ import {formatDate} from "date.js";
 
 				console.log(data);
 				this.sites = data;
+			},
+			exportOnsearch(){
+				let ajax = ajaxx();
+				let timeArr = this.time; 
+				let startDate;
+				let endDate;
+				if(timeArr){
+					if(timeArr[0] == timeArr[1]){
+						startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+						endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+						endDate = `${endDate} 23:59:59`;
+					} else{
+						startDate = timeArr[0];
+						startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+						endDate = timeArr[1];
+						endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+					}
+				} else{
+					startDate = new Date(
+								new Date(new Date().toLocaleDateString()).getTime()
+							);
+					startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+					endDate = new Date(
+								new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
+							);
+					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
 			}
+				let inputSearch = this.inputSearch;
+				let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
+				console.log('new111');
+				console.log(params);
+				ajax.post('urgentReport', params).then((data) => {
+							console.log('new222');
+							console.log(data);
+							this.getData(data);
+						})
 		},
-		beforeMount(){
+		beforeMount({
 			let ajax = ajaxx();
-			 ajax.get('urgentReport').then(data =>{
+			 ajax.post('urgentReport').then(data =>{
 					console.log(data);
 					this.getData(data.data);
 
@@ -165,5 +202,6 @@ import {formatDate} from "date.js";
 				/*this.getData(data);*/
 			/*});*/
 		}
+	}
 	}
 </script>
