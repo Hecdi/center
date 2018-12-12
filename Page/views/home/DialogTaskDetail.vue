@@ -108,8 +108,9 @@
 				});
 				let param = {
 					flightTaskId: this.currentTask.taskId,
-					staffIds: staffIds
+					staffIds: staffIds.join('&'),
 				};
+				console.log(param);
 				ajax.post("home.taskSubmit", param, data => {
 					this.$message({
 						type: data.responseCode == 1000 ? "success" : "error",
