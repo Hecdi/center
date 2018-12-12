@@ -4,9 +4,9 @@
         width="60%"
        >
     <el-carousel indicator-position="outside">
-    <el-carousel-item v-for="item in img" :key="item">
+    <el-carousel-item v-for="item in modelImg" :key="item+$index">
       <!-- <h3>{{ item }}</h3> -->
-      <img src = "key"/>
+      <img :src ="item"/>
     </el-carousel-item>
   </el-carousel>
     <span slot="footer" class="dialog-footer">
@@ -19,6 +19,8 @@
 
 <script>
   import { mapState } from "vuex";
+  import img from "../../assets/logo.png";
+
     export default {
         props:["dialogVisible","picture"],
         watch: {
@@ -31,17 +33,18 @@
           },
           stringToArrary(value){
             return value.join(',');
+          },
+          getEveryImg(value){
+            this.everyImg = this.value;
           }
         },
         data () {
-          // console.log(this.picture);
           return {
             visibleSync: this.dialogVisible,
-            //  img:[],
+            modelImg: [img,img,img],
           }
         },
         computed:{
-            // ...mapState('home', ['flights','tempGuaranteeList','tempWorkerList']),
             ...mapState('violation', ['showImgDialog']),
           showImgDialog: {
           get() {
@@ -53,6 +56,7 @@
         },
         img:function(){
           console.log(this.picture);
+          console.log( this.picture ? this.picture.split(',') :[]);
           return this.picture ? this.picture.split(',') :[];
           },
         },
