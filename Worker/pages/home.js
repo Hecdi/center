@@ -44,9 +44,6 @@ const homeInit = () => {
 			pub('UI','Home.Task.Sync', result);	
 		})
 	});
-	pub('UI','Home.Message.Alert',{
-		content:'324235345',
-	})
 	pub('UI','Home.Event.Ready',null);
 }
 export const initPage = () => {
@@ -86,6 +83,7 @@ export const initSocket = (client) =>{
 	});
 	client.sub('/user/web/scheduling/popoMessage', (d) => {
 		console.log('message:::',d)
+		pub('UI','Home.Message.Alert',d);
 	});
 }
 

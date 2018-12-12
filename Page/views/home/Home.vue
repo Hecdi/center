@@ -244,6 +244,7 @@
 				currentPerson: null,
 				visible: false,
 				messageAlerts:[],
+				currentAreaName:'',
 			};
 		},
 		methods: {

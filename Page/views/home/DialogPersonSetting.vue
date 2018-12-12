@@ -2,7 +2,7 @@
   <el-dialog
     class="dialogPersonSetting"
     center
-    :title="currentPerson.staffName"
+    :title="currentPerson?currentPerson.staffName:''"
     :visible.sync="dialogPersonSettingVisible"
     width="1000px"
   >
@@ -11,7 +11,7 @@
         <el-row :gutter="10" class="row">
           <el-col>
 			  <span class="title">职务：</span>
-            <el-checkbox :checked="currentPerson.groupLeader" @change="setLeader" :true-label="1" :false-label="-1">设为小组长</el-checkbox>
+            <el-checkbox :checked="currentPerson?currentPerson.groupLeader:-1" @change="setLeader" :true-label="1" :false-label="-1">设为小组长</el-checkbox>
           </el-col>
         </el-row>
         <el-row :gutter="10" class="row">
