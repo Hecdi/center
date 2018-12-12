@@ -36,7 +36,10 @@
                 </el-date-picker>
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
-                <el-button size="mini" @click = "exportExcel">导出</el-button>
+                <el-button size="mini" >
+                    <a  @click = "exportExcel">导出</a>
+                </el-button>
+                <!-- <h1 @click = "exportExcel">88899</h1> -->
             </el-col>
             <!-- <el-col :span="0">
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
@@ -84,6 +87,8 @@
             },
             tabActive: 'all',
             currentView: 'Card',
+            tabs:"all",
+            exportLocation: '',
             companys: [
                 {name:"四川航空",code:"HK323",number:"028-88888888",isEdit:false},
                 {name:"国际航空",code:"HK323",number:"028-88888888",isEdit:false},
@@ -96,8 +101,8 @@
                 {name:"西南航空",code:"HK323",number:"028-88882328",isEdit:false},
                 {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
             ],
-             tabs:"all",
           }
+          
         },
         computed: {
             ...mapState('violation',['filterCards','waitItems','showImgDialog']),
@@ -146,6 +151,7 @@
                 let timeArr = this.time;
                 let startDate;
                 let endDate;
+                let that = this;
                 if(timeArr){
                     if(timeArr[0] == timeArr[1]){
                         startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
@@ -166,12 +172,18 @@
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
-                console.log(param);
-                console.log(params)
-                ajax.post('exportExcel', params).then((data) => {
-                    console.log(data);
-                    // this.getData(data);
-                });
+                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startDate=${startDate}&endDate=${endDate}`;
+                console.log(exportLocation);
+                window.open(exportLocation);
+                return exportLocation;
+                // that.exportLocation = exportLocation;
+               // console.log(param);
+                // console.log(params)
+                // ajax.post('exportExcel', params).then((data) => {
+                //     console.log(data);
+                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
+                //     // this.getData(data);
+                // });
             },
             handleSearch(){
                 let ajax = ajaxx();

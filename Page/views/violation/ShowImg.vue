@@ -4,7 +4,7 @@
         width="60%"
        >
     <el-carousel indicator-position="outside">
-    <el-carousel-item v-for="item in modelImg" :key="item+$index">
+    <el-carousel-item v-for="(item, index) in modelImg" :key="item+index">
       <!-- <h3>{{ item }}</h3> -->
       <img :src ="item"/>
     </el-carousel-item>
