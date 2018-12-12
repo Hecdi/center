@@ -2,32 +2,32 @@
   <div class="login">
     <div class="login-bg"></div>
     <div class="input-block">
-        <div class="login-logo"></div>
+      <div class="login-logo"></div>
       <el-form
-        :model="ruleForm2"
+        :model="login"
         status-icon
-        :rules="rules2"
-        ref="ruleForm2"
+        :rules="checkLogin"
+        ref="login"
         label-width="80px"
         class="demo-ruleForm"
         size="middle"
       >
         <el-form-item label="姓名" prop="name">
-          <el-input v-model.number="ruleForm2.name" prefix-icon="el-icon-service" placeholder="请输入账号">
-          </el-input>
+          <el-input v-model.number="login.name" prefix-icon="el-icon-service" placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass" >
-          <el-input type="password" v-model="ruleForm2.pass" autocomplete="off" prefix-icon="el-icon-view" placeholder="请输入密码"></el-input>
+        <el-form-item label="密码" prop="pass">
+          <el-input
+            type="password"
+            v-model="login.pass"
+            autocomplete="off"
+            prefix-icon="el-icon-view"
+            placeholder="请输入密码"
+          ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
-        </el-form-item> -->
-        <span :loginErr = "loginErr"  v-if="loginErr" class="login-error">
-            用户名或密码错误
-        </span>
+        <span :loginErr="loginErr" v-if="loginErr" class="login-error">用户名或密码错误</span>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-          <el-button @click="resetForm('ruleForm2')">重置</el-button>
+          <el-button type="primary" @click="submitForm('login')">提交</el-button>
+          <el-button @click="resetForm('login')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -35,100 +35,78 @@
 </template>
 
 <script>
-	import {ajax} from 'ajax';
+import { ajax } from "ajax";
 
 export default {
   data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
-      return {
-        ruleForm2: {
-          pass: '',
-          checkPass: '',
-          name: '',
-        },
-        loginErr: false,
-        rules2: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
-        }
-      };
-    },
-    methods: {
-      submitForm(formName) {
-          let that = this;
-        this.$refs[formName].validate((valid) => {
-			if (valid) {
-				let name = this.$refs[formName].model.name;
-				let pass = this.$refs[formName].model.pass;
-				let param = {"username":name,"password":pass};
-				console.log(param);
-				ajax.post('login',param,(data)=>{
-					let response = data.responseCode;
-					console.log(data);
-					let storage=window.localStorage;
-					if(response == 1000 && data.data) {
-						let userInfo = data.data;
-						storage.setItem("token",userInfo.token);
-						storage.setItem("userId",userInfo.userId);
-						storage.setItem("username",userInfo.username);
-						storage.setItem("depId",userInfo.depId);
-						storage.setItem("userInfo",JSON.stringify(userInfo));
-						that.$router.push('/home')
-					} else {
-						console.log(data.responseMessage);
-						that.loginErr = true;
-					}
-				});
-			} else {
-				console.log('error submit!!');
-				return false;
-			}
-		});
-	  },
-		resetForm(formName) {
-        this.$refs[formName].resetFields();
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        callback();
+        // else {
+        //   if (this.login.checkPass !== '') {
+        //     this.$refs.login.validateField('checkPass');
+        //   }
+        //   callback();
       }
+    };
+    var validateName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else {
+        callback();
+      }
+    };
+
+    return {
+      login: {
+        pass: "",
+        checkPass: "",
+        name: ""
+      },
+      loginErr: false,
+      checkLogin: {
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        name: [{ validator: validateName, trigger: "blur" }]
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      let that = this;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let name = this.$refs[formName].model.name;
+          let pass = this.$refs[formName].model.pass;
+          let param = { username: name, password: pass };
+          console.log(param);
+          ajax.post("login", param, data => {
+            let response = data.responseCode;
+            console.log(data);
+            let storage = window.localStorage;
+            if (response == 1000 && data.data) {
+              let userInfo = data.data;
+              storage.setItem("token", userInfo.token);
+              storage.setItem("userId", userInfo.userId);
+              storage.setItem("username", userInfo.username);
+              storage.setItem("depId", userInfo.depId);
+              storage.setItem("userInfo", JSON.stringify(userInfo));
+              that.$router.push("/home");
+            } else {
+              console.log(data.responseMessage);
+              that.loginErr = true;
+            }
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
+  }
 };
 </script>
