@@ -110,6 +110,15 @@ export default {
     activeName: '',
     }
   },
+  watch: {
+    dialogAddTaskVisible: function(newDialogAddTaskVisible,oldDialogAddTaskVisible){
+        if(newDialogAddTaskVisible){
+          this.handlGettTaskModelList();
+        } else {
+          return;
+        }		
+    }
+  },
   methods: {
 
     show(value) {
@@ -243,8 +252,9 @@ export default {
     },
     ...mapState("home", ["timeLimitOpts"])
   },
-  	beforeMount(){
-		this.handlGettTaskModelList();
-    },
+
+  	// beforeMount(){
+		// this.handlGettTaskModelList();
+    // },
 };
 </script>
