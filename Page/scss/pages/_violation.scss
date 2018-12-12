@@ -268,14 +268,16 @@
             text-overflow: ellipsis;
         }
     }
-    .page-nation {
-        display: none;
+    .page-nations {
+        display: block;
         text-align: center;
+        background: #fff;
+        width: 100%;
         .el-pagination {
             display: inline-block;
         }
         position: fixed;
         bottom: 30px;
-        margin-left: 27%;
+        // margin-left: 27%;
     } 
 }
