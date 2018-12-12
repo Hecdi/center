@@ -35,7 +35,8 @@
                     value-format="timestamp">
                 </el-date-picker>
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
-                <el-button @click="exportExcel" size="mini" type="primary">导出</el-button>
+                <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
+                <el-button size="mini" @click = "exportExcel">导出</el-button>
             </el-col>
             <!-- <el-col :span="0">
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
@@ -140,6 +141,39 @@
                 this.$store.dispatch("violation/getData", data);
             },
             exportExcel(){
+                let ajax = ajaxx();
+                let violationCode = this.area;
+                let timeArr = this.time;
+                let startDate;
+                let endDate;
+                if(timeArr){
+                    if(timeArr[0] == timeArr[1]){
+                        startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+                        endDate = `${endDate} 23:59:59`;
+                    } else {
+                        startDate = timeArr[0];
+                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = timeArr[1];
+                        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
+                    }  
+                } else {
+                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                }
+                let inputSearch = this.inputSearch;
+                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+                let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
+                console.log(param);
+                console.log(params)
+                ajax.post('exportExcel', params).then((data) => {
+                    console.log(data);
+                    // this.getData(data);
+                });
+            },
+            handleSearch(){
                 let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;

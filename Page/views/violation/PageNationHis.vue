@@ -1,5 +1,5 @@
 <template>
-    <div class="block page-nation">
+    <!-- <div class="block page-nation">
         <span class="demonstration">调整每页显示条数</span>
         <el-pagination
           @size-change="handleSizeChange"
@@ -10,6 +10,19 @@
           layout="sizes, prev, pager, next"
           :total="1000">
         </el-pagination>
+  </div> -->
+   <div class="block page-nations">
+    <span class="demonstration">调整每页显示条数</span>
+    <el-pagination
+      background	
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="400">
+    </el-pagination>
   </div>
 </template>
 
@@ -29,7 +42,7 @@
         currentPage1: 5,
         currentPage2: 5,
         currentPage3: 5,
-        currentPage4: 4
+        currentPage4: 40
       };
     }
   }
