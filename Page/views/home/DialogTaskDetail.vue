@@ -103,7 +103,7 @@
 			},
 			personStyle: function() {},
 			submit: function() {
-				let staffIds = map([...this.workerList], worker => {
+				let staffIds = map([...this.taskWorkerList], worker => {
 					return worker.worerkId || worker.staffId;
 				});
 				let param = {
