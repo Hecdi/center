@@ -12,7 +12,7 @@ const homeInit = () => {
 	ajax.post('personList').then(d=>{
 		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
-				pub('UI','Home.Area.Sync', result);	
+				//pub('UI','Home.Area.Sync', result);	
 				pub('UI','Home.Area.All', result);	
 			});
 		});
