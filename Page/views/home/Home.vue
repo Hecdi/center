@@ -9,7 +9,7 @@
 				</el-col>
 			</el-row>
 			<div class="panel" v-if="!isHidden">
-				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index"class="persons-panel"
+				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index" class="persons-panel"
 					style="margin:0;">
 					<el-col
 						:span="24"
