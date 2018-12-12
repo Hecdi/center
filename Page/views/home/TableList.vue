@@ -16,9 +16,13 @@
         label="标志"
         width="50"
       >
-        <template >
+        <template slot-scope="scope">
               <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
-               <span class="iconfont icon-user">111</span>
+               <span>
+                 <i :class="scope.row.displayDelay"></i>
+                 <i :class="scope.row.displayAlternate"></i>
+                 <i :class="scope.row.displayReturnFliht"></i>
+                 </span>
          </template>
       </el-table-column>
       <el-table-column
@@ -85,7 +89,7 @@
         width="180">
         <template slot-scope="scope">
           <span class="ATDETD">
-            <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i>
+            <i :class = "{'iconfont icon-shiji2':scope.row.ata || scope.row.atd}"></i>
               {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
           </span>
         </template>
@@ -101,11 +105,10 @@
         width="80">
       </el-table-column>
       <el-table-column
-        prop="vip"
-       
+        prop="displayHaveDeviating"
         label="偏离">
-        <template>
-               <span class="iconfont icon-pianlishangbao1"></span>
+        <template  slot-scope="scope">
+               <span :class="scope.row.displayHaveDeviating"></span>
          </template>
       </el-table-column>
     </el-table>
@@ -123,42 +126,6 @@ export default {
 	name: 'TableList',
 	computed: {
     ...mapState('home', ['homeTable']),
-    // disActural:{
-         
-    //   get:function(value) {
-    //   if(value.movement=="A"){
-    //       let param={}
-    //       param.ata = value.displayATAWithDate;
-    //       param.eta = value.displayETAWithDate;
-    //       param.arrive = this.ata !== '--'? this.ata : this.eta;
-    //       param.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-    //       return param;
-    //   } else {
-    //     return 
-    //     this.atd = value.displayATDWithDate;
-    //     this.etd = value.displayETDWithDate;
-    //     // this.actualIcon = "iconfont icon-feiji";
-    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
-    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-    //   }
-    // },
-    //   set:function(value) {
-    //   if(value.movement=="A"){
-    //     return
-    //      this.ata = value.displayATAWithDate;
-    //      this.eta = value.displayETAWithDate;
-    //      this.arrive = this.ata !== '--'? this.ata : this.eta;
-    //       this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-    //   } else {
-    //     return 
-    //     this.atd = value.displayATDWithDate;
-    //     this.etd = value.displayETDWithDate;
-    //     // this.actualIcon = "iconfont icon-feiji";
-    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
-    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-    //   }
-    // }
-    // } 
     },
     data(){
       return {
