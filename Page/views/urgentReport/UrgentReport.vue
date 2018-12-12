@@ -13,7 +13,7 @@
 				</el-date-picker>
 			</el-col>
 			<el-col :span="6">
-				<el-input placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter="exportOnsearch">
+				<el-input placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter.native="exportOnsearch">
 				</el-input>
 			</el-col>
 		</el-row>
@@ -38,15 +38,15 @@
 						</section>
 						<section class="Row4">
 							<div v-if="site.imgFile" class="Yesphoto">
-								<el-button type="text" @click="dialogVisible = true">
+								<el-button type="text" @click="showPics(site.imgFile)">
 									图片详情
 								</el-button>
 								<el-dialog
 									title="提示"
 									:visible.sync="dialogVisible">
 									<el-carousel height="150px">
-										<el-carousel-item  >
-											<img />
+										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
+											<img :src = "item" />
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -96,7 +96,15 @@
 			<el-table-column label = "附件">
 				<template slot-scope="scope" >
 					<div v-if = "scope.row.imgFile">
-						<el-button type = "primary" @click="dialogVisible = true">查看</el-button>
+						<el-button type = "primary" @click.native="showPics(scope.row.imgFile)">查看</el-button>
+						<el-dialog title="提示" :visible.sync="dialogVisible">
+						/*<p>{{scope.row}}</p> //这里显示出scope.row就是前面的site */
+							<el-carousel height="150px">
+								<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
+									<img :src = "item" />
+								</el-carousel-item>
+							</el-carousel>
+						</el-dialog>
 					</div>
 					<div v-else>查看</div>
 				</template>
@@ -121,10 +129,16 @@
 				input1:'',
 				input2:'',
 				time:[],
-				inputSearch:''
+				inputSearch:'',
+				imgArr:[],
 			}
 		},
 		methods:{
+			showPics(picUrls){
+				console.log(picUrls);
+				this.imgArr = picUrls.split(',');
+				this.dialogVisible = true;
+			},
 			getData(data){
 				/*this.sites = data.data;*/
 				console.log(data);
@@ -133,6 +147,8 @@
 				for(var i in data){
 					var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
 					data[i].deviateTime = newDate;
+				   /*data[i].abc = data[i].imgFile ? data[i].imgFile.split(','):[];  //第二种方法，将后端给的data中新增一个属性名为abc的数组*/
+
 				}
 
 				console.log(data);
@@ -177,31 +193,30 @@
 		},
 		beforeMount(){
 			let ajax = ajaxx();
-			ajax.post('urgentReport').then(data =>{
-				console.log(data);
-				this.getData(data.data);
+		   /* ajax.post('urgentReport').then(data =>{*/
+				/*console.log(data);*/
+				/*this.getData(data.data);*/
 
-			});
-			/*ajax.get('urgentReport').then((data)=>{*/
-			/*data = [*/
-			/*{'deviationItemName':'撤桥',*/
-			/*'remarks':'航后',*/
-			/*'flightNo':'EU2280',*/
-			/*'staffName':'leo',*/
-			/*'deviateTime':1544075290,*/
-			/*'content':'这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
-			/*'imgFile':'aaaaaasbbb',*/
-			/*},*/
-			/*{'deviationItemName':'撤桥',*/
-			/*'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
-			/*'flightNo':'EU2280',*/
-			/*'staffName':'leo',*/
-			/*'deviateTime':1544075290,*/
-			/*'conTent':'这是很长很长的内容很长很长这是很长很长的内容很长很长'*/
-			/*}*/
-			/*];*/
-			/*this.getData(data);*/
 			/*});*/
+			ajax.get('urgentReport').then((data)=>{
+			data = [
+			{'deviationItemName':'撤桥',
+			'remarks':'航后',
+			'flightNo':'EU2280',
+			'staffName':'leo',
+			'deviateTime':1544075290,
+			'imgFile':'https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/05/ChMkJlbKyaGIGGNjABT85XemdQ8AALIQQI-6pcAFPz9490.jpg,https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/02/ChMkJlbKxgqIc2QIAAd2hfADVfMAALHfQDYbgAAB3ad736.jpg',
+			},
+			{'deviationItemName':'撤桥',
+			'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',
+			'flightNo':'EU2280',
+			'staffName':'leo',
+			'deviateTime':null,
+			'imgFile':null,
+			}
+			];
+			this.getData(data);
+			});
 		}
 	}
 </script>
