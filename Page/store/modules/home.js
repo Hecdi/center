@@ -120,7 +120,6 @@ const mutations = {
     },
     setMainListData(state,data){
         state.mainList = data;
-        console.log(data);
     },
     setHomeTableData(state,data){
         state.homeTable = data;

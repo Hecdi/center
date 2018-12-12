@@ -10,7 +10,6 @@ var homeFilter={
 };
 const homeInit = () => {
 	ajax.post('personList').then(d=>{
-		console.log(d);
 		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
 				pub('UI','Home.Area.Sync', result);	
@@ -19,7 +18,6 @@ const homeInit = () => {
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		console.log(data);
 		saveHomeTableDB(data).then(result => {
 			postal.channel('UI').publish('Home.Table.Sync',result);
 		});
