@@ -4,7 +4,7 @@
 		center
 		:title="currentPerson?currentPerson.staffName:''"
 		:visible.sync="dialogPersonSettingVisible"
-		width="1000px"
+		width="800px"
 		>
     <el-tabs type="card" v-model="checkedPanel">
       <el-tab-pane label="人员设置" name="set">
@@ -67,6 +67,7 @@
 			dialogPersonSettingVisible:function(newVal,old){
 				if(newVal == true){
 					this.leader = this.currentPerson ? (this.currentPerson.groupLeader==1?true:false):false;
+					this.checkedPanel = 'set';
 					this.getPersonDetail();
 				}
 			},

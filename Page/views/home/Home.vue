@@ -45,111 +45,78 @@
 		</el-aside>
 		<el-container>
 			<el-header class="home-mian-header" height="auto">
-				<el-row>
-					<el-radio-group v-model="taskStatus">
-						<el-radio-button label="1">未完成</el-radio-button>
-						<el-radio-button label="6">已完成</el-radio-button>
-						<el-radio-button label="0">全部</el-radio-button>
-					</el-radio-group>
-					<el-radio-group v-model="type">
-						<el-radio-button label="area">区域</el-radio-button>
-						<el-radio-button label="time">时间</el-radio-button>
-					</el-radio-group>
-					<el-radio-group v-model="movement">
-						<el-radio-button label="0">所有</el-radio-button>
-						<el-radio-button label="A">进</el-radio-button>
-						<el-radio-button label="D">离</el-radio-button>
-					</el-radio-group>
-					<el-radio-group v-model="flightStatus">
-						<el-radio-button label="前站起飞">前站起飞</el-radio-button>
-						<el-radio-button label="已登机">已登机</el-radio-button>
-					</el-radio-group>
-					<el-radio-group v-model="flightIndicator">
-						<el-radio-button label="D">国内</el-radio-button>
-						<el-radio-button label="I">国际</el-radio-button>
-					</el-radio-group>
-					<el-input v-model="search" placeholder>
-						<i slot="suffix" class="el-input__icon el-icon-search"/>
-					</el-input>
-					<el-button @click="reset" type="primary" size="medium" icon="iconfont icon-return1">重置</el-button>
-					<el-button
-						type="primary"
-						size="medium"
-						icon="iconfont icon-search"
-						@click="openAddTask"
-						>临时任务</el-button>
-					<el-button type="primary" size="medium" icon="el-icon-search" @click="openTaskHandover" >任务交接</el-button>
-					<el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
+				<el-row :gutter="0">
+					<el-col :span="14">
+						<!--<span @click="handleTable" class="is-table">-->
+							<!--<i class="el-icon-star-on" v-if="!isTable"></i>-->
+							<!--<i v-else class="el-icon-setting"></i>-->
+						<!--</span>-->
+						<el-radio-group v-model="isTable" size="mini" class="tabCard">
+							<el-radio-button :label="true" ><i class="iconfont icon-liebiao"></i></el-radio-button>
+							<el-radio-button :label="false" ><i class="iconfont icon-qiapian"></i></el-radio-button>
+						</el-radio-group>
+						<el-radio-group v-model="taskStatus" size="mini" >
+							<el-radio-button label="1">未完成</el-radio-button>
+							<el-radio-button label="6">已完成</el-radio-button>
+							<el-radio-button label="0">全部</el-radio-button>
+						</el-radio-group>
+						<el-radio-group v-model="type" size="mini" >
+							<el-radio-button label="area">区域</el-radio-button>
+							<el-radio-button label="time">时间</el-radio-button>
+						</el-radio-group>
+						<el-radio-group v-model="movement" size="mini" >
+							<el-radio-button label="0">所有</el-radio-button>
+							<el-radio-button label="A">进</el-radio-button>
+							<el-radio-button label="D">离</el-radio-button>
+						</el-radio-group>
+						<el-radio-group v-model="flightStatus" size="mini" >
+							<el-radio-button label="前站起飞">前站起飞</el-radio-button>
+							<el-radio-button label="已登机">已登机</el-radio-button>
+						</el-radio-group>
+						<el-radio-group v-model="flightIndicator" size="mini" >
+							<el-radio-button label="D">国内</el-radio-button>
+							<el-radio-button label="I">国际</el-radio-button>
+						</el-radio-group>
+						<el-button @click="reset" type="success" icon="iconfont icon-fanhui"  size="mini" >恢复默认</el-button>
+					</el-col>
+					<el-col :span="10" class="header-right">
+						<el-input v-model="search" style="width:220px;" placeholder="输入关键词搜索" size="mini" >
+							<i slot="suffix" class="el-input__icon el-icon-search"/>
+						</el-input>
+							<el-button
+								type="primary"
+								size="mini"
+								@click="openAddTask"
+								>临时任务</el-button>
+							<el-button type="primary" size="mini"  @click="openTaskHandover" >任务交接</el-button>
+							<el-button type="primary" size="mini"  >冲突检测</el-button>
+					</el-col>
 				</el-row>
-				<span @click="handleTable" class="is-table">
-					<i class="el-icon-star-on" v-if="!isTable"></i>
-					<i v-else class="el-icon-setting"></i>
-				</span>
-				<el-row class="legend-panel">
-					<Legend
-						data="未发布"
-						iconColor="grey"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="已发布"
-						iconColor="#2a2b2c"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="已受领"
-						iconColor="pink"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="已到位"
-						iconColor="green"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="进行中"
-						iconColor="yellow"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="已完成"
-						iconColor="#7f4832"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="取消"
-						iconColor="blue"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
-					<Legend
-						data="警告"
-						iconColor="black"
-						iconSize="16px"
-						fontSize="16px"
-						icon="el-icon-share"
-						color="red"
-					/>
+				<el-row class="legend-panel" v-if="!isTable" :gutter="20">
+					<el-col :span="12" style="text-align:left">
+						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
+							任务状态：
+						</span>
+						<Legend data="未发布" iconColor="white" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已发布" iconColor="#ffac00" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已受领" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已到位" iconColor="#00d859" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="进行中" iconColor="#aa67f3" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已完成" iconColor="#0065ff" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="取消" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="不保障" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>
+					</el-col>
+					<el-col :span="12" style="text-align:left">
+						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
+							标记说明：
+						</span>
+						<Legend data="延误" iconColor="white" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
+						<Legend data="重点" iconColor="#ffac00" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="VIP" iconColor="#00a0ff" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="备降" iconColor="#00d859" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="返航" iconColor="#aa67f3" iconSize="16px" icon="iconfont icon-beijiangbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="告警" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+					</el-col>
 				</el-row>
 			</el-header>
 			<el-main v-if="!isTable">
@@ -313,7 +280,7 @@
 		},
 		computed: {
 			asideWith() {
-				return this.isHidden ? "0" : "390px";
+				return this.isHidden ? "0" : "300px";
 			},
 			search: {
 				get() {

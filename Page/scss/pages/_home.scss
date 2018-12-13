@@ -3,22 +3,22 @@
 @import "../components/UrgentReportBtn";
 @import "../components/elDialog";
 body > .el-container {
-    margin-bottom: 40px;
-  }
-  .el-popover{
-	  padding-top:0;
-	  padding-right:0;
-	  padding-left:0;
-	  background-color:#f1f1f1;
-	  border:1px solid #bebfc0;
-	  .el-tabs {
+	margin-bottom: 40px;
+}
+.el-popover{
+	padding-top:0;
+	padding-right:0;
+	padding-left:0;
+	background-color:#f1f1f1;
+	border:1px solid #bebfc0;
+	.el-tabs {
 		height:450px;
 		overflow-y:auto;
-	  }
-	  .popper__arrow::after{
-		  border-top-color:#f1f1f1 !important;
-	  }
-	  .el-tabs__content{
+	}
+	.popper__arrow::after{
+		border-top-color:#f1f1f1 !important;
+	}
+	.el-tabs__content{
 		padding:0 4px;
 		.el-row{
 			height:40px;
@@ -33,472 +33,504 @@ body > .el-container {
 				border-radius:2px;
 			}
 		}
-	  }
-	  .el-tabs__item{
-		color:#666;
-		background-color:#fff;
-	  }
-	  .el-tabs__item.is-active{
-		background-color:#009eff;
-		color:#fff;
-	  }
-	  .el-tabs__item:first-child {
-		border-top-left-radius:4px;
-	  }
-	  .el-tabs__item:last-child {
-		border-top-right-radius:4px;
-	  }
-  }
-.home {
-  clear:both;
-  position:relative;
-  .dialogPersonSetting{
-	.el-tabs__header, .el-tabs__nav{
-		border-bottom:1px dashed #289DFF;
-	}
-	.el-tabs__nav{
-		border-top:none;
-	}
-	.el-tab-pane{
-		.personDetail{
-			height:45px;
-			line-height:45px;
-			border-bottom:1px dashed #979797;
-			margin-bottom:10px;
-			overflow:hidden;
-			.flightNo{
-				background-color:#393f43;
-				color:#fff;
-				padding:0 4px;
-				border-radius:2px;
-			}
-			.step{
-				text-align:center;
-				width:120px;
-				position:relative;
-				&>p{
-					padding:0;
-					margin:2px;
-					line-height:20px;
-				}
-				&.arrow::after{
-					content:"\E636";
-					position:absolute;
-					right:-50%;
-					top:10px;
-					font-family: element-icons !important;
-					speak: none;
-					font-style: normal;
-					font-weight: 400;
-					font-variant: normal;
-					text-transform: none;
-					line-height: 1;
-					vertical-align: baseline;
-					display: inline-block;
-					-webkit-font-smoothing: antialiased;
-				}
-			}
-		}
-		.row{
-			margin-bottom:10px;
-			.el-checkbox__inner{
-				border-color:#409eff;
-			}
-			.title{
-				font-size:14px;
-				color:#000;
-				font-weight:bold;
-				margin-right:10px;
-			}
-		}
 	}
 	.el-tabs__item{
-		font-size:14px;
-		width:80px;
-		height:30px;
-		line-height:30px;
-		background-color:#e6e6e6;
-		text-align:center;
-		color:#333;
-		padding:0 !important;
-		border-radius: 4px 4px 0 0 !important;
+		color:#666;
+		background-color:#fff;
 	}
-	.is-active{
+	.el-tabs__item.is-active{
 		background-color:#009eff;
-		border-bottom:none;
 		color:#fff;
 	}
-  }
-  .bg-person{
-	  background:$color-bg-person;
-	  &.active{
-		background-color:#1d60dd;
-		color:#fff;
-	  }
+	.el-tabs__item:first-child {
+		border-top-left-radius:4px;
+	}
+	.el-tabs__item:last-child {
+		border-top-right-radius:4px;
+	}
+}
+.home {
+	clear:both;
+	position:relative;
+	.dialogPersonSetting{
+		.el-tabs__header, .el-tabs__nav{
+			border-bottom:1px dashed #289DFF;
+		}
+		.el-tabs__nav{
+			border-top:none;
+		}
+		.el-tab-pane{
+			.personDetail{
+				height:45px;
+				line-height:45px;
+				border-bottom:1px dashed #979797;
+				margin-bottom:10px;
+				overflow:hidden;
+				.flightNo{
+					background-color:#393f43;
+					color:#fff;
+					padding:0 4px;
+					border-radius:2px;
+				}
+				.step{
+					text-align:center;
+					width:120px;
+					position:relative;
+					&>p{
+						padding:0;
+						margin:2px;
+						line-height:20px;
+					}
+					&.arrow::after{
+						content:"\e6bb";
+						position:absolute;
+						right:-50%;
+						top:-6px;
+						font-family: "iconfont" !important;
+						font-size: 40px;
+						font-style: normal;
+						-webkit-font-smoothing: antialiased;
+						-moz-osx-font-smoothing: grayscale;	
+					}
+				}
+			}
+			.row{
+				margin-bottom:10px;
+				.el-checkbox__inner{
+					border-color:#409eff;
+				}
+				.title{
+					font-size:14px;
+					color:#000;
+					font-weight:bold;
+					margin-right:10px;
+				}
+			}
+		}
+		.el-tabs__item{
+			font-size:14px;
+			width:80px;
+			height:30px;
+			line-height:30px;
+			background-color:#e6e6e6;
+			text-align:center;
+			color:#333;
+			padding:0 !important;
+			border-radius: 4px 4px 0 0 !important;
+		}
+		.is-active{
+			background-color:#009eff;
+			border-bottom:none;
+			color:#fff;
+		}
+	}
+	.bg-person{
+		background:$color-bg-person;
+		&.active{
+			background-color:#1d60dd;
+			color:#fff;
+		}
 	}
 	.active-person {
 		background: #2e67f6;
 		color: #fff !important;
 	}
-  .personList{
-	  padding:0 10px;
-	  overflow:hidden;
-	  .person-panel{
-		  padding:2px 6px !important;
-		}
-  }
-  .person{
-	  color:$color-person;
-	  height:30px;
-	  line-height:30px;
-	  cursor:pointer;
-	  padding:0 2px;
-	  text-align:left;
-	  position:relative;
-	  border-radius:4px;
-	  font-size:14px;
-	  .taskNum{
-		  position:absolute;
-		  top:5px;
-		  right:3px;
-		  height:20px;
-		  line-height:20px;
-		  font-size:14px;
-		  font-weight:bold;
-		  width:auto;
-		  padding:0 2px;
-		  background-color:#35dfff;
-		  color:#f1fdfe;
-		  border-radius:4px;
-	  }
-  }
-  .el-aside {
-    background-color: #3f4253;
-    color: #333;
-    text-align: center;
-    overflow:visible;
-    position:relative;
-	padding-bottom:40px;
-	.panel{
-		overflow-y:auto;
-		height:100%;
-		.placeHolder{
-			position:relative;
-			height:42px;
-			width:100%;
+	.personList{
+		padding:0 10px;
+		overflow:hidden;
+		.person-panel{
+			padding:2px 6px !important;
 		}
 	}
-	.el-input{
-		width:95%;
-	}
-	.persons-panel{
-		.area-panel{
-			background-color: #2f3448;
-			color:#1dd8fe;
-			font-size:16px;
+	.person{
+		color:$color-person;
+		height:30px;
+		line-height:30px;
+		cursor:pointer;
+		padding:0 2px;
+		text-align:left;
+		position:relative;
+		border-radius:4px;
+		font-size:14px;
+		.taskNum{
+			position:absolute;
+			top:5px;
+			right:3px;
+			height:20px;
+			line-height:20px;
+			font-size:14px;
 			font-weight:bold;
-			text-align:left;
-			padding:10px 0;
+			width:auto;
+			padding:0 2px;
+			background-color:#35dfff;
+			color:#f1fdfe;
+			border-radius:4px;
 		}
 	}
-    .el-autocomplete {
-      width: 100%;
-      padding:6px 10px;
-    }
-    .toggleBtn {
-      position:absolute;
-      top:60px;
-      right:-20px;
-      width: 20px;
-      height:40px;
-      line-height:40px;
-      background: #666;
-      color:#fff;
-      font-size:18px;
-    }
-  }
-  .el-main {
-    color: #333;
-    text-align: center;
-  }
-  .el-container{
-    background-color: #f1f1f1;
-    .home-mian-header{
-      height:60px;
-      line-height:60px;
-      .el-row{
-        display: flex;
-        flex-wrap: wrap;
+	.el-aside {
+		background-color: #3f4253;
+		color: #333;
+		text-align: center;
+		overflow:visible;
+		position:relative;
+		padding-bottom:40px;
+		.panel{
+			overflow-y:auto;
+			height:100%;
+			.placeHolder{
+				position:relative;
+				height:42px;
+				width:100%;
+			}
+		}
+		.el-input{
+			width:95%;
+		}
+		.persons-panel{
+			.area-panel{
+				background-color: #2f3448;
+				color:#1dd8fe;
+				font-size:16px;
+				font-weight:bold;
+				text-align:left;
+				padding:10px 0;
+			}
+		}
+		.el-autocomplete {
+			width: 100%;
+			padding:6px 10px;
+		}
+		.toggleBtn {
+			position:absolute;
+			top:60px;
+			right:-20px;
+			width: 20px;
+			height:40px;
+			line-height:40px;
+			background: #666;
+			color:#fff;
+			font-size:18px;
+		}
+	}
+	.el-main {
+		color: #333;
+		text-align: center;
+	}
+	.el-container{
+		background-color: #f1f1f1;
+		.home-mian-header{
+			height:60px;
+			line-height:60px;
+			.tabCard{
+				.el-radio-button__orig-radio:checked+.el-radio-button__inner{
+					background-color:#393f43;
+					border-color:#393f43;
+				}
+			}
+			.el-button--mini{
+				padding:7px;
+				&.el-button--success{
+					i{
+						margin-right:2px;
+						font-size:14px;
+					}
+				}
+			}
+			.header-right{
+				text-align:right;
+				overflow:hidden;
+				.el-button+.el-button{
+					margin-left:8px;
+				}
+			}
+			.el-button{
+				&.el-button--mini{
+					height:28px;
+					line-height:0;
+				}
+			}
+			.el-row{
+				display: flex;
+				flex-wrap: wrap;
 				align-items: center;
 				margin-top: 10px;
-        .el-input{
-          width:auto;
-        }
-        .el-radio-group, .el-input{
-          margin-right:10px;
-        }
+				.el-input{
+					width:auto;
+				}
+				.el-radio-group, .el-input{
+					margin-right:8px;
+					.el-radio-button--mini .el-radio-button__inner{
+						padding:7px;
+					}
+				}
 			}
 			.is-table {
 				float: left;
 			}
-      .legend-panel{
-        text-align: right;
-        justify-content: flex-end;
-				background-color: #f1f1f1;	
+			.legend-panel{
+				border-radius:4px;
+				text-align: right;
+				margin-top:0;
+				justify-content: flex-start;
+				background-color: #fff;	
+				height:30px;
+				.el-col{
+					height:30px;
+					line-height:30px;
+				}
 			}
 			.icon-search {
 				&:before {
 					content: "\e663"
 				}
 			}
-    }
-    .el-main{
-      display: flex;
-      flex-direction:column;
+		}
+		.el-main{
+			display: flex;
+			flex-direction:column;
 			padding-top:0;
 			.flight-table {
-					thead>.cell {
-						background-color: #666;
-						height: 30px;
-						line-height: 30px;
-						color: #fff;
+				thead>.cell {
+					background-color: #666;
+					height: 30px;
+					line-height: 30px;
+					color: #fff;
 				}
 				.is-leaf {
-						background: #666;
-						color: #fff;
-						height: 28px;
-						line-height: 28px;
-						padding: 2px 0;
-						text-align: center;
+					background: #666;
+					color: #fff;
+					height: 28px;
+					line-height: 28px;
+					padding: 2px 0;
+					text-align: center;
 				} 
 				tr {
-						height: 28px;
-						line-height: 28px;
-						padding: 2px;
-						text-align: center;
-						border: 1px solid transparent;
+					height: 28px;
+					line-height: 28px;
+					padding: 2px;
+					text-align: center;
+					border: 1px solid transparent;
 				}
 				.el-tag--vl-people {
-						width:48px;
-						// height:20px;
-						color: #fff;
-						background-color:#ff8500; 
+					width:48px;
+					// height:20px;
+					color: #fff;
+					background-color:#ff8500; 
 				}
 				.el-tag--vl-car {
-						width:48px;
-						// height:20px;
-						color: #fff;
-						background-color:#0096ff; 
+					width:48px;
+					// height:20px;
+					color: #fff;
+					background-color:#0096ff; 
 				}
 				.el-tag--vl-company {
-						width:48px;
-						// height:20px;
-						color: #fff;
-						background-color:#a346bc; 
+					width:48px;
+					// height:20px;
+					color: #fff;
+					background-color:#a346bc; 
 				}
 				.el-tag--vl-tool {
-						width:48px;
-						// height:20px;
-						color: #fff;
-						background-color:#677f95; 
+					width:48px;
+					// height:20px;
+					color: #fff;
+					background-color:#677f95; 
 				}
 				.el-table--striped .el-table__body tr.el-table__row--striped td {
 					background: #f0f2f4;
 				}
 				.el-table--enable-row-hover .el-table__body tr>td {
-						padding: 6px 0;
-						border-top: 1px solid transparent;
-						border-bottom: 1px solid transparent;
-						text-align: center;
+					padding: 6px 0;
+					border-top: 1px solid transparent;
+					border-bottom: 1px solid transparent;
+					text-align: center;
 				}
 				.el-table--enable-row-hover .el-table__body tr:hover>td {
-						background-color: #e3f3fc !important;
-						border-top: 1px solid #0096ff;
-						border-bottom: 1px solid #0096ff;
+					background-color: #e3f3fc !important;
+					border-top: 1px solid #0096ff;
+					border-bottom: 1px solid #0096ff;
 				}
 				.el-table .cell {
-						overflow: hidden;
-						white-space: nowrap;
-						text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 			}
-      .mainList{
-        flex:1;
-        background-color:white;
-        padding:6px;
-		.dialogTaskDetail{
-			.taskInfo{
-				margin-bottom:20px;
-			}
-			.taskPersonList{
-			  .taskDetailList{
-				  text-align:left;
-				  span{
-					font-weight:bold;
-				  }
-			  }
-				.el-col{
-					text-align:left;
-					.taskPersonBtn{
-						font-size:12px;
-						margin-left:10px;
-						margin-right:0;
-						margin-bottom:10px;
-						background: #DBE9FE;
-						border: 1px solid #7FB1FF;
-						border-radius: 3px;
-						padding:6px 12px;
-						color:#1F407B;
-						i{
-							color:#009eff;
+			.mainList{
+				flex:1;
+				padding:6px;
+				.dialogTaskDetail{
+					.taskInfo{
+						margin-bottom:20px;
+					}
+					.taskPersonList{
+						.taskDetailList{
+							text-align:left;
+							span{
+								font-weight:bold;
+							}
 						}
-						&.active,&:hover{
-							background-color:#0064FF;
-							color:#fff;
+						.el-col{
+							text-align:left;
+							.taskPersonBtn{
+								font-size:12px;
+								margin-left:10px;
+								margin-right:0;
+								margin-bottom:10px;
+								background: #DBE9FE;
+								border: 1px solid #7FB1FF;
+								border-radius: 3px;
+								padding:6px 12px;
+								color:#1F407B;
+								i{
+									color:#009eff;
+								}
+								&.active,&:hover{
+									background-color:#0064FF;
+									color:#fff;
+								}
+							}
+						}
+					}
+				}
+				> .el-row{
+					display: flex;
+					margin-bottom:20px;
+					.region{
+						margin-top:10px;
+						.el-card{
+							height:100%;
+							background-color:#eff5fd;
+							border:1px solid #bbbbbb;
+							.el-card__body{
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								height: 100%;
+								justify-content: center;
+							}
+							.areaName{
+								font-size:18px;
+								font-weight:bold;
+								color:black;
+							}
+							.workerName{
+								font-size:16px;
+								font-weight:bold;
+								color:#00a93c;
+							}
+						}
+					}
+					.task{
+						.el-col {
+							margin-top:10px;
+							.el-card {
+								border:1px dashed #c7c7c7;
+								cursor:pointer;
+								.el-card__body{
+									padding:0;
+									position:relative;
+									.flight-status{
+										position:absolute;
+										right:0;
+										top:0;
+										width:60px;
+										height:20px;
+										line-height:20px;
+										background-color:#31b4f1;
+										color:#fff;
+										font-size:12px;
+										text-align:center;
+										transform: rotateZ(45deg);
+										top: 5px;
+										right: -15px;
+									}
+								}
+								.el-aside{
+									background-color:white;
+									padding-left:20px;
+									padding-bottom:10px;
+									text-align: left;
+									font-size:14px;
+									color:#9a9a9a;
+									font-weight:bold;
+									.first-row{
+										color:#4e66ef;
+									}
+									.second-row{
+										.flightNo{
+											color:white;
+											font-size:16px;
+											background-color:#6178f1;
+										}
+										.aircraftNumber{
+											color:#636363;
+										}
+									}
+									.et{
+										color:#4b506e;
+									}
+								}
+								.el-main{
+									overflow: hidden;
+									padding: 0;
+									align-items: center;
+									background-color:#3fa7ff;
+									div{
+										width:10px;
+										height:100%;
+										word-break:break-word;
+										color:white;
+										display: flex;
+										align-items:center;
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
-        > .el-row{
-          display: flex;
-          margin-bottom:20px;
-          .region{
-            margin-top:10px;
-            .el-card{
-              height:100%;
-			  background-color:#eff5fd;
-			  border:1px solid #bbbbbb;
-			  .el-card__body{
-				  display: flex;
-				  flex-direction: column;
-				  align-items: center;
-				  height: 100%;
-				  justify-content: center;
-			  }
-			  .areaName{
-				font-size:18px;
-				font-weight:bold;
-				color:black;
-			  }
-			  .workerName{
-				font-size:16px;
-				font-weight:bold;
-				color:#00a93c;
-			  }
-            }
-          }
-          .task{
-            .el-col {
-              margin-top:10px;
-			  .el-card {
-				  border:1px dashed #c7c7c7;
-				  cursor:pointer;
-				  .el-card__body{
-					padding:0;
-					position:relative;
-					.flight-status{
-						position:absolute;
-						right:0;
-						top:0;
-						width:60px;
-						height:20px;
-						line-height:20px;
-						background-color:#31b4f1;
-						color:#fff;
-						font-size:12px;
-						text-align:center;
-						transform: rotateZ(45deg);
-						top: 5px;
-						right: -15px;
-					}
-				  }
-				  .el-aside{
-					  background-color:white;
-						padding-left:20px;
-						padding-bottom:10px;
-						text-align: left;
-						font-size:14px;
-						color:#9a9a9a;
-						font-weight:bold;
-					  .first-row{
-						color:#4e66ef;
-					  }
-					  .second-row{
-						  .flightNo{
-							  color:white;
-							  font-size:16px;
-							  background-color:#6178f1;
-						  }
-						  .aircraftNumber{
-							  color:#636363;
-						  }
-					  }
-						  .et{
-							color:#4b506e;
-						  }
-				  }
-				  .el-main{
-					  overflow: hidden;
-					  padding: 0;
-					  align-items: center;
-					  background-color:#3fa7ff;
-					  div{
-						  width:10px;
-						  height:100%;
-						  word-break:break-word;
-						  color:white;
-						  display: flex;
-						  align-items:center;
-					  }
-				  }
-			  }
-            }
-          }
-        }
-      }
-    }
 	}
-.taskhandover {
-	width:467px;
-	height:270px;
-	background: #f7fcff;
-	border: 1px solid #0064FF;
-	margin: auto;
-	overflow-y: scroll;
-	padding: 10px;
-	div {
+	.taskhandover {
+		width:467px;
+		height:270px;
+		background: #f7fcff;
+		border: 1px solid #0064FF;
 		margin: auto;
-		text-align: center;
-	}
-	span {
-		display: inline-block;
-		height: 20px;
-		line-height: 20px;
-		min-width: 42px;
-		text-align: center;
-		margin:5px 0;
-	}
-	.flight-no {
-		background: #393f44;
-		color: #fff;
-		font-size: 16px;
-		padding: 0 5px;
-		line-height: 20px;
-		border-radius: 4px;
-	}
-	.flight-id {
-		color: #0064FF;
-		font-size: 16px;
-	}
-	.time {
-		color: #666;
-		font-size: 14px;
-	}
-	.staff-name {
-		color: #0064FF;
-	}
-}	
+		overflow-y: scroll;
+		padding: 10px;
+		div {
+			margin: auto;
+			text-align: center;
+		}
+		span {
+			display: inline-block;
+			height: 20px;
+			line-height: 20px;
+			min-width: 42px;
+			text-align: center;
+			margin:5px 0;
+		}
+		.flight-no {
+			background: #393f44;
+			color: #fff;
+			font-size: 16px;
+			padding: 0 5px;
+			line-height: 20px;
+			border-radius: 4px;
+		}
+		.flight-id {
+			color: #0064FF;
+			font-size: 16px;
+		}
+		.time {
+			color: #666;
+			font-size: 14px;
+		}
+		.staff-name {
+			color: #0064FF;
+		}
+	}	
 }
 
 
