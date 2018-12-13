@@ -2,18 +2,18 @@
 <section class="outermostsection" >
 	<section class="outermostheader">
 		<el-row :gutter="50">
-			<el-col :span="12">
-				<el-button :type="currentBtn == 'p1'?'primary':''" @click="showSector('p1')">当前部门</el-button>
-				<el-button :type="currentBtn == 'p2'?'primary':''"  @click="showSector('p2')">所有部门</el-button>
-			</el-col>
-			<el-col :span="6">
-				<el-date-picker v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+			<el-col class="deptRow" :span="12">
+				<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1')">当前部门</el-button>
+				<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2')">所有部门</el-button>
+		   </el-col>
+		   <el-col class="dateRow" id="dateRow" :span="6">
+				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnearch">
 				</el-date-picker>
-			</el-col>
-			<el-col :span="6">
-				<el-input placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter.native="exportOnsearch">
+		   </el-col>
+		   <el-col class="inputRow" :span="6">
+				<el-input class="input" placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter.native="exportOnsearch">
 				</el-input>
-			</el-col>
+		   </el-col>
 		</el-row>
 	</section>
 	<section class="urgentReport" v-if="currentBtn=='p1'">
@@ -114,7 +114,7 @@
 
 <script>
 	import moment from "moment";
-	import ajaxx from "ajax";
+	import {ajax} from "ajax";
 	import {formatDate} from "date.js";
 	import { remote } from 'electron';
 	export default {
@@ -136,7 +136,6 @@
 		methods:{
 			showSector(sector){
 				this.currentBtn = sector;
-				let ajax = ajaxx();
 				let timeArr = this.time;
 				let startDate;
 				let endDate;
@@ -195,7 +194,6 @@
 				this.sites = data;
 			},
 			exportOnsearch(){
-				let ajax = ajaxx();
 				let timeArr = this.time;
 				let startDate;
 				let endDate;
@@ -232,11 +230,10 @@
 			},
 		},
 		beforeMount(){
-			let ajax = ajaxx();
 			ajax.post('urgentReport').then(data =>{
 				console.log(4444);
 				console.log(data);
-				this.getData(data.data);
+				this.getData(data);
 
 			});
 			/*ajax.get('urgentReport').then((data)=>{*/
