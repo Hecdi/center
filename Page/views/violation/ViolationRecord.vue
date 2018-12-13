@@ -40,7 +40,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
             },
             refreshData(){
                 let ajax = ajaxx();
-                ajax.get('getViolationData').then(data=>{
+                ajax.post('getViolationDataForLike','').then(data=>{
                 let violation = data.data;
                 console.log(violation);
                 this.getData(data);

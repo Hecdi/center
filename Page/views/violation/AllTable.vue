@@ -166,7 +166,7 @@ export default {
     },
     refreshData() {
       let ajax = ajaxx();
-      ajax.get("getViolationData").then(data => {
+      ajax.post("getViolationDataForLike",'').then(data => {
         let violation = data.data;
         console.log(violation);
         this.getData(data);
