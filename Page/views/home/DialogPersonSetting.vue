@@ -1,17 +1,17 @@
 <template>
-  <el-dialog
-    class="dialogPersonSetting"
-    center
-    :title="currentPerson?currentPerson.staffName:''"
-    :visible.sync="dialogPersonSettingVisible"
-    width="1000px"
-  >
+	<el-dialog
+		class="dialogPersonSetting"
+		center
+		:title="currentPerson?currentPerson.staffName:''"
+		:visible.sync="dialogPersonSettingVisible"
+		width="1000px"
+		>
     <el-tabs type="card" v-model="checkedPanel">
       <el-tab-pane label="人员设置" name="set">
         <el-row :gutter="10" class="row">
           <el-col>
 			  <span class="title">职务：</span>
-            <el-checkbox :checked="currentPerson?currentPerson.groupLeader:-1" @change="setLeader" :true-label="1" :false-label="-1">设为小组长</el-checkbox>
+            <el-checkbox v-model="leader"  >设为小组长</el-checkbox>
           </el-col>
         </el-row>
         <el-row :gutter="10" class="row">
@@ -28,7 +28,7 @@
 			</el-col>
 			<el-col :span="22">
 				<el-row :gutter="2">
-					<el-col :span="`${index+1 == task.operatorStep.length?4:6}`" v-for="(step,index) in task.operatorStep" :key="index">
+					<el-col :span="index+1 == task.operatorStep.length?4:6" v-for="(step,index) in task.operatorStep" :key="index">
 						<div class="step" :class="{'arrow':index +1 != task.operatorStep.length}">
 							<p style="color:#3D568E;">{{step.operationName}}</p>
 							<p style="color:#333;">{{`${formatDate(step.actTime,'HHmm','--')}` + `${"("+formatDate(step.planTime,'HHmm','--')+")"}`}}</p>
@@ -57,17 +57,19 @@
 		props: ["currentPerson", "currentAreaName"],
 		data() {
 			return {
-				leader:null,
+				leader:false,
 				checkedPanel:'set',
 				detail:[],
+
 			};
 		},
 		watch:{
 			dialogPersonSettingVisible:function(newVal,old){
 				if(newVal == true){
-				this.getPersonDetail();
+					this.leader = this.currentPerson ? (this.currentPerson.groupLeader==1?true:false):false;
+					this.getPersonDetail();
 				}
-			}
+			},
 		},
 		methods: {
 			formatDate:function(val,opt,empty){
@@ -76,46 +78,11 @@
 			getPersonDetail(){
 				ajax.post('home.getPersonDetail',{staffId:this.currentPerson.staffId}).then(data=>{
 					console.log(data);
+					this.detail.splice(0, this.detail.length);
+					each(data, item=>{
+						this.detail.push(item);
+					});
 				});
-				let data =[
-					{
-						"flightNo": "BS2332",
-						"flightTaskId": "dgrtytgfewe3534",
-						"operatorStep":[{
-							"operationCode":"1",
-							"operationName":"领受",
-							"actTime":1544427391000,
-							"planTime":1544427391000,
-						},
-							{
-								"operationCode":"2",
-								"operationName":"到位",
-								"actTime":1544427391000,
-								"planTime":1544427391000,
-							}]
-					},
-					{
-						"flightNo": "BS2332",
-						"flightTaskId": "dgrtytgfewe3534",
-						"operatorStep":[{
-							"operationCode":"1",
-							"operationName":"领受",
-							"actTime":1544427391000,
-							"planTime":1544427391000,
-						},
-							{
-								"operationCode":"2",
-								"operationName":"到位",
-								"actTime":1544427391000,
-								"planTime":1544427391000,
-							}
-						]
-					}]; 
-				this.detail=data;
-				/*this.detail.splice(0, this.detail.length);
-				each(data, item=>{
-					this.detail.push(item);
-				})*/
 			},
 			setLeader(val){
 				this.leader = val;
@@ -123,7 +90,7 @@
 			submit() {
 				let param= {
 					staffId:this.currentPerson.staffId,
-					groupLeader:this.leader,
+					groupLeader:this.leader?1:-1,
 				}
 				console.log(param);
 				ajax.post('home.updateStaffState',param,(data)=>{
