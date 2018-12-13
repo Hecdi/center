@@ -3,10 +3,8 @@
 	<section class="outermostheader">
 		<el-row :gutter="50">
 			<el-col :span="12">
-				<el-radio-group v-model="radio1">
-					<el-radio-button round label="当前部门" ></el-radio-button>
-					<el-radio-button round label="所有部门" ></el-radio-button>
-				</el-radio-group>
+				<el-button :type="currentBtn == 'p1'?'primary':''" @click="showSector('p1')">当前部门</el-button>
+				<el-button :type="currentBtn == 'p2'?'primary':''"  @click="showSector('p2')">所有部门</el-button>
 			</el-col>
 			<el-col :span="6">
 				<el-date-picker v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -18,7 +16,7 @@
 			</el-col>
 		</el-row>
 	</section>
-	<section class="urgentReport" v-if="radio1=='当前部门'">
+	<section class="urgentReport" v-if="currentBtn=='p1'">
 		<el-row :gutter="5" id='card'>
 			<el-col :span="4" v-for="site in sites" :key="site.flightTaskId" >
 				<el-card>
@@ -44,9 +42,9 @@
 								<el-dialog
 									title="提示"
 									:visible.sync="dialogVisible">
-									<el-carousel height="150px">
-										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-											<img :src = "item" />
+									<el-carousel :autoplay=false  height="300px" >
+										<el-carousel-item  v-for = "(item,index) in imgArr" :key = "index">
+											<img :src = "item"  class="img" />
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -98,10 +96,9 @@
 					<div v-if = "scope.row.imgFile">
 						<el-button type = "primary" @click.native="showPics(scope.row.imgFile)">查看</el-button>
 						<el-dialog title="提示" :visible.sync="dialogVisible">
-						/*<p>{{scope.row}}</p> //这里显示出scope.row就是前面的site */
-							<el-carousel height="150px">
+							<el-carousel :autoplay=false height="300px" >
 								<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-									<img :src = "item" />
+									<img :src = "item" class="img"/>
 								</el-carousel-item>
 							</el-carousel>
 						</el-dialog>
@@ -131,19 +128,24 @@
 				time:[],
 				inputSearch:'',
 				imgArr:[],
+				currentBtn:'p1',
 			}
 		},
 		methods:{
+			showSector(sector){
+				this.currentBtn = sector;
+			},
 			showPics(picUrls){
+				console.log(10000);
 				console.log(picUrls);
 				this.imgArr = picUrls.split(',');
 				this.dialogVisible = true;
 			},
 			getData(data){
 				/*this.sites = data.data;*/
+				console.log(1111);
 				console.log(data);
 
-				console.log(11112);
 				for(var i in data){
 					var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
 					data[i].deviateTime = newDate;
@@ -181,11 +183,11 @@
 					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
 				}
 				let inputSearch = this.inputSearch;
-				let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
-				console.log('new111');
+				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,};
+				console.log('2222');
 				console.log(params);
 				ajax.post('urgentReport', params).then((data) => {
-					console.log('new222');
+					console.log('3333');
 					console.log(data);
 					this.getData(data);
 				})
@@ -193,30 +195,31 @@
 		},
 		beforeMount(){
 			let ajax = ajaxx();
-		   /* ajax.post('urgentReport').then(data =>{*/
-				/*console.log(data);*/
-				/*this.getData(data.data);*/
+			ajax.post('urgentReport').then(data =>{
+				console.log(4444);
+				console.log(data);
+				this.getData(data.data);
 
-			/*});*/
-			ajax.get('urgentReport').then((data)=>{
-			data = [
-			{'deviationItemName':'撤桥',
-			'remarks':'航后',
-			'flightNo':'EU2280',
-			'staffName':'leo',
-			'deviateTime':1544075290,
-			'imgFile':'https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/05/ChMkJlbKyaGIGGNjABT85XemdQ8AALIQQI-6pcAFPz9490.jpg,https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/02/ChMkJlbKxgqIc2QIAAd2hfADVfMAALHfQDYbgAAB3ad736.jpg',
-			},
-			{'deviationItemName':'撤桥',
-			'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',
-			'flightNo':'EU2280',
-			'staffName':'leo',
-			'deviateTime':null,
-			'imgFile':null,
-			}
-			];
-			this.getData(data);
 			});
+			/*ajax.get('urgentReport').then((data)=>{*/
+			/*data = [*/
+			/*{'deviationItemName':'撤桥',*/
+			/*'remarks':'航后',*/
+			/*'flightNo':'EU2280',*/
+			/*'staffName':'leo',*/
+			/*'deviateTime':1544075290,*/
+			/*'imgFile':'https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/05/ChMkJlbKyaGIGGNjABT85XemdQ8AALIQQI-6pcAFPz9490.jpg,https://desk-fd.zol-img.com.cn/t_s960x600c5/g5/M00/02/02/ChMkJlbKxgqIc2QIAAd2hfADVfMAALHfQDYbgAAB3ad736.jpg',*/
+			/*},*/
+			/*{'deviationItemName':'撤桥',*/
+			/*'remarks':'这是很长很长的内容很长很长这是很长很长的内容很长很长',*/
+			/*'flightNo':'EU2280',*/
+			/*'staffName':'leo',*/
+			/*'deviateTime':null,*/
+			/*'imgFile':null,*/
+			/*}*/
+			/*];*/
+			/*this.getData(data);*/
+			/*});*/
 		}
 	}
 </script>
