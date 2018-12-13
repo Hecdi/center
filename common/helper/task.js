@@ -23,6 +23,7 @@ const addDisplayField = (row) => {
 		return null;
 	});	
 
+
 	let taskStatusDisplayMap = {
 		1:"未发布",
 		2:"已发布",
@@ -42,12 +43,41 @@ const addDisplayField = (row) => {
 		"M": "混合",
 		"R": "地区",
 	};
-
+	
 	let flightIndicatorDisplay = {
 		displayFlightIndicator: flightIndicatorDisplayMap[row.flightIndicator]
 	}
+	let haveDeviatingDisplayMap = {
+		true: "iconfont icon-pianlishangbao1",
+		false: "iconfont icon-pianlishangbao",
+	};
+	let haveDeviatingDisplay = {
+		displayHaveDeviating: haveDeviatingDisplayMap[row.haveDeviating]
+	};
+	let delayDisplayMap = {
+		true: "iconfont icon-yanwubiaoji",
+		false: "iconfont",
+	};
+	let delayDisplay = {
+		displayDelay: delayDisplayMap[row.delay]
+	};
+	let returnFlihtDisplayMap = {
+		true: "iconfont icon-fanhangbiaoji",
+		false: "iconfont",
+	};
+	let returnFlihtDisplay = {
+		displayReturnFliht: returnFlihtDisplayMap[row.returnFliht]
+	};
+	let alternateMap = {
+		true: "iconfont icon-beijiangbiaoji",
+		false: "iconfont",
+	};
+	let alternateDisplay = {
+		displayAlternate: alternateMap[row.alternate]
+	};
+	
 
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay);
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay );
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);
