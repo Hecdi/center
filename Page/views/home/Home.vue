@@ -40,7 +40,7 @@
 				<div class="placeHolder"/>
 				</div>
 				<div @click="handleToggle" class="toggleBtn">
-					<i class="el-icon-d-arrow-left"/>
+					<i :class="isHidden?'icon-zhankai':'icon-shouqi'" class="iconfont"/>
 				</div>
 		</el-aside>
 		<el-container>
@@ -110,12 +110,13 @@
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
 							标记说明：
 						</span>
-						<Legend data="延误" iconColor="white" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
-						<Legend data="重点" iconColor="#ffac00" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
-						<Legend data="VIP" iconColor="#00a0ff" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="备降" iconColor="#00d859" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="返航" iconColor="#aa67f3" iconSize="16px" icon="iconfont icon-beijiangbiaoji" fontSize="12px" color="#333"/>
-						<Legend data="告警" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
+						<Legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="快速过站" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
 					</el-col>
 				</el-row>
 			</el-header>
