@@ -172,10 +172,10 @@
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
-                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startDate=${startDate}&endDate=${endDate}`;
+                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
                 window.open(exportLocation);
-                return exportLocation;
+                // return exportLocation;
                 // that.exportLocation = exportLocation;
                // console.log(param);
                 // console.log(params)
@@ -210,7 +210,7 @@
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
-                let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
+                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
                 console.log(param);
                 console.log(params)
                 ajax.post('getViolationDataForLike', params).then((data) => {
