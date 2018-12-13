@@ -62,23 +62,23 @@
     </el-row>
     <el-table
 		highlight-current-row
-      :data="flights"
+      :data="displayFlights"
       height="250"
-      style="width: 100%"
-    >
-    <el-table-column label="单选" width="65"  @click.native="checked">
-        <template scope="scope">
-            <el-radio :label="scope.$index+1" v-model="templateRadio" @change.native="getTemplateRow(scope.$index,scope.row)"></el-radio>
-        </template>
-    </el-table-column>
+      width= "100%"
+	  @current-change="handleCurrentChange">
+		<!--<el-table-column label="单选" width="65" > -->
+			<!--<template scope="scope">-->
+				<!--<el-radio v-model="templateRadio" :value="scope.row.flightId" ></el-radio>-->
+			<!--</template>-->
+		<!--</el-table-column>-->
       <el-table-column prop="flightNo" label="航班号"/>
       <el-table-column prop="aircraftNumber" label="机尾号"/>
       <el-table-column prop="seat" label="机位"/>
       <el-table-column prop="aircraftType" label="机型"/>
-      <el-table-column prop="estimatedArriveTime" :formatter="dateFormat" label="预计到达" min-width="160"/>
-      <el-table-column prop="scheduleArriveTime" :formatter="dateFormat" label="计划到达" min-width="160"/>
-      <el-table-column prop="estimatedDepartureTime" :formatter="dateFormat" label="预计起飞" min-width="160"/>
-      <el-table-column prop="scheduleDepartureTime" :formatter="dateFormat" label="计划起飞" min-width="160"/>
+      <el-table-column prop="displayETA" label="预计到达" min-width="160"/>
+      <el-table-column prop="displaySTA" label="计划到达" min-width="160"/>
+      <el-table-column prop="displayETD" label="预计起飞" min-width="160"/>
+      <el-table-column prop="displaySTA" label="计划起飞" min-width="160"/>
     </el-table>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="submitTempTask">提交</el-button>
@@ -88,173 +88,158 @@
 </template>
 <script>
 
-import ajaxx from 'ajax';
-import moment from 'moment';
-import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
-import { getNaturalDate }  from 'date';
+	import {ajax} from 'ajax';
+	import moment from 'moment';
+	import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
+	import {formatDate }  from 'date';
+	import {map, extend} from 'lodash';
 
-export default {
-  name: "DialogAddTask",
-  data(){
-    return {
-      timeLimitValue: "",
-      multipleSelection: [],
-	  input10: "",
-	  temporaryTaskType: "",
-	  searchFlight: "",
-	  tempTaskType: '',
-	  tempTaskTypeCode: '',
-	  tempTaskTypeName: '',
-	  templateRadio: '',
-	  curentWorker: '',
-    activeName: '',
-    }
-  },
-  watch: {
-    dialogAddTaskVisible: function(newDialogAddTaskVisible,oldDialogAddTaskVisible){
-        if(newDialogAddTaskVisible){
-          this.handlGettTaskModelList();
-        } else {
-          return;
-        }		
-    }
-  },
-  methods: {
-
-    show(value) {
-		this.curentWorker = value;
-		console.log(this.curentWorker);
-		this.activeName = value;
-	},
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-      console.log(this.multipleSelection);
-    },
-    handleRowClick(row) {
-      this.$refs.multipleTable.toggleRowSelection(row);
-	},
-	getFlightSearchData(data) {
-        this.$store.dispatch('home/getFlightSearchData',data);
-	},
-	getTaskModelList(data){
-		this.$store.dispatch('home/getTaskModelList',data);
-	},
-	getTemplateRow(index,row){                                 //获取选中数据
-		this.templateRadio = row.flightId;
-		console.log(this.templateRadio);
-	},
-	handleTaskType(value){
-		// this.tempTaskType = value.projectName;
-		this.tempTaskTypeName = value.projectName;
-		this.tempTaskTypeCode = value.projectCode;
-	},
-	dateFormat:function(row, column) {
-        var date = row[column.property];
-        if (date == undefined) {
-            return "";
-		}
-		return moment(date).format("YYYY-MM-DD HH:mm");
-	},
-	
-	submitSuccess(){
-		this.$message({
-			showClose: true,
-          message: '恭喜你，新增临时任务成功',
-		  type: 'success',
-		  duration: 500,
-        //   dangerouslyUseHTMLString: true,
-        //   message: '<strong>这是 <i>HTML</i> 片段</strong>'
-        });
-	},
-	submitError(){
-		this.$message({
-			showClose: true,
-          	message: '新增临时任务失败',
-          	type: 'error'
-		})
-	},
-	handleSearchFlight(){
-		let ajax = ajaxx();
-		let condition = this.searchFlight;
-		let param = {"searchCondition":condition};
-		console.log(param);
-        ajax.post('getFlightForTemporaryTask',param).then(data=>{
-		    let value = data.data;
-		    this.getFlightSearchData(value);
-        })
-	},
-	handlGettTaskModelList(){
-		console.log('lisrt');
-		let ajax = ajaxx();
-		ajax.post('tempTaskModelList').then(data => {
-			let result = data.data;
-			this.getTaskModelList(result);
-		})
-	},
-	submitTempTask(){
-		// let param = "111";
-		let ajax = ajaxx();
-		let time = this.timeLimitValue;
-		let workerId = this.curentWorker;
-		let type;
-		let typeName;
-		let typeCode;
-		if(this.temporaryTaskType){
-			type = this.temporaryTaskType; 
-		} else {
-			// type = this.tempTaskType;
-			typeCode = this.tempTaskTypeCode;
-			typeName = this.tempTaskTypeName;
-		}
-
-    let code = `"projectName":${typeName},"projectCode":${typeCode}`;
-		let flightId = this.templateRadio;
-		let params = {
-			"taskTime": time,
-			"staffIds": workerId,
-			"flightId": flightId,
-			// "projectCode": 	'111',
-    };
-
-    if (type){
-      params.projectName = type;
-    } else {
-      params.projectName = typeName;
-      params.projectCode = typeCode;
-    }
-
-		console.log(params);
-		ajax.post('taskSubmit',params).then(data => {
-			let code = data.responseCode;
-			if(code == 1000){
-        // this.handlGettTaskModelList();
-        this.dialogAddTaskVisible = false;
-				console.log('sssss');
-				this.submitSuccess();
-			} else {
-				this.dialogAddTaskVisible = false;
-				this.submitError()
-				// this.submitSuccess();
-				return console.log('eeeeee');
+	export default {
+		name: "DialogAddTask",
+		data(){
+			return {
+				timeLimitValue: "",
+				multipleSelection: [],
+				input10: "",
+				temporaryTaskType: "",
+				searchFlight: "",
+				tempTaskType: '',
+				tempTaskTypeCode: '',
+				tempTaskTypeName: '',
+				templateRadio: '',
+				curentWorker: '',
+				activeName: '',
+				flights:[],
+				tempWorkerList:[],
+				tempGuaranteeList:[],
 			}
-		})
-	}
-  },
-  computed: {
-	...mapState('home', ['flights','tempGuaranteeList','tempWorkerList']),
-    dialogAddTaskVisible: {
-      get() {
-        return this.$store.state.home.dialogAddTaskVisible;
-      },
-      set() {
-        this.$store.dispatch(`home/update`, { dialogAddTaskVisible: false });
-      }
-    },
-    ...mapState("home", ["timeLimitOpts"])
-  },
+		},
+		watch: {
+			dialogAddTaskVisible: function(newDialogAddTaskVisible,oldDialogAddTaskVisible){
+				this.flights = [];
+				this.tempWorkerList = [];
+				this.tempGuaranteeList = [];
+				this.currentWorker='';
+				this.activeName='';
 
-  	// beforeMount(){
-		// this.handlGettTaskModelList();
-    // },
-};
+				if(newDialogAddTaskVisible){
+					this.handlGettTaskModelList();
+				} 
+			}
+		},
+		methods: {
+			handleCurrentChange(val){
+				if(val){
+					this.templateRadio = val.flightId;
+				}
+			},
+			show(value) {
+				this.curentWorker = value;
+				console.log(this.curentWorker);
+				this.activeName = value;
+			},
+			handleSelectionChange(val) {
+				this.multipleSelection = val;
+				console.log(this.multipleSelection);
+			},
+			handleRowClick(row) {
+				this.$refs.multipleTable.toggleRowSelection(row);
+			},
+			getTemplateRow(index,row){                                 //获取选中数据
+				this.templateRadio = row.flightId;
+			},
+			handleTaskType(value){
+				this.tempTaskTypeName = value.projectName;
+				this.tempTaskTypeCode = value.projectCode;
+			},
+			submitSuccess(message){
+				this.$message({
+					showClose: true,
+					message: message,
+					type: 'success',
+					duration: 500,
+				});
+			},
+			submitError(message){
+				this.$message({
+					showClose: true,
+					message: message,
+					type: 'error'
+				})
+			},
+			handleSearchFlight(){
+				let condition = this.searchFlight;
+				let param = {"searchCondition":condition};
+				ajax.post('getFlightForTemporaryTask',param).then(data=>{
+					this.flights = data;
+				})
+			},
+			handlGettTaskModelList(){
+				ajax.post('tempTaskModelList').then(data => {
+					this.tempWorkerList = data.workerList;
+					this.tempGuaranteeList= data.guaranteeList;
+				})
+			},
+			submitTempTask(){
+				let time = this.timeLimitValue;
+				let workerId = this.curentWorker;
+				let type;
+				let typeName;
+				let typeCode;
+				if(this.temporaryTaskType){
+					type = this.temporaryTaskType; 
+				} else {
+					typeCode = this.tempTaskTypeCode;
+					typeName = this.tempTaskTypeName;
+				}
+				let code = `"projectName":${typeName},"projectCode":${typeCode}`;
+				let flightId = this.templateRadio;
+				let params = {
+					"taskTime": time,
+					"staffIds": workerId,
+					"flightId": flightId,
+				};
+
+				if (type){
+					params.projectName = type;
+				} else {
+					params.projectName = typeName;
+					params.projectCode = typeCode;
+				}
+
+				console.log(params);
+				ajax.post('taskSubmit',params,data => {
+					let code = data.responseCode;
+					if(code == 1000){
+						this.dialogAddTaskVisible = false;
+						this.submitSuccess(data.responseMessage);
+					} else {
+						this.dialogAddTaskVisible = false;
+						this.submitError(data.responseMessage)
+					}
+				})
+			}
+		},
+		computed: {
+			displayFlights:function(){
+				return map(this.flights, flight=>{
+					return extend({},flight,{
+						displayETA:formatDate(flight.estimatedArriveTime,'HHmm(DD)','--'),
+						displaySTA:formatDate(flight.scheduleArriveTime,'HHmm(DD)','--'),
+						displayETD:formatDate(flight.estimatedDepartureTime,'HHmm(DD)','--'),
+						displaySTD:formatDate(flight.scheduleDepartureTime,'HHmm(DD)','--'),
+					});
+				});
+			},
+			dialogAddTaskVisible: {
+				get() {
+					return this.$store.state.home.dialogAddTaskVisible;
+				},
+				set() {
+					this.$store.dispatch(`home/update`, { dialogAddTaskVisible: false });
+				}
+			},
+			...mapState('home', ['timeLimitOpts']),
+		},
+	};
 </script>
