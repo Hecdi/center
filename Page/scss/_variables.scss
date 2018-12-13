@@ -33,33 +33,6 @@ $sizes: (
 // $border-color:        #e5e8ed !default;
 $border-color:        #ced8e8;
 
-
-//font-family
-
-/*
-    定义字体
-    Yahei: 'Microsoft YaHei
-    YaheiBold: MicrosoftYaHei
-
-*/
-
-
-$font-family-Yahei:         'Microsoft YaHei';
-$font-family-YaheiBold:     'MicrosoftYaHei-Bold';
-$font-family-MFlihei:       'MFLiHei_Noncommercial-Regular';
-$font-family-One:    		'Fjalla One';
-$font-family-Medium:		'Orbitron';
-$font-family-rich:      	'Aldrich';
-
-$familys: (
-        "Yahei":    		$font-family-Yahei,
-        "YaheiBold":   		$font-family-YaheiBold,
-        "MFlihei":          $font-family-MFlihei,
-        "One":              $font-family-One,
-        "Medium":           $font-family-Medium,
-        "rich":             $font-family-rich,
-    );
-
 $modal-header-padding: 0.6rem;
 
 $btn-padding-y:  2px;
@@ -81,12 +54,33 @@ $--table-current-row-background: #f0f2f4;
 $color-bg-blue:	#1d60dd;
 $color-bg-cyan:	#d5f0ff;
 
+
+$font-family-Yahei:         'Microsoft YaHei';
+$font-family-YaheiBold:     'MicrosoftYaHei-Bold';
+// $font-family-MFlihei:       'MFLiHei_Noncommercial-Regular';
+$font-family-One:    		'Fjalla One';
+$font-family-Orbitron:		'Orbitron';
+// $font-family-rich:      	'Aldrich';
+$font-family-Helve:          'Helve';
+
+$familys: (
+        "Yahei":    		$font-family-Yahei,
+        "YaheiBold":   		$font-family-YaheiBold,
+        // "MFlihei":          $font-family-MFlihei,
+        "One":              $font-family-One,
+        "Orb":           $font-family-Orbitron,
+        // "rich":             $font-family-rich,
+        "Helve":            $font-family-Helve,
+    );
+
 /* 改变主题色变量 */
 // $--color-primary: teal;
 
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
+
 // $--font-path: '../../public/iconfont';
 
 
 @import "~element-ui/packages/theme-chalk/src/index";
+@import "font";

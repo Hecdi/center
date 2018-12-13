@@ -2,8 +2,8 @@
     <div>
         <el-row class="tooltip">
             <el-col :span="5">
-                <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
-                <button class="tab-btn all"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
+                <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
+                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
             </el-col>
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
@@ -34,7 +34,7 @@
                     format="yyyy 年 MM 月 dd 日"
                     value-format="timestamp">
                 </el-date-picker>
-                <el-button @click="openShowImg" size="mini" >单位管理</el-button>
+                <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button>
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
                 <el-button size="mini" >
                     <a  @click = "exportExcel">导出</a>
