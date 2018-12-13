@@ -27,13 +27,13 @@
         min-width="180"
         :show-overflow-tooltip="true"
       />
-      <el-table-column prop="img" label="图像记录" min-width="80">
+      <el-table-column label="图像记录" min-width="80">
         <template slot-scope="scope">
           <el-button
-            :picture="getImg(scope.row.picture)"
+         
             size="mini"
             type="primary"
-            @click="openShowImg()"
+            @click="openShowImg(scope.row.picture)"
           >查看</el-button>
         </template>
       </el-table-column>
@@ -46,7 +46,7 @@
       </el-table-column>
     </el-table>
     <div class="dialog">
-      <ShowImg picture ="picture"/>
+      <ShowImg :picture ="getPic"/>
     </div>
   </div>
 </template>
@@ -70,6 +70,7 @@ export default {
       status: "22",
       img: img,
       picture: '',
+      getPic: '',
     };
   },
   computed: {
@@ -139,7 +140,9 @@ export default {
         return "待审核";
       }
     },
-    openShowImg() {
+    openShowImg(value) {
+      this.getPic = value;
+      console.log(this.getPic);
       this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
     },
     getData(data) {
@@ -163,7 +166,7 @@ export default {
     },
     refreshData() {
       let ajax = ajaxx();
-      ajax.get("getViolationData").then(data => {
+      ajax.post("getViolationDataForLike",'').then(data => {
         let violation = data.data;
         console.log(violation);
         this.getData(data);

@@ -120,7 +120,6 @@ const mutations = {
     },
     setMainListData(state,data){
         state.mainList = data;
-        console.log(data);
     },
     setHomeTableData(state,data){
         state.homeTable = data;
@@ -139,13 +138,6 @@ const mutations = {
         mapKeys(obj,(item,index) => {
             state[index] = item; 
         });
-    },
-    setFlightData(state, data) {
-        state.flights = data;
-    },
-    setTempList(state,data){
-        state.tempWorkerList = data.workerList;
-        state.tempGuaranteeList = data.guaranteeList;
     },
     setTaskHandover(state,data) {
         state.taskHandover = data.data;
@@ -195,12 +187,6 @@ const actions = {
     }, 
     updateTaskHandover({commit,state}, obj) {
         commit ('updateTaskHandover', obj);
-    },
-    getFlightSearchData({ commit, state }, data) {
-        commit('setFlightData', data);
-    },
-    getTaskModelList({ commit, state}, data) {
-        commit('setTempList',data);
     },
     getTaskHandover({ commit, state}, data) {
         commit('setTaskHandover',data);

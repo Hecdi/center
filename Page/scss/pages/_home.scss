@@ -65,6 +65,7 @@ body > .el-container {
 			line-height:45px;
 			border-bottom:1px dashed #979797;
 			margin-bottom:10px;
+			overflow:hidden;
 			.flightNo{
 				background-color:#393f43;
 				color:#fff;
@@ -300,6 +301,9 @@ body > .el-container {
 						// height:20px;
 						color: #fff;
 						background-color:#677f95; 
+				}
+				.el-table--striped .el-table__body tr.el-table__row--striped td {
+					background: #f0f2f4;
 				}
 				.el-table--enable-row-hover .el-table__body tr>td {
 						padding: 6px 0;

@@ -9,7 +9,7 @@
 				</el-col>
 			</el-row>
 			<div class="panel" v-if="!isHidden">
-				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index"class="persons-panel"
+				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index" class="persons-panel"
 					style="margin:0;">
 					<el-col
 						:span="24"
@@ -78,7 +78,7 @@
 						icon="iconfont icon-search"
 						@click="openAddTask"
 						>临时任务</el-button>
-					<el-button type="primary" size="medium" icon="el-icon-search" >任务交接</el-button>
+					<el-button type="primary" size="medium" icon="el-icon-search" @click="openTaskHandover" >任务交接</el-button>
 					<el-button type="primary" size="medium" icon="el-icon-search">冲突检测</el-button>
 				</el-row>
 				<span @click="handleTable" class="is-table">
@@ -244,6 +244,7 @@
 				currentPerson: null,
 				visible: false,
 				messageAlerts:[],
+				currentAreaName:'',
 			};
 		},
 		methods: {

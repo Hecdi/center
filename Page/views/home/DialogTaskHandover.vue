@@ -50,6 +50,16 @@ export default {
       ]
     }
   },
+  watch: {
+      dialogTaskHandover: function(newDialogTaskHandover, oldDialogTaskHandover){
+        if(newDialogTaskHandover) {
+          this.handlGettTaskHandover();
+        } else {
+          return;
+        }
+          
+      }
+  },
   methods: {
     getTaskHandover(data){
         this.$store.dispatch('home/getTaskHandover',data);
@@ -97,8 +107,8 @@ export default {
       }
     },
   },
-  	beforeMount(){
-		this.handlGettTaskHandover();
-    },
+  	// beforeMount(){
+		// this.handlGettTaskHandover();
+    // },
 };
 </script>

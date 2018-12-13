@@ -10,16 +10,14 @@ var homeFilter={
 };
 const homeInit = () => {
 	ajax.post('personList').then(d=>{
-		console.log(d);
 		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
-				pub('UI','Home.Area.Sync', result);	
+				//pub('UI','Home.Area.Sync', result);	
 				pub('UI','Home.Area.All', result);	
 			});
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		console.log(data);
 		saveHomeTableDB(data).then(result => {
 			postal.channel('UI').publish('Home.Table.Sync',result);
 		});
@@ -44,9 +42,6 @@ const homeInit = () => {
 			pub('UI','Home.Task.Sync', result);	
 		})
 	});
-	pub('UI','Home.Message.Alert',{
-		content:'324235345',
-	})
 	pub('UI','Home.Event.Ready',null);
 }
 export const initPage = () => {
@@ -86,6 +81,7 @@ export const initSocket = (client) =>{
 	});
 	client.sub('/user/web/scheduling/popoMessage', (d) => {
 		console.log('message:::',d)
+		pub('UI','Home.Message.Alert',d);
 	});
 }
 

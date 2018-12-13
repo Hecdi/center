@@ -22,7 +22,7 @@ onmessage = (event) => {
     let channel = get(data, 'channel');
     let topic = get(data, 'topic');
         let msg = get(data, 'data');
-    log.verbose(`received page message topic ${topic} on channel ${channel},data is ${JSON.stringify(data)}`);
+    log.verbose(`received page message topic ${topic} on channel ${channel}`);
 
     postal.channel('Worker').publish(topic,msg);
 }

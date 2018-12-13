@@ -2,8 +2,8 @@
     <div>
         <el-row class="tooltip">
             <el-col :span="5">
-                <button class="tab-btn wait" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
-                <button class="tab-btn all"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
+                <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
+                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
             </el-col>
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
@@ -34,8 +34,12 @@
                     format="yyyy 年 MM 月 dd 日"
                     value-format="timestamp">
                 </el-date-picker>
-                <el-button @click="openShowImg" size="mini" >单位管理</el-button>
-                <el-button @click="exportExcel" size="mini" type="primary">导出</el-button>
+                <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button>
+                <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
+                <el-button size="mini" >
+                    <a  @click = "exportExcel">导出</a>
+                </el-button>
+                <!-- <h1 @click = "exportExcel">88899</h1> -->
             </el-col>
             <!-- <el-col :span="0">
                 <el-button @click="openShowImg" size="mini" >单位管理</el-button>
@@ -83,6 +87,8 @@
             },
             tabActive: 'all',
             currentView: 'Card',
+            tabs:"all",
+            exportLocation: '',
             companys: [
                 {name:"四川航空",code:"HK323",number:"028-88888888",isEdit:false},
                 {name:"国际航空",code:"HK323",number:"028-88888888",isEdit:false},
@@ -95,8 +101,8 @@
                 {name:"西南航空",code:"HK323",number:"028-88882328",isEdit:false},
                 {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
             ],
-             tabs:"all",
           }
+          
         },
         computed: {
             ...mapState('violation',['filterCards','waitItems','showImgDialog']),
@@ -145,6 +151,7 @@
                 let timeArr = this.time;
                 let startDate;
                 let endDate;
+                let that = this;
                 if(timeArr){
                     if(timeArr[0] == timeArr[1]){
                         startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
@@ -164,7 +171,46 @@
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
-                let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch};
+                let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
+                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                console.log(exportLocation);
+                window.open(exportLocation);
+                // return exportLocation;
+                // that.exportLocation = exportLocation;
+               // console.log(param);
+                // console.log(params)
+                // ajax.post('exportExcel', params).then((data) => {
+                //     console.log(data);
+                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
+                //     // this.getData(data);
+                // });
+            },
+            handleSearch(){
+                let ajax = ajaxx();
+                let violationCode = this.area;
+                let timeArr = this.time;
+                let startDate;
+                let endDate;
+                if(timeArr){
+                    if(timeArr[0] == timeArr[1]){
+                        startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+                        endDate = `${endDate} 23:59:59`;
+                    } else {
+                        startDate = timeArr[0];
+                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = timeArr[1];
+                        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
+                    }  
+                } else {
+                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                }
+                let inputSearch = this.inputSearch;
+                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
                 console.log(param);
                 console.log(params)
                 ajax.post('getViolationDataForLike', params).then((data) => {

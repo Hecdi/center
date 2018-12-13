@@ -18,7 +18,7 @@
 	</section>
 	<section class="urgentReport" v-if="currentBtn=='p1'">
 		<el-row :gutter="5" id='card'>
-			<el-col :span="4" v-for="site in sites" :key="site.flightTaskId" >
+			<el-col :span="4" v-for="site in items" :key="site.flightTaskId" >
 				<el-card>
 						<section class="Row1">
 							<i class="iconfont icon-feiji"></i>
@@ -116,11 +116,13 @@
 	import moment from "moment";
 	import ajaxx from "ajax";
 	import {formatDate} from "date.js";
+	import { remote } from 'electron';
 	export default {
 		name:"card",
 		data(){
 			return {
 				sites:[],
+				items:[],
 				dialogVisible:false,
 				radio1:'当前部门',
 				input1:'',
@@ -128,15 +130,47 @@
 				time:[],
 				inputSearch:'',
 				imgArr:[],
-				currentBtn:'p1',
+				currentBtn:'p2',
 			}
 		},
 		methods:{
 			showSector(sector){
 				this.currentBtn = sector;
+				let ajax = ajaxx();
+				let timeArr = this.time;
+				let startDate;
+				let endDate;
+				let deptId = remote.getGlobal("depId");
+				if(timeArr){
+					if(timeArr[0] == timeArr[1]){
+						startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+						endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+						endDate = `${endDate} 23:59:59`;
+					} else{
+						startDate = timeArr[0];
+						startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+						endDate = timeArr[1];
+						endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+					}
+				} else{
+					startDate = new Date(
+						new Date(new Date().toLocaleDateString()).getTime()
+					);
+					startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+					endDate = new Date(
+						new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
+					);
+					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+				}
+				let inputSearch = this.inputSearch;
+				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"deptId":deptId};
+				ajax.post('urgentReport', params).then((data) => {
+					/*this.getData(data);*/
+				this.items = data;
+						
+				})
 			},
 			showPics(picUrls){
-				console.log(10000);
 				console.log(picUrls);
 				this.imgArr = picUrls.split(',');
 				this.dialogVisible = true;
@@ -145,6 +179,9 @@
 				/*this.sites = data.data;*/
 				console.log(1111);
 				console.log(data);
+				if(data.responseMessage == "未查询到内容！"){
+					return ;
+				}else{
 
 				for(var i in data){
 					var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
@@ -152,6 +189,7 @@
 				   /*data[i].abc = data[i].imgFile ? data[i].imgFile.split(','):[];  //第二种方法，将后端给的data中新增一个属性名为abc的数组*/
 
 				}
+				};
 
 				console.log(data);
 				this.sites = data;

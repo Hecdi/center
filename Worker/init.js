@@ -12,7 +12,10 @@ import Worker from './smartScheduling.worker.js';
 // let worker = new myWorker;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+let inited= false;
 export const init = () => {
+	if(inited){return;}
+	inited =true;
     var worker = new Worker();
     worker.onmessage = (event) =>{
         let content = decoder.decode(event.data);
@@ -21,7 +24,7 @@ export const init = () => {
             let channel = get(data, 'channel');
             let topic = get(data, 'topic');
             let msg = get(data, 'data');
-            log.info(`received WorkerPage message ${channel} ${topic}:${msg}`);
+            log.info(`received WorkerPage message ${channel} ${topic}`);
             postal.publish({
                 channel: 'UI',
                 topic: topic,

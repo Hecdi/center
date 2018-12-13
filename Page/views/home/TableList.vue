@@ -16,15 +16,18 @@
         label="标志"
         width="50"
       >
-        <template >
-              <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
-               <span class="iconfont icon-user">111</span>
+        <template slot-scope="scope">
+               <span>
+                 <i :class="scope.row.displayDelay"></i>
+                 <i :class="scope.row.displayAlternate"></i>
+                 <i :class="scope.row.displayReturnFliht"></i>
+                 </span>
          </template>
       </el-table-column>
       <el-table-column
-        prop="movement"
+        prop="areaName"
         label="区域"
-        width="50">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="seat"
@@ -57,11 +60,14 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="airRoute"
         label="航线"
-        :formatter="airlineFormat"
         :show-overflow-tooltip="true"
-        width="80">
+        width="180">
+        <template slot-scope="scope">
+            <span v-for="(a,index) in scope.row.airRoute" :key="index">
+              <span>{{a}}</span><i v-if ="index !== scope.row.airRoute.length-1" class="iconfont icon-hangxian"></i>
+            </span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="displayFlightIndicator"
@@ -84,9 +90,10 @@
         label="实际"
         width="180">
         <template slot-scope="scope">
-          <span class="ATDETD">
-            <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i>
-              {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
+          <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
+            <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
+            <i v-else :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i>
+              {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
           </span>
         </template>
       </el-table-column>
@@ -101,15 +108,13 @@
         width="80">
       </el-table-column>
       <el-table-column
-        prop="vip"
-       
+        prop="displayHaveDeviating"
         label="偏离">
-        <template>
-               <span class="iconfont icon-pianlishangbao1"></span>
+        <template  slot-scope="scope">
+               <span :class="scope.row.displayHaveDeviating"></span>
          </template>
       </el-table-column>
     </el-table>
-    lzzisme
     </div>
   </template>
 
@@ -123,42 +128,6 @@ export default {
 	name: 'TableList',
 	computed: {
     ...mapState('home', ['homeTable']),
-    // disActural:{
-         
-    //   get:function(value) {
-    //   if(value.movement=="A"){
-    //       let param={}
-    //       param.ata = value.displayATAWithDate;
-    //       param.eta = value.displayETAWithDate;
-    //       param.arrive = this.ata !== '--'? this.ata : this.eta;
-    //       param.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-    //       return param;
-    //   } else {
-    //     return 
-    //     this.atd = value.displayATDWithDate;
-    //     this.etd = value.displayETDWithDate;
-    //     // this.actualIcon = "iconfont icon-feiji";
-    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
-    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-    //   }
-    // },
-    //   set:function(value) {
-    //   if(value.movement=="A"){
-    //     return
-    //      this.ata = value.displayATAWithDate;
-    //      this.eta = value.displayETAWithDate;
-    //      this.arrive = this.ata !== '--'? this.ata : this.eta;
-    //       this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-    //   } else {
-    //     return 
-    //     this.atd = value.displayATDWithDate;
-    //     this.etd = value.displayETDWithDate;
-    //     // this.actualIcon = "iconfont icon-feiji";
-    //     this.delivery = this.atd !== '--'? this.atd : this.etd;
-    //     this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-    //   }
-    // }
-    // } 
     },
     data(){
       return {
@@ -179,6 +148,11 @@ export default {
         let riqi = moment(date).format("DD"); 
         return `${time}(${riqi})`;
     },
+    getScope(value,value1,value2){
+      console.log(value);
+      console.log(value1);
+      console.log(value2);
+    },
     test(val){
       let ata = val.displayATAWithDate;
       let atd = val.displayATDWithDate;
@@ -187,45 +161,6 @@ export default {
       return ata != '--' ? ata:(atd != '--' ? atd :(eta != '--' ? eta:(etd !='--'?etd:'--')));
 
     },
-    airlineFormat: function(row,column) {
-      var airline = row[column.property];
-			return map(airline, (r, i) => {
-				let city = r;
-				// let icon = classNames('icon-arrow text-blue px-1');
-				let end = airline.length - 1;
-				// let iconClassName;
-				let iconClassName = i === end ? '' : '->';
-        return `${city}${iconClassName}`;
-        // (
-				// 	<span key={i+1}>
-				// 		{city}
-				// 		<i className={iconClassName} />
-				// 	</span>
-				// );
-			});
-    },
-    deviateFormat: function(row,column) {
-      var value = row[column.property];
-      if (value) {
-        return "el-icon-success";
-      } else {
-        return "el-icon-error";
-      }
-    },
-    disActural:function(value) {
-      if(value.movement=="A"){
-         this.ata = value.displayATAWithDate;
-         this.eta = value.displayETAWithDate;
-         this.arrive = this.ata !== '--'? this.ata : this.eta;
-          this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-      } else {
-        this.atd = value.displayATDWithDate;
-        this.etd = value.displayETDWithDate;
-        // this.actualIcon = "iconfont icon-feiji";
-        this.delivery = this.atd !== '--'? this.atd : this.etd;
-        this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-      }
-    }
   },
   
 };

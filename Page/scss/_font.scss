@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Fjalla One';
+    font-style: normal;
+    font-weight: normal;
+    src:url(../../public/selffont/shxjdwnww6hdq-6dpcg8pwsybbcjybihxartljt7fru-webfont.woff2) format('woff2'),
+         url(../../public/selffont/shxjdwnww6hdq-6dpcg8pwsybbcjybihxartljt7fru-webfont.woff) format('woff');
+  }
+
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff2') format('woff2'),
+         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff') format('woff'),
+         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.ttf') format('truetype'),
+         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.svg#orbitronbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'Microsoft YaHei';
+    src: url('../../public/selffont/msyh.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MicrosoftYaHei-Bold';
+    src: url('../../public/selffont/msyhbd.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+// @font-face {
+//     font-family: 'Helve';
+//     src: url('../../public/selffont/Helvetica.ttc') format('ttc');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+
+//font-size有关的函数定义
+@mixin font-zi ($parent, $value){
+    #{$parent} {
+      font-size: $value !important;
+    }
+  }
+  
+  @each $size-name, $value in $sizes {
+    @include font-zi (".font-#{$size-name}", $value);
+  }
+
+  //font-family有关函数的定义
+  @mixin family ($parent, $value) {
+    #{$parent} {
+      font-family: $value !important;
+    }
+  }
+  
+  @each $family-name, $value in $familys {
+    @include family(".font-#{$family-name}", $value);
+  }
+  
