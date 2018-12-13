@@ -132,7 +132,6 @@ export default {
                 // });
             },
             handleSearch(){
-                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;

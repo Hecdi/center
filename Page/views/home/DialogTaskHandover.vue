@@ -91,7 +91,7 @@ export default {
         console.log('lisrt');
         let remoteParams = remote.getGlobal("depId");
 		ajax.post('getAssociateReportList',{"depId":`${remoteParams}`}).then(data => {
-			let result = data.data;
+			let result = data;
 			this.getTaskHandover(result);
 		})
 	},
