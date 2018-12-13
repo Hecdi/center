@@ -17,7 +17,6 @@
         width="50"
       >
         <template slot-scope="scope">
-              <!-- <img :src="api + scope.row.comImage" alt="" style="width: 36px;height:36px"> -->
                <span>
                  <i :class="scope.row.displayDelay"></i>
                  <i :class="scope.row.displayAlternate"></i>
@@ -94,9 +93,6 @@
           <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
             <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
             <i v-else :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i>
-            <!-- <i v-if="scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i> -->
-            <!-- , 'icon-yuji2': scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--' }] -->
-            <!-- <i :class = "{'iconfont icon-shiji2':scope.row.ata || scope.row.atd}"></i> -->
               {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
           </span>
         </template>
@@ -165,45 +161,6 @@ export default {
       return ata != '--' ? ata:(atd != '--' ? atd :(eta != '--' ? eta:(etd !='--'?etd:'--')));
 
     },
-    airlineFormat: function(row,column) {
-      var airline = row[column.property];
-			return map(airline, (r, i) => {
-				let city = r;
-				// let icon = classNames('icon-arrow text-blue px-1');
-				let end = airline.length - 1;
-				// let iconClassName;
-				let iconClassName = i === end ? '' : '->';
-        return `${city}${iconClassName}`;
-        // (
-				// 	<span key={i+1}>
-				// 		{city}
-				// 		<i className={iconClassName} />
-				// 	</span>
-				// );
-			});
-    },
-    deviateFormat: function(row,column) {
-      var value = row[column.property];
-      if (value) {
-        return "el-icon-success";
-      } else {
-        return "el-icon-error";
-      }
-    },
-    disActural:function(value) {
-      if(value.movement=="A"){
-         this.ata = value.displayATAWithDate;
-         this.eta = value.displayETAWithDate;
-         this.arrive = this.ata !== '--'? this.ata : this.eta;
-          this.actualIcon = this.arrive !=='--'? "iconfont icon-user" : '';
-      } else {
-        this.atd = value.displayATDWithDate;
-        this.etd = value.displayETDWithDate;
-        // this.actualIcon = "iconfont icon-feiji";
-        this.delivery = this.atd !== '--'? this.atd : this.etd;
-        this.actualIcon = this.delivery !=='--'? "iconfont icon-feiji" : '';
-      }
-    }
   },
   
 };
