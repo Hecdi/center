@@ -6,7 +6,7 @@
 
 <script>
 import TopBar from './TopBar.vue';
-import ajaxx from 'ajax';
+import { ajax } from 'ajax';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 
@@ -39,9 +39,9 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
                 this.$store.dispatch('violation/getData',data);
             },
             refreshData(){
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 ajax.post('getViolationDataForLike','').then(data=>{
-                let violation = data.data;
+                let violation = data;
                 console.log(violation);
                 this.getData(data);
                 })

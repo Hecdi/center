@@ -32,6 +32,7 @@
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     format="yyyy 年 MM 月 dd 日"
+                    @change="handleSearch"
                     value-format="timestamp">
                 </el-date-picker>
                 <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button>
@@ -66,7 +67,7 @@
     import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
     import { mapMutations, mapActions, mapState } from 'vuex';
-    import ajaxx from 'ajax';
+    import { ajax } from 'ajax';
     import moment from 'moment';
 
 
@@ -105,7 +106,7 @@
           
         },
         computed: {
-            ...mapState('violation',['filterCards','waitItems','showImgDialog']),
+            ...mapState('violation',['waitItems','showImgDialog']),
         },
         
         methods: {
@@ -145,8 +146,11 @@
              getData(data) {
                 this.$store.dispatch("violation/getData", data);
             },
+            // timeSearch(value){
+            //     console.log(value);
+            // },
             exportExcel(){
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -186,7 +190,7 @@
                 // });
             },
             handleSearch(){
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -220,9 +224,9 @@
 
             },
             refreshData() {
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 ajax.get("getViolationData").then(data => {
-                  let violation = data.data;
+                  let violation = data;
                   console.log(violation);
                   this.getData(data);
                 });

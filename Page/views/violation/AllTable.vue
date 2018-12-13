@@ -57,7 +57,7 @@ import moment from "moment";
 // import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
-import ajaxx from "ajax";
+import { ajax } from "ajax";
 
 export default {
   components: {
@@ -150,24 +150,23 @@ export default {
     },
     submitStatus(param, value) {
       console.log(param);
-      let ajax = ajaxx();
       let id = param.id;
       let status = value;
       let subParam = `{"id":"${id}","status":${status}}`;
       let subParams = { id: id, status: status };
       console.log(subParam);
       console.log(subParams);
+      debugger;
       ajax.post("updateState", subParams).then(data => {
         console.log(data);
-        if (data.responseCode == 1000) {
+        if (data) {
           this.refreshData();
         }
       });
     },
     refreshData() {
-      let ajax = ajaxx();
       ajax.post("getViolationDataForLike",'').then(data => {
-        let violation = data.data;
+        let violation = data;
         console.log(violation);
         this.getData(data);
       });

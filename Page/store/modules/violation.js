@@ -11,7 +11,7 @@ const state = {
 
 const mutations = {
     setData(state, data) {
-        state.cards = data.data;
+        state.cards = data;
     },
     setWaitData(state,data) {
         state.waitItems = data;
@@ -21,7 +21,7 @@ const mutations = {
         console.log(state.currentStatus);
     },
     filterStatus(state, data) {
-        state.filterCards = data.data.filter(item => item.status == 3);
+        state.filterCards = data.filter(item => item.status == 3);
     },
     updateShowImg(state,obj){
         mapKeys(obj,(v,k) => {
