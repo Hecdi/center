@@ -1,16 +1,4 @@
 <template>
-    <!-- <div class="block page-nation">
-        <span class="demonstration">调整每页显示条数</span>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage2"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="10"
-          layout="sizes, prev, pager, next"
-          :total="1000">
-        </el-pagination>
-  </div> -->
    <div class="block page-nations">
     <span class="demonstration">调整每页显示条数</span>
     <el-pagination
@@ -35,6 +23,7 @@
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        console.log(this.currentPage4);
       }
     },
     data() {

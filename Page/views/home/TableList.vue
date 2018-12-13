@@ -88,9 +88,10 @@
         label="实际"
         width="180">
         <template slot-scope="scope">
-          <span class="ATDETD">
-            <i :class = "{'iconfont icon-shiji2':scope.row.ata || scope.row.atd}"></i>
-              {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
+          <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
+            <i :class="['iconfont', { 'icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayExpectedTime!=='--', 'icon-yuji2': scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--' }]"></i>
+            <!-- <i :class = "{'iconfont icon-shiji2':scope.row.ata || scope.row.atd}"></i> -->
+              {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
           </span>
         </template>
       </el-table-column>
@@ -112,7 +113,6 @@
          </template>
       </el-table-column>
     </el-table>
-    lzzisme
     </div>
   </template>
 
@@ -145,6 +145,11 @@ export default {
         let time = moment(date).format("HH:mm");
         let riqi = moment(date).format("DD"); 
         return `${time}(${riqi})`;
+    },
+    getScope(value,value1,value2){
+      console.log(value);
+      console.log(value1);
+      console.log(value2);
     },
     test(val){
       let ata = val.displayATAWithDate;
