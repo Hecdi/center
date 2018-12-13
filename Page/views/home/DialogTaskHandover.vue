@@ -7,7 +7,7 @@
   >
      <el-row>
          <div class="taskhandover">
-         <div v-for = "t in taskHandover" :key ="t.flightTaskId">
+         <div v-for = "(t,index) in taskHandover" :key ="index">
              <span class="flight-no">{{t.flightTaskId}}</span>
              <span class="flight-id">{{t.flightNo}}</span>
              <span class="time"> {{t.fromUserId}}</span>
@@ -97,7 +97,7 @@ export default {
 	},
   },
   computed: {
-	...mapState('home', ['taskHandover']),
+	// ...mapState('home', ['taskHandover']),
     dialogTaskHandover: {
       get() {
         return this.$store.state.home.dialogTaskHandover;
