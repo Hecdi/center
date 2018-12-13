@@ -26,7 +26,7 @@
          </template>
       </el-table-column>
       <el-table-column
-        prop="movement"
+        prop="areaName"
         label="区域"
         width="50">
       </el-table-column>

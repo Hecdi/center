@@ -301,6 +301,9 @@ body > .el-container {
 						color: #fff;
 						background-color:#677f95; 
 				}
+				.el-table--striped .el-table__body tr.el-table__row--striped td {
+					background: #f0f2f4;
+				}
 				.el-table--enable-row-hover .el-table__body tr>td {
 						padding: 6px 0;
 						border-top: 1px solid transparent;
