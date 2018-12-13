@@ -55,7 +55,7 @@
         </div>
         <div v-else>
             <all-table/>
-            <page-nation-his/>
+            <!-- <page-nation-his/> -->
         </div>
     </div>
 </template>
@@ -64,7 +64,7 @@
 <script>
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
-    import PageNationHis from "./PageNationHis.vue";
+    // import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
     import { mapMutations, mapActions, mapState } from 'vuex';
     import { ajax } from 'ajax';
@@ -75,7 +75,6 @@
         components: {
           Card,
           AllTable,
-          PageNationHis,
           ShowImg,
       },
         data() {
@@ -179,15 +178,6 @@
                 let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
                 window.open(exportLocation);
-                // return exportLocation;
-                // that.exportLocation = exportLocation;
-               // console.log(param);
-                // console.log(params)
-                // ajax.post('exportExcel', params).then((data) => {
-                //     console.log(data);
-                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
-                //     // this.getData(data);
-                // });
             },
             handleSearch(){
                 // let ajax = ajaxx();

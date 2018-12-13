@@ -48,6 +48,9 @@
     <div class="dialog">
       <ShowImg :picture ="getPic"/>
     </div>
+     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="total" 
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"/>
   </div>
 </template>
 
@@ -58,10 +61,13 @@ import moment from "moment";
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
 import { ajax } from "ajax";
+import PageNationHis from "./PageNationHis.vue";
+
 
 export default {
   components: {
-    ShowImg
+    ShowImg,
+     PageNationHis,
   },
   data() {
     console.log(this.img);
@@ -71,6 +77,9 @@ export default {
       img: img,
       picture: '',
       getPic: '',
+      total: 100,
+      pageSize: 10,
+      currentPage:1,
     };
   },
   computed: {
@@ -88,8 +97,13 @@ export default {
     indexMethod(index) {
       return index + 1;
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleSizeChange(val){
+      console.log(val);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val){
+      console.log(`当前${val}`)
+      this.currentPage = val;
     },
     dateFormat: function(row, column) {
       var date = row[column.property];
@@ -147,6 +161,7 @@ export default {
     },
     getData(data) {
       this.$store.dispatch("violation/getData", data);
+      this.total = data.length;
     },
     submitStatus(param, value) {
       console.log(param);

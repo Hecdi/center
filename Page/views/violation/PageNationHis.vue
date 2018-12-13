@@ -5,34 +5,56 @@
       background	
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="10"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
 </template>
 
 
 <script>
-    export default {
+import { ajax } from 'ajax';
+
+  export default {
+    props: ['currentPage','pageSize','total'],
+    data(){
+      return{
+          newPageSize:this.pageSize,
+          newCurrentPage: this.currentPage,
+      }
+    },
+    watch:{
+        pageSize(val){
+          this.newPageSize = val;   //监听pageSize，把pageSize赋给newPageSize;
+        },
+        newPageSize(val){
+          this.$emit('handleSizeChange',val);
+        },
+        currentPage(val){
+          this.newCurrentPage = val;
+        },
+        newCurrentPage(val){
+          this.$emit('handleCurrentChange',val);
+        },
+
+      },
     methods: {
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.newPageSize = val;
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
-        console.log(this.currentPage4);
+        this.newCurrentPage = val;
+        // let page = {'pageSize':pageSize,'currentPage':currentPage};
+        // ajax.post('getViolationDataForLike',page).then((data) => {
+        //   // console.log(`当前页: ${val}`);
+        //   // console.log(this.currentPage);
+        // })
       }
     },
-    data() {
-      return {
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 40
-      };
-    }
   }
 </script>
