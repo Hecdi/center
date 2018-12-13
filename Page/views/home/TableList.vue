@@ -28,7 +28,7 @@
       <el-table-column
         prop="areaName"
         label="区域"
-        width="50">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="seat"
@@ -61,11 +61,14 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="airRoute"
         label="航线"
-        :formatter="airlineFormat"
         :show-overflow-tooltip="true"
-        width="80">
+        width="180">
+        <template slot-scope="scope">
+            <span v-for="(a,index) in scope.row.airRoute" :key="index">
+              <span>{{a}}</span><i v-if ="index !== scope.row.airRoute.length-1" class="iconfont icon-hangxian"></i>
+            </span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="displayFlightIndicator"
@@ -89,7 +92,10 @@
         width="180">
         <template slot-scope="scope">
           <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
-            <i :class="['iconfont', { 'icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayExpectedTime!=='--', 'icon-yuji2': scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--' }]"></i>
+            <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
+            <i v-else :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i>
+            <!-- <i v-if="scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i> -->
+            <!-- , 'icon-yuji2': scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--' }] -->
             <!-- <i :class = "{'iconfont icon-shiji2':scope.row.ata || scope.row.atd}"></i> -->
               {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
           </span>
