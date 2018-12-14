@@ -7,7 +7,7 @@
 				<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2')">所有部门</el-button>
 		   </el-col>
 		   <el-col class="dateRow" id="dateRow" :span="6">
-				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnearch">
+				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch">
 				</el-date-picker>
 		   </el-col>
 		   <el-col class="inputRow" :span="6">
@@ -25,7 +25,7 @@
 						<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2')">所有部门</el-button>
 				   </el-col>
 				   <el-col class="dateRow" id="dateRow" :span="6">
-						<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnearch">
+						<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch">
 						</el-date-picker>
 				   </el-col>
 				   <el-col class="inputRow" :span="6">
@@ -38,25 +38,25 @@
 	</section>
 	<section class="urgentReport" v-if="currentBtn=='p1'">
 		<el-row :gutter="5" id='card'>
-			<el-col :span="4" v-for="site in items" :key="site.flightTaskId" >
+			<el-col :span="4" v-for="(site,index) in items" :key="index" >
 				<el-card>
 						<section class="Row1">
 							<i class="iconfont icon-feiji"></i>
-							<div class="No">{{site.flightNo}}</div>
-							<div class="Dname">{{site.deviationItemName}}</div>
+							<div class="No">{{flightNo}}</div>
+							<div class="Dname">{{operationName}}</div>
 						</section>
 						<section class="Row2">
 							<i class="iconfont icon-user"></i>
-							<div class="Sname">{{site.staffName}}</div>
-							<div class="Dtime">{{site.deviateTime}}</div>
+							<div class="Sname">{{staffName}}</div>
+							<div class="Dtime">{{reportTime}}</div>
 						</section>
 						<section class="Row3">
 							<i class="iconfont icon-neirongguanli"></i>
-							<p class="Content" :title="site.remarks">{{site.remarks}}</p>
+							<p class="Content" :title="remarks">{{remarks}}</p>
 						</section>
 						<section class="Row4">
-							<div v-if="site.imgFile" class="Yesphoto">
-								<el-button type="text" @click="showPics(site.imgFile)">
+							<div v-if="imgFile" class="Yesphoto">
+								<el-button type="text" @click="showPics(imgFile)">
 									图片详情
 								</el-button>
 								<el-dialog
@@ -75,7 +75,7 @@
 				</el-col>
 			</el-row>
 	</section>
-	<section v-else>
+	<section v-else class="sectionP2">
 		<el-row :gutter="20">
 			<el-col :span="16" :offset="4">
 				<el-table
@@ -85,35 +85,40 @@
 					style = "width:auto">
 					<el-table-column
 						type = "index"
+						min-width = "40px"
 						label = "序号">
 					</el-table-column>
 					<el-table-column
 						prop = "flightNo"
+						min-width = "80px"
 						label = "航班号">
 					</el-table-column>
 					<el-table-column
-						prop = "deviationItemName"
+						prop = "operationName"
+						min-width = "80px"
 						label = "步骤名称">
 					</el-table-column>
 					<el-table-column
 						prop = "staffName"
+						min-width = "80px"
 						label = "上报人">
 					</el-table-column>
 					<el-table-column
-						prop = "deviateTime"
-						min-width = "100px"
+						prop = "reportTime"
+						min-width = "200px"
 						label = "上报时间">
 					</el-table-column>
 					<el-table-column
+						show-overflow-tooltip			
 						prop = "remarks"
 						min-width = "200px"
 						label = "偏离描述">
 					</el-table-column>
-					<el-table-column label = "附件">
+					<el-table-column label = "附件" min-width = "100px">
 						<template slot-scope="scope" >
-							<div v-if = "scope.row.imgFile">
-								<el-button type = "primary" @click.native="showPics(scope.row.imgFile)">查看</el-button>
-								<el-dialog title="提示" :visible.sync="dialogVisible">
+							<div>
+								<el-button :type = "scope.row.imgFile?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
+								<el-dialog v-if = "scope.row.imgFile"  title="提示" :visible.sync="dialogVisible">
 									<el-carousel :autoplay=false height="300px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
 											<img :src = "item" class="img"/>
@@ -121,7 +126,6 @@
 									</el-carousel>
 								</el-dialog>
 							</div>
-							<div v-else>查看</div>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -156,40 +160,9 @@
 		methods:{
 			showSector(sector){
 				this.currentBtn = sector;
-				let timeArr = this.time;
-				let startDate;
-				let endDate;
-				let deptId = remote.getGlobal("depId");
-				if(timeArr){
-					if(timeArr[0] == timeArr[1]){
-						startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
-						endDate = moment(timeArr[1]).format("YYYY-MM-DD");
-						endDate = `${endDate} 23:59:59`;
-					} else{
-						startDate = timeArr[0];
-						startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-						endDate = timeArr[1];
-						endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
-					}
-				} else{
-					startDate = new Date(
-						new Date(new Date().toLocaleDateString()).getTime()
-					);
-					startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-					endDate = new Date(
-						new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
-					);
-					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
-				}
-				let inputSearch = this.inputSearch;
-				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"deptId":deptId};
-				ajax.post('urgentReport', params).then((data) => {
-					/*this.getData(data);*/
-				this.items = data;
-						
-				})
-			},
+						},
 			showPics(picUrls){
+				if(!picUrls){return;}
 				console.log(picUrls);
 				this.imgArr = picUrls.split(',');
 				this.dialogVisible = true;
@@ -203,8 +176,10 @@
 				}else{
 
 				for(var i in data){
-					var newDate = formatDate(data[i].deviateTime,'YYYY-MM-DD HH:mm','');
-					data[i].deviateTime = newDate;
+					var timestamp = new Date(data[i].reportTime).getTime();
+					/*var newDate = formatDate(data[i].reportTime,'YYYY-MM-DD HH:mm','');*/
+					var newDate = formatDate(timestamp,'YYYY-MM-DD HH:mm','');
+					data[i].reportTime = newDate;
 				   /*data[i].abc = data[i].imgFile ? data[i].imgFile.split(','):[];  //第二种方法，将后端给的data中新增一个属性名为abc的数组*/
 
 				}
@@ -218,7 +193,7 @@
 				let startDate;
 				let endDate;
 				if(timeArr){
-					if(timeArr[0] == timeArr[1]){
+					if(moment(timeArr[0]).format("YYYY-MM-DD") == moment(timeArr[1]).format("YYYY-MM-DD")){
 						startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
 						endDate = moment(timeArr[1]).format("YYYY-MM-DD");
 						endDate = `${endDate} 23:59:59`;
@@ -226,7 +201,8 @@
 						startDate = timeArr[0];
 						startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
 						endDate = timeArr[1];
-						endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+						endDate = moment(endDate).format("YYYY-MM-DD");
+						endDate = `${endDate} 23:59:59`;
 					}
 				} else{
 					startDate = new Date(

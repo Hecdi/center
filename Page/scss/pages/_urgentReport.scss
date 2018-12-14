@@ -1,6 +1,8 @@
 .outermostsection{
 	flex:1;
 	background-color:#E4E7EC;
+	overflow-x:hidden;
+	overflow-y:scroll;
 	.urgentReport{
 		flex:1;
 		padding:0px 25px 10px;
@@ -213,4 +215,8 @@
 			}
 		}
 	}
+		.cell{
+			font-weight:bold;
+		}
 }
+
