@@ -4,7 +4,7 @@
 	.urgentReport{
 		flex:1;
 		padding:0px 25px 10px;
-		background-color:#e4e4e4;
+		background-color:#E4E7EC;
 		overflow:scroll;
 		.Row1{
 			display:flex;
@@ -173,13 +173,34 @@
 		.deptBtn1{
 			position:absolute;
 			left:55px;
+			top:7px;
 		}
 		.deptBtn2{
 			position:absolute;
 			left:145px;
+			top:7px;
 		}
 	}
 	.el-range-input,.el-range-separator,.el-range-input,.inputRow .el-input__inner{
 		font-size:12px;
+	}
+	.allDeptsection{
+		margin:8px 0px;
+		.deptRow{
+			.deptBtn1{
+				left:25px;
+				top:7px;
+			}
+			.deptBtn2{
+				left:115px;
+				top:7px;
+			}
+		}
+		.inputRow{
+			right:0px;
+		}
+		.dateRow{
+			right:200px;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 <section class="outermostsection" >
-	<section class="outermostheader">
+	<section class="outermostheader" v-if="currentBtn == 'p1'">
 		<el-row :gutter="50">
 			<el-col class="deptRow" :span="12">
 				<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1')">当前部门</el-button>
@@ -14,6 +14,26 @@
 				<el-input class="input" placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter.native="exportOnsearch">
 				</el-input>
 		   </el-col>
+		</el-row>
+	</section>
+	<section v-else class="allDeptsection">
+		<el-row :gutter="20">
+			<el-col :span="16" :offset="4">
+				<el-row :gutter="50">
+					<el-col class="deptRow" :span="12">
+						<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1')">当前部门</el-button>
+						<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2')">所有部门</el-button>
+				   </el-col>
+				   <el-col class="dateRow" id="dateRow" :span="6">
+						<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnearch">
+						</el-date-picker>
+				   </el-col>
+				   <el-col class="inputRow" :span="6">
+						<el-input class="input" placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="inputSearch" clearable @keyup.enter.native="exportOnsearch">
+						</el-input>
+				   </el-col>
+				</el-row>
+			</el-col>
 		</el-row>
 	</section>
 	<section class="urgentReport" v-if="currentBtn=='p1'">
@@ -56,57 +76,57 @@
 			</el-row>
 	</section>
 	<section v-else>
-		<el-table
-			:data = "sites"
-			stripe
-			highlight-current-row
-			style = "width:auto">
-			<el-table-column
-				type = "index"
-				width = "80px"
-				label = "序号">
-			</el-table-column>
-			<el-table-column
-				prop = "flightNo"
-				width = "180px"
-				label = "航班号">
-			</el-table-column>
-			<el-table-column
-				prop = "deviationItemName"
-				width = "180px"
-				label = "步骤名称">
-			</el-table-column>
-			<el-table-column
-				prop = "staffName"
-				width = "180px"
-				label = "上报人">
-			</el-table-column>
-			<el-table-column
-				prop = "deviateTime"
-				min-width = "180px"
-				label = "上报时间">
-			</el-table-column>
-			<el-table-column
-				prop = "remarks"
-				min-width = "300px"
-				label = "偏离描述">
-			</el-table-column>
-			<el-table-column label = "附件">
-				<template slot-scope="scope" >
-					<div v-if = "scope.row.imgFile">
-						<el-button type = "primary" @click.native="showPics(scope.row.imgFile)">查看</el-button>
-						<el-dialog title="提示" :visible.sync="dialogVisible">
-							<el-carousel :autoplay=false height="300px" >
-								<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-									<img :src = "item" class="img"/>
-								</el-carousel-item>
-							</el-carousel>
-						</el-dialog>
-					</div>
-					<div v-else>查看</div>
-				</template>
-			</el-table-column>
-		</el-table>
+		<el-row :gutter="20">
+			<el-col :span="16" :offset="4">
+				<el-table
+					:data = "sites"
+					stripe
+					highlight-current-row
+					style = "width:auto">
+					<el-table-column
+						type = "index"
+						label = "序号">
+					</el-table-column>
+					<el-table-column
+						prop = "flightNo"
+						label = "航班号">
+					</el-table-column>
+					<el-table-column
+						prop = "deviationItemName"
+						label = "步骤名称">
+					</el-table-column>
+					<el-table-column
+						prop = "staffName"
+						label = "上报人">
+					</el-table-column>
+					<el-table-column
+						prop = "deviateTime"
+						min-width = "100px"
+						label = "上报时间">
+					</el-table-column>
+					<el-table-column
+						prop = "remarks"
+						min-width = "200px"
+						label = "偏离描述">
+					</el-table-column>
+					<el-table-column label = "附件">
+						<template slot-scope="scope" >
+							<div v-if = "scope.row.imgFile">
+								<el-button type = "primary" @click.native="showPics(scope.row.imgFile)">查看</el-button>
+								<el-dialog title="提示" :visible.sync="dialogVisible">
+									<el-carousel :autoplay=false height="300px" >
+										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
+											<img :src = "item" class="img"/>
+										</el-carousel-item>
+									</el-carousel>
+								</el-dialog>
+							</div>
+							<div v-else>查看</div>
+						</template>
+					</el-table-column>
+				</el-table>
+			</el-col>
+		</el-row>
 	</section>
 </section>
 </template>
