@@ -115,6 +115,9 @@
          </template>
       </el-table-column>
     </el-table>
+    <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="total" 
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/>
     </div>
   </template>
 
@@ -123,8 +126,14 @@
   import moment from 'moment';
   import {map} from 'lodash';
 import DialogTaskDetail from './DialogTaskDetail.vue';
+import PageNation from 'PageNation.vue';
+import { sub, removeSub, pub } from "postalControl";
+
 export default {
-	name: 'TableList',
+  name: 'TableList',
+  components: {
+    PageNation,
+  },
 	computed: {
     ...mapState('home', ['homeTable']),
     },
@@ -134,6 +143,9 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
+        total: 100,
+        pageSize: 10,
+        currentPage:1,
       }
 
     },
@@ -154,6 +166,25 @@ export default {
       let etd = val.displayETDWithDate;
       return ata != '--' ? ata:(atd != '--' ? atd :(eta != '--' ? eta:(etd !='--'?etd:'--')));
 
+    },
+    handleSizeChange(val){
+      console.log(val);
+      this.pageSize = val;
+      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
+      // sub("UI", "Home.Table.Sync", data => {
+      //   // this.getHomeTableData(data);
+      //   this.homeTable = data;
+			// });
+    },
+    handleCurrentChange(val){
+      console.log(`当前${val}`)
+      this.currentPage = val;
+      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
+  
+
+      //  sub("Worker","Home.TablePageNation", data => {
+      //   this.getHomeTableData(data);
+      // });
     },
   },
   

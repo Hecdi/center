@@ -1,15 +1,16 @@
 import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
-import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB } from "../../lib/storage";
+import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB, } from "../../lib/storage";
 import { ajax } from "ajax";
+import { get } from 'http';
 
 var homeFilter={
 	personList:{},
 	taskList:{}
 };
 const homeInit = () => {
-	ajax.post('personList').then(d=>{
+	ajax.post('personList').then( d=>{
 		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
 				//pub('UI','Home.Area.Sync', result);	
@@ -18,8 +19,17 @@ const homeInit = () => {
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		saveHomeTableDB(data).then(result => {
-			postal.channel('UI').publish('Home.Table.Sync',result);
+		saveHomeTableDB(data).then( (value) => {
+			console.log(value);
+			getHomeTableFromDB(2,10).then((result)=>{
+				postal.channel('UI').publish('Home.Table.Sync',result)
+			});
+			
+			// sub("UI",'Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
+			// 	let result = getTaskListFromDB(pageSize,currentPage);
+			// 	postal.channel('UI').publish('Home.Table.Sync',result);
+			// });
+			// postal.channel('UI').publish('Home.Table.Sync',result);
 		});
 		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
@@ -43,6 +53,19 @@ const homeInit = () => {
 		})
 	});
 	pub('UI','Home.Event.Ready',null);
+	sub('Worker','Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
+		console.log(pageSize);
+		getHomeTableFromDB(pageSize,currentPage).then((result)=> {
+			// pub('UI','Home.TablePageNation',result);
+			postal.channel('UI').publish('Home.Table.Sync',result)
+		})
+		// saveToPersonDB(d,10,8).then( data => {
+		// 	getSearchPersons().then((result) => {
+		// 		//pub('UI','Home.Area.Sync', result);	
+		// 		pub('UI','Home.Area.All', result);	
+		// 	});
+		// });
+	})
 }
 export const initPage = () => {
     return Promise.all([
