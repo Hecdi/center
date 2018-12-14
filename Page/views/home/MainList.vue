@@ -21,7 +21,7 @@
                 <el-aside width="97%">
                   <el-row :gutter="10" class="first-row">
                     <el-col :span="11">
-						<span class='b-black t-white'>手</span>
+						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
 						<span class="t-white b-blue">{{ task.aircraftFlightType }}</span>
 						<span style="font-weight:bold;color:black;">{{ task.seat }}</span>
