@@ -202,5 +202,15 @@
 		.dateRow{
 			right:200px;
 		}
+		.dateRow{
+			padding-right:0px;
+			width:300px;
+			.el-input__inner{
+				width:260px;
+			}
+			.el-range-input{
+				width:100%;
+			}
+		}
 	}
 }
