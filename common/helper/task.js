@@ -33,6 +33,7 @@ const addDisplayField = (row) => {
 		6:"已完成",
 		"-1":"取消",
 		7:"告警",
+		8:"不保障",
 	};
 	let taskStatusDisplay =   {
 			displayTaskStatus: taskStatusDisplayMap[row.taskStatus]
@@ -111,6 +112,7 @@ const actExp = (row) => {
 	let result = extend.apply(null, time);
 	return extend({}, row, result);
 };	
+
 
 
 export const process = (rows) => {

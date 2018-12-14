@@ -19,10 +19,11 @@
 					</el-col>
 					<el-row :gutter="20" style="margin:0;" class="personList">
 						<el-col
-							:span="6"
+							:span="7"
 							v-for="worker in person.workerList"
 							:key="worker.staffId"
 							class="person-panel"
+							style="float:none"
 							>
 							<div
 								class="grid-content bg-person person"
@@ -113,7 +114,7 @@
 						<Legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
 						<Legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
 						<Legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="快速过站" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
+						<Legend data="快速过站" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
 						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
 						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
 						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
