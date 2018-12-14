@@ -1,62 +1,70 @@
 <template>
   <div class="mainList">
-    <el-row :gutter="20" v-for="item in mainList" :key="item.areaName">
+    <el-row :gutter="10" v-for="item in mainList" :key="item.areaName">
       <el-col :span="2" class="region">
         <el-card shadow="always">
           <div class="areaName">{{ item.areaName }}</div>
-          <div
-            class="workerName"
-            v-for="worker in item.workerList"
-            :key="worker.staffId"
-          >{{ worker.staffName }}</div>
         </el-card>
       </el-col>
-      <el-col :span="22" class="task">
+      <el-col :span="23" class="task">
         <el-row :gutter="10">
-          <el-col :span="7" v-for="task in item.taskList" :key="task.taskId">
+          <el-col :span="8" v-for="task in item.taskList" :key="task.taskId" 
+			  :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''">
             <el-card shadow="always" :v-id="task.taskId" @click.native="showDeatil(task);">
               <el-container>
-                <el-main>
+				  <el-main :class="`bg-${task.taskStatus}`">
                 </el-main>
                 <el-aside width="97%">
                   <el-row :gutter="10" class="first-row">
                     <el-col :span="11">
 						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
-						<span class="t-white b-blue">{{ task.aircraftFlightType }}</span>
-						<span style="font-weight:bold;color:black;">{{ task.seat }}</span>
+						<span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span>
+						<span style="font-weight:bold;">{{ task.seat }}</span>
                     </el-col>
-                    <el-col :span="13" style="padding-right:30px;text-align:right;">
-						<Legend  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
-						<Legend  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
-						<Legend  iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
-						<Legend  iconColor="#ff7100" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
-						<Legend  iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
-						<Legend  iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
-						<Legend  iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
+                    <el-col :span="13" style="padding-right:30px;padding-left:0;text-align:right;">
+						<Legend v-if="task.delay != '--'"  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
+						<Legend v-if="task.keyMaintaince != '--'"  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
+						<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.quickFlag != '--'"   iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+						<Legend v-if="task.taskAlarm != '--'" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
 					</el-col>
                   </el-row>
-                  <el-row :gutter="10" class="second-row">
-                    <el-col :span="24">
-                      <label class="flightNo">{{ `${task.flightNo}` }}</label>
-                      {{ `(${task.correlationFlightNo})|` }}
-                      <label class="aircraftNumber">{{ task.aircraftNumber }}</label> |
-                      <label v-for="(route, index) in task.airRoute" :key="route">
-                        <i v-if="index != 0" class="el-icon-caret-right"/>
-                        {{ route }}
-                      </label>
+                  <el-row :gutter="0" class="second-row">
+                    <el-col :span="10" class="route-panel">
+						<div>
+							<p>{{task.airRoute[0]}}</p>
+							<p>{{task.airRoute[0]}}</p>
+						</div>
+						<div><i class="iconfont icon-hangxian"></i></div>
+						<div>
+							<p>{{task.airRoute[1]}}</p>
+							<p>{{task.airRoute[1]}}</p>
+						</div>
+                    </el-col>
+                    <el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">
+						<p>{{task.aircraftNumber}}</p>
+						<p>{{task.aircraftType}}</p>
+                    </el-col>
+                    <el-col :span="10">
+						<p><i class="iconfont icon-jihua" style="color:#00ad62;" v-if="task && (task.displayScheduleTimeWithDate != '--')"></i>{{task.displayScheduleTimeWithDate}}</p>
+						<p>
+							<i class="iconfont" :class="(task.disPlayActuralTime != '--') ? 'icon-shiji2':'icon-yuji2'" 
+						   v-if="task && (task.disPlayActuralTime != '--' || task.disPlayExpectedTime != '--')"></i>
+							{{`${task.disPlayActuralTime != '--'? task.disPlayActuralTime:task.disPlayExpectedTime}`}}
+						</p>
                     </el-col>
                   </el-row>
                   <el-row :gutter="10" class="third-row">
-                    <el-col :span="24">
-                      计{{ task.displayScheduleTimeWithDate || task.dispalySTAWithDate || task.displaySTDWithDate }}/
-                      <label
-                        class="et"
-                      >预{{ `${task.displayEstimatedTimeWithDate || task.dispalyETAWithDate || task.displayETDWithDate}` }}</label>
+                    <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden">
+						<i class="iconfont icon-renyuan" style="margin-right:6px;"></i>
+						{{task.taskBindingShiftNames}}
                     </el-col>
                   </el-row>
                 </el-aside>
-                <div class="flight-status">{{task.flightStatus}}</div>
+				<div :class="`flight-status bg-${task.flightStatusCode}`">{{task.flightStatus}}</div>
               </el-container>
             </el-card>
           </el-col>

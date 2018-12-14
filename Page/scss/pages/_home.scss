@@ -2,8 +2,8 @@
 @import "../components/messageBtn";
 @import "../components/UrgentReportBtn";
 @import "../components/elDialog";
-body > .el-container {
-	margin-bottom: 40px;
+#app > .el-container {
+	overflow:hidden;
 }
 .el-popover{
 	padding-top:0;
@@ -125,10 +125,15 @@ body > .el-container {
 		}
 	}
 	.bg-person{
-		background:$color-bg-person;
+		background:#182738;
+		border:1px solid #0068a9;
 		&.active{
-			background-color:#1d60dd;
+			background-color:#0062ff;
 			color:#fff;
+			.taskNum{
+				background-color:#fff;
+				color:#0062ff;	
+			}
 		}
 	}
 	.active-person {
@@ -136,14 +141,14 @@ body > .el-container {
 		color: #fff !important;
 	}
 	.personList{
-		padding:0 10px;
+		padding:6px 10px;
 		overflow:hidden;
 		.person-panel{
 			padding:2px 6px !important;
 		}
 	}
 	.person{
-		color:$color-person;
+		color:#fff;
 		height:30px;
 		line-height:30px;
 		cursor:pointer;
@@ -162,18 +167,18 @@ body > .el-container {
 			font-weight:bold;
 			width:auto;
 			padding:0 2px;
-			background-color:#35dfff;
-			color:#f1fdfe;
+			background-color:#0062ff;
+			color:#fff;
 			border-radius:4px;
 		}
 	}
 	.el-aside {
-		background-color: #3f4253;
+		background-color: #182738;
 		color: #333;
 		text-align: center;
 		overflow:visible;
 		position:relative;
-		padding-bottom:40px;
+		padding-bottom:4px;
 		.panel{
 			overflow-y:auto;
 			height:100%;
@@ -188,8 +193,8 @@ body > .el-container {
 		}
 		.persons-panel{
 			.area-panel{
-				background-color: #2f3448;
-				color:#1dd8fe;
+				background-color: #1f3144;
+				color:#fff;
 				font-size:16px;
 				font-weight:bold;
 				text-align:left;
@@ -409,7 +414,7 @@ body > .el-container {
 						margin-top:10px;
 						.el-card{
 							height:100%;
-							background-color:#eff5fd;
+							background-color:#182738;
 							border:1px solid #bbbbbb;
 							.el-card__body{
 								display: flex;
@@ -421,7 +426,7 @@ body > .el-container {
 							.areaName{
 								font-size:18px;
 								font-weight:bold;
-								color:black;
+								color:#fff;
 							}
 							.workerName{
 								font-size:16px;
@@ -431,6 +436,21 @@ body > .el-container {
 						}
 					}
 					.task{
+						.el-col.greyPanel{
+							i,p,div {
+								color:#bfbfbf !important;
+							}
+							.el-main,.flight-status{
+								background-color:#bfbfbf !important;
+								color:white !important;
+							}
+							.b-black,.aft{
+								background-color: #bfbfbf !important;
+							}
+							.first-row,.second-row,{
+								color:#bfbfbf !important;
+							}
+						}
 						.el-col {
 							margin-top:10px;
 							.el-card {
@@ -453,18 +473,39 @@ body > .el-container {
 										transform: rotateZ(45deg);
 										top: 5px;
 										right: -15px;
+										&.bg-1{
+											background-color:#b239d8;		
+										}
+										&.bg-2{
+											background-color:#009eff;		
+										}
+										&.bg-3{
+											background-color:#f6b500;		
+										}
+										&.bg-4{
+											background-color:#004ab8;		
+										}
+										&.bg-5{
+											background-color:#b239d8;		
+										}
+										&.bg-6{
+											background-color:#b239d8;		
+										}
+										&.bg-7{
+											background-color:#b239d8;		
+										}
 									}
 								}
 								.el-aside{
 									background-color:white;
 									padding-left:10px;
-									//padding-bottom:10px;
+									padding-right:10px;
 									text-align: left;
 									font-size:14px;
 									color:#9a9a9a;
 									font-weight:bold;
 									.first-row{
-										color:#4e66ef;
+										color:black;
 									}
 									.t-white{
 										color: #fff;
@@ -474,8 +515,20 @@ body > .el-container {
 									.b-black{
 										background-color: #393f43;
 									}
-									.b-blue{
-										background-color: #0076ee;
+									.b-B{
+										background-color:#FF5CB0;
+									}
+									.b-C{
+										background-color: #2476E6;
+									}
+									.b-D{
+										background-color: #7540EE;
+									}
+									.b-E{
+										background-color: #0B9337;
+									}
+									.b-F{
+										background-color: #E26A00;
 									}
 									.legend{
 										padding:0;
@@ -483,13 +536,51 @@ body > .el-container {
 										line-height:20px;
 									}
 									.second-row{
-										.flightNo{
-											color:white;
-											font-size:16px;
-											background-color:#6178f1;
+										//.flightNo{
+											//color:white;
+											//font-size:16px;
+											//background-color:#6178f1;
+										//}
+										//.aircraftNumber{
+											//color:#636363;
+										//}
+										border-top:1px dashed #BDBFC3;
+										border-bottom:1px dashed #BDBFC3;
+										height:64px;
+										margin-top:10px;
+										overflow:hidden;
+										.el-col{
+											margin-top:0;
 										}
-										.aircraftNumber{
-											color:#636363;
+										p{
+											padding:0;
+											margin:0;
+											line-height:32px;
+										}
+										color:black;
+										text-align:center;
+										.route-panel{
+											&>div{
+												display:inline-block;
+												height:64px;
+												vertical-align:middle;
+												line-height:64px;
+												p{
+													line-height:32px;
+													&:first-child{
+														font-size:16px;
+														font-weight:bold;
+														color:black;
+													}
+													&:last-child{
+														font-size:12px;
+														color:#666C72;
+													}
+												}
+												i{
+													font-size:30px;
+												}
+											}	
 										}
 									}
 									.et{
@@ -500,7 +591,27 @@ body > .el-container {
 									overflow: hidden;
 									padding: 0;
 									align-items: center;
-									background-color:#3fa7ff;
+									&.bg-1{
+										background-color:white;
+									}
+									&.bg-2{
+										background-color:#ffac00;
+									}
+									&.bg-3{
+										background-color:#00a0ff;
+									}
+									&.bg-4{
+										background-color:#00d859;
+									}
+									&.bg-5{
+										background-color:#aa67f3;
+									}
+									&.bg-6{
+										background-color:#0065ff;
+									}
+									&.bg-8,&.bg--1{
+										background-color:#bfbfbf;
+									}
 									div{
 										width:10px;
 										height:100%;
