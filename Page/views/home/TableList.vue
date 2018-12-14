@@ -90,7 +90,7 @@
         label="实际"
         width="180">
         <template slot-scope="scope">
-          <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
+          <span class="ATDETD">
             <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
             <i v-else :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i>
               {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
@@ -122,7 +122,6 @@
   import { mapState } from 'vuex';
   import moment from 'moment';
   import {map} from 'lodash';
-import ajaxx from 'ajax';
 import DialogTaskDetail from './DialogTaskDetail.vue';
 export default {
 	name: 'TableList',
@@ -147,11 +146,6 @@ export default {
         let time = moment(date).format("HH:mm");
         let riqi = moment(date).format("DD"); 
         return `${time}(${riqi})`;
-    },
-    getScope(value,value1,value2){
-      console.log(value);
-      console.log(value1);
-      console.log(value2);
     },
     test(val){
       let ata = val.displayATAWithDate;

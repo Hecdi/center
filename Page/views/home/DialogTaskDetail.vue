@@ -59,7 +59,7 @@
     </el-tabs>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" @click="release(8)">不保障该航班</el-button>
-      <el-button type="success" @click="release(2)">发布</el-button>
+	  <el-button type="success" @click="release(2)" v-if="taskWorkerList.size>0">发布</el-button>
       <el-button type="primary" @click="submit">提交</el-button>
       <el-button @click="dialogTaskDetailVisible = false;">取 消</el-button>
     </span>
@@ -121,10 +121,10 @@
 			},
 			setCurrentPerson(person, isAdd) {
 				if (isAdd) {
-					this.workerList.delete(person);
+					//this.workerList.delete(person);
 					this.taskWorkerList.add(person);
 				} else {
-					this.workerList.add(person);
+					//this.workerList.add(person);
 					this.taskWorkerList.delete(person);
 				}
 				this.$forceUpdate();

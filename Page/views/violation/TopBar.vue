@@ -32,6 +32,7 @@
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     format="yyyy 年 MM 月 dd 日"
+                    @change="handleSearch"
                     value-format="timestamp">
                 </el-date-picker>
                 <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button>
@@ -54,7 +55,7 @@
         </div>
         <div v-else>
             <all-table/>
-            <page-nation-his/>
+            <!-- <page-nation-his/> -->
         </div>
     </div>
 </template>
@@ -63,10 +64,10 @@
 <script>
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
-    import PageNationHis from "./PageNationHis.vue";
+    // import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
     import { mapMutations, mapActions, mapState } from 'vuex';
-    import ajaxx from 'ajax';
+    import { ajax } from 'ajax';
     import moment from 'moment';
 
 
@@ -74,7 +75,6 @@
         components: {
           Card,
           AllTable,
-          PageNationHis,
           ShowImg,
       },
         data() {
@@ -105,7 +105,7 @@
           
         },
         computed: {
-            ...mapState('violation',['filterCards','waitItems','showImgDialog']),
+            ...mapState('violation',['waitItems','showImgDialog']),
         },
         
         methods: {
@@ -145,8 +145,11 @@
              getData(data) {
                 this.$store.dispatch("violation/getData", data);
             },
+            // timeSearch(value){
+            //     console.log(value);
+            // },
             exportExcel(){
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -175,18 +178,9 @@
                 let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
                 window.open(exportLocation);
-                // return exportLocation;
-                // that.exportLocation = exportLocation;
-               // console.log(param);
-                // console.log(params)
-                // ajax.post('exportExcel', params).then((data) => {
-                //     console.log(data);
-                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
-                //     // this.getData(data);
-                // });
             },
             handleSearch(){
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -220,9 +214,9 @@
 
             },
             refreshData() {
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 ajax.get("getViolationData").then(data => {
-                  let violation = data.data;
+                  let violation = data;
                   console.log(violation);
                   this.getData(data);
                 });

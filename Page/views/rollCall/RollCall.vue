@@ -70,6 +70,7 @@
 							type: 'success',
 							message: data.responseMessage,
 						});
+						this.init(false);
 					}else{
 						this.$message({
 							type: 'error',

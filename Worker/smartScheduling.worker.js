@@ -64,6 +64,7 @@ postal.channel('Worker').subscribe('Start',(data ={}, msg={}) => {
     each(data, (v, k) => {
         remote.setGlobal(k, v);
     });
+	console.log('123123',data);
     init();
 });
 

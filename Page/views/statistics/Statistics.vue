@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import ajaxx from "ajax";
+import { ajax } from "ajax";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import * as echarts from "echarts";
 
@@ -176,9 +176,8 @@ export default {
       this.$store.dispatch("violation/getData", data);
     },
     refreshData() {
-      let ajax = ajaxx();
       ajax.get("getViolationData").then(data => {
-        let violation = data.data;
+        let violation = data;
         console.log(violation);
         this.getData(data);
       });
