@@ -24,22 +24,12 @@ const homeInit = () => {
 			getHomeTableFromDB(2,10).then((result)=>{
 				postal.channel('UI').publish('Home.Table.Sync',result)
 			});
-			
-			// sub("UI",'Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
-			// 	let result = getTaskListFromDB(pageSize,currentPage);
-			// 	postal.channel('UI').publish('Home.Table.Sync',result);
-			// });
-			// postal.channel('UI').publish('Home.Table.Sync',result);
 		});
 		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
 		
 	});
-	// ajax.get('getViolationData').then(data=>{
-	// 	console.log(data);
-	// 	//postal.channel('UI').publish('Home.Sync',data);
-	// });
 	sub('Worker','Home.Area.SetPersonSearchKey',(key) =>{
 		homeFilter['personList']['searchPersonKey'] = key;
 		getSearchPersons(homeFilter['personList']['searchPersonKey']).then((result) => {
@@ -56,15 +46,8 @@ const homeInit = () => {
 	sub('Worker','Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
 		console.log(pageSize);
 		getHomeTableFromDB(pageSize,currentPage).then((result)=> {
-			// pub('UI','Home.TablePageNation',result);
 			postal.channel('UI').publish('Home.Table.Sync',result)
 		})
-		// saveToPersonDB(d,10,8).then( data => {
-		// 	getSearchPersons().then((result) => {
-		// 		//pub('UI','Home.Area.Sync', result);	
-		// 		pub('UI','Home.Area.All', result);	
-		// 	});
-		// });
 	})
 }
 export const initPage = () => {
