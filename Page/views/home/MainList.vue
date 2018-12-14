@@ -19,7 +19,7 @@
                     <el-col :span="11">
 						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
-						<span class="t-white b-blue">{{ task.aircraftFlightType }}</span>
+						<span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span>
 						<span style="font-weight:bold;">{{ task.seat }}</span>
                     </el-col>
                     <el-col :span="13" style="padding-right:30px;padding-left:0;text-align:right;">
@@ -58,7 +58,7 @@
                     </el-col>
                   </el-row>
                   <el-row :gutter="10" class="third-row">
-                    <el-col :span="24" style="margin-top:6px;font-size:14px;">
+                    <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden">
 						<i class="iconfont icon-renyuan" style="margin-right:6px;"></i>
 						{{task.taskBindingShiftNames}}
                     </el-col>

@@ -436,7 +436,7 @@
 						}
 					}
 					.task{
-						&.greyPanel{
+						.el-col.greyPanel{
 							i,p,div {
 								color:#bfbfbf !important;
 							}
@@ -444,7 +444,7 @@
 								background-color:#bfbfbf !important;
 								color:white !important;
 							}
-							.b-black,.b-blue{
+							.b-black,.aft{
 								background-color: #bfbfbf !important;
 							}
 							.first-row,.second-row,{
@@ -515,8 +515,20 @@
 									.b-black{
 										background-color: #393f43;
 									}
-									.b-blue{
-										background-color: #0076ee;
+									.b-B{
+										background-color:#FF5CB0;
+									}
+									.b-C{
+										background-color: #2476E6;
+									}
+									.b-D{
+										background-color: #7540EE;
+									}
+									.b-E{
+										background-color: #0B9337;
+									}
+									.b-F{
+										background-color: #E26A00;
 									}
 									.legend{
 										padding:0;
