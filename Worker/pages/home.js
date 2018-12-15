@@ -43,7 +43,7 @@ const homeInit = () => {
 	});
 	pub('UI','Home.Event.Ready',null);
 	sub('Worker','Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
-		getHomeTableFromDB(pageSize,currentPage).then((result)=> {
+		getHomeTableFromDB(pageSize,currentPage-1).then((result)=> {
 			postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
 		})
 	})
