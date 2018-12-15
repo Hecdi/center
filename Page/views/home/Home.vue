@@ -273,6 +273,9 @@
 			getHomeTableData(data) {
 				this.$store.dispatch("home/getHomeTableData", data);
 			},
+			getHomeTableTotal(data) {
+				this.$store.dispatch("home/getHomeTableTotal", data);
+			},
 			reset() {
 				this.currentPerson = null;
 				this.$store.dispatch(`home/resetFilter`, null);
@@ -398,7 +401,9 @@
 				this.getMainListData(data);
 			});
 			sub("UI", "Home.Table.Sync", data => {
-				this.getHomeTableData(data);
+				console.log(data);
+				this.getHomeTableTotal(data.total);
+				this.getHomeTableData(data.data);
 			});
 			sub("UI", "Home.Area.Sync", data => {
 				this.getPersons(data);

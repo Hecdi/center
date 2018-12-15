@@ -96,6 +96,7 @@ const state = {
     taskDetail:{},
     homeTable: [],
     taskHandover: [],
+    homeTableTotal:100,
 }
 
 const mutations = {
@@ -128,6 +129,9 @@ const mutations = {
 		// 		state['homeTable'].push(item);
 		// 	}
 		// );
+    },
+    setHomeTableTotal(state,data){
+        state.homeTableTotal = data;
     },
 	update(state, obj){
 		mapKeys(obj,(v,k)=>{
@@ -177,6 +181,9 @@ const actions = {
     },
     getHomeTableData({commit,state},data){
         commit('setHomeTableData',data);
+    },
+    getHomeTableTotal({commit,state},data){
+        commit('setHomeTableTotal',data);
     },
     getPersons({commit, state}, data){
 		data = data || [];
