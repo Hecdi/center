@@ -4,6 +4,7 @@ import {sub, pub,  removeSub} from "postalControl";
 import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB, } from "../../lib/storage";
 import { ajax } from "ajax";
 import { get } from 'http';
+import { cloneDeep } from 'lodash';
 
 var homeFilter={
 	personList:{},
@@ -39,19 +40,25 @@ const homeInit = () => {
 		});
 	});
 	sub('Worker','Home.Task.SetTaskFilter',(taskListFilterOpt) =>{
-		homeFilter['taskList'] = taskListFilterOpt;
+		homeFilter['taskList'] = cloneDeep(taskListFilterOpt);
+		delete homeFilter['taskList'].pageSize;
+		delete homeFilter['taskList'].currentPage;
 		getTaskListFromDB(homeFilter['taskList']).then((result) => {
 			pub('UI','Home.Task.Sync', result);	
-		})
-	});
-	pub('UI','Home.Event.Ready',null);
-	sub('Worker','Home.Table.SetTablePageSize',(taskListFilterOpt) => {
-		console.log(taskListFilterOpt);
+		});
 		homeFilter['tableList'] = taskListFilterOpt;
 		getHomeTableFromDB(homeFilter['tableList']).then((result)=> {
 			postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
 		})
-	})
+	});
+	pub('UI','Home.Event.Ready',null);
+	// sub('Worker','Home.Table.SetTablePageSize',(taskListFilterOpt) => {
+	// 	console.log(taskListFilterOpt);
+	// 	homeFilter['tableList'] = taskListFilterOpt;
+	// 	getHomeTableFromDB(homeFilter['tableList']).then((result)=> {
+	// 		postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
+	// 	})
+	// })
 }
 export const initPage = () => {
     return Promise.all([

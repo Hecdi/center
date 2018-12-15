@@ -192,7 +192,7 @@ export default {
       console.log(val);
       this.pageSize = val;
       // pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
-      pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
+      pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
 
      // sub("UI", "Home.Table.Sync", data => {
       //   // this.getHomeTableData(data);
@@ -203,7 +203,7 @@ export default {
       console.log(`当前${val}`)
       this.currentPage = val;
       // pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
-      pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
+      pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
 
 
       //  sub("Worker","Home.TablePageNation", data => {

@@ -117,12 +117,12 @@ const mutations = {
 			state.filterOption.searchPersonKey = null;
 		}
         pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
-        pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
+        // pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
     },
     resetFilter(state){
         state.filterOption={...initFilter};
         pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
-        pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
+        // pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
     },
     setMainListData(state,data){
         state.mainList = data;
