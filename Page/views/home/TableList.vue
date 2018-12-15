@@ -135,7 +135,29 @@ export default {
     PageNation,
   },
 	computed: {
-    ...mapState('home', ['homeTable','homeTableTotal']),
+    ...mapState('home', ['homeTable','homeTableTotal','filterOption']),
+    pageSize: {
+				get() {
+					return this.$store.state.home.filterOption.pageSize;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "pageSize",
+						filterOption: filterOption
+					});
+				}
+      },
+      currentPage: {
+				get() {
+					return this.$store.state.home.filterOption.currentPage;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "currentPage",
+						filterOption: filterOption
+					});
+				}
+			},
     },
     data(){
       return {
@@ -143,8 +165,6 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
-        pageSize: 10,
-        currentPage:1,
       }
 
     },
@@ -167,23 +187,12 @@ export default {
 
     },
     handleSizeChange(val){
-      console.log(val);
       this.pageSize = val;
-      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
-      // sub("UI", "Home.Table.Sync", data => {
-      //   // this.getHomeTableData(data);
-      //   this.homeTable = data;
-			// });
+      pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
     },
     handleCurrentChange(val){
-      console.log(`当前${val}`)
       this.currentPage = val;
-      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
-  
-
-      //  sub("Worker","Home.TablePageNation", data => {
-      //   this.getHomeTableData(data);
-      // });
+      pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
     },
   },
   

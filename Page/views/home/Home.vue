@@ -292,6 +292,8 @@
 			},
 			sendTaskListFilter() {
 				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
+				// console.log('777cc77c7c77c');
+				// pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
 			},
 			getFilterMessages(k,v){
 				return filter(this.messages, item =>{
