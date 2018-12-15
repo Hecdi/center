@@ -19,12 +19,12 @@ const homeInit = () => {
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		//saveHomeTableDB(data).then( (value) => {
-			//console.log(value);
-			//getHomeTableFromDB(2,10).then((result)=>{
-				//postal.channel('UI').publish('Home.Table.Sync',result)
-			//});
-		//});
+		saveHomeTableDB(data).then( (value) => {
+			console.log(value);
+			getHomeTableFromDB(2,10).then((result)=>{
+				postal.channel('UI').publish('Home.Table.Sync',result)
+			});
+		});
 		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});
@@ -68,14 +68,12 @@ export const destroy = () => {
 export const initSocket = (client) =>{
 	client.sub('/user/web/scheduling/changes', (d) => {
 		console.log('task:::',d);
-		//saveToAreaDB(d.data).then( data => {
+		saveToTaskDB(false,d.data,homeFilter['taskList']).then( data => {
 			//getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
 				//pub('UI','Home.Area.Sync', result);	
 			//});
-			//getSearchPersons().then((result) => {
-				//pub('UI','Home.Task.Sync', result);	
-			//});
-		//});
+			pub('UI','Home.Task.Sync', data);	
+		});
 	});
 	client.sub('/user/web/scheduling/getAreaAndWorkerList', (d) => {
 		console.log('area:::', d)
@@ -87,7 +85,7 @@ export const initSocket = (client) =>{
 	});
 	client.sub('/user/web/scheduling/popoMessage', (d) => {
 		console.log('message:::',d)
-		pub('UI','Home.Message.Alert',d);
+		pub('UI','Home.Message.Sync',d.data);
 	});
 }
 

@@ -134,7 +134,7 @@
 					<span slot="label">
 						<i class="el-icon-date"></i>警告
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in getMessages(1)" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -148,7 +148,7 @@
 					<span slot="label">
 						<i class="el-icon-date"></i>偏离上报
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in getMessages(2)" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -159,7 +159,7 @@
 					<span slot="label">
 						<i class="el-icon-date"></i>提醒
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in getMessages(3)" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in tips" :key="index">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -170,7 +170,7 @@
 					<span slot="label">
 						<i class="el-icon-date"></i>日志
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in getMessages(4)" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in logs" :key="index">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -200,6 +200,7 @@
 	import TableList from "./TableList.vue";
 	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
+	import {filter} from 'lodash';
 
 	import { mapState, mapGetters } from "vuex";
 
@@ -212,7 +213,7 @@
 				isDoubleClick: false,
 				currentPerson: null,
 				visible: false,
-				messageAlerts:[],
+				messages:[],
 				currentAreaName:'',
 			};
 		},
@@ -278,9 +279,29 @@
 			},
 			sendTaskListFilter() {
 				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
-			}
+			},
+			getFilterMessages(k,v){
+				return filter(this.messages, item =>{
+					return item[k] == v;
+				});
+			},
 		},
 		computed: {
+			messageAlerts:function(){
+				return this.getFilterMessages('alert', true);	
+			},
+			warnings:function(){
+				return this.getFilterMessages('type', 1);	
+			},
+			urgentReports:function(){
+				return this.getFilterMessages('type', 2);	
+			},
+			tips:function(){
+				return this.getFilterMessages('type', 3);	
+			},
+			logs:function(){
+				return this.getFilterMessages('type', 4);	
+			},
 			asideWith() {
 				return this.isHidden ? "0" : "300px";
 			},
@@ -360,7 +381,6 @@
 				}
 			},
 			...mapState("home", ["filterPersons", "persons", "filterOption"]),
-			...mapGetters("home", ["getMessages"])
 		},
 		components: {
 			/*SearchInput,*/
@@ -389,14 +409,13 @@
 			sub("UI", "Home.Event.Ready", () => {
 				this.sendTaskListFilter();
 			});
-			sub("UI","Home.Message.Alert",(data)=>{
-				this.messageAlerts.push(data);
+			sub("UI","Home.Message.Sync",(data)=>{
+				this.messages.push(data);
 				this.showAlert();
 			});	
 			sub("UI", "All.ready", () => {
 				pub("Worker", "Home.Start", null);
 			});
-			pub("Worker", "Home.Start", null);
 		},
 		beforeDestroy() {
 			removeSub("Home");

@@ -92,6 +92,7 @@ export default {
               storage.setItem("userId", userInfo.userId);
               storage.setItem("username", userInfo.username);
               storage.setItem("depId", userInfo.depId);
+              storage.setItem("deptCode", userInfo.deptCode);
               storage.setItem("userInfo", JSON.stringify(userInfo));
               that.$router.push("/home");
             } else {
