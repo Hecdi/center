@@ -25,16 +25,18 @@
 							class="person-panel"
 							style="float:none"
 							>
-							<div
-								class="grid-content bg-person person"
-								:class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
-								@dblclick="showSetting(worker,person.areaName)"
-								@click="setPersonSearch(worker)"
-								:data-id="worker.staffId"
-								>
-								{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
-								<div class="taskNum">{{ worker.taskNumber }}</div>
-							</div>
+							<el-tooltip effect="light" :disabled="!worker.phone" :content="worker.phone" placement="right">
+								<div
+									class="grid-content bg-person person"
+									:class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
+									@dblclick="showSetting(worker,person.areaName)"
+									@click="setPersonSearch(worker)"
+									:data-id="worker.staffId"
+									>
+									{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
+									<div class="taskNum">{{ worker.taskNumber }}</div>
+								</div>
+							</el-tooltip>
 						</el-col>
 					</el-row>
 				</el-row>
@@ -260,13 +262,21 @@
 				_this.isDoubleClick = false;
 				window.setTimeout(function() {
 					if (!_this.isDoubleClick) {
-						_this.currentPerson = worker;
-						_this.$store.dispatch("home/updateFilter", {
-							name: "searchPersonKey",
-							filterOption: worker.workerName
-							? worker.workerName
-							: worker.staffName
-						});
+						if(_this.currentPerson && _this.currentPerson.staffId == worker.staffId){
+							_this.currentPerson = null;	
+							_this.$store.dispatch("home/updateFilter", {
+								name: "searchPersonKey",
+								filterOption: '',
+							});
+						}else{
+							_this.currentPerson = worker;
+							_this.$store.dispatch("home/updateFilter", {
+								name: "searchPersonKey",
+								filterOption: worker.workerName
+								? worker.workerName
+								: worker.staffName
+							});
+						}
 					}
 				}, 300);
 			},
