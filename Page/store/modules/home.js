@@ -10,7 +10,9 @@ const initFilter = {
         type:null,
         flightIndicator:null,
         searchKey:null,
-		searchPersonKey:null,
+        searchPersonKey:null,
+        pageSize: 10,
+        currentPage: 1,
 }
 const state = {
     rows: [],
@@ -109,6 +111,7 @@ const mutations = {
         state.persons = data;
     },
     updateFilter(state,data){
+        console.log(state.filterOption);
         state.filterOption[data.name] = data.filterOption;
 		if(data.name != 'searchPersonKey' && state.filterOption.searchPersonKey){
 			state.filterOption.searchPersonKey = null;

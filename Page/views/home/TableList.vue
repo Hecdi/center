@@ -136,6 +136,28 @@ export default {
   },
 	computed: {
     ...mapState('home', ['homeTable','homeTableTotal']),
+    pageSize: {
+				get() {
+					return this.$store.state.home.filterOption.pageSize;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "pageSize",
+						filterOption: filterOption
+					});
+				}
+      },
+      currentPage: {
+				get() {
+					return this.$store.state.home.filterOption.currentPage;
+				},
+				set(filterOption) {
+					this.$store.dispatch(`home/updateFilter`, {
+						name: "currentPage",
+						filterOption: filterOption
+					});
+				}
+			},
     },
     data(){
       return {
@@ -143,8 +165,8 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
-        pageSize: 10,
-        currentPage:1,
+        // pageSize: 10,
+        // currentPage:1,
       }
 
     },
