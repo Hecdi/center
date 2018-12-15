@@ -203,6 +203,7 @@
 	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
 	import {filter} from 'lodash';
+	import { remote } from 'electron';
 
 	import { mapState, mapGetters } from "vuex";
 
@@ -430,9 +431,13 @@
 				this.messages.push(data);
 				this.showAlert();
 			});	
-			sub("UI", "All.ready", () => {
+			if(remote.getGlobal('workerInit')){
 				pub("Worker", "Home.Start", null);
-			});
+			}else{
+				sub("UI", "All.ready", () => {
+					pub("Worker", "Home.Start", null);
+				});
+			}
 		},
 		beforeDestroy() {
 			removeSub("Home");

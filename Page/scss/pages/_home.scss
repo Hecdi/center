@@ -670,6 +670,12 @@
 			color: #0064FF;
 		}
 	}	
+	.dialogAlert{
+		.el-dialog__body{
+			max-height:600px;
+			overflow-y:auto;
+		}
+	}
 }
 
 

@@ -8,9 +8,9 @@ export default {
         store:smartSchedulingStore,
         socketAPI:[{
 			name: 'schedule',
-			//host: '192.168.0.145',
-			host: '173.100.1.52',
-			port: '9099',
+			host: '173.100.1.54',
+			//host: '173.100.1.52',
+			port: '9095',
 			channel: 'intelligent_scheduling',
 			headers: {
 				//userId: 'aoc',
