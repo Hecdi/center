@@ -52,10 +52,10 @@
 						</section>
 						<section class="Row3">
 							<i class="iconfont icon-neirongguanli"></i>
-							<p class="Content" :title="remarks">{{site.remarks}}</p>
+							<p class="Content" :title="site.remarks">{{site.remarks}}</p>
 						</section>
 						<section class="Row4">
-							<div v-if="imgFile" class="Yesphoto">
+							<div v-if="site.imgFile" class="Yesphoto">
 								<el-button type="text" @click="showPics(site.imgFile)">
 									图片详情
 								</el-button>
@@ -207,6 +207,8 @@
 
 					};
 					this.sites = data;
+				}else{
+					this.sites= [];
 				}
 			},
 			exportOnsearch(dept){
