@@ -15,14 +15,12 @@ const homeInit = () => {
 	ajax.post('personList').then( d=>{
 		saveToPersonDB(d).then( data => {
 			getSearchPersons().then((result) => {
-				//pub('UI','Home.Area.Sync', result);	
 				pub('UI','Home.Area.All', result);	
 			});
 		});
 	});
 	ajax.post('taskList').then(data=>{
 		saveHomeTableDB(data).then( (value) => {
-			// getHomeTableFromDB(homeFilter['taskList'].pageSize,homeFilter['taskList'].currentPage).then((result)=>{
 			getHomeTableFromDB(homeFilter.tableList).then((result)=>{
 
 				postal.channel('UI').publish('Home.Table.Sync',result)
@@ -52,13 +50,6 @@ const homeInit = () => {
 		})
 	});
 	pub('UI','Home.Event.Ready',null);
-	// sub('Worker','Home.Table.SetTablePageSize',(taskListFilterOpt) => {
-	// 	console.log(taskListFilterOpt);
-	// 	homeFilter['tableList'] = taskListFilterOpt;
-	// 	getHomeTableFromDB(homeFilter['tableList']).then((result)=> {
-	// 		postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
-	// 	})
-	// })
 }
 export const initPage = () => {
     return Promise.all([
@@ -79,9 +70,6 @@ export const initSocket = (client) =>{
 	client.sub('/user/web/scheduling/changes', (d) => {
 		console.log('task:::',d);
 		saveToTaskDB(false,d.data,homeFilter['taskList']).then( data => {
-			//getSearchPersons(homeFilter['searchPersonKey']).then((result) => {
-				//pub('UI','Home.Area.Sync', result);	
-			//});
 			pub('UI','Home.Task.Sync', data);	
 		});
 	});

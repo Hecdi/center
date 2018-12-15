@@ -117,23 +117,16 @@ const mutations = {
 			state.filterOption.searchPersonKey = null;
 		}
         pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
-        // pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
     },
     resetFilter(state){
         state.filterOption={...initFilter};
         pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
-        // pub("Worker", "Home.Table.SetTablePageSize", state.filterOption);
     },
     setMainListData(state,data){
         state.mainList = data;
     },
     setHomeTableData(state,data){
         state.homeTable = data;
-        // state.homeTable.splice(0, state['homeTable'].length)
-        // each(data,(item)=>{
-		// 		state['homeTable'].push(item);
-		// 	}
-		// );
     },
     setHomeTableTotal(state,data){
         state.homeTableTotal = data;
@@ -166,11 +159,6 @@ const getters = {
 				return item.type == type;
 		})
 	},
-    // getFilter:(state, getters, rootState) =>{
-    //     return {
-    //         taskstatus:state => st
-    //     }
-    // },
 }
 
 const actions = {
