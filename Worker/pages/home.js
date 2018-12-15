@@ -7,7 +7,8 @@ import { get } from 'http';
 
 var homeFilter={
 	personList:{},
-	taskList:{}
+	taskList:{},
+	tableList:{},
 };
 const homeInit = () => {
 	ajax.post('personList').then( d=>{
@@ -20,7 +21,9 @@ const homeInit = () => {
 	});
 	ajax.post('taskList').then(data=>{
 		saveHomeTableDB(data).then( (value) => {
-			getHomeTableFromDB(10,1).then((result)=>{
+			// getHomeTableFromDB(homeFilter['taskList'].pageSize,homeFilter['taskList'].currentPage).then((result)=>{
+			getHomeTableFromDB(homeFilter.tableList).then((result)=>{
+
 				postal.channel('UI').publish('Home.Table.Sync',result)
 			});
 		});
@@ -42,8 +45,10 @@ const homeInit = () => {
 		})
 	});
 	pub('UI','Home.Event.Ready',null);
-	sub('Worker','Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
-		getHomeTableFromDB(pageSize,currentPage-1).then((result)=> {
+	sub('Worker','Home.Table.SetTablePageSize',(taskListFilterOpt) => {
+		console.log(taskListFilterOpt);
+		homeFilter['tableList'] = taskListFilterOpt;
+		getHomeTableFromDB(homeFilter['tableList']).then((result)=> {
 			postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
 		})
 	})
