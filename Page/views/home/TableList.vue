@@ -143,7 +143,7 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
-        total: 100,
+        total: 200,
         pageSize: 10,
         currentPage:1,
       }

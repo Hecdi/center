@@ -21,7 +21,7 @@ const homeInit = () => {
 	ajax.post('taskList').then(data=>{
 		saveHomeTableDB(data).then( (value) => {
 			console.log(value);
-			getHomeTableFromDB(2,10).then((result)=>{
+			getHomeTableFromDB(10,1).then((result)=>{
 				postal.channel('UI').publish('Home.Table.Sync',result)
 			});
 		});
