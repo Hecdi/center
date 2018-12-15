@@ -16,13 +16,13 @@
                 </el-main>
                 <el-aside width="97%">
                   <el-row :gutter="10" class="first-row">
-                    <el-col :span="11">
+                    <el-col :span="13">
 						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
 						<span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span>
 						<span style="font-weight:bold;">{{ task.seat }}</span>
                     </el-col>
-                    <el-col :span="13" style="padding-right:30px;padding-left:0;text-align:right;">
+                    <el-col :span="11" style="padding-right:30px;padding-left:0;text-align:right;">
 						<Legend v-if="task.delay != '--'"  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
 						<Legend v-if="task.keyMaintaince != '--'"  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
 						<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
