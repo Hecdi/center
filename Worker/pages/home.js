@@ -20,7 +20,6 @@ const homeInit = () => {
 	});
 	ajax.post('taskList').then(data=>{
 		saveHomeTableDB(data).then( (value) => {
-			console.log(value);
 			getHomeTableFromDB(10,1).then((result)=>{
 				postal.channel('UI').publish('Home.Table.Sync',result)
 			});
@@ -44,9 +43,8 @@ const homeInit = () => {
 	});
 	pub('UI','Home.Event.Ready',null);
 	sub('Worker','Home.Table.SetTablePageSize',({pageSize,currentPage}) => {
-		console.log(pageSize);
 		getHomeTableFromDB(pageSize,currentPage).then((result)=> {
-			postal.channel('UI').publish('Home.Table.Sync',result)
+			postal.channel('UI').publish('Home.Table.Sync',{total:result.total,data:result.data})
 		})
 	})
 }

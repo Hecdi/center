@@ -115,7 +115,7 @@
          </template>
       </el-table-column>
     </el-table>
-    <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="total" 
+    <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="homeTableTotal" 
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
     </div>
@@ -135,7 +135,7 @@ export default {
     PageNation,
   },
 	computed: {
-    ...mapState('home', ['homeTable']),
+    ...mapState('home', ['homeTable','homeTableTotal']),
     },
     data(){
       return {
@@ -143,7 +143,6 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
-        total: 200,
         pageSize: 10,
         currentPage:1,
       }
