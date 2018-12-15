@@ -22,6 +22,7 @@
             autocomplete="off"
             prefix-icon="el-icon-view"
             placeholder="请输入密码"
+			@keyup.enter.native="submitForm('login')"
           ></el-input>
         </el-form-item>
         <span :loginErr="loginErr" v-if="loginErr" class="login-error">用户名或密码错误</span>
@@ -91,6 +92,7 @@ export default {
               storage.setItem("userId", userInfo.userId);
               storage.setItem("username", userInfo.username);
               storage.setItem("depId", userInfo.depId);
+              storage.setItem("deptCode", userInfo.deptCode);
               storage.setItem("userInfo", JSON.stringify(userInfo));
               that.$router.push("/home");
             } else {

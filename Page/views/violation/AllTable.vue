@@ -48,6 +48,9 @@
     <div class="dialog">
       <ShowImg :picture ="getPic"/>
     </div>
+     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="total" 
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"/>
   </div>
 </template>
 
@@ -57,11 +60,14 @@ import moment from "moment";
 // import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
-import ajaxx from "ajax";
+import { ajax } from "ajax";
+import PageNationHis from "./PageNationHis.vue";
+
 
 export default {
   components: {
-    ShowImg
+    ShowImg,
+     PageNationHis,
   },
   data() {
     console.log(this.img);
@@ -71,6 +77,9 @@ export default {
       img: img,
       picture: '',
       getPic: '',
+      total: 100,
+      pageSize: 10,
+      currentPage:1,
     };
   },
   computed: {
@@ -88,8 +97,13 @@ export default {
     indexMethod(index) {
       return index + 1;
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleSizeChange(val){
+      console.log(val);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val){
+      console.log(`当前${val}`)
+      this.currentPage = val;
     },
     dateFormat: function(row, column) {
       var date = row[column.property];
@@ -147,27 +161,27 @@ export default {
     },
     getData(data) {
       this.$store.dispatch("violation/getData", data);
+      this.total = data.length;
     },
     submitStatus(param, value) {
       console.log(param);
-      let ajax = ajaxx();
       let id = param.id;
       let status = value;
       let subParam = `{"id":"${id}","status":${status}}`;
       let subParams = { id: id, status: status };
       console.log(subParam);
       console.log(subParams);
+      debugger;
       ajax.post("updateState", subParams).then(data => {
         console.log(data);
-        if (data.responseCode == 1000) {
+        if (data) {
           this.refreshData();
         }
       });
     },
     refreshData() {
-      let ajax = ajaxx();
       ajax.post("getViolationDataForLike",'').then(data => {
-        let violation = data.data;
+        let violation = data;
         console.log(violation);
         this.getData(data);
       });

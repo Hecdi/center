@@ -4,6 +4,7 @@ import uuid from 'uuid/v4';
 import { get, truncate } from 'lodash';
 import Logger from '../common/logger';
 import { ajaxAPI, socketAPI } from "../index";
+import { remote } from 'electron';
 
 const log = new Logger('Worker:init:');
 
@@ -51,6 +52,9 @@ export const init = () => {
     });
 
     let clientId = uuid();
+	let token = remote.getGlobal('token');
+	let deptCode = remote.getGlobal('deptCode');
+	let userInfo = remote.getGlobal('userInfo');
     postal.publish({
         channel: 'Worker',
         topic: 'Start',
@@ -58,6 +62,9 @@ export const init = () => {
             clientId,
             ajaxAPI,
 			socketAPI,
+			token,
+			userInfo,
+			deptCode,
         },
     });
 
@@ -68,13 +75,5 @@ export const init = () => {
             data: clientId,
         });
     });
-
-    //postal.channel('UI').subscribe('All.ready', (data = {}, msg = {}) => {
-        //postal.publish({
-            //channel: 'Worker',
-            //topic: 'Home.Start',
-            //data: clientId,
-        //});
-    //});
 
 }

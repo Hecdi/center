@@ -33,7 +33,7 @@
 <script>
     import { mapState,mapMutations,mapActions } from 'vuex';
     import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
-    import ajaxx from 'ajax';
+    import { ajax } from 'ajax';
     import img from "../../assets/logo.png";
     import ShowImg from './ShowImg.vue';
 
@@ -72,7 +72,7 @@
             },
 		    submitStatus(param,value) {
 		    	console.log(param);
-                let ajax = ajaxx();
+                // let ajax = ajaxx();
                 let id = param.id;
                 let status = value;
                 let subParam = `{"id":"${id}","status":${status}}`;
@@ -81,7 +81,7 @@
                 console.log(subParams);
 		    	ajax.post('updateState', subParams).then((data) => {
                     console.log(data);  
-                    if(data.responseCode == 1000){
+                    if(data){
                         this.initWaitData()
                     }  
                 })
@@ -120,10 +120,10 @@
                 this.$store.dispatch('violation/getWaitData',value);
             },
             initWaitData(){
-                 let ajax = ajaxx();
-                 ajax.get("getViolationByState").then((data)=>{
-                     if(data.responseCode == 1000){
-                         this.getWaitData(data.data);
+                //  let ajax = ajaxx();
+                 ajax.post("getViolationByState").then((data)=>{
+                     if(data){
+                         this.getWaitData(data);
                      }
                  })
             },

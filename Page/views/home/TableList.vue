@@ -90,7 +90,7 @@
         label="实际"
         width="180">
         <template slot-scope="scope">
-          <span class="ATDETD" @click="getScope(scope.row,scope.row.disPlayActuralTime,scope.row.disPlayExpectedTime)">
+          <span class="ATDETD">
             <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
             <i v-else :class="{'iconfont icon-yuji2':scope.row.disPlayExpectedTime&&scope.row.disPlayExpectedTime!=='--'}"></i>
               {{scope.row.disPlayActuralTime!=='--'?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
@@ -115,6 +115,9 @@
          </template>
       </el-table-column>
     </el-table>
+    <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="homeTableTotal" 
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/>
     </div>
   </template>
 
@@ -122,12 +125,17 @@
   import { mapState } from 'vuex';
   import moment from 'moment';
   import {map} from 'lodash';
-import ajaxx from 'ajax';
 import DialogTaskDetail from './DialogTaskDetail.vue';
+import PageNation from 'PageNation.vue';
+import { sub, removeSub, pub } from "postalControl";
+
 export default {
-	name: 'TableList',
+  name: 'TableList',
+  components: {
+    PageNation,
+  },
 	computed: {
-    ...mapState('home', ['homeTable']),
+    ...mapState('home', ['homeTable','homeTableTotal']),
     },
     data(){
       return {
@@ -135,6 +143,8 @@ export default {
         actural: '',
         arrive: '',
         delivery: '',
+        pageSize: 10,
+        currentPage:1,
       }
 
     },
@@ -148,11 +158,6 @@ export default {
         let riqi = moment(date).format("DD"); 
         return `${time}(${riqi})`;
     },
-    getScope(value,value1,value2){
-      console.log(value);
-      console.log(value1);
-      console.log(value2);
-    },
     test(val){
       let ata = val.displayATAWithDate;
       let atd = val.displayATDWithDate;
@@ -160,6 +165,25 @@ export default {
       let etd = val.displayETDWithDate;
       return ata != '--' ? ata:(atd != '--' ? atd :(eta != '--' ? eta:(etd !='--'?etd:'--')));
 
+    },
+    handleSizeChange(val){
+      console.log(val);
+      this.pageSize = val;
+      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
+      // sub("UI", "Home.Table.Sync", data => {
+      //   // this.getHomeTableData(data);
+      //   this.homeTable = data;
+			// });
+    },
+    handleCurrentChange(val){
+      console.log(`当前${val}`)
+      this.currentPage = val;
+      pub("Worker", "Home.Table.SetTablePageSize", {pageSize:this.pageSize, currentPage:this.currentPage});
+  
+
+      //  sub("Worker","Home.TablePageNation", data => {
+      //   this.getHomeTableData(data);
+      // });
     },
   },
   

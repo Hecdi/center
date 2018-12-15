@@ -16,7 +16,7 @@
 
 
 <script>
-import { ajax } from 'ajax';
+// import { ajax } from 'ajax';
 
   export default {
     props: ['currentPage','pageSize','total'],
@@ -49,11 +49,6 @@ import { ajax } from 'ajax';
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.newCurrentPage = val;
-        // let page = {'pageSize':pageSize,'currentPage':currentPage};
-        // ajax.post('getViolationDataForLike',page).then((data) => {
-        //   // console.log(`当前页: ${val}`);
-        //   // console.log(this.currentPage);
-        // })
       }
     },
   }

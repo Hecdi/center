@@ -14,10 +14,11 @@
             <router-link tag="li" to="/statistics" class="nav-item">统计</router-link>
             <router-link tag="li" to="/operationManual" class="nav-item">操作手册</router-link>
             <!-- <router-link tag="li" to="/login" class="nav-item">登陆测试</router-link> -->
-            <router-link tag="li" to="/login" class="nav-item el-icon-circle-close-outline" style="float:right;color:#fff">
-              <!-- 00 -->
-            </router-link>
+            <!--<router-link tag="li" to="/login" class="nav-item el-icon-circle-close-outline" style="float:right;color:#fff">-->
+              <!--[> 00 <]-->
+            <!--</router-link>-->
           </ul>
+		  <el-button size="mini" style="float:right;margin-top:12px;" type="info" @click="logOut">登出</el-button>
         </div>
       </el-header>
       <el-container>
@@ -26,3 +27,16 @@
     </el-container>
   </div>
 </template>
+
+<script>
+	export default {
+		name: "app",
+		methods:{
+			logOut(){
+				localStorage.clear();
+				this.$router.push('/login');
+			}
+		}
+	}
+</script>
+

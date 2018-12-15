@@ -8,6 +8,7 @@ export default {
         store:smartSchedulingStore,
         socketAPI:[{
 			name: 'schedule',
+			//host: '192.168.0.145',
 			host: '173.100.1.52',
 			port: '9099',
 			channel: 'intelligent_scheduling',
@@ -41,6 +42,7 @@ export default {
                 'taskSubmit':'web/scheduling/createTempTaskSubmit',//临时任务提交接口 post,
                 'login':'web/login', //登陆接口， post
                 'getAssociateReportList':'associate/getAssociateReportList', //任务交接，post
+                'getDataList':'statement/getDataList', //报表列表接口, post
             }
         }
     },
