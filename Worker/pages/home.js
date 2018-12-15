@@ -19,12 +19,12 @@ const homeInit = () => {
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		saveHomeTableDB(data).then( (value) => {
-			console.log(value);
-			getHomeTableFromDB(2,10).then((result)=>{
-				postal.channel('UI').publish('Home.Table.Sync',result)
-			});
-		});
+		//saveHomeTableDB(data).then( (value) => {
+			//console.log(value);
+			//getHomeTableFromDB(2,10).then((result)=>{
+				//postal.channel('UI').publish('Home.Table.Sync',result)
+			//});
+		//});
 		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 			postal.channel('UI').publish('Home.Task.Sync',result);
 		});

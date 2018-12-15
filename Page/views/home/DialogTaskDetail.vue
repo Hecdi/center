@@ -22,8 +22,8 @@
         <el-col :span="8">预计离港时间:{{currentTask.displayETDWithDate}}</el-col>
       </el-row>
     </div>
-    <el-tabs type="card" class="taskPersonList">
-      <el-tab-pane label="任务人员">
+    <el-tabs type="card" class="taskPersonList" v-model="tab">
+      <el-tab-pane label="任务人员" name="person">
         <el-row :gutter="20">
           <el-col :span="14">
             <div>人员列表：</div>
@@ -49,7 +49,7 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="任务详情">
+      <el-tab-pane label="任务详情" name="detail">
         <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
           {{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}
           <span>{{step.operationName}}</span>
@@ -76,6 +76,7 @@
 		name: "dialogTaskDetail",
 		data() {
 			return {
+				tab:'person',
 				taskWorkerList: new Set(),
 				workerList: new Set(),
 				guaranteeDataList: []
@@ -122,7 +123,15 @@
 			setCurrentPerson(person, isAdd) {
 				if (isAdd) {
 					//this.workerList.delete(person);
-					this.taskWorkerList.add(person);
+					let flag = true;
+					for(let item of this.taskWorkerList){
+						if(item.staffId == person.staffId){
+						flag = false;
+						}
+					}
+					if(flag){
+						this.taskWorkerList.add(person);
+					}
 				} else {
 					//this.workerList.add(person);
 					this.taskWorkerList.delete(person);
@@ -257,8 +266,14 @@
 			...mapState("home", ["currentTask"])
 		},
 		watch: {
-			currentTask: function(val) {
-				this.getTaskDetail(val);
+			dialogTaskDetailVisible: function(n,o) {
+				if(n){
+					this.tab = 'person';
+					this.taskWorkerList=new Set();
+					this.workerList=new Set();
+					this.guaranteeDataList=[];
+					this.getTaskDetail(this.currentTask);
+				}
 			}
 		},
 		mounted() {
