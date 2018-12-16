@@ -53,7 +53,7 @@
 	clear:both;
 	position:relative;
 	.dialogPersonSetting{
-		.el-tabs__header, .el-tabs__nav{
+			.el-tabs__header, .el-tabs__nav{
 			border-bottom:1px dashed #289DFF;
 		}
 		.el-tabs__nav{
@@ -375,6 +375,13 @@
 				flex:1;
 				padding:6px;
 				.dialogTaskDetail{
+					.row1{
+						display:flex;
+						justify-content:space-around;
+						.column4 div{
+							text-align:left;
+						}
+					}
 					.taskInfo{
 						margin-bottom:20px;
 					}

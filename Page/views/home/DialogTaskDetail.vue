@@ -3,25 +3,27 @@
     class="dialogTaskDetail"
     :title="title"
     :visible.sync="dialogTaskDetailVisible"
-    width="1000px"
+    width="600px"
   >
-    <div class="taskInfo">
-      <el-row :gutter="30">
-        <el-col :span="8">航班号:{{currentTask.flightNo}}</el-col>
-        <el-col :span="8">机号：{{`${currentTask.aircraftNumber}`}}</el-col>
-        <el-col :span="8">机位/登机口:{{`${currentTask.seat}/${currentTask.gate}`}}</el-col>
-      </el-row>
-      <el-row :gutter="30">
-        <el-col :span="8">航线:{{currentTask.airRoute}}</el-col>
-        <el-col :span="8">机型/机类：{{`${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</el-col>
-        <el-col :span="8">实际落地时间:{{currentTask.displayATAWithDate}}</el-col>
-      </el-row>
-      <el-row :gutter="30">
-        <el-col :span="8">关联航线:{{currentTask.correlationFlightNo}}</el-col>
-        <el-col :span="8">计划离港时间:{{currentTask.displaySTDWithDate}}</el-col>
-        <el-col :span="8">预计离港时间:{{currentTask.displayETDWithDate}}</el-col>
-      </el-row>
-    </div>
+	<section class="row1">
+		<section>
+			<div>昆明</div>
+			<div>长水机场</div>
+		</section>
+			<i class="iconfont icon-hangxian"></i>
+		<section>
+			<div>成都</div>
+			<div>双流机场</div>
+		</section>
+		<section class="column4">
+			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
+			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
+		</section>
+		<section>
+			<div>计划时间：<b>16:34:06(12)</b></div>
+			<div>实际时间：<b>16:34:06(12)</b></div>
+		</section>
+	</section>
     <el-tabs type="card" class="taskPersonList" v-model="tab">
       <el-tab-pane label="任务人员" name="person">
         <el-row :gutter="20">
