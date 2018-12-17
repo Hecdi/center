@@ -127,9 +127,12 @@
 	.bg-person{
 		background:#182738;
 		border:1px solid #0068a9;
+		padding-left:15px !important;
+		padding-right:25px !important;
+		display:inline-block !important;
 		&.active{
 			background-color:#0062ff;
-			color:#fff;
+			color:#fff !important;
 			.taskNum{
 				background-color:#fff;
 				color:#0062ff;	
@@ -145,6 +148,28 @@
 		overflow:hidden;
 		.person-panel{
 			padding:2px 6px !important;
+			display:flex;
+			justify-content:space-between;
+			&.online{
+				color:white;
+				.person{
+					color:white;
+					border-color:#0068a9;
+					.taskNum{
+						background-color:#0062ff;
+						color:white;
+					}
+				}
+			}
+			.person{
+				color:#5d6874;
+				border-color:#5d6874;
+				.taskNum{
+					background-color:#5d6874;
+					color:white;
+				}
+			}
+			color:#5d6874;
 		}
 	}
 	.person{
@@ -576,6 +601,8 @@
 										color:black;
 										text-align:center;
 										.route-panel{
+											display:flex;
+											justify-content:space-around;
 											&>div{
 												display:inline-block;
 												height:64px;

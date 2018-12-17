@@ -19,10 +19,11 @@
 					</el-col>
 					<el-row :gutter="20" style="margin:0;" class="personList">
 						<el-col
-							:span="7"
+							:span="24"
 							v-for="worker in person.workerList"
 							:key="worker.staffId"
 							class="person-panel"
+							:class="{'online':worker.memberState == 1}"
 							style="float:none"
 							>
 							<el-tooltip effect="light" :disabled="!worker.phone" :content="worker.phone" placement="right">
@@ -37,6 +38,9 @@
 									<div class="taskNum">{{ worker.taskNumber }}</div>
 								</div>
 							</el-tooltip>
+							<div v-if="person.areaId == 'jpyxzh_O'" >
+								{{worker.workContent}}
+							</div>
 						</el-col>
 					</el-row>
 				</el-row>
