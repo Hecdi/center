@@ -437,7 +437,21 @@
 						}
 					}
 					.task{
-						.el-col.greyPanel{
+						.poper{
+							position:absolute;
+							right:10px;
+							bottom:10px;
+							width:100px;
+							height:100px;
+							line-height:100px;
+							color:rgba(213,95,95,1);
+							background-color:#feedefc9;
+							border-radius: 50px;
+							transform: rotateZ(-30deg);
+							border:1px solid #e58285;
+
+						}
+						.el-card.greyPanel{
 							i,p,div {
 								color:#bfbfbf !important;
 							}
@@ -670,6 +684,12 @@
 			color: #0064FF;
 		}
 	}	
+	.dialogAlert{
+		.el-dialog__body{
+			max-height:600px;
+			overflow-y:auto;
+		}
+	}
 }
 
 

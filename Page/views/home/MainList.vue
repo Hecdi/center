@@ -8,9 +8,8 @@
       </el-col>
       <el-col :span="23" class="task">
         <el-row :gutter="10">
-          <el-col :span="8" v-for="task in item.taskList" :key="task.taskId" 
-			  :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''">
-            <el-card shadow="always" :v-id="task.taskId" @click.native="showDeatil(task);">
+			<el-col :span="8" style="position:relative" v-for="task in item.taskList" :key="task.taskId"> 
+            <el-card shadow="always" :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''" :v-id="task.taskId" @click.native="showDeatil(task);">
               <el-container>
 				  <el-main :class="`bg-${task.taskStatus}`">
                 </el-main>
@@ -67,6 +66,9 @@
 				<div :class="`flight-status bg-${task.flightStatusCode}`">{{task.flightStatus}}</div>
               </el-container>
             </el-card>
+			<div class='poper'v-if="task.taskStatus == -1 || task.taskStatus == 8" >
+				{{task.displayTaskStatus}}
+			</div>
           </el-col>
         </el-row>
       </el-col>
