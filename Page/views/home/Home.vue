@@ -34,7 +34,9 @@
 									@click="setPersonSearch(worker)"
 									:data-id="worker.staffId"
 									>
-									{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
+									{{formatPerson(worker)}}
+									<!--{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}-->
+									<!--{{worker.staffName + `${worker.nonArrivalReason?}` }}-->
 									<div class="taskNum">{{ worker.taskNumber }}</div>
 								</div>
 							</el-tooltip>
@@ -225,6 +227,16 @@
 			};
 		},
 		methods: {
+			formatPerson(worker){
+				let workerName = worker.staffName;
+				let reason = worker.nonArrivalReason;
+				let tmp ='';
+				if(reason){
+					tmp = `${reason == 5 ? worker.workerName : this.getReason(reason)})`;  
+				}
+				return workerName + tmp;
+				
+			},
 			openAddTask() {
 				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
 			},
@@ -401,6 +413,7 @@
 				}
 			},
 			...mapState("home", ["filterPersons", "persons", "filterOption"]),
+			...mapGetters('rollCall', ['getReason']),
 		},
 		components: {
 			/*SearchInput,*/
