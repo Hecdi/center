@@ -1,5 +1,5 @@
 <template>
-   <div class="block page-nations">
+   <div class="block violation-page-nations">
     <span class="demonstration">调整每页显示条数</span>
     <el-pagination
       background	

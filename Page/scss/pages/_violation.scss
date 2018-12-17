@@ -1,3 +1,5 @@
+// @import "../components/pageNation";
+
 .violation {
     width: 100%;
     padding: 5px;
@@ -270,8 +272,11 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+        .el-table_1_column_1 {
+            font-family: $font-family-One; 
+        }
     }
-    .page-nations {
+    .violation-page-nations {
         display: block;
         text-align: center;
         background: #fff;
