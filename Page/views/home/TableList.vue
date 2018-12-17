@@ -77,7 +77,7 @@
       <el-table-column
         prop="displayETD"
         label="计划"
-        width="80">
+        width="100">
         <template slot-scope="scope">
           <span class="ATDETD" >
            <!-- <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i> -->

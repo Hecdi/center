@@ -28,15 +28,20 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
         methods: {
             ...mapActions({ 
                 getData: "getData",
+                getWaitData: "getWaitData",
             }),
             created() {
                 this.getData();
+                this.initWaitData();
             },
             handleClick(tab, event) {
               console.log(tab, event);
             },
             getData(data) {
                 this.$store.dispatch('violation/getData',data);
+            },
+            getWaitData(data){
+                this.$store.dispatch('violation/getWaitData',data);
             },
             refreshData(){
                 // let ajax = ajaxx();
@@ -45,6 +50,14 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
                 console.log(violation);
                 this.getData(data);
                 })
+            },
+            initWaitData(){
+                //  let ajax = ajaxx();
+                 ajax.post("getViolationByState").then((data)=>{
+                     if(data){
+                         this.getWaitData(data);
+                     }
+                 })
             },
         },
         beforeMount(){
@@ -57,6 +70,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
             //     // console.log(newArr);
             // });
             this.refreshData();
+            this.initWaitData();
         },
     }
 </script>
