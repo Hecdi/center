@@ -1,0 +1,19 @@
+.page-nations {
+    margin-top: 10px;
+    display: inline;
+    width: 80%;
+    // text-align: center;
+    position: fixed;
+    background: #fff;
+    padding: 10px 0;
+    bottom: 10px;
+    left: 320px;
+    .el-pagination {
+        width: 100%;
+        display: inline !important;
+    }
+    .el-pagination:after, .el-pagination:before {
+        display: inline;
+        content: "";
+    }
+}
