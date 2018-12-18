@@ -137,7 +137,7 @@
 			</el-main>
 		</el-container>
 		<el-popover placement="top-end" offset="5" v-model="visible">
-			<el-tabs type="card" style="width:400px;">
+			<el-tabs type="card" style="width:400px;" class="home-message">
 				<el-tab-pane>
 					<span slot="label">
 						<i class="el-icon-date"></i>警告
