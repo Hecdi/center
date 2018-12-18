@@ -6,7 +6,7 @@
     width="1000px"
   >
     <el-row :gutter="10" class="personList">
-      <el-col :span="2" v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
+      <el-col  v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
         <div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName ==worker.staffId  }" @click="show(worker.staffId)" :data-id="worker.staffId">
           {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
           <div class="taskNum">{{ worker.taskNumber }}</div>
