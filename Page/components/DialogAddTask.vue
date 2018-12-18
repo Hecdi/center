@@ -24,7 +24,7 @@
       			<span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName ==g.projectName  }" @click="handleTaskType(g)">{{g.projectName}}</span>
     		</div>
 	  </el-col>
-      <el-col :span="6">
+      <el-col :span="6" style="display:none;">
         <el-input
           size="small"
           style="width:180px;"
@@ -61,16 +61,17 @@
       </el-col>
     </el-row>
     <el-table
+		class="add-task-table"
 		highlight-current-row
       :data="displayFlights"
       height="250"
       width= "100%"
-	  @current-change="handleCurrentChange">
-		<!--<el-table-column label="单选" width="65" > -->
-			<!--<template scope="scope">-->
-				<!--<el-radio v-model="templateRadio" :value="scope.row.flightId" ></el-radio>-->
-			<!--</template>-->
-		<!--</el-table-column>-->
+	  @current-change="handleCurrentChange1">
+		<!-- <el-table-column label="单选" width="65" >
+			<template scope="scope">
+				<el-radio v-model="templateRadio" :value="scope.row" ></el-radio>
+			</template>
+		</el-table-column> -->
       <el-table-column prop="flightNo" label="航班号"/>
       <el-table-column prop="aircraftNumber" label="机尾号"/>
       <el-table-column prop="seat" label="机位"/>
@@ -84,7 +85,10 @@
       <el-button type="primary" @click="submitTempTask">提交</el-button>
       <el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
     </span>
-			<page-nation/>
+			<page-nation style="bottom:-20px;left:200px;position:relative;margin:10px;text-align:center;"
+			:currentPage="currentPage" :pageSize="pageSize" :total="total"
+			@handleCurrentChange = "handleCurrentChange"
+			@handleSizeChange = "handleSizeChange"/>
   </el-dialog>
 </template>
 <script>
@@ -117,23 +121,27 @@
 				flights:[],
 				tempWorkerList:[],
 				tempGuaranteeList:[],
+				pageSize: 20,
+				currentPage:1,
+				total: 100,
 			}
 		},
 		watch: {
 			dialogAddTaskVisible: function(newDialogAddTaskVisible,oldDialogAddTaskVisible){
-				this.flights = [];
-				this.tempWorkerList = [];
-				this.tempGuaranteeList = [];
-				this.currentWorker='';
-				this.activeName='';
-
+			
 				if(newDialogAddTaskVisible){
+					this.flights = [];
+					this.tempWorkerList = [];
+					this.tempGuaranteeList = [];
+					this.currentWorker='';
+					this.activeName='';
+					this.searchFlight = '';
 					this.handlGettTaskModelList();
 				} 
 			}
 		},
 		methods: {
-			handleCurrentChange(val){
+			handleCurrentChange1(val){
 				if(val){
 					this.templateRadio = val.flightId;
 				}
@@ -174,9 +182,11 @@
 			},
 			handleSearchFlight(){
 				let condition = this.searchFlight;
-				let param = {"searchCondition":condition};
+				let param = {"searchCondition":condition,"pageSize":this.pageSize,pageNumber:this.currentPage};
 				ajax.post('getFlightForTemporaryTask',param).then(data=>{
-					this.flights = data;
+					console.log(data);
+					this.total = data.totalNum;
+					this.flights = data.items;
 				})
 			},
 			handlGettTaskModelList(){
@@ -200,7 +210,7 @@
 				let code = `"projectName":${typeName},"projectCode":${typeCode}`;
 				let flightId = this.templateRadio;
 				let params = {
-					"taskTime": time,
+					// "taskTime": time,
 					"staffIds": workerId,
 					"flightId": flightId,
 				};
@@ -223,7 +233,15 @@
 						this.submitError(data.responseMessage)
 					}
 				})
-			}
+			},
+			handleSizeChange(val){
+      	this.pageSize = val;
+				this.handleSearchFlight();
+    	},
+    	handleCurrentChange(val){
+      	this.currentPage = val;
+				this.handleSearchFlight();
+    	},
 		},
 		computed: {
 			displayFlights:function(){
