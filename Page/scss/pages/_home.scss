@@ -140,6 +140,29 @@
 			}
 		}
 	}
+	.dialogAddTask .personList .person-panel {
+		.bg-person{
+			background:#d7e9ff;
+			color:#505960;
+			border:1px solid #8dbfff;
+			padding-left:15px !important;
+			padding-right:25px !important;
+			display:inline-block !important;
+			.taskNum{
+				background-color:#005fff;
+				color:#fff;	
+			}
+			&.active-person{
+				background-color:#005fff;
+				color:#fff !important;
+				.taskNum{
+					background-color:#fff;
+					color:#005fff;	
+				}
+			}
+		}
+
+	}
 	.active-person {
 		background: #2e67f6;
 		color: #fff !important;
@@ -168,6 +191,10 @@
 				.taskNum{
 					background-color:#5d6874;
 					color:white;
+				}
+				&.active .taskNum{
+					background-color:#fff;
+					color:#0062ff;	
 				}
 			}
 			color:#5d6874;
