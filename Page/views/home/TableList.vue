@@ -10,6 +10,7 @@
         prop="index"
         label="序号"
         type = "index"
+        class-name="font-One"
         width="50">
       </el-table-column>
       <el-table-column
@@ -32,11 +33,13 @@
       <el-table-column
         prop="seat"
         label="停机位"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
         prop="flightNo"
         label="航班号"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
@@ -47,22 +50,24 @@
       <el-table-column
         prop="aircraftNumber"
         label="飞机号"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
-        prop="aircraftFlightType"
+        prop="aircraftType"
         label="机型"
+        class-name="font-One"
         width="50">
       </el-table-column>
       <el-table-column
-        prop="aircraftType"
+        prop="aircraftFlightType"
         label="机类"
         width="50">
       </el-table-column>
       <el-table-column
         label="航线"
         :show-overflow-tooltip="true"
-        width="180">
+        min-width="180">
         <template slot-scope="scope">
             <span v-for="(a,index) in scope.row.airRoute" :key="index">
               <span>{{a}}</span><i v-if ="index !== scope.row.airRoute.length-1" class="iconfont icon-hangxian"></i>
@@ -109,6 +114,7 @@
       </el-table-column>
       <el-table-column
         prop="displayHaveDeviating"
+        width="50"
         label="偏离">
         <template  slot-scope="scope">
                <span :class="scope.row.displayHaveDeviating"></span>
