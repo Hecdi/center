@@ -2,9 +2,11 @@
     <div class="violation-topbar">
         <el-row class="tooltip">
             <el-col :span="5">
-                <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
+                <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
                 <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
+            <div class="font-One" style="color:#000;font-size:16px;">BJ9965</div>
             </el-col>
+            
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
                     <el-form-item >
