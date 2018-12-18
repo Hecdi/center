@@ -10,7 +10,9 @@ const initFilter = {
         type:null,
         flightIndicator:null,
         searchKey:null,
-		searchPersonKey:null,
+        searchPersonKey:null,
+        pageSize: 10,
+        currentPage: 1,
 }
 const state = {
     rows: [],
@@ -109,26 +111,22 @@ const mutations = {
         state.persons = data;
     },
     updateFilter(state,data){
+        console.log(state.filterOption);
         state.filterOption[data.name] = data.filterOption;
 		if(data.name != 'searchPersonKey' && state.filterOption.searchPersonKey){
 			state.filterOption.searchPersonKey = null;
 		}
-		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
+        pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     resetFilter(state){
         state.filterOption={...initFilter};
-		pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
+        pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
     setMainListData(state,data){
         state.mainList = data;
     },
     setHomeTableData(state,data){
         state.homeTable = data;
-        // state.homeTable.splice(0, state['homeTable'].length)
-        // each(data,(item)=>{
-		// 		state['homeTable'].push(item);
-		// 	}
-		// );
     },
     setHomeTableTotal(state,data){
         state.homeTableTotal = data;
@@ -161,11 +159,6 @@ const getters = {
 				return item.type == type;
 		})
 	},
-    // getFilter:(state, getters, rootState) =>{
-    //     return {
-    //         taskstatus:state => st
-    //     }
-    // },
 }
 
 const actions = {

@@ -27,8 +27,10 @@
             class="seach-input"
 			blur = "handleSearch"
           />
-          <el-button type size="small" class="export-excel" @click="exportExcel">导出excel
-            <i class="el-icon-upload el-icon--right"/>
+          <el-button type size="small" class="export-excel" @click="exportExcel" >
+            <a :href="exportUrl">导出excel
+              <i class="el-icon-upload el-icon--right"/>
+            </a>
           </el-button>
         </el-col>
       </el-row>
@@ -72,7 +74,8 @@ export default {
     return {
 	  sheetList: [],
 	  time:[],
-	  inputSearch: '',
+    inputSearch: '',
+    exportUrl: '',
     };
   },
   methods: {
@@ -93,6 +96,7 @@ export default {
       });
 	},
 	exportExcel(){
+      let _this = this;
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -118,9 +122,11 @@ export default {
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
-                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                let exportLocation = `http://173.100.1.52:9099/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
-                window.open(exportLocation);
+               return _this.exportUrl = exportLocation;
+                // console.log(exportLocation);
+                // window.open(exportLocation);
                 // return exportLocation;
                 // that.exportLocation = exportLocation;
                // console.log(param);

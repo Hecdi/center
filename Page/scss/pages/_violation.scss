@@ -1,9 +1,14 @@
+// @import "../components/pageNation";
+
 .violation {
     width: 100%;
     padding: 5px;
     font-size:14px;
     height: 100vh;
     background: #E4E7EC;
+    .violation-topbar {
+        // background-color: #fff;
+    }
     .tab-button {
         margin-bottom: 10px;
     }
@@ -267,8 +272,11 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+        .el-table_1_column_1 {
+            font-family: $font-family-One; 
+        }
     }
-    .page-nations {
+    .violation-page-nations {
         display: block;
         text-align: center;
         background: #fff;

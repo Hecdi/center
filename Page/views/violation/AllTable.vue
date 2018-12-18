@@ -49,8 +49,8 @@
       <ShowImg :picture ="getPic"/>
     </div>
      <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="total" 
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"/>
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/>
   </div>
 </template>
 
@@ -62,6 +62,8 @@ import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
 import { ajax } from "ajax";
 import PageNationHis from "./PageNationHis.vue";
+// import PageNation from 'PageNation.vue';
+
 
 
 export default {

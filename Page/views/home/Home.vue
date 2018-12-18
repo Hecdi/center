@@ -19,10 +19,11 @@
 					</el-col>
 					<el-row :gutter="20" style="margin:0;" class="personList">
 						<el-col
-							:span="7"
+							:span="24"
 							v-for="worker in person.workerList"
 							:key="worker.staffId"
 							class="person-panel"
+							:class="{'online':worker.memberState == 1}"
 							style="float:none"
 							>
 							<el-tooltip effect="light" :disabled="!worker.phone" :content="worker.phone" placement="right">
@@ -33,10 +34,15 @@
 									@click="setPersonSearch(worker)"
 									:data-id="worker.staffId"
 									>
-									{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
+									{{formatPerson(worker)}}
+									<!--{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}-->
+									<!--{{worker.staffName + `${worker.nonArrivalReason?}` }}-->
 									<div class="taskNum">{{ worker.taskNumber }}</div>
 								</div>
 							</el-tooltip>
+							<div v-if="person.areaId == 'jpyxzh_O'" >
+								{{worker.workContent}}
+							</div>
 						</el-col>
 					</el-row>
 				</el-row>
@@ -203,6 +209,7 @@
 	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
 	import {filter} from 'lodash';
+	import { remote } from 'electron';
 
 	import { mapState, mapGetters } from "vuex";
 
@@ -220,6 +227,16 @@
 			};
 		},
 		methods: {
+			formatPerson(worker){
+				let workerName = worker.staffName;
+				let reason = worker.nonArrivalReason;
+				let tmp ='';
+				if(reason){
+					tmp = `${reason == 5 ? worker.workerName : this.getReason(reason)})`;  
+				}
+				return workerName + tmp;
+				
+			},
 			openAddTask() {
 				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
 			},
@@ -292,6 +309,8 @@
 			},
 			sendTaskListFilter() {
 				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
+				// console.log('777cc77c7c77c');
+				// pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
 			},
 			getFilterMessages(k,v){
 				return filter(this.messages, item =>{
@@ -394,6 +413,7 @@
 				}
 			},
 			...mapState("home", ["filterPersons", "persons", "filterOption"]),
+			...mapGetters('rollCall', ['getReason']),
 		},
 		components: {
 			/*SearchInput,*/
@@ -428,9 +448,13 @@
 				this.messages.push(data);
 				this.showAlert();
 			});	
-			sub("UI", "All.ready", () => {
+			if(remote.getGlobal('workerInit')){
 				pub("Worker", "Home.Start", null);
-			});
+			}else{
+				sub("UI", "All.ready", () => {
+					pub("Worker", "Home.Start", null);
+				});
+			}
 		},
 		beforeDestroy() {
 			removeSub("Home");

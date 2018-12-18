@@ -6,7 +6,7 @@
     :visible.sync="dialogAlertVisible"
     width="1000px"
   >
-  <p v-for="(message, index) in messages" :key="index">{{message.content}}</p>
+  <p v-for="(message, index) in messages" :key="index">{{message.flightNo}} {{message.content}}</p>
   </el-dialog>
 </template>
 <script>

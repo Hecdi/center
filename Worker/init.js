@@ -26,6 +26,9 @@ export const init = () => {
             let topic = get(data, 'topic');
             let msg = get(data, 'data');
             log.info(`received WorkerPage message ${channel} ${topic}`);
+			if(topic == 'All.ready'){
+				remote.setGlobal('workerInit',true);
+			}
             postal.publish({
                 channel: 'UI',
                 topic: topic,

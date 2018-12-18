@@ -11,7 +11,8 @@ const state = {
 
 const mutations = {
     setData(state, data) {
-        state.cards = data;
+        // state.cards = data;
+        state.cards = data.filter(item => item.status < 3);
     },
     setWaitData(state,data) {
         state.waitItems = data;
