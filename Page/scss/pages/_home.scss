@@ -401,17 +401,60 @@
 				flex:1;
 				padding:6px;
 				.dialogTaskDetail{
+					.el-dialog_body{
+						max-height:400px;
+						overflow:auto;
+					}
 					.row1{
+						padding-top:15px;
+						padding-bottom:30px;
 						display:flex;
 						justify-content:space-around;
-						.column4 div{
+						.column4 div,.column5 div{
 							text-align:left;
+						}
+						.city{
+							font-size:16px;
+							font-family:Microsoft YaHei;
+							font-weight:bold;
+							color:#333333;
+						}
+						.airport{
+							font-size:10px;
+							font-family:Microsoft YaHei;
+							color:#666C72;
+						}
+						.icon-hangxian{
+							position:relative;
+							left:-5px;
+						}
+						.icon-hangxian:before{
+							position:absolute;
+							top:11px;
 						}
 					}
 					.taskInfo{
 						margin-bottom:20px;
 					}
 					.taskPersonList{
+					   // .taskBtn1{
+							//height:30px;
+							
+						//}
+						.is-top{
+							padding:0;
+							height:30px;
+						}
+						.currentRegion{
+							border:1px solid #CBDDED;
+							background-color:#F8FCFF;
+							height:140px;
+						}
+						.selectedStaff{
+							border:1px solid #CBDDED;
+							background-color:#F8FCFF;
+							height:140px;
+						}
 						.taskDetailList{
 							text-align:left;
 							span{

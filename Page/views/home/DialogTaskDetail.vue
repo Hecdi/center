@@ -7,28 +7,34 @@
   >
 	<section class="row1">
 		<section>
-			<div>昆明</div>
-			<div>长水机场</div>
+			<div class="city">{{currentTask.airRoute[0]}}</div>
+			<div class="airport">机场名</div>
 		</section>
 			<i class="iconfont icon-hangxian"></i>
 		<section>
-			<div>成都</div>
-			<div>双流机场</div>
+			<div class="city">{{currentTask.airRoute[1]}}</div>
+			<div class="airport">机场名</div>
 		</section>
 		<section class="column4">
 			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
 			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
 		</section>
-		<section>
-			<div>计划时间：<b>16:34:06(12)</b></div>
-			<div>实际时间：<b>16:34:06(12)</b></div>
+		<section class="column5">
+			<div>计划时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>
+			<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>
 		</section>
 	</section>
-    <el-tabs type="card" class="taskPersonList" v-model="tab">
-      <el-tab-pane label="任务人员" name="person">
-        <el-row :gutter="20">
-          <el-col :span="14">
-            <div>人员列表：</div>
+    <el-tabs class="taskPersonList" v-model="tab">
+	  <el-tab-pane>
+		<span slot="label">
+		  <!--<el-button class="taskBtn1" type="primary">-->
+			  <!--任务人员-->
+		  <!--</el-button>-->
+		  <el-tag>aaa</el-tag>
+		</span>
+        <el-row :gutter="0">
+          <el-col class="currentRegion" :span="14">
+            <div >当前区域全部人员：</div>
             <el-button
               @click="setCurrentPerson(person, true)"
               v-for="person in Array.from(workerList)"
@@ -38,7 +44,10 @@
               icon="iconfont icon-user"
             >{{`${person.staffName}${person.workerName?'/'+person.workerName:''}`}}</el-button>
           </el-col>
-          <el-col :span="10">
+		  <el-col :span="3">
+			  <i class="iconfont icon-fenpei"></i>
+		  </el-col>
+          <el-col class="selectedStaff" :span="7">
             <div>任务已选人员：</div>
             <el-button
               @click="setCurrentPerson(person)"
@@ -51,7 +60,12 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="任务详情" name="detail">
+      <el-tab-pane >
+		<span slot="label">
+		  <el-button type="primary">
+			  任务详情
+		  </el-button>
+		</span>
         <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
           {{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}
           <span>{{step.operationName}}</span>
@@ -81,10 +95,11 @@
 				tab:'person',
 				taskWorkerList: new Set(),
 				workerList: new Set(),
-				guaranteeDataList: []
+				guaranteeDataList: [],
 			};
 		},
-		methods: {
+		methods: {	
+
 			release: function(val) {
 				ajax.post(
 					"home.taskRelease",
@@ -149,7 +164,10 @@
 					this.workerList = new Set(data.workerList);
 					this.taskWorkerList = new Set(data.taskWorkerList);
 					this.guaranteeDataList= data.guaranteeDataList;
+					this.flight = data.flight;
 					console.log(data);
+
+
 					/*this.guaranteeDataList = [
 		  {
 			operationTime: 1544174180000,
