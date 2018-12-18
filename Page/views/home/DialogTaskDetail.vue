@@ -58,9 +58,9 @@
       </el-tab-pane>
     </el-tabs>
     <span slot="footer" class="dialog-footer">
-      <el-button type="danger" @click="release(8)">不保障该航班</el-button>
-	  <el-button type="success" @click="release(2)" v-if="taskWorkerList.size>0">发布</el-button>
-      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button type="danger" v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="release(8)">不保障该航班</el-button>
+	  <el-button type="success" @click="release(2)" v-if=" taskWorkerList.size>0 && this.currentTask.taskStatus == 1">发布</el-button>
+      <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">提交</el-button>
       <el-button @click="dialogTaskDetailVisible = false;">取 消</el-button>
     </span>
   </el-dialog>

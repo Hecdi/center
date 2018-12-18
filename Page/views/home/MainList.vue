@@ -8,21 +8,20 @@
       </el-col>
       <el-col :span="23" class="task">
         <el-row :gutter="10">
-          <el-col :span="8" v-for="task in item.taskList" :key="task.taskId" 
-			  :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''">
-            <el-card shadow="always" :v-id="task.taskId" @click.native="showDeatil(task);">
+			<el-col :span="8" style="position:relative" v-for="task in item.taskList" :key="task.taskId"> 
+            <el-card shadow="always" :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''" :v-id="task.taskId" @click.native="showDeatil(task);">
               <el-container>
 				  <el-main :class="`bg-${task.taskStatus}`">
                 </el-main>
                 <el-aside width="97%">
                   <el-row :gutter="10" class="first-row">
-                    <el-col :span="11">
+                    <el-col :span="13">
 						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
 						<span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span>
 						<span style="font-weight:bold;">{{ task.seat }}</span>
                     </el-col>
-                    <el-col :span="13" style="padding-right:30px;padding-left:0;text-align:right;">
+                    <el-col :span="11" style="padding-right:30px;padding-left:0;text-align:right;">
 						<Legend v-if="task.delay != '--'"  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
 						<Legend v-if="task.keyMaintaince != '--'"  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
 						<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
@@ -67,6 +66,9 @@
 				<div :class="`flight-status bg-${task.flightStatusCode}`">{{task.flightStatus}}</div>
               </el-container>
             </el-card>
+			<div class='poper'v-if="task.taskStatus == -1 || task.taskStatus == 8" >
+				{{task.displayTaskStatus}}
+			</div>
           </el-col>
         </el-row>
       </el-col>

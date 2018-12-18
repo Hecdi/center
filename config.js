@@ -8,9 +8,9 @@ export default {
         store:smartSchedulingStore,
         socketAPI:[{
 			name: 'schedule',
-			//host: '192.168.0.145',
-			host: '173.100.1.52',
-			port: '9099',
+			host: '173.100.1.54',
+			//host: '173.100.1.52',
+			port: '9095',
 			channel: 'intelligent_scheduling',
 			headers: {
 				//userId: 'aoc',
@@ -42,7 +42,8 @@ export default {
                 'taskSubmit':'web/scheduling/createTempTaskSubmit',//临时任务提交接口 post,
                 'login':'web/login', //登陆接口， post
                 'getAssociateReportList':'associate/getAssociateReportList', //任务交接，post
-                'getDataList':'statement/getDataList', //报表列表接口, post
+                'getDataList':'statement/getDataList', //报表列表数据获取接口, post
+                'sheetExportExcel': 'statement/exportExcel', //报表导出excel接口 post
             }
         }
     },

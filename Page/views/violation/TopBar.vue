@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="violation-topbar">
         <el-row class="tooltip">
             <el-col :span="5">
                 <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
-                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">全部</button>
+                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
             </el-col>
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
@@ -37,8 +37,12 @@
                 </el-date-picker>
                 <!-- <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button> -->
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
-                <el-button size="mini" >
-                    <a  @click = "exportExcel">导出</a>
+                <el-button size="mini"  @click = "exportExcel" >
+                    <a  :href="getUrl">导出</a>
+                    <!-- <form action='url'>
+                        <!- <input type="text" name="yourname" value="yourvalue"> ->
+                        <input type="submit" value="提交">
+                    </form> -->
                 </el-button>
                 <!-- <h1 @click = "exportExcel">88899</h1> -->
             </el-col>
@@ -101,6 +105,7 @@
                 {name:"西南航空",code:"HK323",number:"028-88882328",isEdit:false},
                 {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
             ],
+            getUrl:'',
           }
           
         },
@@ -111,7 +116,8 @@
         methods: {
             // ...mapMutations(["setCurrentStatus"]),
              ...mapActions({
-                    getData: "getData"
+                    getData: "getData",
+                    getWaitData: "getWaitData",
             }),
             onSubmit() {
               console.log('submit!');
@@ -132,6 +138,11 @@
             toggleTabs(value){
                 this.tabs=value;
                 this.tabActive = value;
+                if(value == 'wait') {
+                    this.initWaitData();
+                } else {
+                    this.refreshData();
+                }
             },
             setCurrentStatus(data) {
 			    this.$store.dispatch('violation/setCurrentStatus', data);
@@ -148,8 +159,35 @@
             // timeSearch(value){
             //     console.log(value);
             // },
+            //  exportExcel() {
+            //     var encodeParam = function (json) {
+            //       var tmps = [];
+            //       for (var key in json) {
+            //           tmps.push(key + '=' + json[key]);
+            //       }
+            //       return tmps.join('&');
+            //     }
+
+            //     var url = "请求地址" + encodeParam(form);
+            //     console.log(url)
+            //     //判断是否有id为_exportForm的form表单，如果没有则创建一个隐藏的form，把url放入，然后submit
+            //     var exportForm = document.getElementById("_exportForm");
+            //     if (!exportForm) {
+            //       exportForm = document.createElement("form");
+            //       exportForm.setAttribute('id', "_exportForm");
+            //       exportForm.setAttribute("action", url);
+            //       exportForm.setAttribute("method", "post");
+            //     }
+            //     document.body.appendChild(exportForm);
+            //     exportForm.submit();
+            //     document.body.removeChild(exportForm);//导出成功后将form元素移除以免影响下一次导出
+            // },
+            // exportExcelTest(){
+                
+            // },
             exportExcel(){
                 // let ajax = ajaxx();
+                let _this = this;
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -176,8 +214,16 @@
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
                 let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-                console.log(exportLocation);
-                window.open(exportLocation);
+                return _this.getUrl = exportLocation;
+                // console.log(exportLocation);
+                // window.open(exportLocation);
+                // ajax.post('exportExcel',param).then(data => {
+                //     if(data) {
+                //         console.log('999222');
+                //         console.log(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`);
+                //         return _this.url = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                //     }
+                // })
             },
             handleSearch(){
                 // let ajax = ajaxx();
@@ -215,11 +261,19 @@
             },
             refreshData() {
                 // let ajax = ajaxx();
-                ajax.get("getViolationData").then(data => {
+                ajax.post("getViolationDataForLike").then(data => {
                   let violation = data;
                   console.log(violation);
                   this.getData(data);
                 });
+            },
+             initWaitData(){
+                //  let ajax = ajaxx();
+                 ajax.post("getViolationByState").then((data)=>{
+                     if(data){
+                         this.getWaitData(data);
+                     }
+                 })
             },
             openShowImg() {
 			    this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
