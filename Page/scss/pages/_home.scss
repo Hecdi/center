@@ -718,6 +718,29 @@
 			overflow-y:auto;
 		}
 	}
+	.dialogAddTask {
+		.add-task-table {
+			margin-top: 10px;
+			.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td, .el-table__body tr.hover-row.current-row>td, .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .el-table__body tr.hover-row.el-table__row--striped>td, .el-table__body tr.hover-row>td {
+				background-color: #d9e8ff;
+			}
+			.is-leaf {
+				margin-top: 10px;
+				background: #666;
+				color: #fff;
+				height: 1.75rem;
+				line-height: 1.75rem;
+				padding: .125rem 0;
+				text-align: center;
+			}
+			.el-table__row>td {
+				text-align: center;
+			}
+			.td {
+				text-align: center;
+			}
+		}
+	}
 }
 
 
