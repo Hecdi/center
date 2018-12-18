@@ -1,7 +1,6 @@
 <template>
 	<el-dialog class="dialogPersonDetail" center :title=currentPerson.staffName
-:visible.sync="dialogPersonDetailVisible" width="1000px" :before-close="handleClose"
->
+:visible.sync="dialogPersonDetailVisible" width="1000px" >
 		<el-row :gutter="10" class="row">
 			<el-checkbox v-model="groupLeader"  :true-label=1 :false-label=-1 >设为小组长</el-checkbox>
 		</el-row>
