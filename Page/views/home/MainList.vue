@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="23" class="task">
         <el-row :gutter="10">
-			<el-col :span="8" style="position:relative" v-for="task in item.taskList" :key="task.taskId"> 
+			<el-col :span="8" style="position:relative;height:134px;overflow:hidden;" v-for="task in item.taskList" :key="task.taskId"> 
             <el-card shadow="always" :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''" :v-id="task.taskId" @click.native="showDeatil(task);">
               <el-container>
 				  <el-main :class="`bg-${task.taskStatus}`">
@@ -58,7 +58,7 @@
                   </el-row>
                   <el-row :gutter="10" class="third-row">
                     <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden">
-						<i class="iconfont icon-renyuan" style="margin-right:6px;"></i>
+						<i class="iconfont icon-renyuan" style="margin-right:6px;height:18px;"></i>
 						{{task.taskBindingShiftNames}}
                     </el-col>
                   </el-row>
