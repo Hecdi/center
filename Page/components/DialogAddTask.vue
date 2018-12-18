@@ -48,7 +48,7 @@
         />
 		<!-- <button @click="handleSearchFlight">搜索</button> -->
       </el-col>
-      <el-col :span="8">
+      <el-col :span="8" style="display:none">
         <span style="color:#939393">任务时限:</span>
         <el-select v-model="timeLimitValue" size="small" placeholder="请选择">
           <el-option
@@ -84,6 +84,7 @@
       <el-button type="primary" @click="submitTempTask">提交</el-button>
       <el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
     </span>
+			<page-nation/>
   </el-dialog>
 </template>
 <script>
@@ -93,9 +94,13 @@
 	import { mapState,mapActions, mapGetters, mapMutations } from 'vuex';
 	import {formatDate }  from 'date';
 	import {map, extend} from 'lodash';
+	import PageNation from 'PageNation.vue';
 
 	export default {
 		name: "DialogAddTask",
+		components: {
+			PageNation,
+		},
 		data(){
 			return {
 				timeLimitValue: "",

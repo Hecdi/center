@@ -57,19 +57,19 @@ $color-bg-cyan:	#d5f0ff;
 
 $font-family-Yahei:         'Microsoft YaHei';
 $font-family-YaheiBold:     'MicrosoftYaHei-Bold';
-// $font-family-MFlihei:       'MFLiHei_Noncommercial-Regular';
+$font-family-MFlihei:       'MFLiHei_Noncommercial-Regular';
 $font-family-One:    		'Fjalla One';
 $font-family-Orbitron:		'Orbitron';
-// $font-family-rich:      	'Aldrich';
+$font-family-rich:      	'Aldrich';
 $font-family-Helve:          'Helve';
 
 $familys: (
         "Yahei":    		$font-family-Yahei,
         "YaheiBold":   		$font-family-YaheiBold,
-        // "MFlihei":          $font-family-MFlihei,
+        "MFlihei":          $font-family-MFlihei,
         "One":              $font-family-One,
         "Orb":           $font-family-Orbitron,
-        // "rich":             $font-family-rich,
+        "rich":             $font-family-rich,
         "Helve":            $font-family-Helve,
     );
 
