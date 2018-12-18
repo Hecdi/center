@@ -35,7 +35,7 @@
                     @change="handleSearch"
                     value-format="timestamp">
                 </el-date-picker>
-                <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button>
+                <!-- <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button> -->
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
                 <el-button size="mini" >
                     <a  @click = "exportExcel">导出</a>

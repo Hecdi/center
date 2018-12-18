@@ -2,12 +2,12 @@
 	flex:1;
 	background-color:#E4E7EC;
 	overflow-x:hidden;
-	overflow-y:scroll;
+	overflow-y:auto;
 	.urgentReport{
 		flex:1;
 		padding:0px 25px 10px;
 		background-color:#E4E7EC;
-		overflow:scroll;
+		overflow:auto;
 		.Row1{
 			display:flex;
 			flex-direction:row;
@@ -24,13 +24,15 @@
 			padding-left:5px;
 			width:90px;
 			height:20px;
-			font-weight:bold;
+			color:#000000;
+			font-family:Fjalla One;
 		}
 		.Dname{
 			position:absolute;
 			right:0px;
 			background-color:#50b7f7;
 			color:#FFFFFF;
+			font-family:Microsoft YaHei;
 			text-align:center;
 			white-space:nowrap;
 			max-width:150px;
@@ -56,12 +58,13 @@
 			height:14px;
 			padding-left:6px;
 			font-weight:bold;
+			font-family:Microsoft YaHei;
 		}
 		.Dtime{
 			position:absolute;
 			right:0px;
 			height:14px;
-			font-weight:bold;
+			font-family:Microsoft YaHei;
 		}
 		.Row3{
 			display:flex;
@@ -81,8 +84,10 @@
 			height:15px;
 			line-height:15px;
 			font-size:14px;
-			font-weight:bold;
+			//font-weight:bold;
 			padding-left:5px;
+			font-family:Microsoft YaHei;
+			color:#000000;
 		}
 		.el-col{
 			margin-top:2.5px;
@@ -102,9 +107,11 @@
 		}
 		.Yesphoto{
 			color:#0064FF;
+			font-family:Microsoft YaHei;
 		}
 		.Nophoto{
 			color:#999999;
+			font-family:Microsoft YaHei;
 		}
 	}
 
@@ -128,6 +135,7 @@
 		height:100%;
 	}
 	.deptBtn{
+		font-family:Microsoft YaHei;
 		font-size:12px;	
 		height:20px;
 		padding:0px;
@@ -176,11 +184,13 @@
 			position:absolute;
 			left:55px;
 			top:7px;
+			color:#FFFFFF;
 		}
 		.deptBtn2{
 			position:absolute;
 			left:145px;
 			top:7px;
+			color:#333333;
 		}
 	}
 	.el-range-input,.el-range-separator,.el-range-input,.inputRow .el-input__inner{
@@ -192,19 +202,22 @@
 			.deptBtn1{
 				left:25px;
 				top:7px;
+				color:#333333;
 			}
 			.deptBtn2{
 				left:115px;
 				top:7px;
+				color:#FFFFFF;
 			}
 		}
 		.inputRow{
 			right:0px;
 		}
 		.dateRow{
+			font-family:Microsoft YaHei;
+			font-size:12px;
+			color:#333333;
 			right:200px;
-		}
-		.dateRow{
 			padding-right:0px;
 			width:300px;
 			.el-input__inner{
@@ -215,8 +228,26 @@
 			}
 		}
 	}
-		.cell{
-			font-weight:bold;
+		th .cell{
+			font-family:Microsoft YaHei;
+			font-size:14px;
+		}
+		.column1{
+			font-family:Fjalla One;
+			color:#333333;
+		}
+		.column2{
+			font-family:Fjalla One;
+			font-size:16px;
+			color:#000000;
+		}
+		.columnRest{
+			font-family:Microsoft YaHei;
+			color:#000000;
+		}
+		.column7{
+			font-family:Microsoft YaHei;
+			color:#000000;
 		}
 }
 
