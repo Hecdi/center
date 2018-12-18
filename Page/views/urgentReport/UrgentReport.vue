@@ -6,7 +6,7 @@
 				<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1',1)">当前部门</el-button>
 				<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>
 		   </el-col>
-		   <el-col class="dateRow" id="dateRow" :span="6">
+		   <el-col class="dateRow" :span="6">
 				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch(1)">
 				</el-date-picker>
 		   </el-col>
@@ -24,7 +24,7 @@
 						<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1',1)">当前部门</el-button>
 						<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>
 				   </el-col>
-				   <el-col class="dateRow" id="dateRow" :span="6">
+				   <el-col class="dateRow" :span="6">
 						<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch(0)">
 						</el-date-picker>
 				   </el-col>
@@ -84,37 +84,43 @@
 					highlight-current-row
 					style = "width:auto">
 					<el-table-column
+						class-name = "column1"
 						type = "index"
 						min-width = "40px"
 						label = "序号">
 					</el-table-column>
 					<el-table-column
+						class-name = "column2"
 						prop = "flightNo"
 						min-width = "80px"
 						label = "航班号">
 					</el-table-column>
 					<el-table-column
+						class-name = "columnRest"
 						prop = "operationName"
 						min-width = "80px"
 						label = "步骤名称">
 					</el-table-column>
 					<el-table-column
+						class-name = "columnRest"
 						prop = "staffName"
 						min-width = "80px"
 						label = "上报人">
 					</el-table-column>
 					<el-table-column
+						class-name = "columnRest"
 						prop = "reportTime"
 						min-width = "200px"
 						label = "上报时间">
 					</el-table-column>
 					<el-table-column
+						class-name = "columnRest"
 						show-overflow-tooltip			
 						prop = "remarks"
 						min-width = "200px"
 						label = "偏离描述">
 					</el-table-column>
-					<el-table-column label = "附件" min-width = "100px">
+					<el-table-column class-name = "column7" label = "附件" min-width = "100px">
 						<template slot-scope="scope" >
 							<div>
 								<el-button :type = "scope.row.imgFile?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
