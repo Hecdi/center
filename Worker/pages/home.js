@@ -20,7 +20,7 @@ const homeInit = () => {
 		});
 	});
 	ajax.post('taskList').then(data=>{
-		saveHomeTableDB(data).then( (value) => {
+		saveHomeTableDB(true,data).then( (value) => {
 			getHomeTableFromDB(homeFilter.tableList).then((result)=>{
 
 				postal.channel('UI').publish('Home.Table.Sync',result)
