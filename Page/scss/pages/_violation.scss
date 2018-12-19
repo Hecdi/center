@@ -208,6 +208,8 @@
     .all-table {
         margin: 3px;
         margin-top: 10px;
+        height: 90vh;
+        overflow: scroll;
         thead>.cell {
             background-color: #666;
             height: 30px;
@@ -279,13 +281,18 @@
     .violation-page-nations {
         display: block;
         text-align: center;
-        background: #fff;
+        background: transparent;
         width: 99%;
+        margin-top: 10px;
         .el-pagination {
             display: inline-block;
         }
-        position: fixed;
-        bottom: 30px;
+        // position: fixed;
+        // bottom: 30px;
+        .el-pager li {
+            padding: 0 .25rem;
+            background: #fff;
+        }
         .demonstration {
             font-size: 13px;
             height: 30px;
