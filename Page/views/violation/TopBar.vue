@@ -4,7 +4,6 @@
             <el-col :span="5">
                 <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
                 <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
-            <div class="font-One" style="color:#000;font-size:16px;">BJ9965</div>
             </el-col>
             
             <el-col :span="19" class="topbar">
@@ -252,7 +251,7 @@
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
-                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
+                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
                 console.log(param);
                 console.log(params)
                 ajax.post('getViolationDataForLike', params).then((data) => {
@@ -263,7 +262,7 @@
             },
             refreshData() {
                 // let ajax = ajaxx();
-                ajax.post("getViolationDataForLike").then(data => {
+                ajax.post("getViolationDataForLike",{"pageNumber":1,"pageSize":10}).then(data => {
                   let violation = data;
                   console.log(violation);
                   this.getData(data);
