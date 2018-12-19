@@ -54,6 +54,10 @@
     .sheet-table {
         margin: 3px;
         margin-top: 10px;
+        width: 100%;
+        table {
+            width: 100% !important;
+        }
         thead>.cell {
             background-color: #666;
             height: 30px;

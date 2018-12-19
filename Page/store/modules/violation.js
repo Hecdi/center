@@ -7,12 +7,14 @@ const state = {
     filterCards: [],
     showImgDialog: false,
     waitItems: [],
+    totalSize: 11,
 }
 
 const mutations = {
     setData(state, data) {
         // state.cards = data;
-        state.cards = data.filter(item => item.status < 3);
+        state.cards = data.items.filter(item => item.status < 3);
+        state.totalSize = data.totalNum;
     },
     setWaitData(state,data) {
         state.waitItems = data;
@@ -22,7 +24,7 @@ const mutations = {
         console.log(state.currentStatus);
     },
     filterStatus(state, data) {
-        state.filterCards = data.filter(item => item.status == 3);
+        state.filterCards = data.items.filter(item => item.status == 3);
     },
     updateShowImg(state,obj){
         mapKeys(obj,(v,k) => {

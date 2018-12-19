@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="23" class="task">
         <el-row :gutter="10">
-			<el-col :span="8" style="position:relative" v-for="task in item.taskList" :key="task.taskId"> 
+			<el-col :span="8" style="position:relative;height:134px;overflow:hidden;" v-for="task in item.taskList" :key="task.taskId"> 
             <el-card shadow="always" :class="(task.taskStatus == -1 || task.taskStatus == 8) ? 'greyPanel':''" :v-id="task.taskId" @click.native="showDeatil(task);">
               <el-container>
 				  <el-main :class="`bg-${task.taskStatus}`">
@@ -34,13 +34,13 @@
                   <el-row :gutter="0" class="second-row">
                     <el-col :span="10" class="route-panel">
 						<div>
-							<p>{{task.airRoute[0]}}</p>
-							<p>{{task.airRoute[0]}}</p>
+							<p>{{task.iata[0]}}</p>
+							<p :title="task.airRoute[0]">{{task.airRoute[0]}}</p>
 						</div>
 						<div><i class="iconfont icon-hangxian"></i></div>
 						<div>
-							<p>{{task.airRoute[1]}}</p>
-							<p>{{task.airRoute[1]}}</p>
+							<p>{{task.iata[1]}}</p>
+							<p :title="task.airRoute[1]">{{task.airRoute[1]}}</p>
 						</div>
                     </el-col>
                     <el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">
@@ -58,7 +58,7 @@
                   </el-row>
                   <el-row :gutter="10" class="third-row">
                     <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden">
-						<i class="iconfont icon-renyuan" style="margin-right:6px;"></i>
+						<i class="iconfont icon-renyuan" style="margin-right:6px;height:18px;"></i>
 						{{task.taskBindingShiftNames}}
                     </el-col>
                   </el-row>

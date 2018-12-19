@@ -25,7 +25,7 @@
 			@keyup.enter.native="submitForm('login')"
           ></el-input>
         </el-form-item>
-        <span :loginErr="loginErr" v-if="loginErr" class="login-error">用户名或密码错误</span>
+		<span :loginErr="loginErr" v-if="loginErr" class="login-error">{{loginErrInfo}}</span>
         <el-form-item>
           <el-button type="primary" @click="submitForm('login')">提交</el-button>
           <el-button @click="resetForm('login')">重置</el-button>
@@ -70,7 +70,8 @@ export default {
       checkLogin: {
         pass: [{ validator: validatePass, trigger: "blur" }],
         name: [{ validator: validateName, trigger: "blur" }]
-      }
+      },
+		loginErrInfo:'',
     };
   },
   methods: {
@@ -98,6 +99,7 @@ export default {
             } else {
               console.log(data.responseMessage);
               that.loginErr = true;
+			  that.loginErrInfo = data.responseMessage;
             }
           });
         } else {

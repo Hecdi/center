@@ -5,11 +5,13 @@
       style="width: 100%"
       stripe	
       max-height="850"
+      @row-click="showDeatil"
       >
       <el-table-column
         prop="index"
         label="序号"
         type = "index"
+        class-name="font-One"
         width="50">
       </el-table-column>
       <el-table-column
@@ -32,11 +34,13 @@
       <el-table-column
         prop="seat"
         label="停机位"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
         prop="flightNo"
         label="航班号"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
@@ -47,22 +51,24 @@
       <el-table-column
         prop="aircraftNumber"
         label="飞机号"
+        class-name="font-One"
         width="80">
       </el-table-column>
       <el-table-column
-        prop="aircraftFlightType"
+        prop="aircraftType"
         label="机型"
+        class-name="font-One"
         width="50">
       </el-table-column>
       <el-table-column
-        prop="aircraftType"
+        prop="aircraftFlightType"
         label="机类"
         width="50">
       </el-table-column>
       <el-table-column
         label="航线"
         :show-overflow-tooltip="true"
-        width="180">
+        min-width="180">
         <template slot-scope="scope">
             <span v-for="(a,index) in scope.row.airRoute" :key="index">
               <span>{{a}}</span><i v-if ="index !== scope.row.airRoute.length-1" class="iconfont icon-hangxian"></i>
@@ -109,12 +115,14 @@
       </el-table-column>
       <el-table-column
         prop="displayHaveDeviating"
+        width="50"
         label="偏离">
         <template  slot-scope="scope">
                <span :class="scope.row.displayHaveDeviating"></span>
          </template>
       </el-table-column>
     </el-table>
+    <DialogTaskDetail/>
     <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="homeTableTotal" 
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
@@ -133,6 +141,7 @@ export default {
   name: 'TableList',
   components: {
     PageNation,
+    DialogTaskDetail,
   },
 	computed: {
     ...mapState('home', ['homeTable','homeTableTotal','filterOption']),
@@ -194,6 +203,10 @@ export default {
       this.currentPage = val;
       pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
     },
+    showDeatil(task) {
+      console.log(task);
+      this.$store.commit("home/setCurrentTask", task);
+    }
   },
   
 };

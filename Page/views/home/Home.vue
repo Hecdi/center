@@ -79,8 +79,8 @@
 							<el-radio-button label="D">离</el-radio-button>
 						</el-radio-group>
 						<el-radio-group v-model="flightStatus" size="mini" >
-							<el-radio-button label="前站起飞">前站起飞</el-radio-button>
-							<el-radio-button label="已登机">已登机</el-radio-button>
+							<el-radio-button label="前起">前站起飞</el-radio-button>
+							<el-radio-button label="登机">已登机</el-radio-button>
 						</el-radio-group>
 						<el-radio-group v-model="flightIndicator" size="mini" >
 							<el-radio-button label="D">国内</el-radio-button>
@@ -137,7 +137,7 @@
 			</el-main>
 		</el-container>
 		<el-popover placement="top-end" offset="5" v-model="visible">
-			<el-tabs type="card" style="width:400px;">
+			<el-tabs type="card" style="width:400px;" class="home-message">
 				<el-tab-pane>
 					<span slot="label">
 						<i class="el-icon-date"></i>警告

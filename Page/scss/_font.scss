@@ -1,37 +1,36 @@
-@font-face {
-    font-family: 'Fjalla One';
-    font-style: normal;
-    font-weight: normal;
-    src:url(../../public/selffont/shxjdwnww6hdq-6dpcg8pwsybbcjybihxartljt7fru-webfont.woff2) format('woff2'),
-         url(../../public/selffont/shxjdwnww6hdq-6dpcg8pwsybbcjybihxartljt7fru-webfont.woff) format('woff');
-  }
+// @font-face {
+//     font-family: 'Fjalla One';
+//     src:url(../../public/selffont/SHXJdWnWW6HDq-6DpcG8PwsYbbCjybiHxArTLjt7FRU.ttf) format('truetype');
+//     font-style: normal;
+//     font-weight: normal;
+//   }
 
 
-@font-face {
-    font-family: 'Orbitron';
-    src: url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff2') format('woff2'),
-         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff') format('woff'),
-         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.ttf') format('truetype'),
-         url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.svg#orbitronbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
+// @font-face {
+//     font-family: 'Orbitron';
+//     src: url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff2') format('woff2'),
+//          url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.woff') format('woff'),
+//          url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.ttf') format('truetype'),
+//          url('../../public/selffont/y82yh_mjjwnsh2yua5auyygp9q8gbyrhqglrav_ixfk-webfont.svg#orbitronbold') format('svg');
+//     font-weight: normal;
+//     font-style: normal;
 
-}
+// }
 
 
-@font-face {
-    font-family: 'Microsoft YaHei';
-    src: url('../../public/selffont/msyh.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Microsoft YaHei';
+//     src: url('../../public/selffont/msyh.ttf') format('ttf');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'MicrosoftYaHei-Bold';
-    src: url('../../public/selffont/msyhbd.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'MicrosoftYaHei-Bold';
+//     src: url('../../public/selffont/msyhbd.ttf') format('ttf');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
 
 // @font-face {
@@ -41,6 +40,85 @@
 //     font-style: normal;
 // }
 
+
+//页面中用到五种字体定义
+/* latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Orbitron Regular'), local('Orbitron-Regular'), url(../../public/fonts/HmnHiRzvcnQr8CjBje6GQnYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+/* latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Orbitron Medium'), local('Orbitron-Medium'), url(../../public/fonts/VK2oK8L4CJesxwY5dF3zxYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+/* latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Orbitron Bold'), local('Orbitron-Bold'), url(../../public/fonts/Y82YH_MJJWnsH2yUA5AuYYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+/* latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Orbitron Black'), local('Orbitron-Black'), url(../../public/fonts/FyvTORElv6iWeP2Jf9yG3Ygp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+  @font-face {
+    font-family: 'Fjalla One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fjalla One'), local('FjallaOne-Regular'), url(../../public/fonts/SHXJdWnWW6HDq-6DpcG8PwsYbbCjybiHxArTLjt7FRU.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Fjalla One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fjalla One'), local('FjallaOne-Regular'), url(../../public/fonts/rxxXUYj4oZ6Q5oDJFtEd6gzyDMXhdD8sAj6OAJTFsBI.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+  }
+  
+  /* Aldrich-Regular */
+  @font-face {
+    font-family: 'Aldrich';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Aldrich Regular'), local('Aldrich-Regular'), url(../../public/fonts/MCoTzAn-1s3IGyJMVacY37H6D_A.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  
+  @font-face {
+    font-family: 'MFLiHei_Noncommercial-Regular';
+    src: url(../../public/fonts/mflihei_noncommercial-regular-webfont.ttf) format('ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+  @font-face {
+    font-family: "Microsoft YaHei";
+    src: url(../../public/fonts/MicrosoftYaHei.woff2) format('woff2');
+    font-weight: normal;
+  }
+  
+  @font-face {
+    font-family: "MicrosoftYaHei-Bold";
+    src: url(../../public/fonts/MicrosoftYaHei-Bold.woff2) format('woff2');
+    font-weight: bold;
+  }
 
 //font-size有关的函数定义
 @mixin font-zi ($parent, $value){

@@ -1,7 +1,6 @@
 <template>
 	<el-dialog class="dialogPersonDetail" center :title=currentPerson.staffName
-:visible.sync="dialogPersonDetailVisible" width="1000px" :before-close="handleClose"
->
+:visible.sync="dialogPersonDetailVisible" width="1000px" >
 		<el-row :gutter="10" class="row">
 			<el-checkbox v-model="groupLeader"  :true-label=1 :false-label=-1 >设为小组长</el-checkbox>
 		</el-row>
@@ -33,7 +32,7 @@
 			</el-date-picker>
 		</el-row>
 		<span slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="submit" >提交</el-button>
+			<el-button type="primary" @click="submit" >确定</el-button>
 			<el-button @click="dialogPersonDetailVisible = false;">取 消</el-button>
 		</span>
 	</el-dialog>

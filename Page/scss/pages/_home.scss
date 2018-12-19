@@ -50,6 +50,14 @@
 		border-top-right-radius:4px;
 	}
 }
+.home-message{
+	.el-row{
+		cursor:pointer;
+	}
+}
+
+
+
 .home {
 	clear:both;
 	position:relative;
@@ -140,6 +148,30 @@
 			}
 		}
 	}
+	.dialogAddTask .personList .person-panel {
+		width:auto;
+		.bg-person{
+			background:#d7e9ff;
+			color:#505960;
+			border:1px solid #8dbfff;
+			padding-left:15px !important;
+			padding-right:25px !important;
+			display:inline-block !important;
+			.taskNum{
+				background-color:#005fff;
+				color:#fff;	
+			}
+			&.active-person{
+				background-color:#005fff;
+				color:#fff !important;
+				.taskNum{
+					background-color:#fff;
+					color:#005fff;	
+				}
+			}
+		}
+
+	}
 	.active-person {
 		background: #2e67f6;
 		color: #fff !important;
@@ -168,6 +200,10 @@
 				.taskNum{
 					background-color:#5d6874;
 					color:white;
+				}
+				&.active .taskNum{
+					background-color:#fff;
+					color:#0062ff;	
 				}
 			}
 			color:#5d6874;
@@ -331,6 +367,7 @@
 			display: flex;
 			flex-direction:column;
 			padding-top:0;
+			height: 100vh;
 			.flight-table {
 				thead>.cell {
 					background-color: #666;
@@ -395,6 +432,40 @@
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
+				}
+				.dialogTaskDetail{
+					.taskInfo{
+						margin-bottom:20px;
+					}
+					.taskPersonList{
+						.taskDetailList{
+							text-align:left;
+							span{
+								font-weight:bold;
+							}
+						}
+						.el-col{
+							text-align:left;
+							.taskPersonBtn{
+								font-size:12px;
+								margin-left:10px;
+								margin-right:0;
+								margin-bottom:10px;
+								background: #DBE9FE;
+								border: 1px solid #7FB1FF;
+								border-radius: 3px;
+								padding:6px 12px;
+								color:#1F407B;
+								i{
+									color:#009eff;
+								}
+								&.active,&:hover{
+									background-color:#0064FF;
+									color:#fff;
+								}
+							}
+						}
+					}
 				}
 			}
 			.mainList{
@@ -695,12 +766,21 @@
 											display:flex;
 											justify-content:space-around;
 											&>div{
+												position:relative;
+												width:100%;
 												display:inline-block;
 												height:64px;
 												vertical-align:middle;
 												line-height:64px;
 												p{
 													line-height:32px;
+													text-overflow: ellipsis;
+													width: 100%;
+													overflow: hidden;
+													white-space: nowrap;
+													position: absolute;
+													left: 0;
+													text-align: center;
 													&:first-child{
 														font-size:16px;
 														font-weight:bold;
@@ -709,6 +789,7 @@
 													&:last-child{
 														font-size:12px;
 														color:#666C72;
+														top:32px;
 													}
 												}
 												i{
@@ -806,6 +887,35 @@
 		.el-dialog__body{
 			max-height:600px;
 			overflow-y:auto;
+		}
+	}
+	.dialogAddTask {
+		.add-task-table {
+			margin-top: 10px;
+			.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td, .el-table__body tr.hover-row.current-row>td, .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .el-table__body tr.hover-row.el-table__row--striped>td, .el-table__body tr.hover-row>td {
+				background-color: #d9e8ff;
+			}
+			.is-leaf {
+				margin-top: 10px;
+				background: #666;
+				color: #fff;
+				height: 1.75rem;
+				line-height: 1.75rem;
+				padding: .125rem 0;
+				text-align: center;
+			}
+			.el-table__row>td {
+				text-align: center;
+			}
+			.td {
+				text-align: center;
+			}
+		}
+		.el-pagination__sizes {
+			display: none;
+		}
+		.demonstration {
+			display: none;
 		}
 	}
 }
