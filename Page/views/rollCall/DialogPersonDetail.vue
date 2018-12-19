@@ -32,7 +32,7 @@
 			</el-date-picker>
 		</el-row>
 		<span slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="submit" >提交</el-button>
+			<el-button type="primary" @click="submit" >确定</el-button>
 			<el-button @click="dialogPersonDetailVisible = false;">取 消</el-button>
 		</span>
 	</el-dialog>
