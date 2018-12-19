@@ -5,6 +5,7 @@
       style="width: 100%"
       stripe	
       max-height="850"
+      @row-click="showDeatil"
       >
       <el-table-column
         prop="index"
@@ -121,6 +122,7 @@
          </template>
       </el-table-column>
     </el-table>
+    <DialogTaskDetail/>
     <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="homeTableTotal" 
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
@@ -139,6 +141,7 @@ export default {
   name: 'TableList',
   components: {
     PageNation,
+    DialogTaskDetail,
   },
 	computed: {
     ...mapState('home', ['homeTable','homeTableTotal','filterOption']),
@@ -200,6 +203,10 @@ export default {
       this.currentPage = val;
       pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
     },
+    showDeatil(task) {
+      console.log(task);
+      this.$store.commit("home/setCurrentTask", task);
+    }
   },
   
 };
