@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.js --Program schedule",
     "release": "webpack --config webpack.prod.js --Program schedule",
-    "dev.deploy": "scp -r release/website/* root@173.100.1.50:/soft/apache-tomcat-8.5.34/webapps/wise/",
+    "dev.deploy": "scp -r release/website/* root@173.100.1.50:/var/www/schedule/",
     "dev.release.deploy": "yarn release && yarn dev.deploy"
   },
   "dependencies": {
