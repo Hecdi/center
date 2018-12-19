@@ -26,15 +26,15 @@
 	<!--</section>-->
    <el-row class="row1" :gutter="5" >
 		<el-col :span="3">
-			<div class="city">{{currentTask.iata[0]}}</div>
-			<div class="airport">{{currentTask.airRoute[0]}}</div>
+			<div class="city">{{currentTask.iata ? currentTask.iata[0] : ''}}</div>
+			<div class="airport">{{currentTask.airRoute ? currentTask.airRoute[0]:''}}</div>
 		</el-col>
 		<el-col :span="2" class="column2" style="line-height:45px;">
 			<i class="iconfont icon-hangxian"></i>
 		</el-col>
 		<el-col :span="3">
-			<div class="city">{{currentTask.iata[1]}}</div>
-			<div class="airport">{{currentTask.airRoute[1]}}</div>
+			<div class="city">{{currentTask.iata?currentTask.iata[1]:''}}</div>
+			<div class="airport">{{currentTask.airRoute?currentTask.airRoute[1]:''}}</div>
 		</el-col>
 		<el-col :span="10" class="column4">
 			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
@@ -80,7 +80,7 @@
 		<span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
           <span class="span2">{{step.operationName}}</span>
 		  <span class="span3">{{step.staffName}}</span>
-		  <span class="span4">任务超时字段</span>
+		  <span class="span4"> </span>
         </p>
       </el-tab-pane>
     </el-tabs>
