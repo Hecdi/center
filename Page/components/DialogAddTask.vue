@@ -21,7 +21,7 @@
       </el-col>
 	  <el-col :span="12">
 		  	<div class="task-group" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode" >
-      			<span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName ==g.projectName  }" @click="handleTaskType(g)">{{g.projectName}}</span>
+      			<span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName == g.projectName  }" @click="handleTaskType(g)">{{g.projectName}}</span>
     		</div>
 	  </el-col>
       <el-col :span="6" style="display:none;">
@@ -136,6 +136,7 @@
 					this.currentWorker='';
 					this.activeName='';
 					this.searchFlight = '';
+					this.tempTaskTypeName = '';
 					this.handlGettTaskModelList();
 				} 
 			}

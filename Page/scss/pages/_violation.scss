@@ -280,12 +280,25 @@
         display: block;
         text-align: center;
         background: #fff;
-        width: 100%;
+        width: 99%;
         .el-pagination {
             display: inline-block;
         }
         position: fixed;
         bottom: 30px;
-        // margin-left: 27%;
+        .demonstration {
+            font-size: 13px;
+            height: 30px;
+            color: #666;
+            line-height: 28px;
+            position: relative;
+            top: 4px;
+            // font-size: 12px;
+            color: #666;
+        }
+        .el-pagination:after, .el-pagination:before {
+            display: inline;
+            content: "";
+        }
     } 
 }

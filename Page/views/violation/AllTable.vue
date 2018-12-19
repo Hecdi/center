@@ -6,7 +6,7 @@
       <el-table-column
         prop="violationCodeName"
         label="违规类型"
-        width="80"
+        width="130"
         filter-placement="bottom-end"
       >
         <template slot-scope="scope">
@@ -16,11 +16,11 @@
           >{{scope.row.violationCodeName}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="violationCode" label="人员编号" width="80"/>
-      <el-table-column prop="violationName" label="违规人员" width="130"/>
-      <el-table-column prop="violationName1" label="车辆编号" min-width="80"/>
+      <el-table-column prop="violationCode" label="人员编号" width="130"/>
+      <el-table-column prop="violationName" label="违规人员" width="180"/>
+      <el-table-column prop="deptId" label="车辆编号" min-width="80"/>
       <el-table-column prop="violationName2" label="设备编号" min-width="80"/>
-      <el-table-column prop="airLineName" label="所属单位" width="180"/>
+      <el-table-column prop="belongCompanyName" label="所属单位" width="180"/>
       <el-table-column
         prop="violationDescription"
         label="违规描述"
@@ -48,7 +48,7 @@
     <div class="dialog">
       <ShowImg :picture ="getPic"/>
     </div>
-     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="total" 
+     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
   </div>
@@ -79,13 +79,13 @@ export default {
       img: img,
       picture: '',
       getPic: '',
-      total: 100,
+      // totalSize: 100,
       pageSize: 10,
       currentPage:1,
     };
   },
   computed: {
-    ...mapState("violation", ["cards"])
+    ...mapState("violation", ["cards","totalSize"])
   },
   methods: {
     ...mapMutations({ changeStatus: "violation/changeStatus" }),
@@ -102,10 +102,12 @@ export default {
     handleSizeChange(val){
       console.log(val);
       this.pageSize = val;
+      this.refreshData();
     },
     handleCurrentChange(val){
       console.log(`当前${val}`)
       this.currentPage = val;
+      this.refreshData();
     },
     dateFormat: function(row, column) {
       var date = row[column.property];
@@ -182,7 +184,8 @@ export default {
       });
     },
     refreshData() {
-      ajax.post("getViolationDataForLike",'').then(data => {
+      let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize	}
+      ajax.post("getViolationDataForLike",param).then(data => {
         let violation = data;
         console.log(violation);
         this.getData(data);
