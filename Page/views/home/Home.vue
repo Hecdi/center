@@ -80,7 +80,7 @@
 						</el-radio-group>
 						<el-radio-group v-model="flightStatus" size="mini" >
 							<el-radio-button label="前起">前站起飞</el-radio-button>
-							<el-radio-button label="已登机">已登机</el-radio-button>
+							<el-radio-button label="登机">已登机</el-radio-button>
 						</el-radio-group>
 						<el-radio-group v-model="flightIndicator" size="mini" >
 							<el-radio-button label="D">国内</el-radio-button>
