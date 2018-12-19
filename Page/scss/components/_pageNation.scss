@@ -1,13 +1,17 @@
 .page-nations {
-    margin-top: 10px;
-    display: inline;
+    margin-top: 20px;
+    display: inline-block;
     width: 80%;
-    // text-align: center;
-    position: fixed;
-    background: #fff;
+    text-align: center;
+    // position: fixed;
+    background: transparent;
     padding: 10px 0;
-    bottom: 10px;
+    // bottom: 10px;
     left: 320px;
+    .el-pager li {
+        padding: 0 .25rem;
+        background: #fff;
+    }
     .demonstration {
         font-size: 14px;
         height: 30px;
