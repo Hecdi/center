@@ -24,23 +24,23 @@
 			<!--<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>-->
 		<!--</section>-->
 	<!--</section>-->
-   <el-row class="row1" :gutter="5">
+   <el-row class="row1" :gutter="5" >
 		<el-col :span="3">
-			<div class="city">{{currentTask.airRoute[0]}}</div>
-			<div class="airport">机场名</div>
+			<div class="city">{{currentTask.iata[0]}}</div>
+			<div class="airport">{{currentTask.airRoute[0]}}</div>
 		</el-col>
-		<el-col :span="1">
+		<el-col :span="2" class="column2" style="line-height:45px;">
 			<i class="iconfont icon-hangxian"></i>
 		</el-col>
 		<el-col :span="3">
-			<div class="city">{{currentTask.airRoute[1]}}</div>
-			<div class="airport">机场名</div>
+			<div class="city">{{currentTask.iata[1]}}</div>
+			<div class="airport">{{currentTask.airRoute[1]}}</div>
 		</el-col>
-		<el-col :span="9" class="column4">
+		<el-col :span="10" class="column4">
 			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
 			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
 		</el-col>
-		<el-col :span="8" class="column5">
+		<el-col :span="6" class="column5">
 			<div>计划时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>
 			<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>
 		</el-col>
@@ -48,7 +48,7 @@
     <el-tabs class="taskPersonList" v-model="activeName" >
 	  <el-tab-pane label="任务人员" name="first">
         <el-row :gutter="0">
-          <el-col class="currentRegion" :span="14">
+          <el-col class="currentRegion" :span="13">
             <div >当前区域全部人员：</div>
             <el-button
               @click="setCurrentPerson(person, true)"
@@ -62,7 +62,7 @@
 		  <el-col :span="3">
 			  <i class="iconfont icon-fenpei"></i>
 		  </el-col>
-          <el-col class="selectedStaff" :span="7">
+          <el-col class="selectedStaff" :span="8">
             <div>任务已选人员：</div>
             <el-button
               @click="setCurrentPerson(person)"
