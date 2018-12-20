@@ -36,21 +36,11 @@
                     @change="handleSearch"
                     value-format="timestamp">
                 </el-date-picker>
-                <!-- <el-button @click="openShowImg" size="mini" class="font-YaheiBold">单位管理</el-button> -->
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
-                <el-button size="mini"  @click = "exportExcel" >
-                    <a  :href="getUrl">导出</a>
-                    <!-- <form action='url'>
-                        <!- <input type="text" name="yourname" value="yourvalue"> ->
-                        <input type="submit" value="提交">
-                    </form> -->
+                <el-button size="mini">
+                    <a  :href="exportExcel()">导出</a>
                 </el-button>
-                <!-- <h1 @click = "exportExcel">88899</h1> -->
             </el-col>
-            <!-- <el-col :span="0">
-                <el-button @click="openShowImg" size="mini" >单位管理</el-button>
-                <el-button @clißk="exportExcel" size="mini" type="primary">导出</el-button>
-            </el-col> -->
         </el-row>
         <div class="dialog">
             <ShowImg/>
@@ -60,7 +50,6 @@
         </div>
         <div v-else>
             <all-table/>
-            <!-- <page-nation-his/> -->
         </div>
     </div>
 </template>
@@ -69,7 +58,6 @@
 <script>
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
-    // import PageNationHis from "./PageNationHis.vue";
     import ShowImg from "./ShowImg.vue";
     import { mapMutations, mapActions, mapState } from 'vuex';
     import { ajax } from 'ajax';
@@ -115,7 +103,6 @@
         },
         
         methods: {
-            // ...mapMutations(["setCurrentStatus"]),
              ...mapActions({
                     getData: "getData",
                     getWaitData: "getWaitData",
@@ -157,37 +144,7 @@
              getData(data) {
                 this.$store.dispatch("violation/getData", data);
             },
-            // timeSearch(value){
-            //     console.log(value);
-            // },
-            //  exportExcel() {
-            //     var encodeParam = function (json) {
-            //       var tmps = [];
-            //       for (var key in json) {
-            //           tmps.push(key + '=' + json[key]);
-            //       }
-            //       return tmps.join('&');
-            //     }
-
-            //     var url = "请求地址" + encodeParam(form);
-            //     console.log(url)
-            //     //判断是否有id为_exportForm的form表单，如果没有则创建一个隐藏的form，把url放入，然后submit
-            //     var exportForm = document.getElementById("_exportForm");
-            //     if (!exportForm) {
-            //       exportForm = document.createElement("form");
-            //       exportForm.setAttribute('id', "_exportForm");
-            //       exportForm.setAttribute("action", url);
-            //       exportForm.setAttribute("method", "post");
-            //     }
-            //     document.body.appendChild(exportForm);
-            //     exportForm.submit();
-            //     document.body.removeChild(exportForm);//导出成功后将form元素移除以免影响下一次导出
-            // },
-            // exportExcelTest(){
-                
-            // },
             exportExcel(){
-                // let ajax = ajaxx();
                 let _this = this;
                 let violationCode = this.area;
                 let timeArr = this.time;
@@ -214,20 +171,10 @@
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
-                let exportLocation = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-                return _this.getUrl = exportLocation;
-                // console.log(exportLocation);
-                // window.open(exportLocation);
-                // ajax.post('exportExcel',param).then(data => {
-                //     if(data) {
-                //         console.log('999222');
-                //         console.log(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`);
-                //         return _this.url = `http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-                //     }
-                // })
+                let exportLocation = `http://173.100.1.52:80/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                return exportLocation;
             },
             handleSearch(){
-                // let ajax = ajaxx();
                 let violationCode = this.area;
                 let timeArr = this.time;
                 let startDate;
@@ -261,15 +208,12 @@
 
             },
             refreshData() {
-                // let ajax = ajaxx();
                 ajax.post("getViolationDataForLike",{"pageNumber":1,"pageSize":10}).then(data => {
                   let violation = data;
-                  console.log(violation);
                   this.getData(data);
                 });
             },
              initWaitData(){
-                //  let ajax = ajaxx();
                  ajax.post("getViolationByState").then((data)=>{
                      if(data){
                          this.getWaitData(data);
