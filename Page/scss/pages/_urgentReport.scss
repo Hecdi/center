@@ -3,6 +3,20 @@
 	background-color:#E4E7EC;
 	overflow-x:hidden;
 	overflow-y:auto;
+	.el-table td{
+		padding:5px 0;
+	}
+	.el-table__row{
+		height:30px;
+	}
+	tr{
+		height:30px;
+	}
+	.pagination{
+		display:inline-block;
+		width:100%;
+		text-align:center;
+	}
 	.urgentReport{
 		flex:1;
 		padding:0px 25px 10px;
