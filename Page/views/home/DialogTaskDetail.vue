@@ -3,30 +3,53 @@
     class="dialogTaskDetail"
     :title="title"
     :visible.sync="dialogTaskDetailVisible"
-    width="1000px"
+    width="600px"
   >
-    <div class="taskInfo">
-      <el-row :gutter="30">
-        <el-col :span="8">航班号:{{currentTask.flightNo}}</el-col>
-        <el-col :span="8">机号：{{`${currentTask.aircraftNumber}`}}</el-col>
-        <el-col :span="8">机位/登机口:{{`${currentTask.seat}/${currentTask.gate}`}}</el-col>
-      </el-row>
-      <el-row :gutter="30">
-        <el-col :span="8">航线:{{currentTask.airRoute}}</el-col>
-        <el-col :span="8">机型/机类：{{`${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</el-col>
-        <el-col :span="8">实际落地时间:{{currentTask.displayATAWithDate}}</el-col>
-      </el-row>
-      <el-row :gutter="30">
-        <el-col :span="8">关联航线:{{currentTask.correlationFlightNo}}</el-col>
-        <el-col :span="8">计划离港时间:{{currentTask.displaySTDWithDate}}</el-col>
-        <el-col :span="8">预计离港时间:{{currentTask.displayETDWithDate}}</el-col>
-      </el-row>
-    </div>
-    <el-tabs type="card" class="taskPersonList" v-model="tab">
-      <el-tab-pane label="任务人员" name="person">
-        <el-row :gutter="20">
-          <el-col :span="14">
-            <div>人员列表：</div>
+   <!-- <section class="row1">-->
+		<!--<section>-->
+			<!--<div class="city">{{currentTask.airRoute[0]}}</div>-->
+			<!--<div class="airport">机场名</div>-->
+		<!--</section>-->
+			<!--<i class="iconfont icon-hangxian"></i>-->
+		<!--<section>-->
+			<!--<div class="city">{{currentTask.airRoute[1]}}</div>-->
+			<!--<div class="airport">机场名</div>-->
+		<!--</section>-->
+		<!--<section class="column4">-->
+			<!--<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>-->
+			<!--<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>-->
+		<!--</section>-->
+		<!--<section class="column5">-->
+			<!--<div>计划时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>-->
+			<!--<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>-->
+		<!--</section>-->
+	<!--</section>-->
+   <el-row class="row1" :gutter="5" >
+		<el-col :span="3">
+			<div class="city">{{currentTask.iata ? currentTask.iata[0] : ''}}</div>
+			<div class="airport">{{currentTask.airRoute ? currentTask.airRoute[0]:''}}</div>
+		</el-col>
+		<el-col :span="2" class="column2" style="line-height:45px;">
+			<i class="iconfont icon-hangxian"></i>
+		</el-col>
+		<el-col :span="3">
+			<div class="city">{{currentTask.iata?currentTask.iata[1]:''}}</div>
+			<div class="airport">{{currentTask.airRoute?currentTask.airRoute[1]:''}}</div>
+		</el-col>
+		<el-col :span="10" class="column4">
+			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
+			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
+		</el-col>
+		<el-col :span="6" class="column5">
+			<div>计划时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>
+			<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>
+		</el-col>
+	</el-row>
+    <el-tabs class="taskPersonList" v-model="activeName" >
+	  <el-tab-pane label="任务人员" name="first">
+        <el-row :gutter="0">
+          <el-col class="currentRegion" :span="13">
+            <div >当前区域全部人员：</div>
             <el-button
               @click="setCurrentPerson(person, true)"
               v-for="person in Array.from(workerList)"
@@ -36,7 +59,10 @@
               icon="iconfont icon-user"
             >{{`${person.staffName}${person.workerName?'/'+person.workerName:''}`}}</el-button>
           </el-col>
-          <el-col :span="10">
+		  <el-col :span="3">
+			  <i class="iconfont icon-fenpei"></i>
+		  </el-col>
+          <el-col class="selectedStaff" :span="8">
             <div>任务已选人员：</div>
             <el-button
               @click="setCurrentPerson(person)"
@@ -49,18 +75,20 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="任务详情" name="detail">
+      <el-tab-pane label="任务详情" name="second">
         <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
-          {{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}
-          <span>{{step.operationName}}</span>
-          {{step.staffName}}
+		<span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
+          <span class="span2">{{step.operationName}}</span>
+		  <span class="span3">{{step.staffName}}</span>
+		  <span class="span4"> </span>
         </p>
       </el-tab-pane>
     </el-tabs>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="release(8)">不保障该航班</el-button>
 	  <el-button type="success" @click="release(2)" v-if=" taskWorkerList.size>0 && this.currentTask.taskStatus == 1">发布</el-button>
-      <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">提交</el-button>
+      <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">确定
+	  </el-button>
       <el-button @click="dialogTaskDetailVisible = false;">取 消</el-button>
     </span>
   </el-dialog>
@@ -76,13 +104,13 @@
 		name: "dialogTaskDetail",
 		data() {
 			return {
-				tab:'person',
+				activeName:'first',
 				taskWorkerList: new Set(),
 				workerList: new Set(),
-				guaranteeDataList: []
+				guaranteeDataList: [],
 			};
 		},
-		methods: {
+		methods: {	
 			release: function(val) {
 				ajax.post(
 					"home.taskRelease",
@@ -147,7 +175,10 @@
 					this.workerList = new Set(data.workerList);
 					this.taskWorkerList = new Set(data.taskWorkerList);
 					this.guaranteeDataList= data.guaranteeDataList;
+					this.flight = data.flight;
 					console.log(data);
+
+
 					/*this.guaranteeDataList = [
 		  {
 			operationTime: 1544174180000,
@@ -273,6 +304,7 @@
 					this.workerList=new Set();
 					this.guaranteeDataList=[];
 					this.getTaskDetail(this.currentTask);
+					this.activeName='first';
 				}
 			}
 		},

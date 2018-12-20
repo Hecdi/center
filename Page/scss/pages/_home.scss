@@ -62,7 +62,7 @@
 	clear:both;
 	position:relative;
 	.dialogPersonSetting{
-		.el-tabs__header, .el-tabs__nav{
+			.el-tabs__header, .el-tabs__nav{
 			border-bottom:1px dashed #289DFF;
 		}
 		.el-tabs__nav{
@@ -472,14 +472,113 @@
 				flex:1;
 				padding:6px;
 				.dialogTaskDetail{
+					.el-dialog_body{
+						max-height:400px;
+						overflow:auto;
+					}
+					.row1{
+						padding-top:15px;
+						padding-bottom:30px;
+						display:flex;
+						justify-content:space-around;
+						.el-col{
+							height:45px;
+							overflow:hidden;
+						}
+						.column4 div,.column5 div{
+							text-align:left;
+						}
+						.city{
+							font-size:16px;
+							font-family:Microsoft YaHei;
+							font-weight:bold;
+							color:#333333;
+						}
+						.airport{
+							font-size:10px;
+							font-family:Microsoft YaHei;
+							color:#666C72;
+							text-overflow:ellipsis;
+							overflow:hidden;
+							white-space:nowrap;
+						}
+						.icon-hangxian{
+							position:relative;
+							font-size:30px;
+							color:#0185DE;
+						}
+					}
 					.taskInfo{
 						margin-bottom:20px;
 					}
 					.taskPersonList{
+						.el-tabs__item{
+							width:80px;
+							height:30px;
+							line-height:30px;
+							font-size:14px;
+							background-color:#E6E6E6;
+							color:#333333;
+							border-radius:4px 4px 0 0;
+						}
+						.is-active{
+							color:#FFFFFF;
+							background-color:#289DFF;
+						}
+						.icon-fenpei{
+							font-size:40px;
+							position:relative;
+							top:30px;
+							left:15px;
+							color:#2C569E;
+						}
+						.el-tabs__nav-scroll{
+							border-bottom:1px dashed #289DFF;
+							}
+						.is-top{
+							padding:0;
+						}
+						.is-top:after{
+							display:none;
+						}
+						.currentRegion{
+							padding:10px 14px;
+							border:1px solid #CBDDED;
+							background-color:#F8FCFF;
+							height:140px;
+							overflow-y:auto;
+							div{
+								margin-bottom:10px;
+							}
+							.icon-feiji{
+							}
+						}
+						.selectedStaff{
+							border:1px solid #CBDDED;
+							background-color:#F8FCFF;
+							height:140px;
+							overflow-y:auto;
+							div{
+								margin:0 0 10px 10px;
+							}
+						}
 						.taskDetailList{
 							text-align:left;
-							span{
+							font-family:Microsoft YaHei;
+							color:#333333;
+							.span1{
+								min-width:110px;
+								display:inline-block;
+							}
+							.span2{
+								display:inline-block;
+								min-width:30px;
 								font-weight:bold;
+								margin-right:10px;
+							}
+							.span3{
+								display:inline-block;
+								min-width:50px;
 							}
 						}
 						.el-col{
