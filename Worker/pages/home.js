@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
+import { remote } from 'electron';
 import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB, } from "../../lib/storage";
 import { ajax } from "ajax";
 import { get } from 'http';
@@ -67,11 +68,18 @@ export const destroy = () => {
 }
 
 export const initSocket = (client) =>{
+	let token = remote.getGlobal('token');
+	let userId = remote.getGlobal('clientId');
+	console.log('token:',token);
+	console.log('userId:',userId);
 	client.sub('/user/web/scheduling/changes', (d) => {
 		console.log('task:::',d);
 		saveToTaskDB(false,d.data,homeFilter['taskList']).then( data => {
 			pub('UI','Home.Task.Sync', data);	
 		});
+	},{
+		userId:userId,
+		token:token,
 	});
 	client.sub('/user/web/scheduling/getAreaAndWorkerList', (d) => {
 		console.log('area:::', d)
@@ -80,10 +88,16 @@ export const initSocket = (client) =>{
 				pub('UI','Home.Area.Sync', result);	
 			})
 		});
+	},{
+		userId:userId,
+		token:token,
 	});
 	client.sub('/user/web/scheduling/popoMessage', (d) => {
 		console.log('message:::',d)
 		pub('UI','Home.Message.Sync',d.data);
+	},{
+		userId:userId,
+		token:token,
 	});
 }
 
