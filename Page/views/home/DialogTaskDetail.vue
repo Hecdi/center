@@ -76,18 +76,18 @@
         </el-row>
       </el-tab-pane>
       <el-tab-pane label="任务详情" name="second">
-        <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
-		<span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
-          <span class="span2">{{step.operationName}}</span>
+		  <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
+		  <span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
+		  <span class="span2">{{step.operationName}}</span>
 		  <span class="span3">{{step.staffName}}</span>
-		  <span class="span4"> </span>
-        </p>
+		  <span class="span4" v-if="step.overTime">{{formatOverTime(step.overTime)}} </span>
+		  </p>
       </el-tab-pane>
     </el-tabs>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="release(8)">不保障该航班</el-button>
 	  <el-button type="success" @click="release(2)" v-if=" taskWorkerList.size>0 && this.currentTask.taskStatus == 1">发布</el-button>
-      <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">确定
+      <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">提交
 	  </el-button>
       <el-button @click="dialogTaskDetailVisible = false;">取 消</el-button>
     </span>
@@ -97,7 +97,7 @@
 	import { ajax } from "ajax";
 	import moment from "moment";
 	import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-	import { getNaturalDate, formatDate } from "date";
+	import { getNaturalDate, formatDate, ms2Time } from "date";
 	import { map } from "lodash";
 
 	export default {
@@ -111,6 +111,12 @@
 			};
 		},
 		methods: {	
+			formatOverTime(overTime){
+				if(!overTime){
+					return '';
+				}	
+				return ms2Time(overTime); 
+			},
 			release: function(val) {
 				ajax.post(
 					"home.taskRelease",
@@ -177,106 +183,6 @@
 					this.guaranteeDataList= data.guaranteeDataList;
 					this.flight = data.flight;
 					console.log(data);
-
-
-					/*this.guaranteeDataList = [
-		  {
-			operationTime: 1544174180000,
-			staffName: "system_01",
-			operationName: "开始"
-		  },
-		  {
-			operationTime: 1544174229000,
-			staffName: "system_01",
-			operationName: "结束"
-		  },
-		  {
-			operationTime: 1544098325000,
-			staffName: "system_01",
-			operationName: "领受"
-		  },
-		  {
-			operationTime: 1544102026878,
-			staffName: "system_01",
-			operationName: "到位"
-		  }
-		];
-		this.taskWorkerList = new Set([
-		  {
-			staffId: "23",
-			staffName: "离散",
-			jobFlag: "航前",
-			workerId: 102,
-			workerName: "李大刀",
-			taskNumber: 0
-		  },
-		  {
-			staffId: "22",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  },
-		  {
-			staffId: "21",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  },
-		  {
-			staffId: "20",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  },
-		  {
-			staffId: "19",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  },
-		  {
-			staffId: "18",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  },
-		  {
-			staffId: "17",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  }
-		]);
-		this.workerList = new Set([
-		  {
-			staffId: "24",
-			staffName: "离散",
-			jobFlag: "航前",
-			workerId: 102,
-			workerName: "李大刀",
-			taskNumber: 0
-		  },
-		  {
-			staffId: "25",
-			staffName: "离散",
-			jobFlag: "航后",
-			workerId: 103,
-			workerName: "王晓四",
-			taskNumber: 2
-		  }
-		]);*/
 				});
 			}
 		},

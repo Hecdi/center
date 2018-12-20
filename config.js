@@ -10,6 +10,7 @@ export default {
 			name: 'schedule',
 			host: location.hostname,
 			//host: '173.100.1.52',
+			//host: '192.168.1.50',
 			port: '9095',
 			channel: 'intelligent_scheduling',
 			headers: {
