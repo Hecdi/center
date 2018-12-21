@@ -11,14 +11,14 @@ export default {
 			host: location.hostname,
 			//host: '173.100.1.52',
 			//host: '192.168.1.50',
-			port: '9095',
-			channel: 'intelligent_scheduling',
+			port: '6070',
+			channel: 'webpush/intelligent_scheduling',
 			headers: {
 				//userId: 'aoc',
 			},
 		}],
         ajaxAPI:{
-			path:`http://${location.hostname}:80/`,
+			path:`http://${location.hostname}:6070/dispatchforpc/`,
 			//path:'http://173.100.1.52:9099/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
