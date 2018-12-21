@@ -45,6 +45,7 @@ export default {
                 'getAssociateReportList':'associate/getAssociateReportList', //任务交接，post
                 'getDataList':'statement/getDataList', //报表列表数据获取接口, post
                 'sheetExportExcel': 'statement/exportExcel', //报表导出excel接口 post
+                'statistics':'statistics/getData', //统计接口 post
             }
         }
     },
