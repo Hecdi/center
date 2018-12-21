@@ -13,13 +13,18 @@
 		height:30px;
 	}
 	.pagination{
-		display:inline-block;
 		width:100%;
-		text-align:center;
+		display:flex;
+		height:66px;
+		align-items:center;
+		justify-content:center;
 		span{
 			color:#666666;
 			font-weight:400;
 		}
+	}
+	.paginationP2{
+		background-color:#FFFFFF;
 	}
 	.urgentReport{
 		flex:1;

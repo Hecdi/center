@@ -74,6 +74,19 @@
 					</el-card>
 				</el-col>
 			</el-row>
+			<div class="pagination paginationP1" v-if="json.totalNum>this.valSize">
+				<el-pagination
+					background
+					@size-change="handleSizeChange"
+					@current-change="handleCurrentChange"
+					layout="total,sizes,prev,pager,next,jumper"
+					:total="json.totalNum"
+					:page-sizes="[22,30,50]"
+					:page-size="json.pageSize"
+					:current-page="json.currentPage"
+				>
+				</el-pagination>
+			</div>
 	</section>
 	<section v-else class="sectionP2">
 		<el-row :gutter="20">
@@ -137,20 +150,24 @@
 				</el-table>
 			</el-col>
 		</el-row>
+		<el-row :gutter="20">
+			<el-col :span="16" :offset="4">
+				<div class="pagination paginationP2" v-if="json.totalNum>this.valSize">
+					<el-pagination
+						background
+						@size-change="handleSizeChange"
+						@current-change="handleCurrentChange"
+						layout="total,sizes,prev,pager,next,jumper"
+						:total="json.totalNum"
+						:page-sizes="[22,30,50]"
+						:page-size="json.pageSize"
+						:current-page="json.currentPage"
+						>
+					</el-pagination>
+				</div>
+			</el-col>
+		</el-row>
 	</section>
-			<div class="pagination" v-if="json.totalNum>22">
-				<el-pagination
-					background
-					@size-change="handleSizeChange"
-					@current-change="handleCurrentChange"
-					layout="total,sizes,prev,pager,next,jumper"
-					:total="json.totalNum"
-					:page-sizes="[22,30,50]"
-					:page-size="json.pageSize"
-					:current-page="json.currentPage"
-				>
-				</el-pagination>
-			</div>
 </section>
 </template>
 
