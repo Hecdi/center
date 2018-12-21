@@ -136,6 +136,8 @@
 					</el-table-column>
 				</el-table>
 			</el-col>
+		</el-row>
+	</section>
 			<div class="pagination" v-if="json.totalNum>22">
 				<el-pagination
 					background
@@ -149,8 +151,6 @@
 				>
 				</el-pagination>
 			</div>
-		</el-row>
-	</section>
 </section>
 </template>
 
