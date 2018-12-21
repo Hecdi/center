@@ -11,6 +11,7 @@
           end-placeholder="结束日期"
           format="yyyy 年 MM 月 dd 日"
           value-format="timestamp"
+
         ></el-date-picker>
       </el-col>
       <el-col :span="24">
@@ -69,6 +70,7 @@
 import { ajax } from "ajax";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import * as echarts from "echarts";
+import moment from "moment";
 
 export default {
   name: "Statistics",
@@ -84,7 +86,7 @@ export default {
       activeName: "second",
       status: "全部",
       currentView: "all",
-      time: "",
+      time: [],
       tableData: [
         {
           date: "2016",
@@ -157,210 +159,7 @@ export default {
           name5: "超越"
         },
       ],
-      test1:[ {
-            "movementCount": {
-                "movementD": 683,
-                "movementA": 889
-            },
-            "violationType": {
-                "car": 1,
-                "company": 0,
-                "people": 0,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 0,
-                "checking": 1,
-                "pass": 0
-            },
-            "taskDataCount": {
-                "finishTask": 1,
-                "operateTotal": 35,
-                "createTask": 27,
-                "automaticTask": 0,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "staffWorkCount": [
-                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
-                "u58f07a49719446a188b8687cd0da6c8c(1)"
-            ],
-            "totalCount": {
-                "finishRate": "3%",
-                "clickRate": "7%",
-                "finishTask": 1,
-                "operateTotal": 35,
-                "movementD": 683,
-                "movementA": 889,
-                "createTask": 27,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "scheduleTime": "2018-12-11",
-        },
-         {
-            "movementCount": {
-                "movementD": 683,
-                "movementA": 889
-            },
-            "violationType": {
-                "car": 1,
-                "company": 0,
-                "people": 0,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 0,
-                "checking": 1,
-                "pass": 0
-            },
-            "taskDataCount": {
-                "finishTask": 1,
-                "operateTotal": 35,
-                "createTask": 27,
-                "automaticTask": 0,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "staffWorkCount": [
-                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
-                "u58f07a49719446a188b8687cd0da6c8c(1)"
-            ],
-            "totalCount": {
-                "finishRate": "3%",
-                "clickRate": "7%",
-                "finishTask": 1,
-                "operateTotal": 35,
-                "movementD": 683,
-                "movementA": 889,
-                "createTask": 27,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "scheduleTime": "2018-12-11",
-        },
-      ],
-      mockData: {
-    "data": {
-        "2018-12-20": {
-            "movementCount": {
-                "movementD": 683,
-                "movementA": 889
-            },
-            "violationType": {
-                "car": 1,
-                "company": 0,
-                "people": 0,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 0,
-                "checking": 1,
-                "pass": 0
-            },
-            "taskDataCount": {
-                "finishTask": 1,
-                "operateTotal": 35,
-                "createTask": 27,
-                "automaticTask": 0,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "staffWorkCount": [
-                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
-                "u58f07a49719446a188b8687cd0da6c8c(1)"
-            ],
-            "totalCount": {
-                "finishRate": "3%",
-                "clickRate": "7%",
-                "finishTask": 1,
-                "operateTotal": 35,
-                "movementD": 683,
-                "movementA": 889,
-                "createTask": 27,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            }
-        },
-        "2018-12-19": {
-            "movementCount": {
-                "movementD": 936,
-                "movementA": 901
-            },
-            "violationType": {
-                "car": 9,
-                "company": 0,
-                "people": 0,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 7,
-                "checking": 2,
-                "pass": 0
-            },
-            "taskDataCount": {
-                "finishTask": 0,
-                "operateTotal": 104,
-                "createTask": 65,
-                "automaticTask": 0,
-                "notGuaranteeTask": 7,
-                "operateTask": 4
-            },
-            "staffWorkCount": [],
-            "totalCount": {
-                "finishRate": "0%",
-                "clickRate": "6%",
-                "finishTask": 0,
-                "operateTotal": 104,
-                "movementD": 936,
-                "movementA": 901,
-                "createTask": 65,
-                "notGuaranteeTask": 7,
-                "operateTask": 4
-            }
-        },
-        "2018-12-18": {
-            "movementCount": {
-                "movementD": 939,
-                "movementA": 916
-            },
-            "violationType": {
-                "car": 21,
-                "company": 0,
-                "people": 1,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 9,
-                "checking": 0,
-                "pass": 13
-            },
-            "taskDataCount": {
-                "finishTask": 3,
-                "operateTotal": 248,
-                "createTask": 60,
-                "automaticTask": 0,
-                "notGuaranteeTask": 4,
-                "operateTask": 14
-            },
-            "staffWorkCount": [
-                "u3282300247e94ef5bc9d1337ef3a03a0(1)",
-                "uf2bfd70c5f5c47c79b75e856efd909a7(1)",
-                "uddd8c63f0e3e43f08b41fa55def26151(2)"
-            ],
-            "totalCount": {
-                "finishRate": "5%",
-                "clickRate": "25%",
-                "finishTask": 3,
-                "operateTotal": 248,
-                "movementD": 939,
-                "movementA": 916,
-                "createTask": 60,
-                "notGuaranteeTask": 4,
-                "operateTask": 14
-            }
-        },
-        getOption: {
+    getOption: {
           title: {
               text: '进出港统计',
             },
@@ -391,8 +190,60 @@ export default {
                   },
           ]
         },
-    }
-},
+        getOption1: {
+          title: {
+              text: '工作量统计',
+            },
+            legend: {
+              data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
+            },
+            xAxis: [
+              {
+                // type: 'category',
+                data: [],
+              }
+            ],
+            yAxis : [
+                  {
+                      type : 'value'
+                  }
+            ],
+             series : [
+                  {
+                      name:'生成任务',
+                      type:'bar',
+                      data:[],
+                  },
+                  {
+                      name:'不保障任务',
+                      type:'bar',
+                      data:[],
+                  },
+                  {
+                      name:'操作任务',
+                      type:'bar',
+                      data:[],
+                  },
+                   {
+                      name:'自动排班任务',
+                      type:'bar',
+                      data:[],
+                  },
+                  {
+                      name:'完成任务',
+                      type:'bar',
+                      data:[],
+                  },
+                  {
+                      name:'操作数',
+                      type:'bar',
+                      data:[],
+                  },
+                  
+          ]
+        },
+//     }
+// },
 dateRange: [],
 movementD:[],
 movementA: [],
@@ -414,6 +265,7 @@ movementA: [],
       console.log(tab, event);
     },
     handleClick1(){
+      this.refreshData();
       this.drawLine();
     },
     getData(data) {
@@ -427,16 +279,49 @@ movementA: [],
       let dateRange = [];
       let movementA = [];
       let movementD = [];
+      let automaticTask = [];
+      let createTask = [];
+      let finishTask = [];
+      let notGuaranteeTask = [];
+      let operateTask = [];
+      let operateTotal = [];
+      let car =[];
+      let company = [];
+      let device = [];
+      let people = [];
+      let checking = [];
+      let pass = [];
+      let unPass = [];
       data.forEach((item,index) => {
         console.log(item);
         dateRange.push(item.scheduleTime);
         movementA.push(item.movementCount.movementA);
         movementD.push(item.movementCount.movementD);
+        automaticTask.push(item.taskDataCount.automaticTask);
+        createTask.push(item.taskDataCount.createTask);
+        finishTask.push(item.taskDataCount.finishTask);
+        notGuaranteeTask.push(item.taskDataCount.notGuaranteeTask);
+        operateTask.push(item.taskDataCount.operateTask);
+        operateTotal.push(item.taskDataCount.operateTotal);
+        let violationType = item.violationType;
+        car.push(violationType.car);
+        company.push(violationType.company);
+        device.push(violationType.device);
+        people.push(violationType.people);
+        let violationHandle = item.violationHandle;
+        checking.push(violationHandle.checking);
+        pass.push(violationHandle.pass);
+        unPass.push(violationHandle.unPass);
       })  
 
       this.dateRange = dateRange;
       this.movementA = movementA;
       this.movementD = movementD;
+      this.createTask = createTask;
+      this.finishTask = finishTask;
+      this.notGuaranteeTask = notGuaranteeTask;
+      this.operateTask = operateTask;
+      this.operateTotal = operateTotal;
       this.getOption = {
         title: {
               text: '进出港统计',
@@ -468,14 +353,83 @@ movementA: [],
                   },
           ]
       }
-
-      console.log(movementA);
-      console.log(this.getOption);
+      this.getOption1 = {
+          title: {
+              text: '工作量统计',
+            },
+            legend: {
+              data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
+            },
+            xAxis: [
+              {
+                // type: 'category',
+                data: this.dateRange,
+              }
+            ],
+            yAxis : [
+                  {
+                      type : 'value'
+                  }
+            ],
+             series : [
+                  {
+                      name:'生成任务',
+                      type:'bar',
+                      data:this.createTask,
+                  },
+                  {
+                      name:'不保障任务',
+                      type:'bar',
+                      data:this.finishTask,
+                  },
+                  {
+                      name:'操作任务',
+                      type:'bar',
+                      data:this.operateTask,
+                  },
+                   {
+                      name:'自动排班任务',
+                      type:'bar',
+                      data:this.automaticTask,
+                  },
+                  {
+                      name:'完成任务',
+                      type:'bar',
+                      data:this.finishTask,
+                  },
+                  {
+                      name:'操作数',
+                      type:'bar',
+                      data:this.operateTotal,
+                  }, 
+          ]
+        }
     },
     refreshData() {
-      ajax.post("statistics").then(data => {
+      let timeArr = this.time;
+      let startDate;
+      let endDate;
+      let that = this;
+      if(timeArr){
+          if(timeArr[0] == timeArr[1]){
+              startDate = moment(timeArr[0]).format("YYYY-MM-DD");
+              endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+          } else {
+              startDate = timeArr[0];
+              startDate = moment(startDate).format("YYYY-MM-DD");
+              endDate = timeArr[1];
+              endDate = moment(endDate).format("YYYY-MM-DD")
+          }  
+      } else {
+          startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+          startDate = moment(startDate).format("YYYY-MM-DD");
+          endDate = startDate;
+      }
+      let params = {"startTime":startDate,"endTime":endDate};
+      console.log(params);
+      ajax.post("statistics",params).then(data => {
+        console.log(data);
         let statistics = data;
-        console.log(statistics);
         this.getData(data);
       });
     },
@@ -517,8 +471,6 @@ movementA: [],
       },
     drawLine() {
       let _this = this;
-      console.log(_this);
-      console.log(_this.dateRange);
       var myChart = echarts.init(document.getElementById("workload"));
       var myChart1 = echarts.init(document.getElementById("in-out"));
       var myChart2 = echarts.init(document.getElementById("violation-type"));
@@ -566,12 +518,15 @@ movementA: [],
 console.log(_this.setOption3());
 console.log(_this.getOption);
 
-      myChart.setOption(option);
-      myChart1.setOption(_this.setOption3());
+      myChart.setOption(_this.getOption1);
+      myChart1.setOption(_this.getOption);
       myChart2.setOption(option1);
       myChart3.setOption(option);
     }
   },
+  // updated(){
+  //   this.drawLine()
+  // },
   beforeMount() {
     this.refreshData();
     // this.drawLine();
