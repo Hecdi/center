@@ -38,7 +38,7 @@
 	</section>
 	<section class="urgentReport" v-if="currentBtn=='p1'">
 		<el-row :gutter="5" id='card'>
-			<el-col :span="4" v-for="(site,index) in sites" :key="index" >
+			<el-col :span="4" v-for="(site,index) in arr" :key="index" >
 				<el-card>
 						<section class="Row1">
 							<i class="iconfont icon-feiji"></i>
@@ -74,18 +74,33 @@
 					</el-card>
 				</el-col>
 			</el-row>
+			<div class="pagination paginationP1" v-if="json.totalNum>this.valSize">
+				<el-pagination
+					background
+					@size-change="handleSizeChange"
+					@current-change="handleCurrentChange"
+					layout="total,sizes,prev,pager,next,jumper"
+					:total="json.totalNum"
+					:page-sizes="[22,30,50]"
+					:page-size="json.pageSize"
+					:current-page="json.currentPage"
+				>
+				</el-pagination>
+			</div>
 	</section>
 	<section v-else class="sectionP2">
 		<el-row :gutter="20">
 			<el-col :span="16" :offset="4">
 				<el-table
-					:data = "sites"
+					:data = "arr"
 					stripe
 					highlight-current-row
+					height:40px
 					style = "width:auto">
 					<el-table-column
 						class-name = "column1"
 						type = "index"
+						:index = "indexMethod"
 						min-width = "40px"
 						label = "序号">
 					</el-table-column>
@@ -137,6 +152,23 @@
 				</el-table>
 			</el-col>
 		</el-row>
+		<el-row :gutter="20">
+			<el-col :span="16" :offset="4">
+				<div class="pagination paginationP2" v-if="json.totalNum>this.valSize">
+					<el-pagination
+						background
+						@size-change="handleSizeChange"
+						@current-change="handleCurrentChange"
+						layout="total,sizes,prev,pager,next,jumper"
+						:total="json.totalNum"
+						:page-sizes="[22,30,50]"
+						:page-size="json.pageSize"
+						:current-page="json.currentPage"
+						>
+					</el-pagination>
+				</div>
+			</el-col>
+		</el-row>
 	</section>
 </section>
 </template>
@@ -151,7 +183,6 @@
 		name:"card",
 		data(){
 			return {
-				sites:[],
 				dialogVisible:false,
 				radio1:'当前部门',
 				input1:'',
@@ -160,11 +191,30 @@
 				inputSearch:'',
 				imgArr:[],
 				currentBtn:'p1',
+				json:{},
+				arr:[],
+				valSize:22,
+				valPage:1,
+				dept:1,
+				currentPage:1
 			}
 		},
 		methods:{
-			showSector(sector,dept){
-				this.currentBtn = sector;
+			indexMethod(index){
+				return index+1+(this.valPage-1)*this.valSize;
+			},
+			handleSizeChange(val){
+				this.valSize = val;
+				let param = this.getSendParams();
+				ajax.post('urgentReport', param).then((data) => {this.getData(data);})
+
+			},
+			handleCurrentChange(val){
+				this.valPage = val;
+				let param = this.getSendParams();
+				ajax.post('urgentReport', param).then((data) => {this.getData(data);})
+			},
+			getSendParams(){
 				let timeArr = this.time;
 				let startDate;
 				let endDate;
@@ -191,9 +241,17 @@
 					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
 				}
 				let inputSearch = this.inputSearch;
+				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"type":this.dept,"pageNumber":this.valPage,"pageSize":this.valSize};
+				return params;
+			},
+			showSector(sector,dept){
+				this.dept = dept;
+				this.currentBtn = sector;
+				this.valSize = 22;
+				this.valPage = 1;
+				let param = this.getSendParams();
 				console.log(dept);
-				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"type":dept};
-				ajax.post('urgentReport', params).then((data) => {
+				ajax.post('urgentReport', param).then((data) => {
 					this.getData(data);
 				})
 			},
@@ -203,49 +261,30 @@
 				this.dialogVisible = true;
 			},
 			getData(data){
-				if(data && data.length){
-					for(var i in data){
-						var timestamp = new Date(data[i].reportTime).getTime();
-						/*var newDate = formatDate(data[i].reportTime,'YYYY-MM-DD HH:mm','');*/
+				if(data.items && data.items.length){
+					for(var i in data.items){
+						var timestamp = new Date(data.items[i].reportTime).getTime();
 						var newDate = formatDate(timestamp,'YYYY-MM-DD HH:mm','');
-						data[i].reportTime = newDate;
-						/*data[i].abc = data[i].imgFile ? data[i].imgFile.split(','):[];  //第二种方法，将后端给的data中新增一个属性名为abc的数组*/
-
+						data.items[i].reportTime = newDate;
 					};
-					this.sites = data;
+					this.json = data;
+					this.arr = this.json.items;
+					this.currentPage = this.json.currentPage;
+					this.pageSize = this.json.pageSize;
 				}else{
-					this.sites= [];
+					this.json = {};
+					this.arr = [];
+					this.currentPage = this.json.currentPage;
+					this.pageSize = this.json.pageSize;
 				}
 			},
 			exportOnsearch(dept){
 				let timeArr = this.time;
-				let startDate;
-				let endDate;
-				if(timeArr && timeArr.length){
-					if(moment(timeArr[0]).format("YYYY-MM-DD") == moment(timeArr[1]).format("YYYY-MM-DD")){
-						startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
-						endDate = moment(timeArr[1]).format("YYYY-MM-DD");
-						endDate = `${endDate} 23:59:59`;
-					} else{
-						startDate = timeArr[0];
-						startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-						endDate = timeArr[1];
-						endDate = moment(endDate).format("YYYY-MM-DD");
-						endDate = `${endDate} 23:59:59`;
-					}
-				} else{
-					startDate = new Date(
-						new Date(new Date().toLocaleDateString()).getTime()
-					);
-					startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-					endDate = new Date(
-						new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1
-					);
-					endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
-				}
-				let inputSearch = this.inputSearch;
-				let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"type":dept};
-				ajax.post('urgentReport', params).then((data) => {
+				this.valSize = 22;
+				this.valPage = 1;
+				this.dept = dept;
+				let param = this.getSendParams();
+				ajax.post('urgentReport', param).then((data) => {
 					this.getData(data);
 				})
 			},
@@ -255,8 +294,11 @@
 					startTime:moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
 					endTime:moment(new Date()).format('YYYY-MM-DD') + ' 23:59:59',
 					type:1,
+					pageNumber:this.valPage,
+					pageSize:this.valSize,
 					}).then(data =>{
 				this.getData(data);
+					console.log(data);
 
 			});
 			/*ajax.get('urgentReport').then((data)=>{*/
