@@ -66,7 +66,6 @@ export const formatDate = (date, opt, empty) => {
 		hour = date.getHours(),
 		minute = date.getMinutes(),
 		second = date.getSeconds();
-
 	switch (opt) {
 		case 'HHmm':
 			return (hour >= 10 ? hour : '0' + hour) + ':' + (minute >= 10 ? minute : '0' + minute);
@@ -120,4 +119,31 @@ export const getDiffTime = (start, end) => {
 	time = end < start ? -time : time;
 	return `${time}${unit}`;
 };
+
+
+export const ms2Time = (time,type,empty) => {
+	if (!empty) {
+		empty = '';
+	}
+	if (isNumber(time)) {
+		time = moment.duration(time); 
+	}
+	if (!time) {
+		return empty;
+	}
+	let year = time.years();
+	let month= time.months();
+	let day= time.days();
+	let hour= time.hours();
+	let min= time.minutes();
+	let sec= time.seconds();
+	switch(type){
+		case '!s':
+			return `${year?year + '年' : ''}${month?month + '月' : ''}${day?day + '天' : ''}${hour?hour + '小时' : ''}${min?min + '分钟' : ''}`;
+		default:
+			return `${year?year + '年' : ''}${month?month + '月' : ''}${day?day + '天' : ''}${hour?hour + '小时' : ''}${min?min + '分钟' : ''}${sec?sec + '秒' : ''}`;
+
+	}
+
+}
 

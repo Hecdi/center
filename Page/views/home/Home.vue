@@ -40,7 +40,7 @@
 									<div class="taskNum">{{ worker.taskNumber }}</div>
 								</div>
 							</el-tooltip>
-							<div v-if="person.areaId == 'jpyxzh_O'" >
+							<div style="font-size:12px;line-height:30px;" v-if="person.areaId == 'jpyxzh_O'" >
 								{{worker.workContent}}
 							</div>
 						</el-col>
@@ -232,7 +232,7 @@
 				let reason = worker.nonArrivalReason;
 				let tmp ='';
 				if(reason){
-					tmp = `${reason == 5 ? worker.workerName : this.getReason(reason)})`;  
+					tmp = `(${reason == 5 ? worker.workerName : this.getReason(reason)})`;  
 				}
 				return workerName + tmp;
 				

@@ -25,7 +25,8 @@
             prefix-icon="el-icon-search"
             v-model="inputSearch"
             class="seach-input"
-			blur = "handleSearch"
+			      blur = "handleSearch"
+            @keyup.enter.native="handleSearch"
           />
           <el-button type size="small" class="export-excel" @click="exportExcel" >
             <a :href="exportUrl">导出excel
@@ -36,8 +37,8 @@
       </el-row>
     </el-container>
     <div class="sheet-table">
-      <el-table :data="sheetList1" stripe style="width: 100%" height="100vh">
-		<el-table-column type="index" label="序号" width="80"/>
+      <el-table :data="sheetList1" stripe style="width: 100%">
+		    <el-table-column type="index" label="序号" width="80"/>
         <el-table-column prop="aircraftType" label="机型" width="80"/>
         <el-table-column prop="flightType" label="机类" width="80"/>
         <el-table-column prop="routeName" label="航线" width="80"/>
@@ -53,6 +54,9 @@
         <el-table-column prop="departmentGuaranteeStaff" label="引导人员" width="120"/>
       </el-table>
     </div>
+    <PageNation :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/>
   </div>
 </template>
 
@@ -62,13 +66,15 @@ import TableDis from "./TableDis.vue";
 import { ajax } from "ajax";
 import { extend, map } from "lodash";
 import { formatDate } from "date";
+import PageNation from 'PageNation.vue';
 import moment from 'moment';
 
 export default {
   name: "Sheet",
   components: {
     ToolBar,
-    TableDis
+    TableDis,
+    PageNation
   },
   data() {
     return {
@@ -76,23 +82,26 @@ export default {
 	  time:[],
     inputSearch: '',
     exportUrl: '',
+    pageSize: 10,
+    currentPage: 1,
+    totalSize:10,
     };
   },
   methods: {
 	getListData(value){
-		this.sheetList = value;
-	},
+    this.sheetList = value.items;
+  },
+  getTotalNum(value){
+     this.totalSize = value.totalNum;
+  },
     getSheetData() {
       // let vm = this;
-      ajax.post("getDataList").then(data => {
-		  this.getListData(data);
-        // this.sheetList = data;
-        // if(data.responseCode == 1000) {
-        // 	// debugger;
-        // 	this.sheetList = data;
-        // } else {
-        // 	console.log('请求失败');
-        // }
+      console.log({"pageSize":this.pageSize,"currentPage":this.currentPage});
+      let _this = this;
+      ajax.post("getDataList", {"pageSize":_this.pageSize,"pageNumber":_this.currentPage}).then(data => {
+      console.log(data);
+      this.getListData(data);
+      this.getTotalNum(data);
       });
 	},
 	exportExcel(){
@@ -125,17 +134,6 @@ export default {
                 let exportLocation = `http://173.100.1.52:9099/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
                return _this.exportUrl = exportLocation;
-                // console.log(exportLocation);
-                // window.open(exportLocation);
-                // return exportLocation;
-                // that.exportLocation = exportLocation;
-               // console.log(param);
-                // console.log(params)
-                // ajax.post('exportExcel', params).then((data) => {
-                //     console.log(data);
-                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
-                //     // this.getData(data);
-                // });
             },
             handleSearch(){
                 let violationCode = this.area;
@@ -161,14 +159,24 @@ export default {
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
-                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
+                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageSize":this.pageSize,"pageNumber":this.currentPage};
                 console.log(param);
                 console.log(params)
                 ajax.post('getDataList', params).then((data) => {
                     console.log(data);
                     this.getListData(data);
                 });
-
+            },
+            handleSizeChange(val){
+                this.pageSize = val;
+                // this.handleSearch();
+                this.getSheetData();
+              },
+              handleCurrentChange(val){
+                this.currentPage = val;
+                console.log(`currentPage:${this.currentPage}`);
+                // this.handleSearch();
+                this.getSheetData();
             },
   },
   computed: {

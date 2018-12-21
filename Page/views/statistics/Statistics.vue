@@ -155,17 +155,261 @@ export default {
           name3: "王麻子",
           name4: "哈哈哈",
           name5: "超越"
+        },
+      ],
+      test2:{ "2018-12-20": {
+            "movementCount": {
+                "movementD": 683,
+                "movementA": 889
+            },
+            "violationType": {
+                "car": 1,
+                "company": 0,
+                "people": 0,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 0,
+                "checking": 1,
+                "pass": 0
+            },
+            "taskDataCount": {
+                "finishTask": 1,
+                "operateTotal": 35,
+                "createTask": 27,
+                "automaticTask": 0,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "staffWorkCount": [
+                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
+                "u58f07a49719446a188b8687cd0da6c8c(1)"
+            ],
+            "totalCount": {
+                "finishRate": "3%",
+                "clickRate": "7%",
+                "finishTask": 1,
+                "operateTotal": 35,
+                "movementD": 683,
+                "movementA": 889,
+                "createTask": 27,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            }
+        },
+      },
+
+      test1:[ {
+            "movementCount": {
+                "movementD": 683,
+                "movementA": 889
+            },
+            "violationType": {
+                "car": 1,
+                "company": 0,
+                "people": 0,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 0,
+                "checking": 1,
+                "pass": 0
+            },
+            "taskDataCount": {
+                "finishTask": 1,
+                "operateTotal": 35,
+                "createTask": 27,
+                "automaticTask": 0,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "staffWorkCount": [
+                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
+                "u58f07a49719446a188b8687cd0da6c8c(1)"
+            ],
+            "totalCount": {
+                "finishRate": "3%",
+                "clickRate": "7%",
+                "finishTask": 1,
+                "operateTotal": 35,
+                "movementD": 683,
+                "movementA": 889,
+                "createTask": 27,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "scheduleTime": "2018-12-11",
+        },
+         {
+            "movementCount": {
+                "movementD": 683,
+                "movementA": 889
+            },
+            "violationType": {
+                "car": 1,
+                "company": 0,
+                "people": 0,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 0,
+                "checking": 1,
+                "pass": 0
+            },
+            "taskDataCount": {
+                "finishTask": 1,
+                "operateTotal": 35,
+                "createTask": 27,
+                "automaticTask": 0,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "staffWorkCount": [
+                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
+                "u58f07a49719446a188b8687cd0da6c8c(1)"
+            ],
+            "totalCount": {
+                "finishRate": "3%",
+                "clickRate": "7%",
+                "finishTask": 1,
+                "operateTotal": 35,
+                "movementD": 683,
+                "movementA": 889,
+                "createTask": 27,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "scheduleTime": "2018-12-11",
+        },
+      ],
+      mockData: {
+    "data": {
+        "2018-12-20": {
+            "movementCount": {
+                "movementD": 683,
+                "movementA": 889
+            },
+            "violationType": {
+                "car": 1,
+                "company": 0,
+                "people": 0,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 0,
+                "checking": 1,
+                "pass": 0
+            },
+            "taskDataCount": {
+                "finishTask": 1,
+                "operateTotal": 35,
+                "createTask": 27,
+                "automaticTask": 0,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            },
+            "staffWorkCount": [
+                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
+                "u58f07a49719446a188b8687cd0da6c8c(1)"
+            ],
+            "totalCount": {
+                "finishRate": "3%",
+                "clickRate": "7%",
+                "finishTask": 1,
+                "operateTotal": 35,
+                "movementD": 683,
+                "movementA": 889,
+                "createTask": 27,
+                "notGuaranteeTask": 1,
+                "operateTask": 2
+            }
+        },
+        "2018-12-19": {
+            "movementCount": {
+                "movementD": 936,
+                "movementA": 901
+            },
+            "violationType": {
+                "car": 9,
+                "company": 0,
+                "people": 0,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 7,
+                "checking": 2,
+                "pass": 0
+            },
+            "taskDataCount": {
+                "finishTask": 0,
+                "operateTotal": 104,
+                "createTask": 65,
+                "automaticTask": 0,
+                "notGuaranteeTask": 7,
+                "operateTask": 4
+            },
+            "staffWorkCount": [],
+            "totalCount": {
+                "finishRate": "0%",
+                "clickRate": "6%",
+                "finishTask": 0,
+                "operateTotal": 104,
+                "movementD": 936,
+                "movementA": 901,
+                "createTask": 65,
+                "notGuaranteeTask": 7,
+                "operateTask": 4
+            }
+        },
+        "2018-12-18": {
+            "movementCount": {
+                "movementD": 939,
+                "movementA": 916
+            },
+            "violationType": {
+                "car": 21,
+                "company": 0,
+                "people": 1,
+                "device": 0
+            },
+            "violationHandle": {
+                "unPass": 9,
+                "checking": 0,
+                "pass": 13
+            },
+            "taskDataCount": {
+                "finishTask": 3,
+                "operateTotal": 248,
+                "createTask": 60,
+                "automaticTask": 0,
+                "notGuaranteeTask": 4,
+                "operateTask": 14
+            },
+            "staffWorkCount": [
+                "u3282300247e94ef5bc9d1337ef3a03a0(1)",
+                "uf2bfd70c5f5c47c79b75e856efd909a7(1)",
+                "uddd8c63f0e3e43f08b41fa55def26151(2)"
+            ],
+            "totalCount": {
+                "finishRate": "5%",
+                "clickRate": "25%",
+                "finishTask": 3,
+                "operateTotal": 248,
+                "movementD": 939,
+                "movementA": 916,
+                "createTask": 60,
+                "notGuaranteeTask": 4,
+                "operateTask": 14
+            }
         }
-      ]
+    }
+}
     };
   },
   mounted() {
     this.drawLine();
   },
   methods: {
-    ...mapActions({
-      getData: "getData"
-    }),
     created() {
       this.getData();
     },
@@ -173,12 +417,20 @@ export default {
       console.log(tab, event);
     },
     getData(data) {
-      this.$store.dispatch("violation/getData", data);
+      // this.$store.dispatch("violation/getData", data);
+      this.list = data;
+
+
+      for(let i in  data){
+          console.log(i);
+      } 
+
+      console.log(data);
     },
     refreshData() {
-      ajax.get("getViolationData").then(data => {
-        let violation = data;
-        console.log(violation);
+      ajax.post("statistics").then(data => {
+        let statistics = data;
+        console.log(statistics);
         this.getData(data);
       });
     },
@@ -226,8 +478,41 @@ export default {
         ]
       };
 
+      //进出港统计
+let option3 = {
+  title: {
+    text: '进出港统计',
+  },
+  legend: {
+    data: ['进港','离港']
+  },
+  xAxis: [
+    {
+      // type: 'category',
+      data: ["2018-12-18","2018-12-19","2018-12-20"]
+    }
+  ],
+  yAxis : [
+        {
+            type : 'value'
+        }
+  ],
+   series : [
+        {
+            name:'进港',
+            type:'bar',
+            data:[889,292,222],
+        },
+        {
+            name:'离港',
+            type:'bar',
+            data:[683,223,444],
+        },
+]
+};
+
       myChart.setOption(option);
-      myChart1.setOption(option);
+      myChart1.setOption(option3);
       myChart2.setOption(option1);
       myChart3.setOption(option);
     }
@@ -236,4 +521,8 @@ export default {
     this.refreshData();
   }
 };
+
+
+
+
 </script>
