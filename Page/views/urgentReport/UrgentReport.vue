@@ -95,10 +95,12 @@
 					:data = "arr"
 					stripe
 					highlight-current-row
+					height:40px
 					style = "width:auto">
 					<el-table-column
 						class-name = "column1"
 						type = "index"
+						:index = "indexMethod"
 						min-width = "40px"
 						label = "序号">
 					</el-table-column>
@@ -198,6 +200,9 @@
 			}
 		},
 		methods:{
+			indexMethod(index){
+				return index+1+(this.valPage-1)*this.valSize;
+			},
 			handleSizeChange(val){
 				this.valSize = val;
 				let param = this.getSendParams();
