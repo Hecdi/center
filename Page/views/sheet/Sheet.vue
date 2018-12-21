@@ -102,13 +102,6 @@ export default {
       console.log(data);
       this.getListData(data);
       this.getTotalNum(data);
-        // this.sheetList = data;
-        // if(data.responseCode == 1000) {
-        // 	// debugger;
-        // 	this.sheetList = data;
-        // } else {
-        // 	console.log('请求失败');
-        // }
       });
 	},
 	exportExcel(){
@@ -141,17 +134,6 @@ export default {
                 let exportLocation = `http://173.100.1.52:9099/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 console.log(exportLocation);
                return _this.exportUrl = exportLocation;
-                // console.log(exportLocation);
-                // window.open(exportLocation);
-                // return exportLocation;
-                // that.exportLocation = exportLocation;
-               // console.log(param);
-                // console.log(params)
-                // ajax.post('exportExcel', params).then((data) => {
-                //     console.log(data);
-                //     window.open(`http://173.100.1.52:9099/violationRecord/exportExcel?title=11&value=1`);
-                //     // this.getData(data);
-                // });
             },
             handleSearch(){
                 let violationCode = this.area;
