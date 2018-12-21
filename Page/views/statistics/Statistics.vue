@@ -1,5 +1,6 @@
 <template>
   <div class="statistics">
+    <el-button @click="handleClick1">图标渲染顺序测试</el-button>
     <el-row :gutter="0">
       <el-col :span="24">
         <el-date-picker
@@ -61,7 +62,6 @@
       </el-col>
     </el-row>
 
-    <!-- <div v-on:click="drawLine">test</div> -->
   </div>
 </template>
 
@@ -157,48 +157,6 @@ export default {
           name5: "超越"
         },
       ],
-      test2:{ "2018-12-20": {
-            "movementCount": {
-                "movementD": 683,
-                "movementA": 889
-            },
-            "violationType": {
-                "car": 1,
-                "company": 0,
-                "people": 0,
-                "device": 0
-            },
-            "violationHandle": {
-                "unPass": 0,
-                "checking": 1,
-                "pass": 0
-            },
-            "taskDataCount": {
-                "finishTask": 1,
-                "operateTotal": 35,
-                "createTask": 27,
-                "automaticTask": 0,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            },
-            "staffWorkCount": [
-                "u4be9fc7ee7dc4fc399d4cc0f065cc313(1)",
-                "u58f07a49719446a188b8687cd0da6c8c(1)"
-            ],
-            "totalCount": {
-                "finishRate": "3%",
-                "clickRate": "7%",
-                "finishTask": 1,
-                "operateTotal": 35,
-                "movementD": 683,
-                "movementA": 889,
-                "createTask": 27,
-                "notGuaranteeTask": 1,
-                "operateTask": 2
-            }
-        },
-      },
-
       test1:[ {
             "movementCount": {
                 "movementD": 683,
@@ -401,13 +359,52 @@ export default {
                 "notGuaranteeTask": 4,
                 "operateTask": 14
             }
-        }
+        },
+        getOption: {
+          title: {
+              text: '进出港统计',
+            },
+            legend: {
+              data: ['进港','离港']
+            },
+            xAxis: [
+              {
+                // type: 'category',
+                data: [],
+              }
+            ],
+            yAxis : [
+                  {
+                      type : 'value'
+                  }
+            ],
+             series : [
+                  {
+                      name:'进港',
+                      type:'bar',
+                      data:[],
+                  },
+                  {
+                      name:'离港',
+                      type:'bar',
+                      data:[],
+                  },
+          ]
+        },
     }
-}
+},
+dateRange: [],
+movementD:[],
+movementA: [],
+
     };
   },
+  created(){
+    this.refreshData()
+  },
   mounted() {
-    this.drawLine();
+    this.refreshData()
+    this.drawLine()
   },
   methods: {
     created() {
@@ -416,16 +413,64 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    handleClick1(){
+      this.drawLine();
+    },
     getData(data) {
       // this.$store.dispatch("violation/getData", data);
       this.list = data;
+      let _this = this;
+      // for(let i in  data){
 
+      //     console.log(i);
+      // }
+      let dateRange = [];
+      let movementA = [];
+      let movementD = [];
+      data.forEach((item,index) => {
+        console.log(item);
+        dateRange.push(item.scheduleTime);
+        movementA.push(item.movementCount.movementA);
+        movementD.push(item.movementCount.movementD);
+      })  
 
-      for(let i in  data){
-          console.log(i);
-      } 
+      this.dateRange = dateRange;
+      this.movementA = movementA;
+      this.movementD = movementD;
+      this.getOption = {
+        title: {
+              text: '进出港统计',
+            },
+            legend: {
+              data: ['进港','离港']
+            },
+            xAxis: [
+              {
+                // type: 'category',
+                data: this.dateRange,
+              }
+            ],
+            yAxis : [
+                  {
+                      type : 'value'
+                  }
+            ],
+             series : [
+                  {
+                      name:'进港',
+                      type:'bar',
+                      data: this.movementA,
+                  },
+                  {
+                      name:'离港',
+                      type:'bar',
+                      data:this.movementD,
+                  },
+          ]
+      }
 
-      console.log(data);
+      console.log(movementA);
+      console.log(this.getOption);
     },
     refreshData() {
       ajax.post("statistics").then(data => {
@@ -434,7 +479,46 @@ export default {
         this.getData(data);
       });
     },
+    setOption3() {
+      let _this = this;
+            //进出港统计
+          let option3 = {
+            title: {
+              text: '进出港统计',
+            },
+            legend: {
+              data: ['进港','离港']
+            },
+            xAxis: [
+              {
+                // type: 'category',
+                data: _this.dateRange,
+              }
+            ],
+            yAxis : [
+                  {
+                      type : 'value'
+                  }
+            ],
+             series : [
+                  {
+                      name:'进港',
+                      type:'bar',
+                      data:_this.movementA,
+                  },
+                  {
+                      name:'离港',
+                      type:'bar',
+                      data:_this.movementD,
+                  },
+          ]
+        };
+        return option3;
+      },
     drawLine() {
+      let _this = this;
+      console.log(_this);
+      console.log(_this.dateRange);
       var myChart = echarts.init(document.getElementById("workload"));
       var myChart1 = echarts.init(document.getElementById("in-out"));
       var myChart2 = echarts.init(document.getElementById("violation-type"));
@@ -478,47 +562,19 @@ export default {
         ]
       };
 
-      //进出港统计
-let option3 = {
-  title: {
-    text: '进出港统计',
-  },
-  legend: {
-    data: ['进港','离港']
-  },
-  xAxis: [
-    {
-      // type: 'category',
-      data: ["2018-12-18","2018-12-19","2018-12-20"]
-    }
-  ],
-  yAxis : [
-        {
-            type : 'value'
-        }
-  ],
-   series : [
-        {
-            name:'进港',
-            type:'bar',
-            data:[889,292,222],
-        },
-        {
-            name:'离港',
-            type:'bar',
-            data:[683,223,444],
-        },
-]
-};
+
+console.log(_this.setOption3());
+console.log(_this.getOption);
 
       myChart.setOption(option);
-      myChart1.setOption(option3);
+      myChart1.setOption(_this.setOption3());
       myChart2.setOption(option1);
       myChart3.setOption(option);
     }
   },
   beforeMount() {
     this.refreshData();
+    // this.drawLine();
   }
 };
 
