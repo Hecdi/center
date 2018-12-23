@@ -19,7 +19,7 @@
             margin: 0 10px;
         }
         .el-date-editor, .el-input {
-            width: 15.75rem;
+            width: 12.75rem;
             height: 30px;
             line-height: 30px;
             .el-input__inner{
@@ -38,8 +38,12 @@
                 line-height: 24px !important;
             }
         } 
+        .el-date-editor {
+            width: 21.75rem;
+        }
         .right-col {
             margin-top:10px;
+            text-align: right;
         }
         .el-button {
             height: 30px;

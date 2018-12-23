@@ -3,10 +3,10 @@
     <!-- <ToolBar /> -->
     <el-container class="sheet">
       <el-row :gutter="0">
-        <el-col :span="12">
+        <el-col :span="8">
           <span class="float-left bread-crumb">引导车报表</span>
         </el-col>
-        <el-col :span="12" class="right-col">
+        <el-col :span="16" class="right-col">
           <span>时间段:</span>
           <!-- <el-date-picker v-model="value1" type="date" placeholder="开始日期"/>
           <span>-</span>
@@ -28,8 +28,8 @@
             blur="handleSearch"
             @keyup.enter.native="handleSearch"
           />
-          <el-button type size="small" class="export-excel" @click="exportExcel">
-            <a :href="exportUrl">
+          <el-button type size="small" class="export-excel">
+            <a :href="exportExcel()">
               导出excel
               <i class="el-icon-upload el-icon--right"/>
             </a>
@@ -42,7 +42,13 @@
         <el-table-column type="index" label="序号" width="80"/>
         <el-table-column prop="aircraftType" label="机型" width="80"/>
         <el-table-column prop="flightType" label="机类" width="80"/>
-        <el-table-column prop="routeName" label="航线" width="80"/>
+        <el-table-column prop="routeName" label="航线" min-width="120">
+          <template slot-scope="scope">
+            <span v-for="(a,index) in scope.row.routeName" :key="index">
+              <span>{{a}}</span><i v-if ="index !== scope.row.routeName.length-1" class="iconfont icon-hangxian"></i>
+            </span>
+        </template>
+      </el-table-column>
         <el-table-column prop="displayETA" label="预达" width="120"/>
         <el-table-column prop="displaySTA" label="计达" width="120"/>
         <el-table-column prop="displayATA" label="实达" width="120"/>
@@ -184,9 +190,10 @@ export default {
         value: inputSearch,
         title: "tttt"
       };
-      let exportLocation = `http://173.100.1.52:9099/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-      console.log(exportLocation);
-      return (_this.exportUrl = exportLocation);
+      let exportLocation = `http://173.100.1.52:80/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+      return exportLocation;
+      // console.log(exportLocation);
+      // return (_this.exportUrl = exportLocation);
     },
     handleSearch() {
       let violationCode = this.area;
