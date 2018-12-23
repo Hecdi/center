@@ -13,12 +13,11 @@ import {mapState} from 'vuex';
 import { cloneDeep , filter} from 'lodash';
 	export default {
 		name:'personSelect',
-		props:['team','currentTeamId','checkedWorkerId'],
+		props:['team','currentTeamId','checkedWorkerId','hiddenWorkerId','hiddenTeamId'],
 		data(){
 			return {
-				teamArry : this.team,
 				currentTeam:this.currentTeamId,
-				currentWorkerId: null,
+				currentWorkerId: this.checkedWorkerId,
 				currentWorkerName:null,
 			}
 		},
@@ -33,13 +32,30 @@ import { cloneDeep , filter} from 'lodash';
 			},
 			getPersons(persons){
 				let localTeam = cloneDeep(persons);
-				localTeam =  filter(localTeam, (item)=>{
-					return item.staffId != this.currentPerson.staffId;
-				})
+				if(this.hiddenWorkerId){
+					localTeam =  filter(localTeam, (item)=>{
+						return item.staffId != this.hiddenWorkerId;
+					})
+				}
 				return localTeam;
 			},
 		},
+		watch:{
+			checkedWorkerId(){
+				this.currentWorkerId = this.checkedWorkerId;
+				this.currentTeam=this.currentTeamId;
+			}
+		},
 		computed:{
+			teamArry(){
+				let tmp = cloneDeep(this.team);
+				if(this.hiddenTeamId){
+					tmp =  filter(tmp, (item)=>{
+						return item.squadId != this.hiddenTeamId;
+					})
+				}
+				return tmp;
+			},
 			...mapState('rollCall',['currentPerson']),
 		}
 	} 
