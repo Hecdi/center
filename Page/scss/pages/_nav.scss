@@ -1,31 +1,45 @@
 #nav {
     position:relative;
-    padding: 0 1rem;
+    // padding: 0 1rem;
     color: #fff;
     height:$navbar-height-px;
     width:100%;
-    background-color: #313347!important;
+    // background-color: #313347!important;
+    background:linear-gradient(90deg,rgba(23,40,63,1) 0%,rgba(1,114,207,1) 100%) !important;
     box-sizing: border-box;
     overflow: hidden;
     .navbar-brand{
-        width: 8.35714rem;
-        height: $navbar-height-px;
-        margin-top: 3px;
-        background: url(../assets/logo.png) no-repeat;
+        background:linear-gradient(270deg,rgba(46,103,246,1) 0%,rgba(0,75,205,0.35) 100%);
+        box-shadow:0px 0px 6px 0px rgba(47,61,142,1);
+        border-radius:0px 100px 100px 0px;
+        // width: 8.35714rem;
+        // height: $navbar-height-px;
+        // margin-top: 3px;
+        // background: url(../assets/logo.png) no-repeat;
         background-size: 100%;
         float: left;
-        padding-top: .25rem;
-        padding-bottom: .25rem;
+        // padding-top: .25rem;
+        // padding-bottom: .25rem;
         margin-right: 1rem;
-        font-size: 1.28571rem;
+        // font-size: 1.28571rem;
+        width: 260px;
+        height: 40px;
+        color: #fff;
+        font-size: 18px;
+        font-family: $font-family-YaheiBold;
+        line-height: 40px;
+        .nav-title {
+            float: right;
+            padding-right: 30px;
+        }
     }
-    .navbar-departName {
-        margin: 12px 1rem 0 0;
-        float: left;
-        color: #00c0ff;
-        font-size: 1.28571rem;
-        font-weight: 600;
-    }
+    // .navbar-departName {
+    //     margin: 12px 1rem 0 0;
+    //     float: left;
+    //     color: #00c0ff;
+    //     font-size: 1.28571rem;
+    //     font-weight: 600;
+    // }
     .navbar-nav {
         padding:0;
         margin:0;
@@ -36,11 +50,15 @@
             line-height:$navbar-height-px;
             list-style: none;
             cursor:pointer;
+            color: #fff;
             &.router-link-active{
-                background-color: #54587a;
-                -moz-box-shadow: 0 -4px 0 0 #6cf inset;
-                -webkit-box-shadow: 0 -4px 0 0 #6cf inset;
-                box-shadow: 0 -4px 0 0 #6cf inset;
+                // background-color: #54587a;
+                // -moz-box-shadow: 0 -4px 0 0 #6cf inset;
+                // -webkit-box-shadow: 0 -4px 0 0 #6cf inset;
+                box-shadow: 0 -3px 0 0 #49A1FF inset;
+                color: #fff;
+                background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(61,132,255,50%) 100%);
+                // opacity:0.5;
             }
         }
     }
