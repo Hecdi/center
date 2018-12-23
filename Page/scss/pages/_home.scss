@@ -761,6 +761,11 @@
 										height:64px;
 										margin-top:10px;
 										overflow:hidden;
+										.airNo{
+											overflow:hidden;
+											text-overflow:ellipsis;
+											white-space:nowrap;
+										}
 										.el-col{
 											margin-top:0;
 										}
