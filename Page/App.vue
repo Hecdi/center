@@ -19,7 +19,10 @@
               <!--[> 00 <]-->
             <!--</router-link>-->
           </ul>
-		    <el-button size="mini" style="float:right;" type="info" @click="logOut">登出</el-button>
+		        <span><i class="iconfont icon-riqi"></i></span>
+		        <span><i class="iconfont icon-shijian"></i></span>
+		        <span><i class="iconfont icon-yonghu"></i></span>
+		        <el-button size="mini" style="float:right;margin-top:12px;" type="info" @click="logOut">登出</el-button>
         </div>
       </el-header>
       <el-container>
