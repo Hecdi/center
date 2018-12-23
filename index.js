@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
 			remote.setGlobal("userInfo",localStorage.getItem('userInfo'));
 			remote.setGlobal("depId",localStorage.getItem('depId'));
 			remote.setGlobal("deptCode",localStorage.getItem('deptCode'));
-			let deptCode = remote.getGlobal('deptCode');
+			remote.setGlobal("username",localStorage.getItem('username'));
 			initWorker();
            next(
             //    {path: '/'}

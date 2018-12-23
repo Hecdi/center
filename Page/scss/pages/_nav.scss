@@ -7,6 +7,14 @@
     background-color: #313347!important;
     box-sizing: border-box;
     overflow: hidden;
+	.timeAndName{
+		position:absolute;
+		top:15px;
+		right:150px;
+		span, i{
+			margin-right:10px;
+		}
+	}
     .navbar-brand{
         width: 8.35714rem;
         height: $navbar-height-px;
