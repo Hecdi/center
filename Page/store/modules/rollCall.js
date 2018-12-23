@@ -17,6 +17,20 @@ const state = {
 	checkedRemark:'',
 }
 
+
+const getCheckTeamId = (team) =>{
+	let checkedId = '';
+	forEach(team, (item)=>{
+		if(item.isAttendanceSquad){
+			checkedId = item.squadId;
+		}
+	})
+	if(!checkedId && team.length){
+		checkedId = team[0].squadId;
+	}
+	return checkedId;
+}
+
 const mutations = {
 	//setPersonSearchKey(state, {searchKey,filterPersons}){
 	//state.personSearchKey = searchKey;
@@ -68,7 +82,7 @@ const mutations = {
 		});
 		let team = get(state,'team',[]);
 		let module = get(state,'module',[]);
-		state.currentTeam = team.length?team[0].squadId:'';
+		state.currentTeam = getCheckTeamId(team);
 		state.currentModuleId = module.length?module[0].templateId:'';
 	},
 	updateArray(state, obj){

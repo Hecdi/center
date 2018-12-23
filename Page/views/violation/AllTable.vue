@@ -175,7 +175,6 @@ export default {
       let subParams = { id: id, status: status };
       console.log(subParam);
       console.log(subParams);
-      debugger;
       ajax.post("updateState", subParams).then(data => {
         console.log(data);
         if (data) {

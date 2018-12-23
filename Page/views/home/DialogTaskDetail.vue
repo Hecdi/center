@@ -156,6 +156,9 @@
 				});
 			},
 			setCurrentPerson(person, isAdd) {
+				if(this.currentTask.taskStatus == 6 || this.currentTask.taskStatus == 8 || this.currentTask.taskStatus == -1){
+					return;
+				}
 				if (isAdd) {
 					//this.workerList.delete(person);
 					let flag = true;

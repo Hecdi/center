@@ -18,7 +18,8 @@
 			<span>代班人员：</span><span style="color:#2F61D5;font-size:12px;">{{currentWorkerName}}</span>
 		</el-row>
 		<div class="line"></div>
-		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId" v-if="nonArrivalReason == 5"/>
+		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="activeTeamId"
+		:hiddenWorkerId="currentPerson?currentPerson.staffId:''" :hiddenTeamId="currentTeam" v-if="nonArrivalReason == 5"/>
 		<el-row v-if="nonArrivalReason == 1 || nonArrivalReason==2">
 			<span>开始时间：</span>
 			<el-date-picker
@@ -41,7 +42,7 @@
 import { mapState } from 'vuex';
 import PersonSelect from 'PersonSelect.vue';
 import moment from 'moment';
-import {pick, extend, identity} from 'lodash';
+import {pick, extend, identity, filter} from 'lodash';
 
 export default {
 	name: 'dialogPersonDetail',
@@ -62,10 +63,10 @@ export default {
 			}
 			this.$store.commit('rollCall/setPerson');
 		},
-		getChecked({workerName,workerId}){
+		getChecked({staffId,staffName,workerName,workerId}){
 			this.$store.dispatch(`rollCall/updateObj`,{currentPerson:{
-				workerName,
-				workerId,
+				workerName:staffName,
+				workerId:staffId,
 			}});
 		},
 		checked(flag){
@@ -80,6 +81,12 @@ export default {
 		},
 	},
 	computed: {
+		activeTeamId(){
+			let tmp = filter(this.team , (item)=>{
+				return !item.isAttendanceSquad; 
+			});
+			return tmp[0].squadId;
+		},
 		leaveTime:{
 			get(){
 				return [this.currentPerson.leaveStartTime?this.currentPerson.leaveStartTime:moment().valueOf(),this.currentPerson.leaveEndTime?this.currentPerson.leaveEndTime:moment().add(8,'h').valueOf()];
@@ -120,15 +127,6 @@ export default {
 				this.$store.dispatch('rollCall/updateObj',{currentPerson:param});
 			}
 			
-		},
-		currentTeamIndex:{
-			get(){
-				return this.currentTeam;
-			},
-			set(val) {
-				console.log(val);
-				this.$store.dispatch('rollCall/update',{currentTeam: val});
-			}
 		},
 		dialogPersonDetailVisible: {
 			get() {
