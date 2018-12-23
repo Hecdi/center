@@ -1,8 +1,8 @@
 <template>
     <div class="violation-topbar">
-        <el-row class="tooltip">
+        <el-row class="tooltip" v-if="tabActive == 'all'">
             <el-col :span="5">
-                <button class="tab-btn wait font-One" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitItems.length}}</button>
+                <button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</button>
                 <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
             </el-col>
             
@@ -40,6 +40,48 @@
                 <el-button size="mini">
                     <a  :href="exportExcel()">导出</a>
                 </el-button>
+            </el-col>
+        </el-row>
+        <el-row class="tooltip" v-else>
+            <el-col :span="5">
+                <button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</button>
+                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
+            </el-col>
+            
+            <el-col :span="19" class="topbar">
+                <el-form ref="form" label-width="80px" style="display:none">
+                    <el-form-item >
+                        <el-select v-model="area" placeholder="活动区域" v-on:change="changeSelectStatus">
+                          <el-option label="全部" value="1"></el-option>
+                          <el-option label="人员" value="2"></el-option>
+                          <el-option label="车辆" value="3"></el-option>
+                          <el-option label="设备" value="4"></el-option>
+                          <el-option label="公司" value="5"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <el-input
+                    placeholder="请输入内容"
+                    prefix-icon="el-icon-search"
+                    v-model="inputSearch"
+                    class="seach-input"
+                    v-on:click="searchAll(e)"
+                ></el-input>
+                <span class="demonstration">时间段</span>
+                <el-date-picker
+                    v-model="time"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    @change="handleSearch"
+                    value-format="timestamp">
+                </el-date-picker>
+                <el-button @click="handleSearchWait" size="mini" type="primary">查询</el-button>
+                <!-- <el-button size="mini">
+                    <a  :href="exportExcel()">导出</a>
+                </el-button> -->
             </el-col>
         </el-row>
         <div class="dialog">
@@ -99,7 +141,7 @@
           
         },
         computed: {
-            ...mapState('violation',['waitItems','showImgDialog']),
+            ...mapState('violation',['waitItems','showImgDialog','waitTotalSize']),
         },
         
         methods: {
@@ -141,8 +183,11 @@
             searchAll($event){
                 console.log($event.target.value);
             },
-             getData(data) {
+            getData(data) {
                 this.$store.dispatch("violation/getData", data);
+            },
+            getWaitData(data) {
+                this.$store.dispatch("violation/getWaitData", data);
             },
             exportExcel(){
                 let _this = this;
@@ -207,6 +252,41 @@
                 });
 
             },
+            handleSearchWait(){
+                let _this = this;
+                let violationCode = this.area;
+                let timeArr = this.time;
+                let startDate;
+                let endDate;
+                if(timeArr){
+                    if(timeArr[0] == timeArr[1]){
+                        startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+                        endDate = `${endDate} 23:59:59`;
+                    } else {
+                        startDate = timeArr[0];
+                        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                        endDate = timeArr[1];
+                        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
+                    }  
+                } else {
+                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                }
+                let inputSearch = this.inputSearch;
+                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+                let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
+                console.log(param);
+                console.log(params)
+                ajax.post('getViolationByState', params).then((data) => {
+                    console.log(data);
+                    // this.initWaitData(data);
+                    _this.getWaitData(data);
+                });
+
+            },
             refreshData() {
                 ajax.post("getViolationDataForLike",{"pageNumber":1,"pageSize":10}).then(data => {
                   let violation = data;
@@ -214,7 +294,7 @@
                 });
             },
              initWaitData(){
-                 ajax.post("getViolationByState").then((data)=>{
+                 ajax.post("getViolationByState", {pageSize:10, pageNumber:1}).then((data)=>{
                      if(data){
                          this.getWaitData(data);
                      }

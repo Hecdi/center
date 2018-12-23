@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="violation-card">
+    <el-row class="violation-card">
         <el-col :span="5" v-for="c in waitItems" v-bind:key="c.id">
             <el-card shadow="hover" >
                 <div class="violation-id">
@@ -24,9 +24,12 @@
                     <el-button type="danger" size="small" @click="submitStatus(c,2)" plain>不通过</el-button>
                 </div>
             </el-card>
-
         </el-col>
-    </div>
+    </el-row>
+    <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="waitTotalSize" 
+    style="width:100%;height:30px"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/>
 	</div>
 </template>
 
@@ -36,12 +39,14 @@
     import { ajax } from 'ajax';
     import img from "../../assets/logo.png";
     import ShowImg from './ShowImg.vue';
+    import PageNationHis from "./PageNationHis.vue";
 
 
 
     export default{
         components: {
             ShowImg,
+            PageNationHis
         },
         data(){
             return {
@@ -51,10 +56,12 @@
                 dialogVisible: '',
                 picture: '',
                 waitItem: '',
+                currentPage: 1,
+                pageSize: 10,
             }
         },
         computed: {
-            ...mapState('violation',['filterCards','waitItems','showImgDialog']),
+            ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize']),
         },
         filters:{
             currency(value){
@@ -80,7 +87,6 @@
                 console.log(subParam);
                 console.log(subParams);
 		    	ajax.post('updateState', subParams).then((data) => {
-                    console.log(data);  
                     if(data){
                         this.initWaitData()
                     }  
@@ -121,11 +127,23 @@
             },
             initWaitData(){
                 //  let ajax = ajaxx();
-                 ajax.post("getViolationByState").then((data)=>{
+                let _this = this;
+                 ajax.post("getViolationByState",{pageSize:_this.pageSize, pageNumber:_this.currentPage}).then((data)=>{
                      if(data){
+                         console.log(data);
                          this.getWaitData(data);
                      }
                  })
+            },
+            handleSizeChange(val){
+              console.log(val);
+              this.pageSize = val;
+              this.initWaitData();
+            },
+            handleCurrentChange(val){
+              console.log(`当前${val}`)
+              this.currentPage = val;
+              this.initWaitData();
             },
              created() {
                 this.initWaitData();

@@ -8,6 +8,7 @@ const state = {
     showImgDialog: false,
     waitItems: [],
     totalSize: 11,
+    waitTotalSize: 1,
 }
 
 const mutations = {
@@ -17,7 +18,8 @@ const mutations = {
         state.totalSize = data.totalNum;
     },
     setWaitData(state,data) {
-        state.waitItems = data;
+        state.waitItems = data.items;
+        state.waitTotalSize = data.totalNum;
     },
     setCurrentStatus(state, status) {
         state.currentStatus = status;

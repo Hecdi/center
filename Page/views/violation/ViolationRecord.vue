@@ -53,7 +53,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
             },
             initWaitData(){
                 //  let ajax = ajaxx();
-                 ajax.post("getViolationByState").then((data)=>{
+                 ajax.post("getViolationByState",{pageSize:10, pageNumber:1}).then((data)=>{
                      if(data){
                          this.getWaitData(data);
                      }
