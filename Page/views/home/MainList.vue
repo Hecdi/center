@@ -44,7 +44,7 @@
 						</div>
                     </el-col>
                     <el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">
-						<p>{{task.aircraftNumber}}</p>
+						<p class="airNo" :title="task.aircraftNumber">{{task.aircraftNumber}}</p>
 						<p>{{task.aircraftType}}</p>
                     </el-col>
                     <el-col :span="10">

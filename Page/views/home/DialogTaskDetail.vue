@@ -41,8 +41,9 @@
 			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
 		</el-col>
 		<el-col :span="6" class="column5">
-			<div>计划时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>
-			<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>
+			<div>计划时间：<b>{{currentTask.displayScheduleTimeWithDate}}</b></div>
+			<div v-if="currentTask.disPlayActuralTime && currentTask.disPlayActuralTime != '--'">实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>
+			<div v-else>预计时间：<b>{{currentTask.disPlayExpectedTime}}</b></div>
 		</el-col>
 	</el-row>
     <el-tabs class="taskPersonList" v-model="activeName" >

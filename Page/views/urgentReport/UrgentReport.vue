@@ -205,6 +205,7 @@
 			},
 			handleSizeChange(val){
 				this.valSize = val;
+				this.valPage = 1;
 				let param = this.getSendParams();
 				ajax.post('urgentReport', param).then((data) => {this.getData(data);})
 
