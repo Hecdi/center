@@ -5,6 +5,7 @@ import { get, truncate } from 'lodash';
 import Logger from '../common/logger';
 import { ajaxAPI, socketAPI } from "../index";
 import { remote } from 'electron';
+import {sub, pub,  removeSub} from "postalControl";
 
 const log = new Logger('Worker:init:');
 
@@ -58,6 +59,12 @@ export const init = () => {
 	let token = remote.getGlobal('token');
 	let deptCode = remote.getGlobal('deptCode');
 	let userInfo = remote.getGlobal('userInfo');
+	sub('UI','Time.Sync', data =>{
+		let nowTime = new Date().getTime();
+		let offsetTime = data && data.data ? data.data - nowTime: 0;
+		console.log('offsetTime::',offsetTime);
+		remote.setGlobal('offsetTime', offsetTime);
+	});
     postal.publish({
         channel: 'Worker',
         topic: 'Start',

@@ -1,6 +1,7 @@
 import postal from 'postal';
 import Logger from '../common/logger';
 import { each, get, truncate, map, cloneDeep } from 'lodash';
+import {sub, pub,  removeSub} from "postalControl";
 import Promise from 'bluebird';
 import {initPage as initHome, destroy as destroyHome, initSocket as initHomeSocket } from "./pages/home";
 import { remote } from 'electron';
@@ -42,6 +43,10 @@ const init = ()=>{
 			postal.channel('ServerConnect').subscribe(`${socketAPI[0].name}.Network.Connected`,()=>{
 				mysocket.regist('schedule',(client) => {
 					initHomeSocket(client);
+					client.sub('/web/currentTime', (d) => {
+						console.log('time:::',d)
+						pub('UI','Time.Sync',d);
+					});
 				});
 			});
 		},

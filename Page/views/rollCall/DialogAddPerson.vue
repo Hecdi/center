@@ -1,8 +1,8 @@
 <template>
 	<el-dialog class="dialogAddPerson" center :title="this.currentRow && this.currentRow.staffId ? '修改人员':'添加人员'"
 	 :visible.sync="dialogAddPersonVisible" width="1000px" >
-		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId"
-		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" />
+		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam"
+		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" :showTeamId="currentTeam" />
 		<span slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="submit" >确定</el-button>
 			<el-button @click="dialogAddPersonVisible = false;">取 消</el-button>
@@ -19,6 +19,8 @@ export default {
 	name: 'dialogAddPerson',
 	data (){
 		return {
+			currentStaffId: '',
+			currentStaffName: '',
 			currentWorkerName: '',
 			currentWorkerId: '',
 			newCurrentPerson: this.currentPerson,
@@ -27,12 +29,16 @@ export default {
 	methods: {
 		submit(){
 			this.$store.commit('rollCall/updateObj',{currentRow:{
-				staffId:this.currentWorkerId,
-				staffName:this.currentWorkerName,
+				staffId:this.currentStaffId,
+				staffName:this.currentStaffName,
+				workId:this.currentWorkerId,
+				workName:this.currentWorkerName,
 			}})
 			this.dialogAddPersonVisible = false;
 		},
-		getChecked({workerName,workerId}){
+		getChecked({staffId,staffName,workerName,workerId}){
+			this.currentStaffId = staffId;
+			this.currentStaffName = staffName;
 			this.currentWorkerId = workerId;
 			this.currentWorkerName = workerName;
 			console.log(workerName,workerId);
