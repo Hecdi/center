@@ -1,5 +1,5 @@
 <template>
-	<el-dialog class="dialogAddPerson" center title="增加人员"
+	<el-dialog class="dialogAddPerson" center :title="this.currentRow && this.currentRow.staffId ? '修改人员':'添加人员'"
 	 :visible.sync="dialogAddPersonVisible" width="1000px" >
 		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId"
 		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" />
