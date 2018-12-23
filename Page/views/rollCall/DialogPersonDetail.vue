@@ -18,7 +18,8 @@
 			<span>代班人员：</span><span style="color:#2F61D5;font-size:12px;">{{currentWorkerName}}</span>
 		</el-row>
 		<div class="line"></div>
-		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId" v-if="nonArrivalReason == 5"/>
+		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId"
+		:hiddenWorkerId="currentPerson?currentPerson.staffId:''" v-if="nonArrivalReason == 5"/>
 		<el-row v-if="nonArrivalReason == 1 || nonArrivalReason==2">
 			<span>开始时间：</span>
 			<el-date-picker

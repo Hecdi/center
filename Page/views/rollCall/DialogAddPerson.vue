@@ -1,7 +1,8 @@
 <template>
 	<el-dialog class="dialogAddPerson" center title="增加人员"
 	 :visible.sync="dialogAddPersonVisible" width="1000px" >
-		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId" />
+		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam?currentTeam:team[0].squadId"
+		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" />
 		<span slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="submit" >确定</el-button>
 			<el-button @click="dialogAddPersonVisible = false;">取 消</el-button>
@@ -53,7 +54,7 @@ export default {
 				this.$store.dispatch(`rollCall/update`, { dialogAddPersonVisible: false });
 			},
 		},
-		...mapState('rollCall', ['currentPerson', 'team','currentTeam']),
+		...mapState('rollCall', ['currentPerson', 'team','currentTeam','currentRow']),
 	},
 	components:{
 		PersonSelect,	
