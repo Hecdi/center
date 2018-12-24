@@ -471,6 +471,24 @@
 			.mainList{
 				flex:1;
 				padding:6px;
+				.third-row{
+					.el-col{
+						font-size:12px;
+						line-height:18px;
+						display:flex;
+						align-items:center;
+						height:28px;
+						margin-top:0px !important;
+						p {
+							text-overflow:ellipsis;
+							overflow:hidden;
+							white-space:nowrap;
+						}
+					}
+					text-overflow:ellipsis;
+					overflow:hidden;
+					white-space:nowrap;
+				}
 				.dialogTaskDetail{
 					.el-dialog_body{
 						max-height:400px;

@@ -24,7 +24,7 @@
 			  <span><i class="iconfont icon-shijian"></i>{{getTimeHms}}</span>
 			  <span><i class="iconfont icon-yonghu"></i>{{username}}</span>
 		  </section>
-		  <el-button size="mini" style="float:right;margin-top:12px;" type="info" @click="logOut">登出</el-button>
+		  <el-button icon="iconfont icon-tuichu" type="info" @click="logOut"></el-button>
         </div>
       </el-header>
       <el-container>
