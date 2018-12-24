@@ -2,6 +2,7 @@
     width: 100%;
     height: auto;
     overflow: scroll;
+    background: #E4E7EC;
     .el-row{
         width: 100%;
         .el-date-editor {
@@ -10,19 +11,19 @@
         }
         #workload {
             width: 100%;
-            height: 200px;
+            height: 400px;
         }
         #in-out {
             width: 100%;
-            height: 200px;
+            height: 400px;
         }
         #violation-type,#violation-sum {
             width: 100%;
-            height: 200px;
+            height: 400px;
         }
         .el-card {
-            width: 90%;
-            margin: 10px;
+            width: 96%;
+            margin: 10px auto;
         }
         .time-col {
             display: inline-block;

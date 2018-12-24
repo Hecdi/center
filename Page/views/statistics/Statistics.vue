@@ -14,40 +14,46 @@
 
         ></el-date-picker>
       </el-col>
-      <el-col :span="24">
-        <div id="workload"></div>
-      </el-col>
-      <el-col :span="24">
-        <div id="in-out"></div>
+      <el-col :span="12">
+        <el-card shadow="always">
+          <div id="workload"></div>
+        </el-card>
       </el-col>
       <el-col :span="12">
         <el-card shadow="always">
-          <h2>违规类型统计</h2>
+          <div id="in-out"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="always">
+          <!-- <h2>违规类型统计</h2> -->
           <div id="violation-type"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card shadow="hover">
-          <h2>违规统计</h2>
+          <!-- <h2>违规统计</h2> -->
           <div id="violation-sum"></div>
         </el-card>
       </el-col>
       <h1>Table</h1>
       <el-col :span="24">
-        <el-table :data="tableData" stripe style="width: 100%">
-          <el-table-column prop="date" label="机型" min-width="80"/>
-          <el-table-column prop="name" label="机类" min-width="180"/>
-          <el-table-column prop="address" label="航线" min-width="180"/>
-          <el-table-column prop="date" label="预达" min-width="120"/>
-          <el-table-column prop="name" label="计达" width="120"/>
-          <el-table-column prop="address" label="实达" width="120"/>
-          <el-table-column prop="date" label="前飞" width="120"/>
-          <el-table-column prop="name" label="登机" width="120"/>
-          <el-table-column prop="address" label="协关" width="120"/>
-          <el-table-column prop="address" label="计飞" width="120"/>
+        <el-table :data="tableData1" stripe style="width: 100%">
+          <el-table-column type="index" label="序号" width="50"/>
+          <el-table-column prop="date" label="日期" width="120"/>
+          <el-table-column prop="clickRate" label="点击率" min-width="80"/>
+          <el-table-column prop="createTask" label="生成任务" min-width="180"/>
+          <el-table-column prop="finishRate" label="完成率" min-width="180"/>
+          <el-table-column prop="finishTask" label="完成任务" min-width="120"/>
+          <el-table-column prop="movementA" label="进港航班" width="120"/>
+          <el-table-column prop="movementD" label="离港航班" width="120"/>
+          <el-table-column prop="notGuaranteeTask" label="不保障任务" width="120"/>
+          <el-table-column prop="operateTask" label="操作任务" width="120"/>
+          <el-table-column prop="operateTotal" label="操作总数" width="120"/>
+          <!-- <el-table-column prop="address" label="计飞" width="120"/>
           <el-table-column prop="date" label="实飞" width="120"/>
           <el-table-column prop="name" label="引导车" width="120"/>
-          <el-table-column prop="address" label="引导人员" width="120"/>
+          <el-table-column prop="address" label="引导人员" width="120"/> -->
         </el-table>
       </el-col>
       <h1>完成工作量top5</h1>
@@ -87,6 +93,7 @@ export default {
       status: "全部",
       currentView: "all",
       time: [],
+      tableData1: [],
       tableData: [
         {
           date: "2016",
@@ -292,6 +299,7 @@ movementA: [],
       let checking = [];
       let pass = [];
       let unPass = [];
+      let taskDataCount1 = [];
       data.forEach((item,index) => {
         console.log(item);
         dateRange.push(item.scheduleTime);
@@ -312,6 +320,7 @@ movementA: [],
         checking.push(violationHandle.checking);
         pass.push(violationHandle.pass);
         unPass.push(violationHandle.unPass);
+        taskDataCount1.push(item.taskDataCount);
       })  
 
       this.dateRange = dateRange;
@@ -322,6 +331,8 @@ movementA: [],
       this.notGuaranteeTask = notGuaranteeTask;
       this.operateTask = operateTask;
       this.operateTotal = operateTotal;
+      this.tableData1 = taskDataCount1;
+      console.log(this.tableData1);
       this.getOption = {
         title: {
               text: '进出港统计',
@@ -354,23 +365,68 @@ movementA: [],
           ]
       }
       this.getOption1 = {
+        backgroundColor: '#fff',
+        color: ['#9dcae4','#fcca3d','#2fb1fe','#bea5f6','#7fe7dc','#ffa7a7'],
           title: {
               text: '工作量统计',
+              textStyle:{
+                color:'#333',
+                fontSize: '14',
+              }
+              
             },
-            legend: {
-              data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
-            },
-            xAxis: [
+          legend: {
+            itemWidth: 14,
+            itemHeight: 14,
+            itemGap: 14,
+            x: 'right',
+            icon: "circle", 
+            data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
+          },
+          grid: {
+            // width: {totalWidth} - x - x2,
+            // height: {totalHeight} - y - y2,
+            backgroundColor: '#E6EEF4',
+            borderWidth: 1,
+            // borderColor: '#ccc',
+            // borderStyle: 'dashed',
+          },
+            xAxis:
               {
                 // type: 'category',
                 data: this.dateRange,
+                splitLine: {show:true,lineStyle:{type:'dashed'}},
+                max:'4',
+                axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'#3A3A3A',
+                    }
+                }
+                // splitArea : {show : true,
+                //     // areaStyle: {
+                //     //   color: ['#f5f8fa'],
+                //     // }
+                //     }//保留网格区域
               }
-            ],
-            yAxis : [
-                  {
-                      type : 'value'
-                  }
-            ],
+            ,
+            yAxis : {
+              splitLine: {
+                show: true,
+                lineStyle:{type:'dashed'}
+              },
+              type : 'value',
+              axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'rgba(58,58,58,1)',
+                    }
+                },
+              splitArea : {show : true,
+                areaStyle: {
+                      color: ['#f5f8fa'],
+                    }}//保留网格区域
+            },
              series : [
                   {
                       name:'生成任务',
