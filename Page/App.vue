@@ -3,8 +3,9 @@
     <el-container>
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
-          <a class="navbar-brand" href="javascript:void(0)"/>
-          <span class="navbar-departName">机坪运行管理</span>
+          <span class="navbar-brand" href="javascript:void(0)">
+            <span class="nav-title">机坪运行管理</span></span>
+          <!-- <span class="navbar-departName">机坪运行管理</span> -->
           <ul class="nav navbar-nav">
             <router-link tag="li" to="/home" class="nav-item" exact>排班</router-link>
             <router-link tag="li" to="/rollCall" class="nav-item">点到</router-link>
