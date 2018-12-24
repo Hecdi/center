@@ -17,7 +17,7 @@
 					<el-col class='cyan center' :span="2">
 						<span class="iconfont icon-zengjia addPerson" v-if="!row.staffId" @click="addPerson(row)"> 添加人员</span>
 						<span class="addPerson" v-if="row.staffId" @click="addPerson(row)">
-							{{`${row.staffName}${row.workName?'('+row.workName+')':''}`}}</span>
+							{{`${row.staffName}${row.workerName?'('+row.workerName+')':''}`}}</span>
 					</el-col>
 					<el-col :span="20">
 						<el-row :gutter="0" class="wokerRow">
