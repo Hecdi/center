@@ -19,10 +19,12 @@
               <!--[> 00 <]-->
             <!--</router-link>-->
           </ul>
-		        <span><i class="iconfont icon-riqi"></i></span>
-		        <span><i class="iconfont icon-shijian"></i></span>
-		        <span><i class="iconfont icon-yonghu"></i></span>
-		        <el-button size="mini" style="float:right;margin-top:12px;" type="info" @click="logOut">登出</el-button>
+		  <section class="timeAndName">
+			  <span><i class="iconfont icon-riqi"></i>{{getTimeYMD}}</span>
+			  <span><i class="iconfont icon-shijian"></i>{{getTimeHms}}</span>
+			  <span><i class="iconfont icon-yonghu"></i>{{username}}</span>
+		  </section>
+		  <el-button size="mini" style="float:right;margin-top:12px;" type="info" @click="logOut">登出</el-button>
         </div>
       </el-header>
       <el-container>
@@ -33,14 +35,47 @@
 </template>
 
 <script>
+	import {formatDate} from "date.js";
+	import {remote} from "electron";
+	import {isNumber} from 'lodash';
 	export default {
 		name: "app",
+		data(){
+			return {
+				getTimeYMD:'',
+				getTimeHms:'',
+				username:remote.getGlobal('username'),
+			}
+		},
 		methods:{
 			logOut(){
 				localStorage.clear();
 				this.$router.push('/login');
 			}
-		}
+		},
+		mounted(){
+			var _this = this;
+			this.timer1 = setInterval(function(){
+				let offsetTime = remote.getGlobal('offsetTime');
+				offsetTime = isNumber(offsetTime) ? offsetTime:0;
+				let correctTime = new Date().getTime() + offsetTime ;
+				_this.getTimeHms = formatDate(correctTime,'HHmmss','');
+			},1000);
+			this.timer2 = setInterval(function(){
+				let offsetTime = remote.getGlobal('offsetTime');
+				offsetTime = isNumber(offsetTime) ? offsetTime:0;
+				let correctTime = new Date().getTime() + offsetTime ;
+				_this.getTimeYMD = formatDate(correctTime,'YYYY-MM-DD','');
+			},1000);
+		},
+		beforeDestroy(){
+				if(this.timer1){
+					clearInterval(this.timer1);
+				};
+				if(this.timer2){
+					clearInterval(this.timer2);
+				}
+		},
 	}
 </script>
 

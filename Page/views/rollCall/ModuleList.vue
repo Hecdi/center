@@ -16,7 +16,8 @@
 				<el-row :gutter="0" class="module-content" v-for="row in item.checkIns" :key="row.workUnit">
 					<el-col class='cyan center' :span="2">
 						<span class="iconfont icon-zengjia addPerson" v-if="!row.staffId" @click="addPerson(row)"> 添加人员</span>
-						<span class="addPerson" v-if="row.staffId" @click="addPerson(row)">{{`${row.staffName?row.staffName:row.staffId}`}}</span>
+						<span class="addPerson" v-if="row.staffId" @click="addPerson(row)">
+							{{`${row.staffName}${row.workName?'('+row.workName+')':''}`}}</span>
 					</el-col>
 					<el-col :span="20">
 						<el-row :gutter="0" class="wokerRow">
