@@ -34,13 +34,13 @@
                   <el-row :gutter="0" class="second-row">
                     <el-col :span="10" class="route-panel">
 						<div>
-							<p>{{task.iata[0]}}</p>
-							<p :title="task.airRoute[0]">{{task.airRoute[0]}}</p>
+							<p>{{task && task.iata ? task.iata[0]: ''}}</p>
+							<p :title="task.airRoute[0]">{{task && task.airRoute ? task.airRoute[0]: ''}}</p>
 						</div>
 						<div><i class="iconfont icon-hangxian"></i></div>
 						<div>
-							<p>{{task.iata[1]}}</p>
-							<p :title="task.airRoute[1]">{{task.airRoute[1]}}</p>
+							<p>{{task && task.iata ? task.iata[1]:''}}</p>
+							<p :title="task.airRoute[1]">{{task && task.airRoute ? task.airRoute[1]: ''}}</p>
 						</div>
                     </el-col>
                     <el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">
@@ -57,11 +57,11 @@
                     </el-col>
                   </el-row>
                   <el-row :gutter="10" class="third-row">
-                    <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden;line-height:18px;">
-						<i class="iconfont icon-renyuan" style="margin-right:6px;height:18px;"></i>
-						{{task.taskBindingShiftNames}}
-                    </el-col>
-                  </el-row>
+                    <el-col :span="24" >
+						<i class="iconfont icon-renyuan"  style="margin-right:6px;height:18px;"></i>
+						<p :title="task.taskBindingShiftNames">{{task.taskBindingShiftNames}}</p>
+					</el-col>
+				  </el-row>
                 </el-aside>
 				<div :class="`flight-status bg-${task.flightStatusCode}`">{{task.flightStatus}}</div>
               </el-container>

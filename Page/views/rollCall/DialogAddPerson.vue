@@ -31,8 +31,8 @@ export default {
 			this.$store.commit('rollCall/updateObj',{currentRow:{
 				staffId:this.currentStaffId,
 				staffName:this.currentStaffName,
-				workId:this.currentWorkerId,
-				workName:this.currentWorkerName,
+				workerId:this.currentWorkerId,
+				workerName:this.currentWorkerName,
 			}})
 			this.dialogAddPersonVisible = false;
 		},
@@ -63,7 +63,7 @@ export default {
 		...mapState('rollCall', ['currentPerson', 'team','currentTeam','currentRow']),
 	},
 	components:{
-		PersonSelect,	
+		PersonSelect,
 	}
 };
 </script>

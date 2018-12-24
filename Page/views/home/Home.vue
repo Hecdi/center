@@ -446,7 +446,9 @@
 			});
 			sub("UI","Home.Message.Sync",(data)=>{
 				this.messages.push(data);
-				this.showAlert();
+				if(data.alert){
+					this.showAlert();
+				}
 			});	
 			if(remote.getGlobal('workerInit')){
 				pub("Worker", "Home.Start", null);
