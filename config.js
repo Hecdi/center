@@ -18,8 +18,9 @@ export default {
 			},
 		}],
         ajaxAPI:{
-			path:`http://${location.hostname}:6070/dispatchforpc/`,
-			//path:'http://173.100.1.52:9099/',
+            path:`http://${location.hostname}:6070/dispatchforpc/`,
+            // path:`http://${location.hostname}:6070/`,
+			// path:'http://173.100.1.52:9099/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
 				'personList':'web/scheduling/getAreaAndWorkerListAll',

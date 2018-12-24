@@ -67,6 +67,16 @@ const mutations = {
 		let fixPerson = get(state,'fixPerson');
 		assignIn(fixPerson,get(state,'currentPerson'));
 		set(state,'dialogPersonDetailVisible', false);
+		forEach(get(state,'team',[]), item => {
+			if(item.squadId == get(state, 'currentTeam')){
+				forEach(get(item, 'organization', []), person => {
+					if(person.staffId == fixPerson.staffId){
+						assignIn(person, fixPerson);
+						console.log(person);
+					}
+				})
+			}
+		});
 	},
 	setCurrentPerson(state,{currentPerson, fixPerson}){
 		state['currentPerson'] = currentPerson;
