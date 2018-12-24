@@ -10,7 +10,7 @@
 				<el-radio :label="2">事假</el-radio>
 				<el-radio :label="3">缺席</el-radio>
 				<el-radio :label="4">下班</el-radio>
-				<el-radio :label="5">换人</el-radio>
+				<el-radio :label="5">代班</el-radio>
 				<el-radio label="">正常上班</el-radio>
 			</el-radio-group>
 		</el-row>

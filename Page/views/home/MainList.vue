@@ -16,7 +16,7 @@
                 <el-aside width="97%">
                   <el-row :gutter="10" class="first-row">
                     <el-col :span="13">
-						<span class='b-black t-white'>{{`${task.auto?'自':'手'}`}}</span>
+						<span class='b-black t-white'>{{`${task.auto == true ?'自':'手'}`}}</span>
 						<span class='b-black t-white'>{{task.flightNo}}</span>
 						<span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span>
 						<span style="font-weight:bold;">{{ task.seat }}</span>
