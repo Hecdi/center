@@ -354,7 +354,6 @@
 				},
 				set(personSearchKey) {
 					pub("Worker", "Home.Area.SetPersonSearchKey", personSearchKey);
-					/*this.$store.dispatch(`home/setPersonSearchKey`, personSearchKey);*/
 				}
 			},
 			taskStatus: {
