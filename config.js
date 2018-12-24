@@ -11,7 +11,7 @@ export default {
 			host: location.hostname,
 			//host: '173.100.1.52',
 			//host: '192.168.1.50',
-			port: '9095',
+			port: '6070',
 			channel: 'webpush/intelligent_scheduling',
 			headers: {
 				//userId: 'aoc',
