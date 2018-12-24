@@ -230,7 +230,11 @@
 						endDate = moment(endDate).format("YYYY-MM-DD");
 						endDate = `${endDate} 23:59:59`;
 					}
-				} else{
+				} else if (this.inputSearch != '' && !(timeArr && timeArr.length)){
+						startDate = '';
+						endDate = '';
+				} 
+				else{
 					startDate = new Date(
 						new Date(new Date().toLocaleDateString()).getTime()
 					);
