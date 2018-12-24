@@ -85,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("violation", ["cards","totalSize"])
+    ...mapState("violation", ["cards","totalSize","allCondition"])
   },
   methods: {
     ...mapMutations({ changeStatus: "violation/changeStatus" }),
@@ -183,7 +183,8 @@ export default {
       });
     },
     refreshData() {
-      let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize	}
+      let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize}
+      param = Object.assign({}, param, this.allCondition);
       ajax.post("getViolationDataForLike",param).then(data => {
         let violation = data;
         console.log(violation);

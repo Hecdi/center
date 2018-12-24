@@ -21,7 +21,7 @@
             value-format="timestamp"
           ></el-date-picker>
           <el-input
-            placeholder="请输入内容"
+            placeholder="请输入查询内容"
             prefix-icon="el-icon-search"
             v-model="inputSearch"
             class="seach-input"
@@ -79,6 +79,7 @@ import { extend, map } from "lodash";
 import { formatDate } from "date";
 import PageNation from "PageNation.vue";
 import moment from "moment";
+import { remote } from 'electron';
 
 export default {
   name: "Sheet",
@@ -114,7 +115,7 @@ export default {
       let timeArr = this.time;
       let startDate;
       let endDate;
-      if (timeArr) {
+      if (timeArr && timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
           startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
           endDate = moment(timeArr[1]).format("YYYY-MM-DD");
@@ -126,16 +127,18 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        startDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime()
-        );
-        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        endDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime() +
-            24 * 60 * 60 * 1000 -
-            1
-        );
-        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        // startDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime()
+        // );
+        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+        // endDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime() +
+        //     24 * 60 * 60 * 1000 -
+        //     1
+        // );
+        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        startDate = '';
+        endDate = '';
       }
       let inputSearch = this.inputSearch;
       let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
@@ -190,8 +193,13 @@ export default {
         value: inputSearch,
         title: "tttt"
       };
-      let exportLocation = `http://173.100.1.52:80/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-      return exportLocation;
+      const ajaxAPI = remote.getGlobal('ajaxAPI');
+      console.log(ajaxAPI);
+      let path = `${ajaxAPI.path}/${ajaxAPI.url.sheetExportExcel}`;
+      console.log(path);
+      // let exportLocation = `http://173.100.1.52:80/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+      let exportLocation = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+     return exportLocation;
       // console.log(exportLocation);
       // return (_this.exportUrl = exportLocation);
     },
@@ -200,7 +208,7 @@ export default {
       let timeArr = this.time;
       let startDate;
       let endDate;
-      if (timeArr) {
+      if (timeArr&&timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
           startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
           endDate = moment(timeArr[1]).format("YYYY-MM-DD");
@@ -212,24 +220,26 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        startDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime()
-        );
-        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        endDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime() +
-            24 * 60 * 60 * 1000 -1
-        );
-        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        // startDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime()
+        // );
+        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+        // endDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime() +
+        //     24 * 60 * 60 * 1000 -1
+        // );
+        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        startDate = '';
+        endDate = '';
       }
       let inputSearch = this.inputSearch;
       let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
       let params = {
-        startTime: startDate,
-        endTime: endDate,
-        value: inputSearch,
-        pageSize: this.pageSize,
-        pageNumber: 1
+        "startTime": startDate,
+        "endTime": endDate,
+        "value": inputSearch,
+        "pageSize": this.pageSize,
+        "pageNumber": 1
       };
       console.log(param);
       console.log(params);
@@ -240,13 +250,11 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
-      // this.handleSearch();
       this.getSheetData();
     },
     handleCurrentChange(val) {
       this.currentPage = val;
       console.log(`currentPage:${this.currentPage}`);
-      // this.handleSearch();
       this.getSheetData();
     }
   },

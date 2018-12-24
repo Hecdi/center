@@ -61,7 +61,7 @@
             }
         },
         computed: {
-            ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize']),
+            ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize','waitCondition']),
         },
         filters:{
             currency(value){
@@ -128,7 +128,9 @@
             initWaitData(){
                 //  let ajax = ajaxx();
                 let _this = this;
-                 ajax.post("getViolationByState",{pageSize:_this.pageSize, pageNumber:_this.currentPage}).then((data)=>{
+                let param = {"pageSize":_this.pageSize, "pageNumber":_this.currentPage};
+                param = Object.assign({},param,_this.waitCondition);
+                 ajax.post("getViolationByState",param).then((data)=>{
                      if(data){
                          console.log(data);
                          this.getWaitData(data);

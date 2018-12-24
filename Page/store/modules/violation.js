@@ -9,6 +9,8 @@ const state = {
     waitItems: [],
     totalSize: 11,
     waitTotalSize: 1,
+    allCondition:{},
+    waitCondition: {},
 }
 
 const mutations = {
@@ -20,6 +22,12 @@ const mutations = {
     setWaitData(state,data) {
         state.waitItems = data.items;
         state.waitTotalSize = data.totalNum;
+    },
+    setAllCondition(state,data){
+        state.allCondition = data;
+    },
+    setWaitCondition(state,data){
+        state.waitCondition = data;
     },
     setCurrentStatus(state, status) {
         state.currentStatus = status;
@@ -36,11 +44,6 @@ const mutations = {
     changeStatus(state,value){
         let filterCards = state.filterCards;
         let allCards = state.cards;
-        // allCards.forEach(item,index){
-        //     if(item.id == value.id){
-        //         item.status = value.status;
-        //     }
-        // },
         let index  = filterCards.findIndex(c => c.id == value.id);
         console.log(index);
             if (index > -1) {
@@ -73,6 +76,12 @@ const actions = {
     },
     getWaitData({ commit, state }, data) {
         commit ('setWaitData',data);
+    },
+    getAllCondition({commit,state},data){
+        commit ('setAllCondition',data);
+    },
+    getWaitCondition({commit,state},data){
+        commit ('setWaitCondition',data);
     },
     setCurrentStatus({ commit, state }, data) {
         data = data || [];

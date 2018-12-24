@@ -104,6 +104,7 @@
     import { mapMutations, mapActions, mapState } from 'vuex';
     import { ajax } from 'ajax';
     import moment from 'moment';
+    import { remote } from 'electron';
 
 
     export default {
@@ -148,6 +149,8 @@
              ...mapActions({
                     getData: "getData",
                     getWaitData: "getWaitData",
+                    getAllCondition: "getAllCondition",
+                    getWaitCondition: "getWaitCondition",
             }),
             onSubmit() {
               console.log('submit!');
@@ -189,6 +192,12 @@
             getWaitData(data) {
                 this.$store.dispatch("violation/getWaitData", data);
             },
+            getAllCondition(data) {
+                this.$store.dispatch("violation/getAllCondition",data);
+            },
+            getWaitCondition(data) {
+                this.$store.dispatch("violation/getWaitCondition",data);
+            },
             exportExcel(){
                 let _this = this;
                 let violationCode = this.area;
@@ -217,7 +226,9 @@
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
                 console.log(params);
-                let exportLocation = `http://173.100.1.52:80/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                const ajaxAPI = remote.getGlobal('ajaxAPI');
+                let path = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}`;
+                let exportLocation = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 return exportLocation;
             },
             handleSearch(){
@@ -237,16 +248,20 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    startDate = '';
+                    endDate = '';
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
                 console.log(param);
                 console.log(params)
+                let condition = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
+                this.getAllCondition(condition);
                 ajax.post('getViolationDataForLike', params).then((data) => {
                     console.log(data);
                     this.getData(data);
@@ -271,16 +286,20 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    startDate = '';
+                    endDate = '';
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
                 console.log(param);
                 console.log(params)
+                let condition = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
+                this.getWaitCondition(condition);
                 ajax.post('getViolationByState', params).then((data) => {
                     console.log(data);
                     // this.initWaitData(data);
