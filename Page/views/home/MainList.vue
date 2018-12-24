@@ -57,7 +57,7 @@
                     </el-col>
                   </el-row>
                   <el-row :gutter="10" class="third-row">
-                    <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden">
+                    <el-col :span="24" style="margin-top:6px;font-size:12px;overflow:hidden;line-height:18px;">
 						<i class="iconfont icon-renyuan" style="margin-right:6px;height:18px;"></i>
 						{{task.taskBindingShiftNames}}
                     </el-col>
