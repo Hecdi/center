@@ -95,7 +95,6 @@
 					:data = "arr"
 					stripe
 					highlight-current-row
-					height:40px
 					style = "width:auto">
 					<el-table-column
 						class-name = "column1"
@@ -138,7 +137,7 @@
 					<el-table-column class-name = "column7" label = "附件" min-width = "100px">
 						<template slot-scope="scope" >
 							<div>
-								<el-button :type = "scope.row.imgFile?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
+								<el-button style="padding:8px 16px" :type = "scope.row.imgFile?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
 								<el-dialog v-if = "scope.row.imgFile"  title="提示" :visible.sync="dialogVisible">
 									<el-carousel :autoplay=false height="300px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
