@@ -39,13 +39,13 @@
     </el-container>
     <div class="sheet-table">
       <el-table :data="sheetList1" stripe style="width: 100%">
-        <el-table-column type="index" label="序号" width="80"/>
+        <el-table-column type="index" label="序号" width="80"  class-name="font-One"/>
         <el-table-column prop="aircraftType" label="机型" width="80"/>
         <el-table-column prop="flightType" label="机类" width="80"/>
-        <el-table-column prop="routeName" label="航线" min-width="120">
+        <el-table-column prop="routeName" label="航线" min-width="150">
           <template slot-scope="scope">
-            <span v-for="(a,index) in scope.row.routeName" :key="index">
-              <span>{{a}}</span><i v-if ="index !== scope.row.routeName.length-1" class="iconfont icon-hangxian"></i>
+            <span v-for="(a,index) in scope.row.routeName.split(',')" :key="index">
+              <span>{{a}}</span><i v-if ="index !== scope.row.routeName.split(',').length-1" class="iconfont icon-hangxian"></i>
             </span>
         </template>
       </el-table-column>
@@ -58,7 +58,7 @@
         <el-table-column prop="displaySTD" label="计飞" width="120"/>
         <el-table-column prop="displayATD" label="实飞" width="120"/>
         <el-table-column prop="projectName" label="引导车" width="120"/>
-        <el-table-column prop="departmentGuaranteeStaff" label="引导人员" width="120"/>
+        <el-table-column prop="departmentGuaranteeStaff" label="引导人员" width="80"/>
       </el-table>
     </div>
     <PageNation
