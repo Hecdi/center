@@ -140,7 +140,7 @@
 			personStyle: function() {},
 			submit: function() {
 				let staffIds = map([...this.taskWorkerList], worker => {
-					return worker.worerkId || worker.staffId;
+					return worker.workerId || worker.staffId;
 				});
 				let param = {
 					flightTaskId: this.currentTask.taskId,
