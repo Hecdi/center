@@ -142,7 +142,7 @@ const mutations = {
         });
     },
     setTaskHandover(state,data) {
-        state.taskHandover = data.data;
+        state.taskHandover = data;
     },
 	setCurrentTask(state,data){
 		state.currentTask = data;

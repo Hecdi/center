@@ -886,7 +886,8 @@
 	}
 	.taskhandover {
 		width:467px;
-		height:270px;
+		// height:270px;
+		min-height: 6.875rem;
 		background: #f7fcff;
 		border: 1px solid #0064FF;
 		margin: auto;
@@ -924,6 +925,12 @@
 			color: #0064FF;
 		}
 	}	
+	.no-data {
+		font-size: 18px;
+		color: #999;
+		padding: 20px;
+		text-align: center;
+	}
 	.dialogAlert{
 		.el-dialog__body{
 			max-height:600px;
