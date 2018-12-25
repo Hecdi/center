@@ -228,9 +228,9 @@
                 console.log(params);
                 const ajaxAPI = remote.getGlobal('ajaxAPI');
                 let path = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}`;
-                // let exportLocation = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
                 let exportLocation = `http://173.101.1.52:80/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`
-                return exportLocation;
+                return exportLocation1;
             },
             handleSearch(){
                 let violationCode = this.area;

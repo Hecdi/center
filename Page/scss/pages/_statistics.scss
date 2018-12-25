@@ -31,13 +31,20 @@
             line-height: 30px;
             border-right: 1px solid #000;
         }
+        .top-worker {
+            margin: 10px 15px;
+            margin-top: 0;
+        }
+        .table-title {
+            padding-left: 15px;
+            margin-bottom: 10px;
+        }
         .top-worker:nth-of-type(2n+1) {
             height: 40px;
             line-height: 40px;
-            border: 1px solid #ccc;
-            background: #83C0FF;
-            color: #fff;
-
+            border: 1px solid transparent;
+            background: #fff;
+            color: #333;
             span {
                 padding: 0 10px;
                 :nth-child(1){
@@ -48,11 +55,11 @@
             
         }
         .top-worker:nth-of-type(2n){
-            background: #A1A3A4;
+            background: #f0f2f4;
             color: #000;
             height: 40px;
             line-height: 40px;
-            border: 1px solid #ccc;
+            border: 1px solid transparent;
             span {
                 padding: 0 10px;
                 :nth-child(1){
@@ -61,66 +68,77 @@
                 }
             }
         }
-    //     thead>.cell {
-    //         background-color: #666;
-    //         height: 30px;
-    //         line-height: 30px;
-    //         color: #fff;
-    // }
-    // .is-leaf {
-    //         background: #666;
-    //         color: #fff;
-    //         height: 28px;
-    //         line-height: 28px;
-    //         padding: 2px 0;
-    //         text-align: center;
-    // } 
-    // tr {
-    //         height: 28px;
-    //         line-height: 28px;
-    //         padding: 2px;
-    //         text-align: center;
-    //         border: 1px solid transparent;
-    // }
-    // .el-tag--vl-people {
-    //         width:48px;
-    //         // height:20px;
-    //         color: #fff;
-    //         background-color:#ff8500; 
-    // }
-    // .el-tag--vl-car {
-    //         width:48px;
-    //         // height:20px;
-    //         color: #fff;
-    //         background-color:#0096ff; 
-    // }
-    // .el-tag--vl-company {
-    //         width:48px;
-    //         // height:20px;
-    //         color: #fff;
-    //         background-color:#a346bc; 
-    // }
-    // .el-tag--vl-tool {
-    //         width:48px;
-    //         // height:20px;
-    //         color: #fff;
-    //         background-color:#677f95; 
-    // }
-    // .el-table--enable-row-hover .el-table__body tr>td {
-    //         padding: 6px 0;
-    //         border-top: 1px solid transparent;
-    //         border-bottom: 1px solid transparent;
-    //         text-align: center;
-    // }
-    // .el-table--enable-row-hover .el-table__body tr:hover>td {
-    //         background-color: #e3f3fc !important;
-    //         border-top: 1px solid #0096ff;
-    //         border-bottom: 1px solid #0096ff;
-    // }
-    // .el-table .cell {
-    //         overflow: hidden;
-    //         white-space: nowrap;
-    //         text-overflow: ellipsis;
-    // }
+        .top-worker:hover {
+            background: #e3f3fc;
+            border: 1px solid #0096ff;
+        }
+        .top-cell {
+            padding: 0 100px !important;
+        }
+  }
+  .data-sum {
+      margin: 10px 15px;
+      margin-top: 0;
+      thead>.cell {
+        background-color: #666;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+    }
+    .is-leaf {
+        background: #666;
+        color: #fff;
+        height: 28px;
+        line-height: 28px;
+        padding: 2px 0;
+        text-align: center;
+    } 
+    tr {
+        height: 28px;
+        line-height: 28px;
+        padding: 2px;
+        text-align: center;
+        border: 1px solid transparent;
+    }
+    .el-tag--vl-people {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#ff8500; 
+    }
+    .el-tag--vl-car {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#0096ff; 
+    }
+    .el-tag--vl-company {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#a346bc; 
+    }
+    .el-tag--vl-tool {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#677f95; 
+    }
+    .el-table--enable-row-hover .el-table__body tr>td {
+        padding: 6px 0;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        text-align: center;
+    }
+    .el-table--enable-row-hover .el-table__body tr:hover>td {
+        background-color: #e3f3fc !important;
+        border-top: 1px solid #0096ff;
+        border-bottom: 1px solid #0096ff;
+    }
+    .el-table .cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
   }
 }

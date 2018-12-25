@@ -198,8 +198,9 @@ export default {
       let path = `${ajaxAPI.path}/${ajaxAPI.url.sheetExportExcel}`;
       console.log(path);
       let exportLocation = `http://173.101.1.52:80/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-      // let exportLocation = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-     return exportLocation;
+      let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+    //  console.log(exportLocation1);
+     return exportLocation1;
       // console.log(exportLocation);
       // return (_this.exportUrl = exportLocation);
     },
