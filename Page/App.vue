@@ -22,7 +22,7 @@
 		  <section class="timeAndName">
 			  <span><i class="iconfont icon-riqi"></i>{{getTimeYMD}}</span>
 			  <span><i class="iconfont icon-shijian"></i>{{getTimeHms}}</span>
-			  <span><i class="iconfont icon-yonghu"></i>{{username}}</span>
+			  <span><i class="iconfont icon-yonghu"></i>{{getUserName()}}</span>
 		  </section>
 		  <el-button icon="iconfont icon-tuichu" type="info" @click="logOut"></el-button>
         </div>
@@ -44,13 +44,15 @@
 			return {
 				getTimeYMD:'',
 				getTimeHms:'',
-				username:remote.getGlobal('username'),
 			}
 		},
 		methods:{
 			logOut(){
 				localStorage.clear();
 				this.$router.push('/login');
+			},
+			getUserName(){
+				return remote.getGlobal('username');	
 			}
 		},
 		mounted(){
