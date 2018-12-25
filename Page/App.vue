@@ -4,20 +4,31 @@
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
           <span class="navbar-brand" href="javascript:void(0)">
+						&nbsp;&nbsp;<i class="iconfont icon-"></i>
             <span class="nav-title">机坪运行管理</span></span>
           <!-- <span class="navbar-departName">机坪运行管理</span> -->
           <ul class="nav navbar-nav">
-            <router-link tag="li" to="/home" class="nav-item" exact>排班</router-link>
-            <router-link tag="li" to="/rollCall" class="nav-item">点到</router-link>
-            <router-link tag="li" to="/urgentReport" class="nav-item">偏离上报</router-link>
-            <router-link tag="li" to="/violations" class="nav-item">违规记录</router-link>
-            <router-link tag="li" to="/report" class="nav-item">报表</router-link>
-            <router-link tag="li" to="/statistics" class="nav-item">统计</router-link>
-            <router-link tag="li" to="/operationManual" class="nav-item">操作手册</router-link>
-            <!-- <router-link tag="li" to="/login" class="nav-item">登陆测试</router-link> -->
-            <!--<router-link tag="li" to="/login" class="nav-item el-icon-circle-close-outline" style="float:right;color:#fff">-->
-              <!--[> 00 <]-->
-            <!--</router-link>-->
+            <router-link tag="li" to="/home" class="nav-item" exact>
+							<i class="iconfont icon-paibanguanli"></i>&nbsp;&nbsp;排班
+						</router-link>
+            <router-link tag="li" to="/rollCall" class="nav-item">
+							<i class="iconfont icon-diandao"></i>&nbsp;&nbsp;点到
+						</router-link>
+            <router-link tag="li" to="/urgentReport" class="nav-item">
+							<i class="iconfont icon-pianlishangbao"></i>&nbsp;&nbsp;偏离上报
+						</router-link>
+            <router-link tag="li" to="/violations" class="nav-item">
+							<i class="iconfont icon-weiguijilu"></i>&nbsp;&nbsp;违规记录
+						</router-link>
+            <router-link tag="li" to="/report" class="nav-item">
+							<i class="iconfont icon-baobiao-copy"></i>&nbsp;&nbsp;报表
+						</router-link>
+            <router-link tag="li" to="/statistics" class="nav-item">
+							<i class="iconfont icon-tongji"></i>&nbsp;&nbsp;统计
+						</router-link>
+            <router-link tag="li" to="/operationManual" class="nav-item">
+							<i class="iconfont icon-caozuoshouce"></i>&nbsp;&nbsp;操作手册
+						</router-link>
           </ul>
 		  <section class="timeAndName">
 			  <span><i class="iconfont icon-riqi"></i>{{getTimeYMD}}</span>
