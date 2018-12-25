@@ -9,7 +9,6 @@
           <span class="staff-name">{{t.toUserId}}</span>
         </div>
       </div>
-      <h1 @click="handlGettTaskHandover">Hello 任务交接</h1>
     </el-row>
   </el-dialog>
 </template>
@@ -129,9 +128,9 @@ export default {
     },
     handlGettTaskHandover() {
       console.log("lisrt");
-      let remoteParams = remote.getGlobal("depId");
+	  let remoteParams = remote.getGlobal("deptCode");
       ajax
-        .post("getAssociateReportList", { deptId: `${remoteParams}` })
+        .post("getAssociateReportList", { deptCode: `${remoteParams}` })
         .then(data => {
           let result = data;
           this.getTaskHandover(result);
@@ -152,7 +151,6 @@ export default {
     }
   },
   beforeMount(){
-  this.handlGettTaskHandover();
   },
 };
 </script>

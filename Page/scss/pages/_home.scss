@@ -27,7 +27,16 @@
 			margin-bottom:10px;
 			background-color:#fff;
 			border-radius: 4px;
+			.el-col{
+				text-overflow:ellipsis;
+				overflow:hidden;
+				white-space:nowrap;
+			}
 			.flightNo{
+				display:inline-block;
+				width:51px;
+				height:18px;
+				line-height:18px;
 				background-color:#393f43;
 				color:#fff;
 				padding:0 4px;

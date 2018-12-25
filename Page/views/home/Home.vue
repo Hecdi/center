@@ -144,9 +144,9 @@
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index">
 						<el-col :span="4" style="text-align:center;">
-							<span class="flightNo">{{message.flightNo}}</span>
+							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
-						<el-col :span="14">{{message.content}}</el-col>
+						<el-col :span="14" :title="message.content">{{message.content}}</el-col>
 						<el-col :span="6" style="text-align:right;padding-right:6px;">
 							<el-button size="mini" type="danger">解除警告</el-button>
 						</el-col>
@@ -158,9 +158,9 @@
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
 						<el-col :span="4" style="text-align:center;">
-							<span class="flightNo">{{message.flightNo}}</span>
+							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
-						<el-col :span="20">{{message.content}}</el-col>
+						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
 					</el-row>
 				</el-tab-pane>
 				<el-tab-pane>
@@ -169,9 +169,9 @@
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in tips" :key="index">
 						<el-col :span="4" style="text-align:center;">
-							<span class="flightNo">{{message.flightNo}}</span>
+							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
-						<el-col :span="20">{{message.content}}</el-col>
+						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
 					</el-row>
 				</el-tab-pane>
 				<el-tab-pane>
@@ -180,9 +180,9 @@
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in logs" :key="index">
 						<el-col :span="4" style="text-align:center;">
-							<span class="flightNo">{{message.flightNo}}</span>
+							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
-						<el-col :span="20">{{message.content}}</el-col>
+						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
 					</el-row>
 				</el-tab-pane>
 			</el-tabs>
