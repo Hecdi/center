@@ -2,8 +2,8 @@
     <div class="violation-topbar">
         <el-row class="tooltip" v-if="tabActive == 'all'">
             <el-col :span="5">
-                <button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</button>
-                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
+                <el-button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</el-button>
+                <el-button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</el-button>
             </el-col>
             
             <el-col :span="19" class="topbar">
@@ -44,10 +44,10 @@
         </el-row>
         <el-row class="tooltip" v-else>
             <el-col :span="5">
-                <button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</button>
-                <button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</button>
+                <el-button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</el-button>
+                <el-button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</el-button>
             </el-col>
-            
+  
             <el-col :span="19" class="topbar">
                 <el-form ref="form" label-width="80px" style="display:none">
                     <el-form-item >
@@ -152,22 +152,22 @@
                     getAllCondition: "getAllCondition",
                     getWaitCondition: "getWaitCondition",
             }),
-            onSubmit() {
-              console.log('submit!');
-            },
-            handleClose(done) {
-                this.$confirm('确认关闭？')
-                    .then(_ => {
-                      done();
-                    })
-                    .catch(_ => {});
-            },
-            handEdit(target){
-                target.isEdit = !target.isEdit;
-            },
-            closeEdit(item){
-                item.isEdit = false;
-            },
+            // onSubmit() {
+            //   console.log('submit!');
+            // },
+            // handleClose(done) {
+            //     this.$confirm('确认关闭？')
+            //         .then(_ => {
+            //           done();
+            //         })
+            //         .catch(_ => {});
+            // },
+            // handEdit(target){
+            //     target.isEdit = !target.isEdit;
+            // },
+            // closeEdit(item){
+            //     item.isEdit = false;
+            // },
             toggleTabs(value){
                 this.tabs=value;
                 this.tabActive = value;
@@ -307,6 +307,22 @@
                     _this.getWaitData(data);
                 });
 
+            },
+            judgePermission(){
+                let userInfo = remote.getGlobal('userInfo');
+                userInfo = JSON.parse(userInfo);
+                console.log(userInfo);
+                let permission = userInfo.roleRS;
+                let _this = this;
+                permission.forEach(element => {
+                    let role = element.roleCode;
+                    if(role=="review_schdule") {
+                        return _this.role = true;
+                    }else {
+                        return _this.role = false;
+                    }
+                });
+                console.log(_this.role);
             },
             refreshData() {
                 ajax.post("getViolationDataForLike",{"pageNumber":1,"pageSize":10}).then(data => {

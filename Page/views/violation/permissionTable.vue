@@ -1,8 +1,37 @@
 <template>
-  <div class="all-table">
-    <el-table :data="cardList" stripe style="width: 100%" :cell-class-name="violationTypeBg">
+  <div class="permission-table">
+    <div class="violation-topbar">
+      <el-row class="tooltip">
+            <el-col :span="5">
+                <el-button class="tab-btn all font-Orb active-tab">历史记录</el-button>
+            </el-col>
+            <el-col :span="19" class="topbar">
+                <el-input
+                    placeholder="请输入内容"
+                    prefix-icon="el-icon-search"
+                    v-model="inputSearch"
+                    class="seach-input"
+                    blur="handleSearch"
+                ></el-input>
+                <span class="demonstration">时间段</span>
+                <el-date-picker
+                    v-model="time"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    @change="handleSearch"
+                    value-format="timestamp">
+                </el-date-picker>
+                <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
+                <el-button size="mini">
+                    <a>导出</a>
+                </el-button>
+            </el-col>
+        </el-row>
+    <el-table :data="filterCards" stripe style="width: 100%" :cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
-      <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
       <el-table-column
         prop="violationCodeName"
         label="违规类型"
@@ -16,7 +45,6 @@
           >{{scope.row.violationCodeName}}</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="violationName" label="人员编号" width="130"/> -->
       <el-table-column prop="people" label="违规人员" width="180"/>
       <el-table-column prop="car" label="车辆编号" min-width="80"/>
       <el-table-column prop="device" label="设备编号" min-width="80"/>
@@ -39,19 +67,20 @@
       </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
       <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
-      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat1" width="80"/>
-      <el-table-column label="操作" v-if="test==1">
+      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
+      <!-- <el-table-column label="操作" v-if="test==1">
         <template slot-scope="scope">
           <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <div class="dialog">
       <ShowImg :picture ="getPic"/>
     </div>
-     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
+     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="perTotalSize" 
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
+  </div>
   </div>
 </template>
 
@@ -81,17 +110,15 @@ export default {
       img: img,
       picture: '',
       getPic: '',
-      // totalSize: 100,
       pageSize: 10,
       currentPage:1,
       test: 0,
+      time: [],
+      inputSearch:'',
     };
   },
-  // computed: {
-  //     ...mapState("violation", ["cards","totalSize","allCondition"])
-  // },
   computed: {
-    ...mapState("violation", ["cards","totalSize","allCondition"]),
+    ...mapState("violation", ["perTotalSize","allCondition","filterCards"]),
     cardList: function() {
       return map(this.cards, list => {
         return extend({}, list, {
@@ -117,19 +144,6 @@ export default {
       }else {
         return;
       }
-      // switch(value) {
-      //   case 1: 
-      //     return result;
-      //   case 2: 
-      //     return result;
-      //    case 3: 
-      //     return result;
-      //   case 4: 
-      //     return result;
-      //   case 5: 
-      //     return result;
-      // }
-
     },
     indexMethod(index) {
       return index + 1;
@@ -193,15 +207,6 @@ export default {
         return "待审核";
       }
     },
-     statusFormat1(row, column) {
-      if (row.status == 1) {
-        return "通过111";
-      } else if (row.status == 2) {
-        return "不通过";
-      } else {
-        return "待审核";
-      }
-    },
     openShowImg(value) {
       this.getPic = value;
       console.log(this.getPic);
@@ -226,14 +231,49 @@ export default {
         }
       });
     },
+    handleSearch(){
+        let violationCode = this.area;
+        let timeArr = this.time;
+        let startDate;
+        let endDate;
+        if(timeArr){
+            if(timeArr[0] == timeArr[1]){
+                startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+                endDate = moment(timeArr[1]).format("YYYY-MM-DD");
+                endDate = `${endDate} 23:59:59`;
+            } else {
+                startDate = timeArr[0];
+                startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                endDate = timeArr[1];
+                endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
+            }  
+        } else {
+            startDate = '';
+            endDate = '';
+        }
+        let inputSearch = this.inputSearch;
+        let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
+        let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
+        console.log(param);
+        console.log(params)
+        let condition = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
+        // this.getAllCondition(condition);
+        ajax.post('getViolationDataForLike', params).then((data) => {
+            console.log(data);
+            this.getData(data);
+        });
+
+    },
     refreshData() {
       let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize}
-      param = Object.assign({}, param, this.allCondition);
-      ajax.post("getViolationDataForLike",param).then(data => {
-        let violation = data;
-        console.log(violation);
-        this.getData(data);
-      });
+    //   param = Object.assign({}, param, this.allCondition);
+    //   ajax.post("getViolationDataForLike",param).then(data => {
+    //     let violation = data;
+    //     console.log(violation);
+    //     this.getData(data);
+    //   });
+     let pageData = this.filterCards;
+     
     },
     created() {
       this.refreshData();
@@ -242,8 +282,5 @@ export default {
       this.picture = value;
     }
   },
-  // beforeMount(){
-  //     this.getData();
-  // }
 };
 </script>

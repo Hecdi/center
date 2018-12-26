@@ -7,10 +7,12 @@ const state = {
     filterCards: [],
     showImgDialog: false,
     waitItems: [],
-    totalSize: 11,
+    totalSize: 0,
     waitTotalSize: 1,
     allCondition:{},
     waitCondition: {},
+    havePermission: false,
+    perTotalSize: 0,
 }
 
 const mutations = {
@@ -23,6 +25,9 @@ const mutations = {
         state.waitItems = data.items;
         state.waitTotalSize = data.totalNum;
     },
+    setPermission(state,data) {
+        state.havePermission = data;
+    },
     setAllCondition(state,data){
         state.allCondition = data;
     },
@@ -33,8 +38,10 @@ const mutations = {
         state.currentStatus = status;
         console.log(state.currentStatus);
     },
+   
     filterStatus(state, data) {
-        state.filterCards = data.items.filter(item => item.status == 3);
+        state.filterCards = state.cards.filter(item => item.status == 1);
+        state.perTotalSize = state.filterCards.length; 
     },
     updateShowImg(state,obj){
         mapKeys(obj,(v,k) => {
@@ -73,6 +80,9 @@ const actions = {
     getData({ commit, state }, data) {
         commit('setData', data);
         commit('filterStatus', data);
+    },
+    getPermission({commit,state},data){
+        commit('setPermission',data);
     },
     getWaitData({ commit, state }, data) {
         commit ('setWaitData',data);
