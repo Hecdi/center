@@ -22,6 +22,8 @@
         margin-bottom: 10px;
     }
     .violation-card {
+        height:82vh;
+        overflow: scroll;
         .el-card {
             height: 220px;
             .el-card__body {
@@ -283,8 +285,11 @@
     .all-table{
         margin: 3px;
         margin-top: 10px;
-        height: 90vh;
-        overflow: scroll;
+        // height: 90vh;
+        // overflow: scroll;
+        .el-table {
+            background: transparent !important;
+        }
         thead>.cell {
             background-color: #666;
             height: 30px;
