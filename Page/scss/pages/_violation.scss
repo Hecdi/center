@@ -1,6 +1,9 @@
 // @import "../components/pageNation";
 
-.violation {
+.full-width {
+    width: 100%;
+}
+.violation,.permission-table {
     width: 100%;
     padding: 5px;
     font-size:14px;
@@ -125,6 +128,9 @@
         border-radius: 10px;
         // margin-top: 12px;
         margin-right: 10px;  
+        span {
+            font-size: 12px;
+        }
     }
     .active-tab {
         background-color: #0096ff;
@@ -206,7 +212,75 @@
             }
         }
     }
-    .all-table {
+
+    thead>.cell {
+        background-color: #666;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+    }
+    .is-leaf {
+        background: #666;
+        color: #fff;
+        height: 28px;
+        line-height: 28px;
+        padding: 2px;
+        text-align: center;
+    } 
+    tr {
+        height: 28px;
+        line-height: 28px;
+        padding: 2px;
+        text-align: center;
+        border: 1px solid transparent;
+    }
+    .el-table--striped .el-table__body tr.el-table__row--striped td {
+        background: #f0f2f4;
+    }
+    .el-tag--vl-people {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#ff8500; 
+    }
+    .el-tag--vl-car {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#0096ff; 
+    }
+    .el-tag--vl-company {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#a346bc; 
+    }
+    .el-tag--vl-tool {
+        width:48px;
+        // height:20px;
+        color: #fff;
+        background-color:#677f95; 
+    }
+    .el-table--enable-row-hover .el-table__body tr>td {
+        padding: 6px 0;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        text-align: center;
+    }
+    .el-table--enable-row-hover .el-table__body tr:hover>td {
+        background-color: #e3f3fc !important;
+        border-top: 1px solid #0096ff;
+        border-bottom: 1px solid #0096ff;
+    }
+    .el-table .cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .el-table_1_column_1 {
+        font-family: $font-family-One; 
+    }
+    .all-table{
         margin: 3px;
         margin-top: 10px;
         height: 90vh;
@@ -279,6 +353,7 @@
             font-family: $font-family-One; 
         }
     }
+    
     .violation-page-nations {
         display: block;
         text-align: center;

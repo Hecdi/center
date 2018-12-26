@@ -77,6 +77,16 @@
                 background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(61,132,255,50%) 100%);
                 // opacity:0.5;
             }
+            &:after{
+                content: "";
+                line-height: 16px;
+                height: 16px;
+                width: 1px;
+                color: #fff;
+                position: relative;
+                left: 20px;
+            }
         }
+
     }
 }

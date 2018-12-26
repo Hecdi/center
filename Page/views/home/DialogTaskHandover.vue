@@ -1,13 +1,16 @@
 <template>
   <el-dialog class="dialogAddTask" title="自动交接任务" :visible.sync="dialogTaskHandover" width="540px">
     <el-row>
-      <div class="taskhandover">
+      <div class="taskhandover" v-if="haveData" >
         <div v-for="(t,index) in taskHandover" :key="index">
-          <span class="flight-no">{{t.flightTaskId}}</span>
-          <span class="flight-id">{{t.flightNo}}</span>
-          <span class="time">{{t.fromUserId}}</span>
-          <span class="staff-name">{{t.toUserId}}</span>
+          <span class="flight-no">{{t.flightNo}}</span>
+          <span class="flight-id">{{t.flightId}}</span>
+          <span class="time">{{t.fromUserName}}</span>
+          <span class="staff-name">{{t.toUserName}}</span>
         </div>
+      </div>
+      <div class="" v-else>
+        暂无任务交接数据
       </div>
     </el-row>
   </el-dialog>
@@ -23,6 +26,7 @@ export default {
   name: "dialogTaskHandover",
   data() {
     return {
+      haveData: false,
       taskHandover1: [
         {
           flightTaskId: "1",
@@ -127,14 +131,17 @@ export default {
       });
     },
     handlGettTaskHandover() {
-      console.log("lisrt");
-	  let remoteParams = remote.getGlobal("deptCode");
-      ajax
-        .post("getAssociateReportList", { deptCode: `${remoteParams}` })
-        .then(data => {
+      let _this = this;
+	    let remoteParams = remote.getGlobal("deptCode");
+      ajax.post("getAssociateReportList", { deptCode: `${remoteParams}` }).then(data => {
+          // let result = data.length==0 ? "对不起，暂无数据" : data;
           let result = data;
+          // let responseMessage = responseMessage;
+          // _this.haveData = responseMessage == "未查询到内容！" ? false : true;
+          _this.haveData = data.length == 0 ? false : true;
+          console.log(_this.haveData);
           this.getTaskHandover(result);
-        });
+      });
     }
   },
   computed: {
@@ -151,6 +158,7 @@ export default {
     }
   },
   beforeMount(){
+    this.handlGettTaskHandover();
   },
 };
 </script>
