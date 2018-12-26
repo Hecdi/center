@@ -98,7 +98,7 @@
 								@click="openAddTask"
 								>临时任务</el-button>
 							<el-button type="primary" size="mini"  @click="openTaskHandover" >任务交接</el-button>
-							<el-button type="primary" size="mini"  >冲突检测</el-button>
+							<!--<el-button type="primary" size="mini"  >冲突检测</el-button>-->
 					</el-col>
 				</el-row>
 				<el-row class="legend-panel" v-if="!isTable" :gutter="20">
@@ -140,7 +140,7 @@
 			<el-tabs type="card" style="width:400px;" class="home-message">
 				<el-tab-pane>
 					<span slot="label">
-						<i class="el-icon-date"></i>警告
+						<i class="iconfont icon-gaojing"></i>警告
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index">
 						<el-col :span="4" style="text-align:center;">
@@ -154,18 +154,7 @@
 				</el-tab-pane>
 				<el-tab-pane>
 					<span slot="label">
-						<i class="el-icon-date"></i>偏离上报
-					</span>
-					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
-						<el-col :span="4" style="text-align:center;">
-							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
-						</el-col>
-						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
-					</el-row>
-				</el-tab-pane>
-				<el-tab-pane>
-					<span slot="label">
-						<i class="el-icon-date"></i>提醒
+						<i class="iconfont icon-tongzhi"></i>提醒
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in tips" :key="index">
 						<el-col :span="4" style="text-align:center;">
@@ -176,9 +165,20 @@
 				</el-tab-pane>
 				<el-tab-pane>
 					<span slot="label">
-						<i class="el-icon-date"></i>日志
+						<i class="iconfont icon-log-a-04"></i>日志
 					</span>
 					<el-row :gutter="4" v-for="(message, index) in logs" :key="index" @click.native="revealLogDetail(message)">
+						<el-col :span="4" style="text-align:center;">
+							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
+						</el-col>
+						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
+					</el-row>
+				</el-tab-pane>
+				<el-tab-pane>
+					<span slot="label">
+						<i class="iconfont icon-chongtu"></i>冲突
+					</span>
+					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
