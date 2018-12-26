@@ -178,7 +178,7 @@
 					<span slot="label">
 						<i class="el-icon-date"></i>日志
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in logs" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in logs" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -227,6 +227,14 @@
 			};
 		},
 		methods: {
+			revealLogDetail(message){
+				if(message && message.flightTaskId){
+					this.$store.dispatch(`home/updateFilter`,{
+						name:"logTaskId",
+						filterOption:message.flightTaskId,
+					});
+				}
+			},
 			formatPerson(worker){
 				let workerName = worker.staffName;
 				let reason = worker.nonArrivalReason;

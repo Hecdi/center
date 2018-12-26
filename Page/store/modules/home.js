@@ -13,6 +13,7 @@ const initFilter = {
         searchPersonKey:null,
         pageSize: 10,
         currentPage: 1,
+		logTaskId:null,
 }
 const state = {
     rows: [],
@@ -26,50 +27,7 @@ const state = {
     dialogTaskHandover:false,
     persons:[],
     filterPersons:[],
-	messages:[
-		{
-			taskId:'34234235435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:1,
-			alert:true,
-		},
-		{
-			taskId:'342342353244435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:2,
-			alert:true,
-		},
-		{
-			taskId:'34234235656565435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:3,
-			alert:false,
-		},
-		{
-			taskId:'34234234564564565435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:4,
-			alert:true,
-		},
-		{
-			taskId:'3423425465756756735435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:2,
-			alert:true,
-		},
-		{
-			taskId:'342454645634235435',
-			flightNo:'BL34345',
-			content:'45uksdjfsdjfksdf',
-			type:2,
-			alert: false,
-		},
-	],
+	messages:[],
 	timeLimitOpts:[{
           value: '10',
           label: '10分钟'
@@ -115,6 +73,9 @@ const mutations = {
         state.filterOption[data.name] = data.filterOption;
 		if(data.name != 'searchPersonKey' && state.filterOption.searchPersonKey){
 			state.filterOption.searchPersonKey = null;
+		}
+		if(data.name != 'logTaskId' && state.filterOption.logTaskId){
+			state.filterOption.logTaskId = null;
 		}
         pub('Worker','Home.Task.SetTaskFilter', state.filterOption);
     },
