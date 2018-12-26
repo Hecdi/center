@@ -22,12 +22,12 @@
 						<span style="font-weight:bold;">{{ task.seat }}</span>
                     </el-col>
                     <el-col :span="11" style="padding-right:30px;padding-left:0;text-align:right;">
-						<Legend v-if="task.delay != '--'"  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
-						<Legend v-if="task.keyMaintaince != '--'"  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
-						<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
-						<Legend v-if="task.quickFlag != '--'"   iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
-						<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
-						<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+						<Legend v-if="task.delay != '--'"  iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333"/>
+						<Legend v-if="task.keyMaintaince != '--'"  iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333"/>
+						<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.quickFlag != '--'"   iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang"  fontSize="12px" color="#333"/>
+						<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333"/>
 						<Legend v-if="task.taskAlarm != '--'" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
 					</el-col>
                   </el-row>
