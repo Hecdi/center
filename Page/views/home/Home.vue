@@ -119,12 +119,12 @@
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
 							标记说明：
 						</span>
-						<Legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwubiaoji" fontSize="12px" color="#333"/>
-						<Legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdianbiaoji" fontSize="12px" color="#333"/>
-						<Legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIPbiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="快速过站" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisubiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiangbiaoji"  fontSize="12px" color="#333"/>
-						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhangbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333"/>
+						<Legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333"/>
+						<Legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP"  fontSize="12px" color="#333"/>
+						<Legend data="快速过站" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu"  fontSize="12px" color="#333"/>
+						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang"  fontSize="12px" color="#333"/>
+						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333"/>
 						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
 					</el-col>
 				</el-row>
