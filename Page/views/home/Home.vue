@@ -126,6 +126,7 @@
 						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang"  fontSize="12px" color="#333"/>
 						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333"/>
 						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="偏离上报" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333"/>
 					</el-col>
 				</el-row>
 			</el-header>
