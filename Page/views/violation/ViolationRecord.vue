@@ -1,10 +1,7 @@
 <template>
 <div class="full-width">
-  <div class="violation" v-if="this.havePermission">
+  <div class="violation">
 		<top-bar />
-  </div>
-  <div v-else>
-      <permission-table/>
   </div>
 </div>
 </template>
@@ -84,13 +81,13 @@ import {remote} from 'electron';
                 permission.forEach(element => {
                     let role = element.roleCode;
                     if(role=="review_schdule") {
-                        return _this.havePermission = true;
-                        // let value = 1;
-                        // return _this.getPermission(value);
+                        // return _this.havePermission = true;
+                         let value = 1;
+                         return _this.getPermission(value);
                     }else {
-                        return _this.havePermission = false;
-                        // let value = 0;
-                        // return _this.getPermission(value);
+                        // return _this.havePermission = false;
+                        let value = 0;
+                        return _this.getPermission(value);
                     }
                 });
                 // this.getPermission();

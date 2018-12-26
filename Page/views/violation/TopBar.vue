@@ -1,9 +1,12 @@
 <template>
     <div class="violation-topbar">
         <el-row class="tooltip" v-if="tabActive == 'all'">
-            <el-col :span="5">
+            <el-col :span="5" v-if="this.havePermission">
                 <el-button class="tab-btn wait" v-bind:class="{ 'active-tab font-YaheiBold': tabActive == 'wait'}" @click="toggleTabs('wait')">待审核{{this.waitTotalSize}}</el-button>
                 <el-button class="tab-btn all font-Orb"  v-bind:class="{ 'active-tab':tabActive == 'all'}" @click="toggleTabs('all')">历史记录</el-button>
+            </el-col>
+             <el-col :span="5" v-else>
+                <el-button class="tab-btn all font-Orb active-tab">历史记录</el-button>
             </el-col>
             
             <el-col :span="19" class="topbar">
@@ -142,7 +145,7 @@
           
         },
         computed: {
-            ...mapState('violation',['waitItems','showImgDialog','waitTotalSize']),
+            ...mapState('violation',['waitItems','showImgDialog','waitTotalSize','havePermission']),
         },
         
         methods: {
