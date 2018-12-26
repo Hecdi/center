@@ -77,6 +77,11 @@ export const initSocket = (client) =>{
 		saveToTaskDB(false,d.data,homeFilter['taskList']).then( data => {
 			pub('UI','Home.Task.Sync', data);	
 		});
+		saveHomeTableDB(false,d.data).then( () => {
+			getHomeTableFromDB(homeFilter.tableList).then((result)=>{
+				postal.channel('UI').publish('Home.Table.Sync',result)
+			});
+		});
 	},{
 		userId:userId,
 		token:token,
