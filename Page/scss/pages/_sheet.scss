@@ -59,6 +59,9 @@
         margin: 3px;
         margin-top: 10px;
         width: 100%;
+        .el-table {
+            background: transparent !important;
+        }
         table {
             width: 100% !important;
         }
