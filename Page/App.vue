@@ -4,7 +4,7 @@
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
           <span class="navbar-brand" href="javascript:void(0)">
-						&nbsp;&nbsp;<i class="iconfont icon-"></i>
+			  <i class="iconfont icon-logo" style="font-size:80px;margin-left:10px;"></i>
             <span class="nav-title">机坪运行管理</span></span>
           <!-- <span class="navbar-departName">机坪运行管理</span> -->
           <ul class="nav navbar-nav">
