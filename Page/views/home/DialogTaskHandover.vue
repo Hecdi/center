@@ -136,6 +136,8 @@ export default {
       ajax.post("getAssociateReportList", { deptCode: `${remoteParams}` }).then(data => {
           // let result = data.length==0 ? "对不起，暂无数据" : data;
           let result = data;
+          // let responseMessage = responseMessage;
+          // _this.haveData = responseMessage == "未查询到内容！" ? false : true;
           _this.haveData = data.length == 0 ? false : true;
           console.log(_this.haveData);
           this.getTaskHandover(result);

@@ -1,6 +1,6 @@
 <template>
   <div class="all-table">
-    <el-table :data="cards" stripe style="width: 100%" :cell-class-name="violationTypeBg">
+    <el-table :data="cardList" stripe style="width: 100%" :cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
       <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
       <el-table-column
@@ -16,10 +16,10 @@
           >{{scope.row.violationCodeName}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="violationCode" label="人员编号" width="130"/>
-      <el-table-column prop="violationName" label="违规人员" width="180"/>
-      <el-table-column prop="deptId" label="车辆编号" min-width="80"/>
-      <el-table-column prop="violationName2" label="设备编号" min-width="80"/>
+      <!-- <el-table-column prop="violationName" label="人员编号" width="130"/> -->
+      <el-table-column prop="people" label="违规人员" width="180"/>
+      <el-table-column prop="car" label="车辆编号" min-width="80"/>
+      <el-table-column prop="device" label="设备编号" min-width="80"/>
       <el-table-column prop="belongCompanyName" label="所属单位" width="180"/>
       <el-table-column
         prop="violationDescription"
@@ -61,6 +61,7 @@ import moment from "moment";
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
 import { ajax } from "ajax";
+import { map, extend } from 'lodash';
 import PageNationHis from "./PageNationHis.vue";
 // import PageNation from 'PageNation.vue';
 
@@ -84,9 +85,21 @@ export default {
       currentPage:1,
     };
   },
+  // computed: {
+  //     ...mapState("violation", ["cards","totalSize","allCondition"])
+  // },
   computed: {
-    ...mapState("violation", ["cards","totalSize","allCondition"])
-  },
+    ...mapState("violation", ["cards","totalSize","allCondition"]),
+    cardList: function() {
+      return map(this.cards, list => {
+        return extend({}, list, {
+          people: this.formatData(list.violationCode==1,list.violationName),
+          car : this.formatData(list.violationCode==2,list.violationName),
+          device: this.formatData(list.violationCode==3,list.violationName)
+          })
+        });
+      }
+    },
   methods: {
     ...mapMutations({ changeStatus: "violation/changeStatus" }),
     handleChangeStatus(row, value) {
@@ -96,6 +109,26 @@ export default {
     ...mapActions({
       getData: "getData"
     }),
+    formatData(value,result) {
+      if(value){
+        return result;
+      }else {
+        return;
+      }
+      // switch(value) {
+      //   case 1: 
+      //     return result;
+      //   case 2: 
+      //     return result;
+      //    case 3: 
+      //     return result;
+      //   case 4: 
+      //     return result;
+      //   case 5: 
+      //     return result;
+      // }
+
+    },
     indexMethod(index) {
       return index + 1;
     },
