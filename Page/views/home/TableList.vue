@@ -4,7 +4,7 @@
       :data="homeTable"
       style="width: 100%"
       stripe	
-      max-height="850"
+      height="70vh"
       @row-click="showDeatil"
       >
       <el-table-column
