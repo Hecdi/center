@@ -38,7 +38,7 @@
       </el-row>
     </el-container>
     <div class="sheet-table">
-      <el-table :data="sheetList1" stripe style="width: 100%">
+      <el-table :data="sheetList1" stripe style="width: 100%" height="80vh">
         <el-table-column type="index" label="序号" width="80"  class-name="font-One" fixed/>
         <el-table-column prop="FlightNo" label="航班号" width="120" class-name="font-One"/>
         <el-table-column prop="aircraftNo" label="飞机号" width="120"/>
