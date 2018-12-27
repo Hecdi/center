@@ -40,7 +40,7 @@
                     value-format="timestamp">
                 </el-date-picker>
                 <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
-                <el-button size="mini">
+                <el-button size="mini" type="primary" class="export-excel">
                     <a  :href="exportExcel()">导出</a>
                 </el-button>
             </el-col>
@@ -220,19 +220,22 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+                    startDate='';
+                    endDate = '';
                 }
                 let inputSearch = this.inputSearch;
                 let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
                 console.log(params);
+                let title = "违规记录历史数据";
                 const ajaxAPI = remote.getGlobal('ajaxAPI');
                 let path = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}`;
-                let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-                let exportLocation = `http://173.101.1.52:80/violationRecord/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`
+                let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+                let exportLocation = `http://173.101.1.52:80/violationRecord/exportExcel?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`
                 return exportLocation1;
             },
             handleSearch(){

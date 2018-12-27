@@ -19,6 +19,7 @@ const mutations = {
     setData(state, data) {
         // state.cards = data;
         state.cards = data.items.filter(item => item.status < 3);
+        // state.cards = data.items;
         state.totalSize = data.totalNum;
     },
     setWaitData(state,data) {
