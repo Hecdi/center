@@ -143,7 +143,7 @@
 					<span slot="label">
 						<i class="iconfont icon-gaojing"></i>警告
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -157,7 +157,7 @@
 					<span slot="label">
 						<i class="iconfont icon-tongzhi"></i>提醒
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in tips" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in tips" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -179,7 +179,7 @@
 					<span slot="label">
 						<i class="iconfont icon-chongtu"></i>冲突
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in conflicis" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -336,8 +336,8 @@
 			warnings:function(){
 				return this.getFilterMessages('type', 1);	
 			},
-			urgentReports:function(){
-				return this.getFilterMessages('type', 2);	
+			conflicis:function(){
+				return this.getFilterMessages('type', 5);	
 			},
 			tips:function(){
 				return this.getFilterMessages('type', 3);	
