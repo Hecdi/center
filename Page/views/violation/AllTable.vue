@@ -17,9 +17,10 @@
         </template>
       </el-table-column>
       <!-- <el-table-column prop="violationName" label="人员编号" width="130"/> -->
-      <el-table-column prop="people" label="违规人员" width="180"/>
-      <el-table-column prop="car" label="车辆编号" min-width="80"/>
-      <el-table-column prop="device" label="设备编号" min-width="80"/>
+      <el-table-column prop="staffNumber" label="人员编号" width="180"/>
+      <el-table-column prop ="staffName" label="违规人员" width="180"/>
+      <el-table-column prop="carNumber" label="车辆编号" min-width="80"/>
+      <el-table-column prop="deviceNumber" label="设备编号" min-width="80"/>
       <el-table-column prop="belongCompanyName" label="所属单位" width="180"/>
       <el-table-column
         prop="violationDescription"
@@ -97,13 +98,24 @@ export default {
         return extend({}, list, {
           people: this.formatData(list.violationCode==1,list.violationName),
           car : this.formatData(list.violationCode==2,list.violationName),
-          device: this.formatData(list.violationCode==3,list.violationName)
+          device: this.formatData(list.violationCode==3,list.violationName),
+          // staffNumber: list.staffNumber!==null?list.staffNumber:'--',
+          // staffName: list.staffName !== null ? list.staffName:'--',
+          staffNumber: this.formatNull(list.staffNumber),
+          staffName: this.formatNull(list.staffName),
+          carNumber: this.formatNull(list.carNumber),
+          deviceNumber: this.formatNull(list.deviceNumber),
+          belongCompanyName:this.formatNull(list.belongCompanyName),
+          violationDescription:this.formatNull(list.violationDescription),
           })
         });
       }
     },
   methods: {
     ...mapMutations({ changeStatus: "violation/changeStatus" }),
+     ...mapActions({ 
+      getWaitData: "getWaitData",
+    }),
     handleChangeStatus(row, value) {
       this.changeStatus(value);
       console.log(value);
@@ -117,19 +129,13 @@ export default {
       }else {
         return;
       }
-      // switch(value) {
-      //   case 1: 
-      //     return result;
-      //   case 2: 
-      //     return result;
-      //    case 3: 
-      //     return result;
-      //   case 4: 
-      //     return result;
-      //   case 5: 
-      //     return result;
-      // }
-
+    },
+    formatNull(value){
+      if(value){
+        return value;
+      } else {
+        return '--'
+      }
     },
     indexMethod(index) {
       return index + 1;
@@ -193,15 +199,6 @@ export default {
         return "待审核";
       }
     },
-     statusFormat1(row, column) {
-      if (row.status == 1) {
-        return "通过111";
-      } else if (row.status == 2) {
-        return "不通过";
-      } else {
-        return "待审核";
-      }
-    },
     openShowImg(value) {
       this.getPic = value;
       console.log(this.getPic);
@@ -223,8 +220,19 @@ export default {
         console.log(data);
         if (data) {
           this.refreshData();
+          this.initWaitData();
         }
       });
+    },
+    getWaitData(value) {
+        this.$store.dispatch('violation/getWaitData',value);
+    },
+    initWaitData(){
+        ajax.post("getViolationByState", {pageSize:10, pageNumber:1}).then((data)=>{
+            if(data){
+                this.getWaitData(data);
+            }
+        })
     },
     refreshData() {
       let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize}

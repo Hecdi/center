@@ -333,7 +333,7 @@
                   this.getData(data);
                 });
             },
-             initWaitData(){
+            initWaitData(){
                  ajax.post("getViolationByState", {pageSize:10, pageNumber:1}).then((data)=>{
                      if(data){
                          this.getWaitData(data);
