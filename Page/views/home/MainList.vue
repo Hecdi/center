@@ -49,7 +49,9 @@
 						<p>{{task.aircraftType}}</p>
                     </el-col>
                     <el-col :span="10">
-						<p><i class="iconfont icon-jihua" style="color:#00ad62;" v-if="task && (task.displayScheduleTimeWithDate != '--')"></i>{{task.displayScheduleTimeWithDate}}</p>
+						<p><i class="iconfont icon-jihua" style="color:#00ad62;" v-if="task && (task.displayScheduleTimeWithDate != '--')"></i>
+						{{task.displayScheduleTimeWithDate}}
+						</p>
 						<p>
 							<i class="iconfont" :class="(task.disPlayActuralTime != '--') ? 'icon-shiji2':'icon-yuji2'" 
 						   v-if="task && (task.disPlayActuralTime != '--' || task.disPlayExpectedTime != '--')"></i>
