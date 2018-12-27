@@ -86,16 +86,9 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="displayETD"
+        prop="displayScheduleTimeWithDate"
         label="计划"
-        width="100">
-        <template slot-scope="scope">
-          <span class="ATDETD" >
-           <!-- <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i> -->
-           <!-- {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}} -->
-          {{scope.row.displayScheduleTimeWithDate}}
-          </span>
-        </template>
+        width="150">
       </el-table-column>
       <el-table-column
         prop="displayATAWithDate"
