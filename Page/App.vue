@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="isLoad">
     <el-container>
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
@@ -55,6 +55,7 @@
 			return {
 				getTimeYMD:'',
 				getTimeHms:'',
+				isLoad:false,
 			}
 		},
 		methods:{
@@ -68,6 +69,9 @@
 		},
 		mounted(){
 			var _this = this;
+			window.onload = ()=>{
+				_this.isLoad = true;
+			}
 			this.timer1 = setInterval(function(){
 				let offsetTime = remote.getGlobal('offsetTime');
 				offsetTime = isNumber(offsetTime) ? offsetTime:0;
