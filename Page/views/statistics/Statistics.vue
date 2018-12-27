@@ -40,7 +40,7 @@
       <el-col :span="24" class="data-sum">
         <el-table :data="tableData1" stripe style="width: 100%">
           <el-table-column type="index" label="序号" width="50"/>
-          <el-table-column prop="date" label="日期" width="120"/>
+          <el-table-column prop="scheduleTime" label="日期" width="120"/>
           <el-table-column prop="clickRate" label="点击率" min-width="80"/>
           <el-table-column prop="createTask" label="生成任务" min-width="180"/>
           <el-table-column prop="finishRate" label="完成率" min-width="180"/>
@@ -85,6 +85,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 import * as echarts from "echarts";
 import moment from "moment";
 import dialogUnFinishView from "./dialogUnFinishView.vue";
+import {extend} from "lodash";
 
 export default {
   name: "Statistics",
@@ -182,7 +183,9 @@ export default {
       let pass = [];
       let unPass = [];
       let taskDataCount1 = [];
-      let staffWorkCount = {}
+      let staffWorkCount = {};
+      let topStaff = [];
+      data.topMam = {};
       data.forEach((item,index) => {
         console.log(item);
         dateRange.push(item.scheduleTime);
@@ -203,8 +206,11 @@ export default {
         checking.push(violationHandle.checking);
         pass.push(violationHandle.pass);
         unPass.push(violationHandle.unPass);
-        taskDataCount1.push(item.taskDataCount);
+        item.totalCount = extend({},item.totalCount , {scheduleTime:item.scheduleTime});
+        taskDataCount1.push(item.totalCount);
         staffWorkCount.item1 = (item.staffWorkCount);
+        item.topMam = extend({},{topStaff:item.staffWorkCount},{scheduleTime:item.scheduleTime})
+        topStaff.push( item.topMam );
         // staffWorkCount[index].push(item.scheduleTime);
       })  
 
@@ -217,6 +223,8 @@ export default {
       this.operateTask = operateTask;
       this.operateTotal = operateTotal;
       this.tableData1 = taskDataCount1;
+      this.topStaff = topStaff;
+      console.log(this.topStaff);
       this.staffWorkCount = staffWorkCount;
       console.log(this.dateRange);
       console.log(this.staffWorkCount);

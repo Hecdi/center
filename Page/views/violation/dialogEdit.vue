@@ -76,7 +76,7 @@
     props:["dialogVisible","unfinishData"],
     data() {
       return {
-        dialogCheckEdit: false
+        dialogCheckEdit: true
       };
     },
     methods: {
