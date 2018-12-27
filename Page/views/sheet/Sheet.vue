@@ -19,13 +19,14 @@
             end-placeholder="结束日期"
             format="yyyy 年 MM 月 dd 日"
             value-format="timestamp"
+            @change="handleSearch"
           ></el-date-picker>
           <el-input
             placeholder="请输入查询内容"
             prefix-icon="el-icon-search"
             v-model="inputSearch"
             class="seach-input"
-            blur="handleSearch"
+            @blur="handleSearch"
             @keyup.enter.native="handleSearch"
           />
           <el-button type size="small" class="export-excel">
@@ -283,10 +284,12 @@ export default {
           displaySTA: formatDate(list.sta, "HHmm(DD)", "--"),
           displaySTD: formatDate(list.std, "HHmm(DD)", "--"),
           displayETD: formatDate(list.etd, "HHmm(DD)", "--"),
+          displayATA: formatDate(list.ata, "HHmm(DD)", "--"	),
           // displaySTD:formatDate(list.std,'HHmm(DD)','--'),
           displayCTOT: formatDate(list.ctot, "HHmm(DD)", "--"),
           displatPreAtd: formatDate(list.preAtd, "HHmm(DD)", "--"),
-          displatBoardingTime: formatDate(list.boardingTime, "HHmm(DD)", "--"),
+          displayBoardingTime: formatDate(list.boardingTime, "HHmm(DD)", "--"),
+          displayATD: formatDate(list.atd, "HHmm(DD)", "--"),
           Receive: list.movement=="A"?formatDate(list.arriveReceive,"HHmm(DD)", "--"):formatDate(list.departmentReceive,"HHmm(DD)", "--"),
           Finish: list.movement=="A"?formatDate(list.arriveFinish,"HHmm(DD)", "--"	):formatDate(list.departmentFinish,"HHmm(DD)", "--"),
           Place: list.movement=="A"?formatDate(list.arriveInPlace,"HHmm(DD)", "--"):formatDate(list.departmentInPlace,"HHmm(DD)", "--"),
