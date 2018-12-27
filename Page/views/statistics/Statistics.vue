@@ -11,7 +11,7 @@
           end-placeholder="结束日期"
           format="yyyy 年 MM 月 dd 日"
           value-format="timestamp"
-
+          @change = "handleClick1"
         ></el-date-picker>
       </el-col>
       <el-col :span="12">
@@ -50,6 +50,15 @@
           <el-table-column prop="notGuaranteeTask" label="不保障任务" width="120"/>
           <el-table-column prop="operateTask" label="操作任务" width="120"/>
           <el-table-column prop="operateTotal" label="操作总数" width="120"/>
+          <el-table-column label="未完成任务" min-width="80">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="primary"
+                @click="openUnfinish(scope.row)"
+              >查看</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <h4 class="table-title">每日完成工作量top5</h4>
@@ -64,7 +73,9 @@
         </div>
       </el-col>
     </el-row>
-
+    <div class="dialog">
+        <dialogUnFinishView :unfinishData ="getUnfinish"/>
+    </div>
   </div>
 </template>
 
@@ -73,11 +84,13 @@ import { ajax } from "ajax";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import * as echarts from "echarts";
 import moment from "moment";
+import dialogUnFinishView from "./dialogUnFinishView.vue";
 
 export default {
   name: "Statistics",
   components: {
     // TopBar,
+    dialogUnFinishView
   },
   computed: {
     ...mapGetters({ cards: "processedCards" })
@@ -91,6 +104,7 @@ export default {
       time: [],
       tableData1: [],
       staffWorkCount: [],
+      getUnfinish: [],
       getOption: {
         title: {text: '进出港统计'},legend: {data: ['进港','离港']},
         xAxis: [{data: []}],
@@ -130,12 +144,17 @@ export default {
     created() {
       this.getData();
     },
+    openUnfinish(value) {
+      // this.getUnfinish = value;
+      // console.log(this.getUnfinish);
+      this.$store.dispatch('statistics/updateTaskHandover', { dialogUnFinish: true });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     handleClick1(){
       this.refreshData();
-      this.drawLine();
+      // this.drawLine();
     },
     initData(){
       let _this = this;
@@ -656,8 +675,8 @@ export default {
           startDate = moment(startDate).format("YYYY-MM-DD");
           endDate = startDate;
       }
-      // let params = {"startTime":startDate,"endTime":endDate};
-      let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};
+      let params = {"startTime":startDate,"endTime":endDate};
+      // let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};
       console.log(params);
       ajax.post("statistics",params).then(data => {
         // let statistics = data;
