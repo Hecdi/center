@@ -225,15 +225,6 @@ export default {
       this.tableData1 = taskDataCount1;
       this.topStaff = topStaff;
       console.log(this.topStaff);
-      let array=[];
-      // this.tableData1.map((item,index)=>{
-      // // dateRange.forEach((ele,index) =>{
-
-      // // })
-      // array.push(
-      //     Object.assign({},item,{indexNum:str})
-      //   )
-      // });
       this.staffWorkCount = staffWorkCount;
       console.log(this.dateRange);
       console.log(this.staffWorkCount);
