@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="isLoad" v-loading="waiting" element-loading-text="拼命加载中。。。">
+  <div id="app" v-if="isLoad" v-loading="waiting" element-loading-text="拼命加载中。。。" element-loading-background="rgba(0,0,0,0.1)">
     <el-container>
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
