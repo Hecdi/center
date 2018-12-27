@@ -114,7 +114,7 @@
 				searchFlight: "",
 				tempTaskType: '',
 				tempTaskTypeCode: '',
-				tempTaskTypeName: '',
+				tempTaskTypeName: '引导车',
 				templateRadio: '',
 				curentWorker: '',
 				activeName: '',
@@ -123,7 +123,7 @@
 				tempGuaranteeList:[],
 				pageSize: 20,
 				currentPage:1,
-				total: 100,
+				total: 0,
 			}
 		},
 		watch: {
@@ -136,9 +136,12 @@
 					this.currentWorker='';
 					this.activeName='';
 					this.searchFlight = '';
-					this.tempTaskTypeName = '';
+					this.tempTaskTypeName = '引导车';
 					this.handlGettTaskModelList();
-				} 
+					this.handleSearchFlight();
+				} else {
+					this.handleSearchFlight();
+				}
 			}
 		},
 		methods: {
