@@ -26,6 +26,9 @@
             <router-link tag="li" to="/statistics" class="nav-item">
 							<i class="iconfont icon-tongji"></i>&nbsp;&nbsp;统计
 						</router-link>
+			<router-link tag="li" to="/messageCenter" class="nav-item">
+							<i class="iconfont icon-xiaoxi"></i>&nbsp;&nbsp;消息中心
+						</router-link>
             <router-link tag="li" to="/operationManual" class="nav-item">
 							<i class="iconfont icon-caozuoshouce"></i>&nbsp;&nbsp;操作手册
 						</router-link>
