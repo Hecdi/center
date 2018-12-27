@@ -225,6 +225,7 @@
 				visible: false,
 				messages:[],
 				currentAreaName:'',
+				messageAlerts:[],
 			};
 		},
 		methods: {
@@ -265,7 +266,11 @@
 			handleTable() {
 				this.isTable = !this.isTable;
 			},
-			showAlert(){
+			showAlert(data){
+				if(!this.dialogAlertVisible){
+					this.messageAlerts = [];
+				}
+				this.messageAlerts.push(data);
 				this.$store.dispatch('home/update',{
 					dialogAlertVisible:true,	
 				});
@@ -328,9 +333,6 @@
 			},
 		},
 		computed: {
-			messageAlerts:function(){
-				return this.getFilterMessages('alert', true);	
-			},
 			warnings:function(){
 				return this.getFilterMessages('type', 1);	
 			},
@@ -420,7 +422,7 @@
 					});
 				}
 			},
-			...mapState("home", ["filterPersons", "persons", "filterOption"]),
+			...mapState("home", ["filterPersons", "persons", "filterOption", "dialogAlertVisible"]),
 			...mapGetters('rollCall', ['getReason']),
 		},
 		components: {
@@ -455,7 +457,7 @@
 			sub("UI","Home.Message.Sync",(data)=>{
 				this.messages.push(data);
 				if(data.alert){
-					this.showAlert();
+					this.showAlert(data);
 				}
 			});	
 			if(remote.getGlobal('workerInit')){
