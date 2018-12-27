@@ -159,8 +159,5 @@ export default {
       }
     }
   },
-  beforeMount(){
-    this.handlGettTaskHandover();
-  },
 };
 </script>
