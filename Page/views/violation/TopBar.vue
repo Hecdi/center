@@ -104,6 +104,7 @@
     import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
     import ShowImg from "./ShowImg.vue";
+    import checkPending from './checkPending.vue';
     import { mapMutations, mapActions, mapState } from 'vuex';
     import { ajax } from 'ajax';
     import moment from 'moment';
@@ -115,6 +116,7 @@
           Card,
           AllTable,
           ShowImg,
+          checkPending,
       },
         data() {
           return {
