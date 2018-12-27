@@ -3,7 +3,7 @@ import postal from 'postal';
 import {sub, pub,  removeSub} from "postalControl";
 import { remote } from 'electron';
 import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB, } from "../../lib/storage";
-import { ajax } from "ajax";
+import { ajax } from "ajaxForWorker";
 import { get } from 'http';
 import { cloneDeep } from 'lodash';
 
@@ -13,25 +13,56 @@ var homeFilter={
 	tableList:{},
 };
 const homeInit = () => {
-	ajax.post('personList').then( d=>{
-		saveToPersonDB(d).then( data => {
-			getSearchPersons().then((result) => {
-				pub('UI','Home.Area.All', result);	
+	pub('UI','Home.Loading', true);	
+	Promise.map([
+		()=>{
+			return 	ajax.post('personList').then( d=>{
+				return	saveToPersonDB(d).then( data => {
+					return getSearchPersons().then((result) => {
+						pub('UI','Home.Area.All', result);	
+						console.log('ffff');
+						return Promise.resolve();
+					});
+				});
 			});
-		});
-	});
-	ajax.post('taskList').then(data=>{
-		saveHomeTableDB(true,data).then( (value) => {
-			getHomeTableFromDB(homeFilter.tableList).then((result)=>{
+		},
+		()=>{
+			return ajax.post('taskList').then(data=>{
+				saveHomeTableDB(true,data).then( (value) => {
+					getHomeTableFromDB(homeFilter.tableList).then((result)=>{
+						postal.channel('UI').publish('Home.Table.Sync',result)
+					});
+				});
+				return saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
+					postal.channel('UI').publish('Home.Task.Sync',result);
+					console.log('fffffffff');
+					return Promise.resolve();
+				});
+			});
+		}
 
-				postal.channel('UI').publish('Home.Table.Sync',result)
-			});
-		});
-		saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
-			postal.channel('UI').publish('Home.Task.Sync',result);
-		});
-		
+	],(f)=>f()).then(()=>{
+		console.log('fffffffffffffffff');
+		pub('UI','Home.Loading', false);	
 	});
+	//ajax.post('personList').then( d=>{
+		//saveToPersonDB(d).then( data => {
+			//getSearchPersons().then((result) => {
+				//pub('UI','Home.Area.All', result);	
+			//});
+		//});
+	//});
+	//ajax.post('taskList').then(data=>{
+		//saveHomeTableDB(true,data).then( (value) => {
+			//getHomeTableFromDB(homeFilter.tableList).then((result)=>{
+				//postal.channel('UI').publish('Home.Table.Sync',result)
+			//});
+		//});
+		//saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
+			//postal.channel('UI').publish('Home.Task.Sync',result);
+		//});
+		
+	//});
 	sub('Worker','Home.Area.SetPersonSearchKey',(key) =>{
 		homeFilter['personList']['searchPersonKey'] = key;
 		getSearchPersons(homeFilter['personList']['searchPersonKey']).then((result) => {

@@ -5,6 +5,7 @@
     :visible.sync="dialogAddTaskVisible"
     width="1000px"
   >
+  <section v-loading="waiting" element-loading-text="拼命加载中。。。">
     <el-row :gutter="10" class="personList">
       <el-col  v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
         <div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName ==worker.staffId  }" @click="show(worker.staffId)" :data-id="worker.staffId">
@@ -44,9 +45,7 @@
           v-model="searchFlight"
           suffix-icon="el-icon-search"
 		  @keyup.native.enter = "handleSearchFlight"
-		  @blur = "handleSearchFlight"
         />
-		<!-- <button @click="handleSearchFlight">搜索</button> -->
       </el-col>
       <el-col :span="8" style="display:none">
         <span style="color:#939393">任务时限:</span>
@@ -85,10 +84,11 @@
       <el-button type="primary" @click="submitTempTask">提交</el-button>
       <el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
     </span>
-			<page-nation style="bottom:-20px;left:200px;position:relative;margin:10px;text-align:center;"
-			:currentPage="currentPage" :pageSize="pageSize" :total="total"
-			@handleCurrentChange = "handleCurrentChange"
-			@handleSizeChange = "handleSizeChange"/>
+	<page-nation style="bottom:-20px;left:200px;position:relative;margin:10px;text-align:center;"
+				 :currentPage="currentPage" :pageSize="pageSize" :total="total"
+				 @handleCurrentChange = "handleCurrentChange"
+				 @handleSizeChange = "handleSizeChange"/>
+  </section>
   </el-dialog>
 </template>
 <script>
@@ -124,6 +124,7 @@
 				pageSize: 20,
 				currentPage:1,
 				total: 0,
+				waiting: false,
 			}
 		},
 		watch: {
@@ -139,9 +140,7 @@
 					this.tempTaskTypeName = '引导车';
 					this.handlGettTaskModelList();
 					this.handleSearchFlight();
-				} else {
-					this.handleSearchFlight();
-				}
+				} 
 			}
 		},
 		methods: {
@@ -187,14 +186,18 @@
 			handleSearchFlight(){
 				let condition = this.searchFlight;
 				let param = {"searchCondition":condition,"pageSize":this.pageSize,pageNumber:this.currentPage};
+				this.waiting = true;
 				ajax.post('getFlightForTemporaryTask',param).then(data=>{
 					console.log(data);
+					this.waiting = false;
 					this.total = data.totalNum;
 					this.flights = data.items;
 				})
 			},
 			handlGettTaskModelList(){
+				this.waiting = true;
 				ajax.post('tempTaskModelList').then(data => {
+					this.waiting = false;
 					this.tempWorkerList = data.workerList;
 					this.tempGuaranteeList= data.guaranteeList;
 				})
@@ -227,7 +230,9 @@
 				}
 
 				console.log(params);
+				this.waiting = true;
 				ajax.post('taskSubmit',params,data => {
+					this.waiting = false;
 					let code = data.responseCode;
 					if(code == 1000){
 						this.dialogAddTaskVisible = false;
@@ -239,13 +244,13 @@
 				})
 			},
 			handleSizeChange(val){
-      	this.pageSize = val;
+				this.pageSize = val;
 				this.handleSearchFlight();
-    	},
-    	handleCurrentChange(val){
-      	this.currentPage = val;
+			},
+			handleCurrentChange(val){
+				this.currentPage = val;
 				this.handleSearchFlight();
-    	},
+			},
 		},
 		computed: {
 			displayFlights:function(){

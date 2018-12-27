@@ -28,7 +28,7 @@
 						<Legend v-if="task.quickFlag != '--'"   iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu"  fontSize="12px" color="#333"/>
 						<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang"  fontSize="12px" color="#333"/>
 						<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333"/>
-						<Legend v-if="task.taskAlarm != '--'" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
+						<Legend v-if="task.taskAlarm == -1 " iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
 						<Legend v-if="task.haveDeviating != '--'" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333"/>
 					</el-col>
                   </el-row>

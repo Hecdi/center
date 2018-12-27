@@ -1,5 +1,5 @@
 <template>
-	<el-container class="home">
+	<el-container class="home" >
 		<el-aside :style="{ width: asideWith }">
 			<el-row v-if="!isHidden">
 				<el-col :span="24">
@@ -422,7 +422,7 @@
 					});
 				}
 			},
-			...mapState("home", ["filterPersons", "persons", "filterOption", "dialogAlertVisible"]),
+			...mapState("home", ["filterPersons", "persons", "filterOption", "dialogAlertVisible",'mainList']),
 			...mapGetters('rollCall', ['getReason']),
 		},
 		components: {
@@ -437,6 +437,9 @@
 			DialogAlert,
 		},
 		beforeMount() {
+			this.$store.dispatch('home/update',{
+				waiting:true,	
+			});
 			sub("UI", "Home.Task.Sync", data => {
 				this.getMainListData(data);
 			});
@@ -447,6 +450,14 @@
 			});
 			sub("UI", "Home.Area.Sync", data => {
 				this.getPersons(data);
+			});
+			sub("UI", "Home.Loading", data => {
+				if(this.persons.length && this.mainList.length){
+					data = false;
+				}
+				this.$store.dispatch(`home/update`, {
+					waiting: data,
+				});
 			});
 			sub("UI", "Home.Area.All", data => {
 				this.getPersons(data);

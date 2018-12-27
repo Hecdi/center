@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="isLoad">
+  <div id="app" v-if="isLoad" v-loading="waiting" element-loading-text="拼命加载中。。。">
     <el-container>
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
@@ -49,6 +49,7 @@
 	import {formatDate} from "date.js";
 	import {remote} from "electron";
 	import {isNumber} from 'lodash';
+	import { mapState} from "vuex";
 	export default {
 		name: "app",
 		data(){
@@ -66,6 +67,9 @@
 			getUserName(){
 				return remote.getGlobal('username');	
 			}
+		},
+		computed:{
+			...mapState("home", ['waiting']),
 		},
 		mounted(){
 			var _this = this;

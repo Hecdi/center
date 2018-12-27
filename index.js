@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
     }
   });
 
-new Vue({
+export const myVue = new Vue({
     router:config.smartScheduling.router,
     store: config.smartScheduling.store,
 	render: h => h(app)

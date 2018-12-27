@@ -6,6 +6,7 @@
 		:visible.sync="dialogPersonSettingVisible"
 		width="800px"
 		>
+		<section v-loading="waiting" element-loading-text="拼命加载中。。。">
     <el-tabs type="card" v-model="checkedPanel">
       <el-tab-pane label="人员设置" name="set">
         <el-row :gutter="10" class="row">
@@ -43,6 +44,7 @@
 		<el-button type="primary" @click="submit">确定</el-button>
 		<el-button @click="dialogPersonSettingVisible = false;">取 消</el-button>
 	</span>
+		</section>
   </el-dialog>
 </template>
 <script>
@@ -60,7 +62,7 @@
 				leader:false,
 				checkedPanel:'set',
 				detail:[],
-
+				waiting:false,
 			};
 		},
 		watch:{
@@ -77,8 +79,10 @@
 				return formatDate(val,opt,empty);
 			},
 			getPersonDetail(){
+				this.waiting = true;
 				ajax.post('home.getPersonDetail',{staffId:this.currentPerson.staffId}).then(data=>{
 					console.log(data);
+					this.waiting = false;
 					this.detail.splice(0, this.detail.length);
 					each(data, item=>{
 						this.detail.push(item);
@@ -94,7 +98,9 @@
 					groupLeader:this.leader?1:-1,
 				}
 				console.log(param);
+				this.waiting = true;
 				ajax.post('home.updateStaffState',param,(data)=>{
+					this.waiting = false;
 					this.$message({
 						type: data.responseCode == 1000 ? "success" : "error",
 						message: data.responseMessage
