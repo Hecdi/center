@@ -39,6 +39,7 @@ export default {
 				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token
 				'urgentReport':'deviationReport/getDeviationReportData',
                 'updateState':'violationRecord/updateState',
+				'messageCenter':'message/getList',
                 'findByTimeAndCode':'violationRecord/findByTimeAndCode',
                 'getFlightForTemporaryTask':'web/scheduling/getFlightForTemporaryTask', //航班搜索 post
                 'tempTaskModelList':'web/scheduling/tempTaskModelList', //临时任务获取接口 post
