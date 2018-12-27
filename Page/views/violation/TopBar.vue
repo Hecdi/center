@@ -90,8 +90,11 @@
         <div class="dialog">
             <ShowImg/>
         </div>
-        <div v-if="tabs!=='all'">
+        <!-- <div v-if="tabs!=='all'">
             <Card/>
+        </div> -->
+        <div v-if="tabs!=='all'">
+            <checkPending/>
         </div>
         <div v-else>
             <all-table/>
