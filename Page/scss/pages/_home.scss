@@ -907,25 +907,30 @@
 			min-width: 42px;
 			text-align: center;
 			margin:5px 0;
+			font-size: 14px;
 		}
 		.flight-no {
 			background: #393f44;
 			color: #fff;
-			font-size: 16px;
+			font-size: 14px;
 			padding: 0 5px;
 			line-height: 20px;
 			border-radius: 4px;
 		}
 		.flight-id {
 			color: #0064FF;
-			font-size: 16px;
+			font-size: 14px;
+			font-family: $font-family-One;
 		}
 		.time {
-			color: #666;
+			color: #333;
 			font-size: 14px;
 		}
-		.staff-name {
+		.staff-toname {
 			color: #0064FF;
+		}
+		.end-time {
+			color:red;
 		}
 	}	
 	.no-data {

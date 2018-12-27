@@ -1,5 +1,5 @@
 <template>
-	<el-container class="home">
+	<el-container class="home" >
 		<el-aside :style="{ width: asideWith }">
 			<el-row v-if="!isHidden">
 				<el-col :span="24">
@@ -126,6 +126,7 @@
 						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang"  fontSize="12px" color="#333"/>
 						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333"/>
 						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333"/>
+						<Legend data="偏离上报" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333"/>
 					</el-col>
 				</el-row>
 			</el-header>
@@ -142,13 +143,13 @@
 					<span slot="label">
 						<i class="iconfont icon-gaojing"></i>警告
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in warnings" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
 						<el-col :span="14" :title="message.content">{{message.content}}</el-col>
 						<el-col :span="6" style="text-align:right;padding-right:6px;">
-							<el-button size="mini" type="danger">解除警告</el-button>
+							<el-button size="mini" type="danger" @click.native.stop="relievingAlarm(message.flightTaskId)">解除警告</el-button>
 						</el-col>
 					</el-row>
 				</el-tab-pane>
@@ -156,7 +157,7 @@
 					<span slot="label">
 						<i class="iconfont icon-tongzhi"></i>提醒
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in tips" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in tips" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
@@ -178,13 +179,14 @@
 					<span slot="label">
 						<i class="iconfont icon-chongtu"></i>冲突
 					</span>
-					<el-row :gutter="4" v-for="(message, index) in urgentReports" :key="index">
+					<el-row :gutter="4" v-for="(message, index) in conflicis" :key="index" @click.native="revealLogDetail(message)">
 						<el-col :span="4" style="text-align:center;">
 							<span class="flightNo" :title="message.flightNo">{{message.flightNo}}</span>
 						</el-col>
 						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
 					</el-row>
 				</el-tab-pane>
+				<el-button size="mini" round style="color:#666C72;background-color:#d8d8d8;font-size:12px;" @click.native="gotoMessage">更多></el-button>
 			</el-tabs>
 			<MessageBtn slot="reference" @click="showMessageBox"/>
 		</el-popover>
@@ -208,8 +210,9 @@
 	import TableList from "./TableList.vue";
 	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
-	import {filter} from 'lodash';
+	import {filter, each} from 'lodash';
 	import { remote } from 'electron';
+	import { ajax } from "ajax";
 
 	import { mapState, mapGetters } from "vuex";
 
@@ -224,9 +227,26 @@
 				visible: false,
 				messages:[],
 				currentAreaName:'',
+				messageAlerts:[],
 			};
 		},
 		methods: {
+			relievingAlarm(flightTaskId){
+				ajax.post('relievingAlarm',{flightTaskId:flightTaskId},data=>{
+					each(this.messages, (item, index)=>{
+						if(item.type == 1 && item.flightTaskId == flightTaskId){
+							this.messages.splice(index,1);	
+						}
+					});
+					this.$message({
+						type: data.responseCode == 1000 ? "success" : "error",
+						message: data.responseMessage
+					});
+				});
+			},
+			gotoMessage(){
+				this.$router.push('/messageCenter');	
+			},
 			revealLogDetail(message){
 				if(message && message.flightTaskId){
 					this.$store.dispatch(`home/updateFilter`,{
@@ -264,7 +284,11 @@
 			handleTable() {
 				this.isTable = !this.isTable;
 			},
-			showAlert(){
+			showAlert(data){
+				if(!this.dialogAlertVisible){
+					this.messageAlerts = [];
+				}
+				this.messageAlerts.push(data);
 				this.$store.dispatch('home/update',{
 					dialogAlertVisible:true,	
 				});
@@ -317,8 +341,6 @@
 			},
 			sendTaskListFilter() {
 				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
-				// console.log('777cc77c7c77c');
-				// pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
 			},
 			getFilterMessages(k,v){
 				return filter(this.messages, item =>{
@@ -327,14 +349,11 @@
 			},
 		},
 		computed: {
-			messageAlerts:function(){
-				return this.getFilterMessages('alert', true);	
-			},
 			warnings:function(){
 				return this.getFilterMessages('type', 1);	
 			},
-			urgentReports:function(){
-				return this.getFilterMessages('type', 2);	
+			conflicis:function(){
+				return this.getFilterMessages('type', 5);	
 			},
 			tips:function(){
 				return this.getFilterMessages('type', 3);	
@@ -419,7 +438,7 @@
 					});
 				}
 			},
-			...mapState("home", ["filterPersons", "persons", "filterOption"]),
+			...mapState("home", ["filterPersons", "persons", "filterOption", "dialogAlertVisible",'mainList']),
 			...mapGetters('rollCall', ['getReason']),
 		},
 		components: {
@@ -434,6 +453,9 @@
 			DialogAlert,
 		},
 		beforeMount() {
+			this.$store.dispatch('home/update',{
+				waiting:true,	
+			});
 			sub("UI", "Home.Task.Sync", data => {
 				this.getMainListData(data);
 			});
@@ -445,6 +467,14 @@
 			sub("UI", "Home.Area.Sync", data => {
 				this.getPersons(data);
 			});
+			sub("UI", "Home.Loading", data => {
+				if(this.persons.length && this.mainList.length){
+					data = false;
+				}
+				this.$store.dispatch(`home/update`, {
+					waiting: data,
+				});
+			});
 			sub("UI", "Home.Area.All", data => {
 				this.getPersons(data);
 			});
@@ -454,7 +484,7 @@
 			sub("UI","Home.Message.Sync",(data)=>{
 				this.messages.push(data);
 				if(data.alert){
-					this.showAlert();
+					this.showAlert(data);
 				}
 			});	
 			if(remote.getGlobal('workerInit')){

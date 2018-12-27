@@ -4,7 +4,7 @@
     :title="title"
     :visible.sync="dialogTaskDetailVisible"
     width="600px"
-  >
+	  >
    <!-- <section class="row1">-->
 		<!--<section>-->
 			<!--<div class="city">{{currentTask.airRoute[0]}}</div>-->
@@ -24,6 +24,7 @@
 			<!--<div>实际时间：<b>{{currentTask.disPlayActuralTime}}</b></div>-->
 		<!--</section>-->
 	<!--</section>-->
+	<section v-loading="waiting" element-loading-text="拼命加载中。。。">
    <el-row class="row1" :gutter="5" >
 		<el-col :span="3">
 			<div class="city">{{currentTask.iata ? currentTask.iata[0] : ''}}</div>
@@ -87,11 +88,12 @@
     </el-tabs>
     <span slot="footer" class="dialog-footer">
       <el-button type="danger" v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="release(8)">不保障该航班</el-button>
-	  <el-button type="success" @click="release(2)" v-if=" taskWorkerList.size>0 && this.currentTask.taskStatus == 1">发布</el-button>
+	  <el-button type="success" @click="release(2)" v-if=" originTaskWorkerList.size != 0 && !isTaskWorkerListChange() && this.currentTask.taskStatus == 1">发布</el-button>
       <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">提交
 	  </el-button>
       <el-button @click="dialogTaskDetailVisible = false;">取 消</el-button>
     </span>
+	</section>
   </el-dialog>
 </template>
 <script>
@@ -107,8 +109,10 @@
 			return {
 				activeName:'first',
 				taskWorkerList: new Set(),
+				originTaskWorkerList: new Set(),
 				workerList: new Set(),
 				guaranteeDataList: [],
+				waiting:false,
 			};
 		},
 		methods: {	
@@ -119,6 +123,7 @@
 				return ms2Time(overTime); 
 			},
 			release: function(val) {
+				this.waiting = true;
 				ajax.post(
 					"home.taskRelease",
 					{
@@ -126,6 +131,7 @@
 						taskState: val
 					},
 					data => {
+						this.waiting = false;
 						this.$message({
 							type: data.responseCode == 1000 ? "success" : "error",
 							message: data.responseMessage
@@ -147,7 +153,9 @@
 					staffIds: staffIds.join('&'),
 				};
 				console.log(param);
+				this.waiting = true;
 				ajax.post("home.taskSubmit", param, data => {
+					this.waiting = false;
 					this.$message({
 						type: data.responseCode == 1000 ? "success" : "error",
 						message: data.responseMessage
@@ -181,14 +189,27 @@
 				this.taskWorkerList.clear();
 				this.guaranteeDataList= [];
 				if(!val || !val.taskId){return;}
+				this.waiting = true;
 				ajax.post("home.taskDetail", { flightTaskId: val.taskId }).then(data => {
 					this.workerList = new Set(data.workerList);
 					this.taskWorkerList = new Set(data.taskWorkerList);
+					this.originTaskWorkerList = new Set(data.taskWorkerList);
 					this.guaranteeDataList= data.guaranteeDataList;
 					this.flight = data.flight;
+					this.waiting = false;
 					console.log(data);
 				});
-			}
+			},
+			isTaskWorkerListChange: function(){
+				if(this.taskWorkerList.size != this.originTaskWorkerList.size){
+					return true;
+				}
+				let diff = new Set([...this.originTaskWorkerList].filter(x => !this.taskWorkerList.has(x)));
+				if(diff.size > 0){
+					return true;
+				}
+				return false;
+			},
 		},
 		computed: {
 			title: function() {

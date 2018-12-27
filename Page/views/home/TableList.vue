@@ -16,14 +16,19 @@
       </el-table-column>
       <el-table-column
         label="标志"
-        width="50"
+        width="150"
       >
         <template slot-scope="scope">
-               <span>
+               <span v-if="!scope.row.disPlaceholder">
                  <i :class="scope.row.displayDelay"></i>
                  <i :class="scope.row.displayAlternate"></i>
                  <i :class="scope.row.displayReturnFliht"></i>
-                 </span>
+                 <i :class="scope.row.displayQuickFlag"></i>
+                 <i :class="scope.row.displayVip"></i>
+              </span>
+              <span v-else>
+                --
+              </span>
          </template>
       </el-table-column>
       <el-table-column
@@ -81,15 +86,9 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="displayETD"
+        prop="displayScheduleTimeWithDate"
         label="计划"
-        width="100">
-        <template slot-scope="scope">
-          <span class="ATDETD" >
-           <!-- <i :class = "{'iconfont icon-feiji':scope.row.ata || scope.row.atd}"></i> -->
-           {{scope.row.disPlayActuralTime?scope.row.disPlayActuralTime:scope.row.disPlayExpectedTime}}
-          </span>
-        </template>
+        width="150">
       </el-table-column>
       <el-table-column
         prop="displayATAWithDate"

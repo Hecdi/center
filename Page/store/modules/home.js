@@ -17,6 +17,7 @@ const initFilter = {
 }
 const state = {
     rows: [],
+	waiting:false,
     checkedRow: null,
     checkedTask: null,
     personSearchKey:null,

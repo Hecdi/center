@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="isLoad" v-loading="waiting" element-loading-text="拼命加载中。。。" element-loading-background="rgba(0,0,0,0.1)">
     <el-container>
       <el-header height="50px;">
         <div id="nav" class="top-menu navbar navbar-dark bg-inverse">
@@ -52,12 +52,14 @@
 	import {formatDate} from "date.js";
 	import {remote} from "electron";
 	import {isNumber} from 'lodash';
+	import { mapState} from "vuex";
 	export default {
 		name: "app",
 		data(){
 			return {
 				getTimeYMD:'',
 				getTimeHms:'',
+				isLoad:false,
 			}
 		},
 		methods:{
@@ -69,8 +71,14 @@
 				return remote.getGlobal('username');	
 			}
 		},
+		computed:{
+			...mapState("home", ['waiting']),
+		},
 		mounted(){
 			var _this = this;
+			window.onload = ()=>{
+				_this.isLoad = true;
+			}
 			this.timer1 = setInterval(function(){
 				let offsetTime = remote.getGlobal('offsetTime');
 				offsetTime = isNumber(offsetTime) ? offsetTime:0;

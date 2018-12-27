@@ -19,19 +19,20 @@
             end-placeholder="结束日期"
             format="yyyy 年 MM 月 dd 日"
             value-format="timestamp"
+            @change="handleSearch"
           ></el-date-picker>
           <el-input
             placeholder="请输入查询内容"
             prefix-icon="el-icon-search"
             v-model="inputSearch"
             class="seach-input"
-            blur="handleSearch"
+            @blur="handleSearch"
             @keyup.enter.native="handleSearch"
           />
-          <el-button type size="small" class="export-excel">
+          <el-button type="primary" size="small" class="export-excel">
             <a :href="exportExcel()">
-              导出excel
-              <i class="el-icon-upload el-icon--right"/>
+              导出
+              <!-- <i class="el-icon-upload el-icon--right"/> -->
             </a>
           </el-button>
         </el-col>
@@ -182,16 +183,18 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        startDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime()
-        );
-        startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        endDate = new Date(
-          new Date(new Date().toLocaleDateString()).getTime() +
-            24 * 60 * 60 * 1000 -
-            1
-        );
-        endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        // startDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime()
+        // );
+        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+        // endDate = new Date(
+        //   new Date(new Date().toLocaleDateString()).getTime() +
+        //     24 * 60 * 60 * 1000 -
+        //     1
+        // );
+        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+        startDate = '';
+        endDate = '';
       }
       let inputSearch = this.inputSearch;
       let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
@@ -205,8 +208,9 @@ export default {
       console.log(ajaxAPI);
       let path = `${ajaxAPI.path}/${ajaxAPI.url.sheetExportExcel}`;
       console.log(path);
-      let exportLocation = `http://173.101.1.52:80/statement/exportExcel?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-      let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=11&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+      let title = "报表统计数据";
+      let exportLocation = `http://173.101.1.52:80/statement/exportExcel?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
+      let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
     //  console.log(exportLocation1);
      return exportLocation1;
       // console.log(exportLocation);
@@ -283,10 +287,12 @@ export default {
           displaySTA: formatDate(list.sta, "HHmm(DD)", "--"),
           displaySTD: formatDate(list.std, "HHmm(DD)", "--"),
           displayETD: formatDate(list.etd, "HHmm(DD)", "--"),
+          displayATA: formatDate(list.ata, "HHmm(DD)", "--"	),
           // displaySTD:formatDate(list.std,'HHmm(DD)','--'),
           displayCTOT: formatDate(list.ctot, "HHmm(DD)", "--"),
           displatPreAtd: formatDate(list.preAtd, "HHmm(DD)", "--"),
-          displatBoardingTime: formatDate(list.boardingTime, "HHmm(DD)", "--"),
+          displayBoardingTime: formatDate(list.boardingTime, "HHmm(DD)", "--"),
+          displayATD: formatDate(list.atd, "HHmm(DD)", "--"),
           Receive: list.movement=="A"?formatDate(list.arriveReceive,"HHmm(DD)", "--"):formatDate(list.departmentReceive,"HHmm(DD)", "--"),
           Finish: list.movement=="A"?formatDate(list.arriveFinish,"HHmm(DD)", "--"	):formatDate(list.departmentFinish,"HHmm(DD)", "--"),
           Place: list.movement=="A"?formatDate(list.arriveInPlace,"HHmm(DD)", "--"):formatDate(list.departmentInPlace,"HHmm(DD)", "--"),

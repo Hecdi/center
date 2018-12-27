@@ -13,12 +13,14 @@ const state = {
     waitCondition: {},
     havePermission: false,
     perTotalSize: 0,
+    dialogCheckEdit: false,
 }
 
 const mutations = {
     setData(state, data) {
         // state.cards = data;
         state.cards = data.items.filter(item => item.status < 3);
+        // state.cards = data.items;
         state.totalSize = data.totalNum;
     },
     setWaitData(state,data) {
@@ -44,6 +46,11 @@ const mutations = {
         state.perTotalSize = state.filterCards.length; 
     },
     updateShowImg(state,obj){
+        mapKeys(obj,(v,k) => {
+            state[k] = v;
+        })
+    },
+    updateDialogCheckEdit(state,obj){
         mapKeys(obj,(v,k) => {
             state[k] = v;
         })
@@ -102,6 +109,9 @@ const actions = {
     },
     updateShowImg({commit,state},obj){
         commit('updateShowImg',obj);
+    },
+    updateDialogCheckEdit({commit,state},obj){
+        commit('updateDialogCheckEdit',obj);
     },
 }
 

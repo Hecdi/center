@@ -1,6 +1,6 @@
 <template>
   <div class="all-table">
-    <el-table :data="cardList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
+    <el-table :data="waitList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
       <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
       <el-table-column
@@ -41,16 +41,29 @@
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
       <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
       <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
-      <el-table-column label="操作" v-if="havePermission">
+      <el-table-column label="操作" >
         <template slot-scope="scope">
-          <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
+          <el-button size="mini" @click="submitStatus(scope.row,3)">通过</el-button>
+          <el-button size="mini" @click="submitStatus(scope.row,3)">不通过</el-button>
+        </template>
+      </el-table-column>
+       <el-table-column label="编辑">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="openDialogEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="dialog">
       <ShowImg :picture ="getPic"/>
     </div>
-     <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
+    <div class="dialog">
+      <dialogEdit :editCheckData ="getCheckEditData"/>
+    </div>
+     <!-- <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"/> -->
+      <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="waitTotalSize" 
+    style="width:100%;height:30px"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"/>
   </div>
@@ -62,6 +75,7 @@ import moment from "moment";
 // import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
+import dialogEdit from "./dialogEdit.vue";
 import { ajax } from "ajax";
 import { map, extend } from 'lodash';
 import PageNationHis from "./PageNationHis.vue";
@@ -72,7 +86,8 @@ import PageNationHis from "./PageNationHis.vue";
 export default {
   components: {
     ShowImg,
-     PageNationHis,
+    PageNationHis,
+    dialogEdit
   },
   data() {
     console.log(this.img);
@@ -82,6 +97,7 @@ export default {
       img: img,
       picture: '',
       getPic: '',
+      getCheckEditData: '',
       // totalSize: 100,
       pageSize: 10,
       currentPage:1,
@@ -92,9 +108,10 @@ export default {
   //     ...mapState("violation", ["cards","totalSize","allCondition"])
   // },
   computed: {
-    ...mapState("violation", ["cards","totalSize","allCondition",'havePermission']),
-    cardList: function() {
-      return map(this.cards, list => {
+    // ...mapState("violation", ["cards","totalSize","allCondition",'havePermission']),
+    ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize','waitCondition']),
+    waitList: function() {
+      return map(this.waitItems, list => {
         return extend({}, list, {
           people: this.formatData(list.violationCode==1,list.violationName),
           car : this.formatData(list.violationCode==2,list.violationName),
@@ -202,6 +219,11 @@ export default {
     openShowImg(value) {
       this.getPic = value;
       console.log(this.getPic);
+      this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+    },
+    openDialogEdit(value) {
+      this.getCheckEditData = value;
+    //   console.log(this.getPic);
       this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
     },
     getData(data) {

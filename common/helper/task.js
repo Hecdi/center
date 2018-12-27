@@ -76,9 +76,32 @@ const addDisplayField = (row) => {
 	let alternateDisplay = {
 		displayAlternate: alternateMap[row.alternate]
 	};
+	let quickFlagMap = {
+		true: "iconfont icon-beijiangbiaoji",
+		false: "iconfont",
+	};
+	let quickFlagDisplay = {
+		displayQuickFlag: quickFlagMap[row.quickFlag]
+	};
+	let vipMap = {
+		true: "iconfont icon-beijiangbiaoji",
+		false: "iconfont",
+	};
+	let vipDisplay = {
+		displayVip: vipMap[row.vip]
+	};
+	let PlaceholderMap = {
+		true: true,
+		fasle: false
+	};
+	let Placeholder = {
+		disPlaceholder:PlaceholderMap[row.vip==row.quickFlag==row.alternate==row.delay==row.returnFliht==false]
+	};
+
+
 	
 
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay );
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay,vipDisplay,quickFlagDisplay,Placeholder);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);

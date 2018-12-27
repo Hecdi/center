@@ -11,7 +11,7 @@
           end-placeholder="结束日期"
           format="yyyy 年 MM 月 dd 日"
           value-format="timestamp"
-
+          @change = "handleClick1"
         ></el-date-picker>
       </el-col>
       <el-col :span="12">
@@ -40,7 +40,7 @@
       <el-col :span="24" class="data-sum">
         <el-table :data="tableData1" stripe style="width: 100%">
           <el-table-column type="index" label="序号" width="50"/>
-          <el-table-column prop="date" label="日期" width="120"/>
+          <el-table-column prop="scheduleTime" label="日期" width="120"/>
           <el-table-column prop="clickRate" label="点击率" min-width="80"/>
           <el-table-column prop="createTask" label="生成任务" min-width="180"/>
           <el-table-column prop="finishRate" label="完成率" min-width="180"/>
@@ -50,6 +50,15 @@
           <el-table-column prop="notGuaranteeTask" label="不保障任务" width="120"/>
           <el-table-column prop="operateTask" label="操作任务" width="120"/>
           <el-table-column prop="operateTotal" label="操作总数" width="120"/>
+          <el-table-column label="未完成任务" min-width="80">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="primary"
+                @click="openUnfinish(scope.row)"
+              >查看</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <h4 class="table-title">每日完成工作量top5</h4>
@@ -58,13 +67,15 @@
           <span class="time-col">
             {{w}}
           </span>
-          <span class="top-cell" v-for = "(s,index) in staffWorkCount" v-bind:key="index">
+          <span class="top-cell" v-for = "(s,index) in staffWorkCount.item1" v-bind:key="index">
             {{s}}
           </span>
         </div>
       </el-col>
     </el-row>
-
+    <div class="dialog">
+        <dialogUnFinishView :unfinishData ="getUnfinish"/>
+    </div>
   </div>
 </template>
 
@@ -73,11 +84,14 @@ import { ajax } from "ajax";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import * as echarts from "echarts";
 import moment from "moment";
+import dialogUnFinishView from "./dialogUnFinishView.vue";
+import {extend} from "lodash";
 
 export default {
   name: "Statistics",
   components: {
     // TopBar,
+    dialogUnFinishView
   },
   computed: {
     ...mapGetters({ cards: "processedCards" })
@@ -91,6 +105,7 @@ export default {
       time: [],
       tableData1: [],
       staffWorkCount: [],
+      getUnfinish: [],
       getOption: {
         title: {text: '进出港统计'},legend: {data: ['进港','离港']},
         xAxis: [{data: []}],
@@ -130,12 +145,17 @@ export default {
     created() {
       this.getData();
     },
+    openUnfinish(value) {
+      // this.getUnfinish = value;
+      // console.log(this.getUnfinish);
+      this.$store.dispatch('statistics/updateTaskHandover', { dialogUnFinish: true });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     handleClick1(){
       this.refreshData();
-      this.drawLine();
+      // this.drawLine();
     },
     initData(){
       let _this = this;
@@ -163,7 +183,9 @@ export default {
       let pass = [];
       let unPass = [];
       let taskDataCount1 = [];
-      let staffWorkCount = [];
+      let staffWorkCount = {};
+      let topStaff = [];
+      data.topMam = {};
       data.forEach((item,index) => {
         console.log(item);
         dateRange.push(item.scheduleTime);
@@ -184,8 +206,11 @@ export default {
         checking.push(violationHandle.checking);
         pass.push(violationHandle.pass);
         unPass.push(violationHandle.unPass);
-        taskDataCount1.push(item.taskDataCount);
-        staffWorkCount.push(item.staffWorkCount);
+        item.totalCount = extend({},item.totalCount , {scheduleTime:item.scheduleTime});
+        taskDataCount1.push(item.totalCount);
+        staffWorkCount.item1 = (item.staffWorkCount);
+        item.topMam = extend({},{topStaff:item.staffWorkCount},{scheduleTime:item.scheduleTime})
+        topStaff.push( item.topMam );
         // staffWorkCount[index].push(item.scheduleTime);
       })  
 
@@ -198,6 +223,8 @@ export default {
       this.operateTask = operateTask;
       this.operateTotal = operateTotal;
       this.tableData1 = taskDataCount1;
+      this.topStaff = topStaff;
+      console.log(this.topStaff);
       this.staffWorkCount = staffWorkCount;
       console.log(this.dateRange);
       console.log(this.staffWorkCount);
@@ -656,8 +683,8 @@ export default {
           startDate = moment(startDate).format("YYYY-MM-DD");
           endDate = startDate;
       }
-      // let params = {"startTime":startDate,"endTime":endDate};
-      let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};
+      let params = {"startTime":startDate,"endTime":endDate};
+      // let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};
       console.log(params);
       ajax.post("statistics",params).then(data => {
         // let statistics = data;

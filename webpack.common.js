@@ -24,6 +24,7 @@ const copyFiles = new CopyWebpackPlugin([
 if(argv.Program === 'schedule'){
     var entry = {
         index: [
+			`babel-polyfill`,
             `./index.js`,
             `./Page/scss/smartScheduling.scss`,
         ],
@@ -74,12 +75,13 @@ module.exports = {
 					options: {
 						cacheDirectory: true,
 						presets: ['@babel/preset-env', 'vue'],
-						//plugins: [
+						plugins: [
+							'@babel/plugin-syntax-dynamic-import'
 							//'react-hot-loader/babel',
 							//'transform-inline-environment-variables',
 							//'transform-decorators-legacy',
 							//'transform-runtime',
-						//],
+						],
 					},
 				}]
             },
