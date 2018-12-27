@@ -141,4 +141,22 @@
         text-overflow: ellipsis;
     }
   }
+  .el-dialog__body {
+    .unfinish-table {
+        thead>.cell {
+            background-color: #666;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+        }
+        .is-leaf {
+            background: #666;
+            color: #fff;
+            height: 28px;
+            line-height: 28px;
+            padding: 2px 0;
+            text-align: center;
+        } 
+      }
+  }
 }

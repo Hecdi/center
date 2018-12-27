@@ -67,7 +67,7 @@
           <span class="time-col">
             {{w}}
           </span>
-          <span class="top-cell" v-for = "(s,index) in staffWorkCount" v-bind:key="index">
+          <span class="top-cell" v-for = "(s,index) in staffWorkCount.item1" v-bind:key="index">
             {{s}}
           </span>
         </div>
@@ -182,7 +182,7 @@ export default {
       let pass = [];
       let unPass = [];
       let taskDataCount1 = [];
-      let staffWorkCount = [];
+      let staffWorkCount = {}
       data.forEach((item,index) => {
         console.log(item);
         dateRange.push(item.scheduleTime);
@@ -204,7 +204,7 @@ export default {
         pass.push(violationHandle.pass);
         unPass.push(violationHandle.unPass);
         taskDataCount1.push(item.taskDataCount);
-        staffWorkCount.push(item.staffWorkCount);
+        staffWorkCount.item1 = (item.staffWorkCount);
         // staffWorkCount[index].push(item.scheduleTime);
       })  
 
