@@ -45,7 +45,8 @@
       </el-table-column>
        <el-table-column label="编辑" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" @click="openDialogEdit(scope.row)">编辑</el-button>
+            <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i>
+          <!-- <el-button size="mini" @click="openDialogEdit(scope.row)">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
