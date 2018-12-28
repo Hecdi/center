@@ -108,7 +108,7 @@
 						</span>
 						<Legend data="未发布" iconColor="white" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="已发布" iconColor="#ffac00" iconSize="16px" fontSize="12px" color="#333"/>
-						<Legend data="已受领" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已领受" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="已到位" iconColor="#00d859" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="进行中" iconColor="#aa67f3" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="已完成" iconColor="#0065ff" iconSize="16px" fontSize="12px" color="#333"/>
