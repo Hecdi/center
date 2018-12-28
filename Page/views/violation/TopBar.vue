@@ -26,7 +26,8 @@
                     prefix-icon="el-icon-search"
                     v-model="inputSearch"
                     class="seach-input"
-                    v-on:click="searchAll(e)"
+                    @blur = "handleSearch"
+                    @keyup.enter.native  = "handleSearch"
                 ></el-input>
                 <span class="demonstration">时间段</span>
                 <el-date-picker
@@ -39,7 +40,7 @@
                     @change="handleSearch"
                     value-format="timestamp">
                 </el-date-picker>
-                <el-button @click="handleSearch" size="mini" type="primary">查询</el-button>
+                <el-button @click="handleSearch" size="mini" type="primary" style="display:none;">查询</el-button>
                 <el-button size="mini" type="primary" class="export-excel">
                     <a  :href="exportExcel()">导出</a>
                 </el-button>
@@ -68,7 +69,8 @@
                     prefix-icon="el-icon-search"
                     v-model="inputSearch"
                     class="seach-input"
-                    v-on:click="searchAll(e)"
+                    @blur = "handleSearchWait"
+                    @keyup.enter.native = "handleSearchWait"
                 ></el-input>
                 <span class="demonstration">时间段</span>
                 <el-date-picker
@@ -78,10 +80,10 @@
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     format="yyyy 年 MM 月 dd 日"
-                    @change="handleSearch"
+                    @change="handleSearchWait"
                     value-format="timestamp">
                 </el-date-picker>
-                <el-button @click="handleSearchWait" size="mini" type="primary">查询</el-button>
+                <el-button @click="handleSearchWait" size="mini" type="primary" style="display:none;">查询</el-button>
                 <!-- <el-button size="mini">
                     <a  :href="exportExcel()">导出</a>
                 </el-button> -->

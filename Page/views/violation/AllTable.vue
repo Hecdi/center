@@ -1,8 +1,7 @@
 <template>
-  <div class="all-table">
+  <!-- <div class="all-table">
     <el-table :data="cardList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
-      <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
       <el-table-column
         prop="violationCodeName"
         label="违规类型"
@@ -16,7 +15,6 @@
           >{{scope.row.violationCodeName}}</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="violationName" label="人员编号" width="130"/> -->
       <el-table-column prop="staffNumber" label="人员编号" width="180"/>
       <el-table-column prop ="staffName" label="违规人员" width="180"/>
       <el-table-column prop="carNumber" label="车辆编号" min-width="80"/>
@@ -44,6 +42,50 @@
       <el-table-column label="操作" v-if="havePermission">
         <template slot-scope="scope">
           <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
+        </template>
+      </el-table-column>
+    </el-table> -->
+<div class="all-table">
+    <el-table :data="cardList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
+      <el-table-column label="序号" width="80" type="index" :index="indexMethod" class-name="font-One" fixed/>
+      <el-table-column prop="violationNoticeNum" label="编号" width="180"/>
+    <el-table-column
+        prop="violationCodeName"
+        label="违规主体"
+        width="130"
+        filter-placement="bottom-end"
+      >
+        <template slot-scope="scope">
+          <el-tag
+            :type="violationTypeBg1(scope.row.violationCodeName)"
+            disable-transitions
+          >{{scope.row.violationCodeName}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="violationName" label="责任人/单位" width="130"/>
+      <el-table-column prop="workOrgName" label="工作单位" width="130"/>
+      <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
+      <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
+      <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
+      <el-table-column prop="carNo" label="车牌号" width="130"/>
+      <el-table-column prop="violationDescription" label="情况说明" width="130"/>
+      <el-table-column prop="deductionScore" label="扣分分值" width="80"/>
+      <el-table-column label="照片" min-width="80">
+        <template slot-scope="scope">
+          <el-button
+         
+            size="mini"
+            type="primary"
+            @click="openShowImg(scope.row.picture)"
+          >查看</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
+      <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
+      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
+      <el-table-column label="审核" width="100" fixed="right">
+        <template slot-scope="scope">
+            <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -96,17 +138,24 @@ export default {
     cardList: function() {
       return map(this.cards, list => {
         return extend({}, list, {
-          people: this.formatData(list.violationCode==1,list.violationName),
-          car : this.formatData(list.violationCode==2,list.violationName),
-          device: this.formatData(list.violationCode==3,list.violationName),
-          // staffNumber: list.staffNumber!==null?list.staffNumber:'--',
-          // staffName: list.staffName !== null ? list.staffName:'--',
-          staffNumber: this.formatNull(list.staffNumber),
-          staffName: this.formatNull(list.staffName),
-          carNumber: this.formatNull(list.carNumber),
-          deviceNumber: this.formatNull(list.deviceNumber),
-          belongCompanyName:this.formatNull(list.belongCompanyName),
-          violationDescription:this.formatNull(list.violationDescription),
+          // people: this.formatData(list.violationCode==1,list.violationName),
+          // car : this.formatData(list.violationCode==2,list.violationName),
+          // device: this.formatData(list.violationCode==3,list.violationName),
+          // staffNumber: this.formatNull(list.staffNumber),
+          // staffName: this.formatNull(list.staffName),
+          // carNumber: this.formatNull(list.carNumber),
+          // deviceNumber: this.formatNull(list.deviceNumber),
+          // belongCompanyName:this.formatNull(list.belongCompanyName),
+          aviolationDescription:this.formatNull(list.violationDescription),
+          violationName: this.formatNull(list.violationName),
+          violationNoticeNum: this.formatNull(list.violationNoticeNum),
+          workOrgName:this.formatNull(list.workOrgName),
+          passNumber:this.formatNull(list.passNumber),
+          driverLicen:this.formatNull(list.driverLicen),
+          carTypeName:this.formatNull(list.carTypeName),
+          carNo: this.formatNull(list.carNo),
+          deductionScore: this.formatNull(list.deductionScore),
+          driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
           })
         });
       }

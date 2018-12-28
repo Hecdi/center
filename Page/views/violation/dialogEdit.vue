@@ -6,7 +6,7 @@
       :visible.sync="dialogCheckEdit"
       width="50%"
       >
-         <el-form :model="form" status-icon ref="form" label-width="180px" class="demo-ruleForm"> 
+         <el-form :model="form" status-icon ref="form" label-width="250px" class="demo-ruleForm"> 
             <el-form-item label ="编号">
 				{{form.violationNoticeNum}}
             </el-form-item>
@@ -23,10 +23,18 @@
                   <el-option label="责任人" :value="1"></el-option>
                   <el-option label="责任单位" :value="2"></el-option>
                 </el-select>
+            </el-form-item> 
+            <el-form-item :inline="true" v-if="form.violationType==1">
+                <el-input v-model="form.people" value="111"></el-input>
             </el-form-item>
-            <el-form-item label="责任单位描述">
+            <el-form-item :inline="true" v-else label="">
+                <el-select  placeholder="请选择工作单位" v-model="form.workOrgName">
+                  <el-option v-for="(company,index) in form.companySelect" :key="index" :label="company.value" :value="company.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <!-- <el-form-item label="责任单位描述">
                 <el-input v-model="form.name" value="111"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="工作单位">
                 <el-select  placeholder="请选择活动区域" v-model="form.workOrgName">
                   <el-option v-for="(company,index) in form.companySelect" :key="index" :label="company.value" :value="company.id"></el-option>
@@ -38,9 +46,15 @@
             <el-form-item label="内场驾驶证号">
                 <el-input v-model="form.driverLicenseNumber"></el-input>
             </el-form-item>
+            <el-form-item label="车辆类型">
+                <el-input v-model="form.carTypeName"></el-input>
+            </el-form-item>
+            <el-form-item label="车牌号">
+                <el-input v-model="form.carNo"></el-input>
+            </el-form-item>
             <el-form-item label="情况说明">
                 <el-select v-model="form.violationDescription" placeholder="请选择活动区域" >
-                    <el-option :label="decribe.value" v-for="(decribe,index) in form.describeSelect" :key="index" :value="decribe.id"></el-option>
+                    <el-option :label="decribe.value" v-for="(decribe,index) in form.describeSelect" :key="index" :value="decribe.value"></el-option>
                 </el-select>
                 <el-input
                   type="textarea"
@@ -58,7 +72,7 @@
         <el-button>取消</el-button> -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogCheckEdit = false">取 消</el-button>
-        <el-button type="primary" @click="dialogCheckEdit = false">提交</el-button>
+        <el-button type="primary" @click="submitEditForm">提交</el-button>
       </span>
     </el-dialog>
 </div>
@@ -129,7 +143,15 @@
 			},
 			//提交违规记录编辑
 			submitEditForm(){
-				let param = {
+                let param = this.form;
+                param.violationDescription = `${param.violationDescription}。${param.textarea}`;
+                console.log(param);
+                delete param.textarea;
+                delete param.companySelect;
+                delete param.describeSelect;
+
+                console.log(param);
+				let param11 = {
 					//   violationCode	,
 					//   deductionScore,
 					//   violationName	,
@@ -141,14 +163,21 @@
 					//   carNo,
 					//   passNumber,
 				};
-				ajax.post('updateViolation',param).then((data)=> {
+				ajax.post('updateViolation',param,(data)=> {
 					if(data.responseCode==1000){
 						this.getWaitData();
 						this.$store.dispatch(`violation/updateDialogCheckEdit`, {
 							dialogCheckEdit: false
-						});
+                        });
+                        this.$message({
+						    type: "success",
+						    message: data.responseMessage
+					    });
 					} else {
-						'提交失败';
+                        this.$message({
+						    type: "error",
+						    message: data.responseMessage
+					    });
 						this.$store.dispatch(`violation/updateDialogCheckEdit`, {
 							dialogCheckEdit: false
 						});

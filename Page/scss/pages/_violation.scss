@@ -284,6 +284,7 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        text-align: center !important;
     }
     .el-table_1_column_1 {
         font-family: $font-family-One; 
@@ -301,6 +302,7 @@
             height: 30px;
             line-height: 30px;
             color: #fff;
+            text-align: center !important;
         }
         .is-leaf {
             background: #666;

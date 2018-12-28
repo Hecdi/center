@@ -1,11 +1,11 @@
 <template>
   <div class="all-table">
     <el-table :data="waitList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
-      <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
-      <!-- <el-table-column prop="violationCodeName" label="违规类型" width="80" 	/> -->
-      <el-table-column
+      <el-table-column label="序号" width="80" type="index" :index="indexMethod" class-name="font-One" fixed/>
+      <el-table-column prop="violationNoticeNum" label="编号" width="180"/>
+    <el-table-column
         prop="violationCodeName"
-        label="违规类型"
+        label="违规主体"
         width="130"
         filter-placement="bottom-end"
       >
@@ -16,19 +16,15 @@
           >{{scope.row.violationCodeName}}</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="violationName" label="人员编号" width="130"/> -->
-      <el-table-column prop="staffNumber" label="人员编号" width="180"/>
-      <el-table-column prop ="staffName" label="违规人员" width="180"/>
-      <el-table-column prop="carNumber" label="车辆编号" min-width="80"/>
-      <el-table-column prop="deviceNumber" label="设备编号" min-width="80"/>
-      <el-table-column prop="belongCompanyName" label="所属单位" width="180"/>
-      <el-table-column
-        prop="violationDescription"
-        label="违规描述"
-        min-width="180"
-        :show-overflow-tooltip="true"
-      />
-      <el-table-column label="图像记录" min-width="80">
+      <el-table-column prop="violationName" label="责任人/单位" width="130"/>
+      <el-table-column prop="workOrgName" label="工作单位" width="130"/>
+      <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
+      <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
+      <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
+      <el-table-column prop="carNo" label="车牌号" width="130"/>
+      <el-table-column prop="violationDescription" label="情况说明" width="80"/>
+      <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
+      <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">
           <el-button
          
@@ -39,15 +35,15 @@
         </template>
       </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
-      <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
-      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
-      <el-table-column label="操作" >
+      <!-- <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/> -->
+      <!-- <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/> -->
+      <el-table-column label="审核" width="200" >
         <template slot-scope="scope">
-          <el-button size="mini" @click="submitStatus(scope.row,3)">通过</el-button>
-          <el-button size="mini" @click="submitStatus(scope.row,3)">不通过</el-button>
+          <el-button size="mini" type="success" @click="submitStatus(scope.row,1)">通过</el-button>
+          <el-button size="mini" type="danger" @click="submitStatus(scope.row,2)">不通过</el-button>
         </template>
       </el-table-column>
-       <el-table-column label="编辑">
+       <el-table-column label="编辑" fixed="right">
         <template slot-scope="scope">
           <el-button size="mini" @click="openDialogEdit(scope.row)">编辑</el-button>
         </template>
@@ -59,9 +55,6 @@
     <div class="dialog">
       <dialogEdit :editCheckData="getCheckEditData"/>
     </div>
-     <!-- <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
-      @handleSizeChange="handleSizeChange"
-      @handleCurrentChange="handleCurrentChange"/> -->
       <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="waitTotalSize" 
     style="width:100%;height:30px"
       @handleSizeChange="handleSizeChange"
@@ -113,17 +106,27 @@ export default {
     waitList: function() {
       return map(this.waitItems, list => {
         return extend({}, list, {
-          people: this.formatData(list.violationCode==1,list.violationName),
-          car : this.formatData(list.violationCode==2,list.violationName),
-          device: this.formatData(list.violationCode==3,list.violationName),
-          // staffNumber: list.staffNumber!==null?list.staffNumber:'--',
-          // staffName: list.staffName !== null ? list.staffName:'--',
-          staffNumber: this.formatNull(list.staffNumber),
-          staffName: this.formatNull(list.staffName),
-          carNumber: this.formatNull(list.carNumber),
-          deviceNumber: this.formatNull(list.deviceNumber),
-          belongCompanyName:this.formatNull(list.belongCompanyName),
-          violationDescription:this.formatNull(list.violationDescription),
+        //   people: this.formatData(list.violationCode==1,list.violationName),
+        //   car : this.formatData(list.violationCode==2,list.violationName),
+        //   device: this.formatData(list.violationCode==3,list.violationName),
+        //   staffNumber: list.staffNumber!==null?list.staffNumber:'--',
+        //   staffName: list.staffName !== null ? list.staffName:'--',
+        //   staffNumber: this.formatNull(list.staffNumber),
+        //   staffName: this.formatNull(list.staffName),
+        //   carNumber: this.formatNull(list.carNumber),
+        //   deviceNumber: this.formatNull(list.deviceNumber),
+        //   belongCompanyName:this.formatNull(list.belongCompanyName),
+        //   violationDescription:this.formatNull(list.violationDescription),
+         vaviolationDescription:this.formatNull(list.violationDescription),
+          violationName: this.formatNull(list.violationName),
+          violationNoticeNum: this.formatNull(list.violationNoticeNum),
+          workOrgName:this.formatNull(list.workOrgName),
+          passNumber:this.formatNull(list.passNumber),
+          driverLicen:this.formatNull(list.driverLicen),
+          carTypeName:this.formatNull(list.carTypeName),
+          carNo: this.formatNull(list.carNo),
+          deductionScore: this.formatNull(list.deductionScore),
+          driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
           })
         });
       }
@@ -241,7 +244,7 @@ export default {
       ajax.post("updateState", subParams).then(data => {
         console.log(data);
         if (data) {
-          this.refreshData();
+        //   this.refreshData();
           this.initWaitData();
         }
       });
