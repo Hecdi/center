@@ -22,11 +22,11 @@
 						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType1-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
-							<div>{{item.flightNo}}</div>
+							<div :title="item.flightNo">{{item.flightNo}}</div>
 						</el-col>
-						<el-col class="colA colB col3" :span = "7">{{item.createTime}}
+						<el-col class="colA colB col3" :span = "7" :title="item.createTime">{{item.createTime}}
 						</el-col>
-						<el-col class="colA colB col4" :span = "8">{{item.context}}
+						<el-col class="colA colB col4" :span = "8" :title="item.context">{{item.context}}
 						</el-col>
 						<el-col class="colA col5" :span = "3">
 							
@@ -61,11 +61,11 @@
 						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType3-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
-							<div>{{item.flightNo}}</div>
+							<div :title="item.flightNo">{{item.flightNo}}</div>
 						</el-col>
-						<el-col class="colA colB col3" :span = "10">{{item.context}}
+						<el-col class="colA colB col3" :span = "10" :title="item.context">{{item.context}}
 						</el-col>
-						<el-col class="colA col4" :span = "8">{{item.createTime}}
+						<el-col class="colA col4" :span = "8" :title="item.createTime">{{item.createTime}}
 						</el-col>
 					</el-row>
 				</div>
@@ -95,11 +95,11 @@
 						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType4-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
-							<div>{{item.flightNo}}</div>
+							<div :title="item.flightNo">{{item.flightNo}}</div>
 						</el-col>
-						<el-col class="colA colB col3" :span = "10">{{item.context}}
+						<el-col class="colA colB col3" :span = "10" :title="item.context">{{item.context}}
 						</el-col>
-						<el-col class="colA col4" :span = "8">{{item.createTime}}
+						<el-col class="colA col4" :span = "8" :title="item.createTime">{{item.createTime}}
 						</el-col>
 					</el-row>
 				</div>
@@ -128,12 +128,12 @@
 					<el-row v-for="(item,index) in computedConflictlist" :key = "index">
 						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType5-1)*valSize}}
 						</el-col>
-						<el-col class="colA colB col2" :span = "3">
+						<el-col class="colA colB col2" :span = "3" >
 							{{item.staffName}}
 						</el-col>
-						<el-col class="colA colB col3" :span = "11">{{item.context}}
+						<el-col class="colA colB col3" :span = "11" :title="item.context">{{item.context}}
 						</el-col>
-						<el-col class="colA col4" :span = "8">{{item.createTime}}
+						<el-col class="colA col4" :span = "8" :title="item.createTime">{{item.createTime}}
 						</el-col>
 					</el-row>
 				</div>
