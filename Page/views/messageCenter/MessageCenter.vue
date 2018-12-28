@@ -14,7 +14,7 @@
 					<i class="iconfont icon-gaojing"></i>
 					警告
 					<div class="column3">
-						<div class="sum">{{alarmList.totalNum}}</div>
+						<div class="sum">{{alarmList?alarmList.totalNum:0}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
@@ -24,12 +24,14 @@
 						<el-col class="colA colB col2" :span = "4">
 							<div>{{item.flightNo}}</div>
 						</el-col>
-						<el-col class="colA colB col3" :span = "6">{{item.createTime}}
+						<el-col class="colA colB col3" :span = "7">{{item.createTime}}
 						</el-col>
-						<el-col class="colA colB col4" :span = "9">{{item.context}}
+						<el-col class="colA colB col4" :span = "8">{{item.context}}
 						</el-col>
 						<el-col class="colA col5" :span = "3">
-							<div>解除</div>
+							
+							<div v-if="item.status == -1" class="active" @click="relieveAlarm(item.flightTaskId)" @mouseenter="mouseEnter()">解除</div>
+							<div v-if="item.status == 2" class="disable">解除</div>
 						</el-col>
 					</el-row>
 				</div>
@@ -40,9 +42,9 @@
 						@current-change="handleCurrentChangeType1"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="alarmList.currentPage"
+						:current-page="alarmList ? alarmList.currentPage:0"
 						:page-size="15"
-						:total="alarmList.totalNum">
+						:total="alarmList ? alarmList.totalNum:0">
 					</el-pagination>
 				</div>
 			</section>
@@ -51,7 +53,7 @@
 					<i class="iconfont icon-tongzhi"></i>
 					提醒
 					<div class="column3">
-						<div class="sum">{{remindList.totalNum}}</div>
+						<div class="sum">{{remindList?remindList.totalNum:0}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
@@ -74,9 +76,9 @@
 						@current-change="handleCurrentChangeType3"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="remindList.currentPage"
+						:current-page="remindList ? remindList.currentPage:0"
 						:page-size="15"
-						:total="remindList.totalNum">
+						:total="remindList?remindList.totalNum:0">
 					</el-pagination>
 				</div>
 			</section>
@@ -85,7 +87,7 @@
 					<i class="iconfont icon-log-a-04"></i>
 					日志
 					<div class="column3">
-						<div class="sum">{{recordeList.totalNum}}</div>
+						<div class="sum">{{recordeList?recordeList.totalNum:0}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
@@ -108,9 +110,9 @@
 						@current-change="handleCurrentChangeType4"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="recordeList.currentPage"
+						:current-page="recordeList ? recordeList.currentPage:0"
 						:page-size="15"
-						:total="recordeList.totalNum">
+						:total="recordeList?recordeList.totalNum:0">
 					</el-pagination>
 				</div>
 			</section>
@@ -119,7 +121,7 @@
 					<i class="iconfont icon-chongtu"></i>
 					冲突
 					<div class="column3">
-						<div class="sum">{{conflictList.totalNum}}</div>
+						<div class="sum">{{conflictList?conflictList.totalNum:0}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
@@ -142,9 +144,9 @@
 						@current-change="handleCurrentChangeType5"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="conflictList.currentPage"
+						:current-page="conflictList ? conflictList.currentPage:0"
 						:page-size="15"
-						:total="conflictList.totalNum">
+						:total="conflictList?conflictList.totalNum:0">
 					</el-pagination>
 				</div>
 			</section>
@@ -173,6 +175,7 @@
 				conflictList:{},
 				time:[],
 				search:'',
+				alramItems:'',
 
 
 			}
@@ -252,26 +255,45 @@
 					arr[i].createTime = newDate;
 				};
 				return arr;
-			}
+			},
+
+			relieveAlarm(val){
+				ajax.post('relievingAlarm',{
+					flightTaskId:val
+				},(data) => {
+					this.$message({
+						type: data.responseCode == 1000 ? "success" : "error",
+						message: data.responseMessage
+					});
+					let param = this.getSendParams();
+					ajax.post('messageCenter',param).then((data) => {
+						this.setData(data);
+					})
+				});
+			},
+
+			mouseEnter(){
+			},
+
 		},
 		computed:{
 			computedAlarmList:function(){
-				let list = this.alarmList.items;
+				let list = this.alarmList?this.alarmList.items:[];
 				let result = this.process(list);
 				return result;
 			},
 			computedRemindlist:function(){
-				let list = this.remindList.items;
+				let list = this.remindList?this.remindList.items:[];
 				let result = this.process(list);
 				return result;
 			},
 			computedRecordelist:function(){
-				let list = this.recordeList.items;
+				let list = this.recordeList?this.recordeList.items:[];
 				let result = this.process(list);
 				return result;
 			},
 			computedConflictlist:function(){
-				let list = this.conflictList.items;
+				let list = this.conflictList?this.conflictList.items:[];
 				let result = this.process(list);
 				return result;
 			},
