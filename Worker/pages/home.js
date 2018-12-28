@@ -17,6 +17,9 @@ const homeInit = () => {
 	Promise.map([
 		()=>{
 			return 	ajax.post('personList').then( d=>{
+				if(d == 'error' || (d.response && d.response.status != 200)){
+					return Promise.resolve();
+				}
 				return	saveToPersonDB(d).then( data => {
 					return getSearchPersons().then((result) => {
 						pub('UI','Home.Area.All', result);	
@@ -27,6 +30,9 @@ const homeInit = () => {
 		},
 		()=>{
 			return ajax.post('taskList').then(data=>{
+				if(data =='error' || (data.response && data.response.status != 200)){
+					return Promise.resolve();
+				}
 				saveHomeTableDB(true,data).then( (value) => {
 					getHomeTableFromDB(homeFilter.tableList).then((result)=>{
 						postal.channel('UI').publish('Home.Table.Sync',result)
