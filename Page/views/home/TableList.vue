@@ -20,11 +20,12 @@
       >
         <template slot-scope="scope">
                <span v-if="scope.row.disPlaceholder == 2">
-                 <i :class="scope.row.displayDelay" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
-                 <i :class="scope.row.displayAlternate" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
-                 <i :class="scope.row.displayReturnFliht" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
-                 <i :class="scope.row.displayQuickFlag" style="color: rgb(0, 101, 255); font-size: 16px;"></i>
-                 <i :class="scope.row.displayVip" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
+                 <i :class="scope.row.displayDelay" style="color: #f00025; font-size: 12px;"></i>
+                 <i :class="scope.row.displayAlternate" style="color:#0065ff; font-size: 12px;"></i>
+                 <i :class="scope.row.displayReturnFliht" style="color: #009beb; font-size: 12px;"></i>
+                 <i :class="scope.row.displayQuickFlag" style="color: #0065ff; font-size: 12px;"></i>
+                 <i :class="scope.row.displayVip" style="color: #ff7100; font-size: 12px;"></i>
+                 <i :class="scope.row.displayKeyMaintaince" style="color: #009a51; font-size: 12px;"></i>
                  <i :class="scope.row.displayAlarm" style="color: rgb(250, 0, 19); font-size: 16px;"></i>
               </span>
               <span v-else>

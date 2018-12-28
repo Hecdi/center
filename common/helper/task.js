@@ -56,35 +56,43 @@ const addDisplayField = (row) => {
 		displayHaveDeviating: haveDeviatingDisplayMap[row.haveDeviating]
 	};
 	let delayDisplayMap = {
-		true: "iconfont icon-yanwubiaoji",
+		true: "iconfont icon-yanwu",
 		false: "iconfont",
 	};
 	let delayDisplay = {
 		displayDelay: delayDisplayMap[row.delay]
 	};
 	let returnFlihtDisplayMap = {
-		true: "iconfont icon-fanhangbiaoji",
+		true: "iconfont icon-fanhang",
 		false: "iconfont",
 	};
 	let returnFlihtDisplay = {
 		displayReturnFliht: returnFlihtDisplayMap[row.returnFliht]
 	};
 	let alternateMap = {
-		true: "iconfont icon-beijiangbiaoji",
+		true: "iconfont icon-beijiang",
 		false: "iconfont",
 	};
 	let alternateDisplay = {
 		displayAlternate: alternateMap[row.alternate]
 	};
 	let quickFlagMap = {
-		true: "iconfont icon-beijiangbiaoji",
+		true: "iconfont icon-kuaisu",
 		false: "iconfont",
 	};
 	let quickFlagDisplay = {
 		displayQuickFlag: quickFlagMap[row.quickFlag]
 	};
+	let keyMaintainceMap = {
+		true: "iconfont icon-zhongdian",
+		false: "iconfont",
+	}
+	let keyMaintaince = row.keyMaintaince == 1 ? true: false;
+	let keyMaintainceDisplay = {
+		displayKeyMaintaince: keyMaintainceMap[keyMaintaince]
+	};
 	let vipMap = {
-		true: "iconfont icon-beijiangbiaoji",
+		true: "iconfont icon-VIP",
 		false: "iconfont",
 	};
 	let vipDisplay = {
@@ -104,9 +112,9 @@ const addDisplayField = (row) => {
 	}; 
 	
 	let Placeholder = {
-		disPlaceholder:PlaceholderMap[!(row.vip ||row.quickFlag ||row.alternate || row.delay ||row.returnFliht||record)]
+		disPlaceholder:PlaceholderMap[!(row.vip ||row.quickFlag ||row.alternate || keyMaintaince || row.delay ||row.returnFliht||record)]
 	};
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay,vipDisplay,quickFlagDisplay,alarmDisplay,Placeholder);
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, keyMaintainceDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay,vipDisplay,quickFlagDisplay,alarmDisplay,Placeholder);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);
