@@ -5,6 +5,7 @@ import RollCall from "./views/rollCall/RollCall.vue";
 import Sheet from "./views/sheet/Sheet.vue";
 import Violation from "./views/violation/ViolationRecord.vue";
 import UrgentReport from "./views/urgentReport/UrgentReport.vue";
+import MessageCenter from "./views/messageCenter/MessageCenter.vue";
 import Statistics from "./views/statistics/Statistics.vue";
 import Login from "./views/login/Login.vue";
 Vue.use(Router);
@@ -67,6 +68,15 @@ export const smartSchedulingRouter = new Router({
 			path: "/urgentReport",
 			name: "urgentReport",
 			component:UrgentReport,
+			meta: {
+				title: '',
+				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+			}
+		},
+		{
+			path: "/messageCenter",
+			name: "messageCenter",
+			component:MessageCenter,
 			meta: {
 				title: '',
 				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的

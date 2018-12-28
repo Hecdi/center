@@ -179,7 +179,7 @@
 	import {formatDate} from "date.js";
 	import {remote} from "electron";
 	export default {
-		name:"card",
+		name:"urgentReport",
 		data(){
 			return {
 				dialogVisible:false,

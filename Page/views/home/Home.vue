@@ -149,7 +149,7 @@
 						</el-col>
 						<el-col :span="14" :title="message.content">{{message.content}}</el-col>
 						<el-col :span="6" style="text-align:right;padding-right:6px;">
-							<el-button size="mini" type="danger">解除警告</el-button>
+							<el-button size="mini" type="danger" @click.native.stop="relievingAlarm(message.flightTaskId)">解除警告</el-button>
 						</el-col>
 					</el-row>
 				</el-tab-pane>
@@ -186,6 +186,7 @@
 						<el-col :span="20" :title="message.content">{{message.content}}</el-col>
 					</el-row>
 				</el-tab-pane>
+				<el-button size="mini" round style="color:#666C72;background-color:#d8d8d8;font-size:12px;" @click.native="gotoMessage">更多></el-button>
 			</el-tabs>
 			<MessageBtn slot="reference" @click="showMessageBox"/>
 		</el-popover>
@@ -209,8 +210,9 @@
 	import TableList from "./TableList.vue";
 	import dialogTaskHandover from "./dialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
-	import {filter} from 'lodash';
+	import {filter, each} from 'lodash';
 	import { remote } from 'electron';
+	import { ajax } from "ajax";
 
 	import { mapState, mapGetters } from "vuex";
 
@@ -229,6 +231,22 @@
 			};
 		},
 		methods: {
+			relievingAlarm(flightTaskId){
+				ajax.post('relievingAlarm',{flightTaskId:flightTaskId},data=>{
+					each(this.messages, (item, index)=>{
+						if(item.type == 1 && item.flightTaskId == flightTaskId){
+							this.messages.splice(index,1);	
+						}
+					});
+					this.$message({
+						type: data.responseCode == 1000 ? "success" : "error",
+						message: data.responseMessage
+					});
+				});
+			},
+			gotoMessage(){
+				this.$router.push('/messageCenter');	
+			},
 			revealLogDetail(message){
 				if(message && message.flightTaskId){
 					this.$store.dispatch(`home/updateFilter`,{
@@ -323,8 +341,6 @@
 			},
 			sendTaskListFilter() {
 				pub("Worker", "Home.Task.SetTaskFilter", this.filterOption);
-				// console.log('777cc77c7c77c');
-				// pub("Worker", "Home.Table.SetTablePageSize", this.filterOption);
 			},
 			getFilterMessages(k,v){
 				return filter(this.messages, item =>{

@@ -20,7 +20,6 @@ const homeInit = () => {
 				return	saveToPersonDB(d).then( data => {
 					return getSearchPersons().then((result) => {
 						pub('UI','Home.Area.All', result);	
-						console.log('ffff');
 						return Promise.resolve();
 					});
 				});
@@ -35,14 +34,12 @@ const homeInit = () => {
 				});
 				return saveToTaskDB(true,data, homeFilter['taskList']).then(result => {
 					postal.channel('UI').publish('Home.Task.Sync',result);
-					console.log('fffffffff');
 					return Promise.resolve();
 				});
 			});
 		}
 
 	],(f)=>f()).then(()=>{
-		console.log('fffffffffffffffff');
 		pub('UI','Home.Loading', false);	
 	});
 	//ajax.post('personList').then( d=>{

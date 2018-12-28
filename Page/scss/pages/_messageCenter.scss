@@ -1,0 +1,421 @@
+.messageCenter{
+	width:100%;
+	//overflow-y:auto;
+	background-color:#E0E2EC;
+	.rowHead{
+		height:34px;
+		padding:8px 14px;
+		.pic{
+			width:5px;
+			height:16px;
+			background-color:#0566FF;
+			float:left;
+			margin-top:9px;
+		}
+		p{
+			font-family:Microsoft YaHei;
+			font-weight:bold;
+			font-size:14px;
+			height:16px;
+			line-height:16px;
+			margin:0;
+			float:left;
+			margin-top:9px;
+			margin-left:10px;
+		}
+		.input{
+			float:right;
+			width:220px;
+			height:34px;
+			margin-right:15px;
+		}
+		.date{
+			float:right;
+			height:34px;
+		}
+		.el-input__inner{
+			height:34px;
+			margin-right:10px;
+			font-family:Microsoft YaHei;
+		}
+		.el-range-input{
+			font-family:Microsoft YaHei;
+		}
+	}
+	.rowBody{
+		position:relative;
+		padding-left:15px;
+		.card1{
+			border-radius:8px;
+			width:465px;
+			height:680px;
+			.cardHeader{
+				position:relative;
+				height:40px;
+				line-height:40px;
+				padding:0px 10px;
+				background-color:#289DFF;
+				color:#FFFFFF;
+				border-radius:8px 8px 0 0;
+				.column3{
+					position:absolute;
+					right:10px;
+					top:0px;
+					height:inherit;
+					width:24px;
+				}
+				.sum{
+					display:inline-block;
+					width:24px;
+					height:24px;
+					border:1px solid #F1F2F5;
+					border-radius:12px;
+					font-size:14px;
+					line-height:24px;
+					text-align:center;
+				}
+			}
+			.cardBody{
+				height:600px;
+				background-color:#FFFFFF;
+				.colA{
+					border-bottom:1px solid #EEF1F7; 
+					height:40px;
+					line-height:40px;
+					font-size:14px;
+					font-family:Microsoft YaHei;
+					text-overflow:ellipsis;
+					overflow:hidden;
+					white-space:nowrap;
+				}
+				.colB{
+					border-right:1px solid #EEF1F7; 
+				}
+				.col1{
+					text-align:center;
+				}
+				.col2{
+					padding:11px 5px 0px 5px;
+					div {
+						background-color:#3A3F43;
+						color:#FFFFFF;
+						height:18px;
+						line-height:18px;
+						text-overflow:ellipsis;
+						overflow:hidden;
+						white-space:nowrap;
+						text-indent:6px;
+					}
+				}
+				.col4{
+					text-indent:1em;
+				}
+				.col5{
+					padding:8px;
+					div {
+						width:42px;
+						height:24px;
+						background-color:#D41E1E;
+						color:#FFFFFF;
+						line-height:24px;
+						text-align:center;
+					}
+				}
+			}
+			.cardFooter{
+				height:40px;
+				background-color:#F1F2F5;
+				border-radius:0 0 8px 8px;
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				.el-pagination.is-background .btn-next{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .btn-prev{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li:not(.disabled).active{
+					background-color:#2E67F6;
+					color:#FFFFFF;
+				}
+			}
+		}
+		.card2{
+			position:absolute;
+			top:0px;
+			left:495px;
+			border-radius:8px;
+			width:375px;
+			height:680px;
+			.cardHeader{
+				position:relative;
+				height:40px;
+				line-height:40px;
+				padding:0px 10px;
+				background-color:#289DFF;
+				color:#FFFFFF;
+				border-radius:8px 8px 0 0;
+				.column3{
+					position:absolute;
+					right:10px;
+					top:0px;
+					height:inherit;
+					width:24px;
+				}
+				.sum{
+					display:inline-block;
+					width:24px;
+					height:24px;
+					border:1px solid #F1F2F5;
+					border-radius:12px;
+					font-size:14px;
+					line-height:24px;
+					text-align:center;
+				}
+			}
+			.cardBody{
+				height:600px;
+				background-color:#FFFFFF;
+				.colA{
+					border-bottom:1px solid #EEF1F7; 
+					height:40px;
+					line-height:40px;
+					font-size:14px;
+					font-family:Microsoft YaHei;
+					text-overflow:ellipsis;
+					overflow:hidden;
+					white-space:nowrap;
+				}
+				.colB{
+					border-right:1px solid #EEF1F7; 
+				}
+				.col1{
+					text-align:center;
+				}
+				.col2{
+					padding:11px 5px 0px 5px;
+					div {
+						background-color:#3A3F43;
+						color:#FFFFFF;
+						height:18px;
+						line-height:18px;
+						text-overflow:ellipsis;
+						overflow:hidden;
+						white-space:nowrap;
+						text-indent:6px;
+					}
+				}
+				.col4{
+					text-indent:1em;
+				}
+			}
+			.cardFooter{
+				height:40px;
+				background-color:#F1F2F5;
+				border-radius:0 0 8px 8px;
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				.el-pagination.is-background .btn-next{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .btn-prev{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li:not(.disabled).active{
+					background-color:#2E67F6;
+					color:#FFFFFF;
+				}
+			}
+		}
+		.card3{
+			position:absolute;
+			top:0px;
+			left:885px;
+			border-radius:8px;
+			width:375px;
+			height:680px;
+			.cardHeader{
+				position:relative;
+				height:40px;
+				line-height:40px;
+				padding:0px 10px;
+				background-color:#289DFF;
+				color:#FFFFFF;
+				border-radius:8px 8px 0 0;
+				.column3{
+					position:absolute;
+					right:10px;
+					top:0px;
+					height:inherit;
+					width:24px;
+				}
+				.sum{
+					display:inline-block;
+					width:24px;
+					height:24px;
+					border:1px solid #F1F2F5;
+					border-radius:12px;
+					font-size:14px;
+					line-height:24px;
+					text-align:center;
+				}
+			}
+			.cardBody{
+				height:600px;
+				background-color:#FFFFFF;
+				.colA{
+					border-bottom:1px solid #EEF1F7; 
+					height:40px;
+					line-height:40px;
+					font-size:14px;
+					font-family:Microsoft YaHei;
+					text-overflow:ellipsis;
+					overflow:hidden;
+					white-space:nowrap;
+				}
+				.colB{
+					border-right:1px solid #EEF1F7; 
+				}
+				.col1{
+					text-align:center;
+				}
+				.col2{
+					padding:11px 5px 0px 5px;
+					div {
+						background-color:#3A3F43;
+						color:#FFFFFF;
+						height:18px;
+						line-height:18px;
+						text-overflow:ellipsis;
+						overflow:hidden;
+						white-space:nowrap;
+						text-indent:6px;
+					}
+				}
+				.col4{
+					text-indent:1em;
+				}
+			}
+			.cardFooter{
+				height:40px;
+				background-color:#F1F2F5;
+				border-radius:0 0 8px 8px;
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				.el-pagination.is-background .btn-next{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .btn-prev{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li:not(.disabled).active{
+					background-color:#2E67F6;
+					color:#FFFFFF;
+				}
+			}
+		}
+		.card4{
+			position:absolute;
+			top:0px;
+			left:1275px;
+			border-radius:8px;
+			width:375px;
+			height:680px;
+			.cardHeader{
+				position:relative;
+				height:40px;
+				line-height:40px;
+				padding:0px 10px;
+				background-color:#289DFF;
+				color:#FFFFFF;
+				border-radius:8px 8px 0 0;
+				.column3{
+					position:absolute;
+					right:10px;
+					top:0px;
+					height:inherit;
+					width:24px;
+				}
+				.sum{
+					display:inline-block;
+					width:24px;
+					height:24px;
+					border:1px solid #F1F2F5;
+					border-radius:12px;
+					font-size:14px;
+					line-height:24px;
+					text-align:center;
+				}
+			}
+			.cardBody{
+				height:600px;
+				background-color:#FFFFFF;
+				.colA{
+					border-bottom:1px solid #EEF1F7; 
+					height:40px;
+					line-height:40px;
+					font-size:14px;
+					font-family:Microsoft YaHei;
+					text-overflow:ellipsis;
+					overflow:hidden;
+					white-space:nowrap;
+				}
+				.colB{
+					border-right:1px solid #EEF1F7; 
+				}
+				.col1{
+					text-align:center;
+				}
+				.col4{
+					text-indent:1em;
+				}
+			}
+			.cardFooter{
+				height:40px;
+				background-color:#F1F2F5;
+				border-radius:0 0 8px 8px;
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				.el-pagination.is-background .btn-next{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .btn-prev{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li{
+					background-color:#FFFFFF;
+					color:#7D7D7D;
+				}
+				.el-pagination.is-background .el-pager li:not(.disabled).active{
+					background-color:#2E67F6;
+					color:#FFFFFF;
+				}
+			}
+		}
+
+	}
+}

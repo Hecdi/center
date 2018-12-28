@@ -29,6 +29,7 @@ export default {
                 'home.taskRelease':'web/scheduling/taskRelease',//首页任务详情里的任务发布/不保障，post ，taskState:2未发布，8不保障
 				'home.updateStaffState':'attendance/updateStaffState',//排班页面跟新人员状态，post
 				'home.getPersonDetail':'web/scheduling/staffOperationList',//排班页面跟新人员状态，post
+				'relievingAlarm':'alarm/web/scheduling/relievingAlarm',//解除警告
                 'getViolationData':'violationRecord/getViolationData', //获取所有的违规记录数据,get
                 'getViolationByState': 'violationRecord/getViolationByState', //获取待审核的违规记录数据,get
                 'getViolationDataForLike': 'violationRecord/getViolationDataForLike', //过滤违规记录数据，即违规记录搜索, post
@@ -38,6 +39,7 @@ export default {
 				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token
 				'urgentReport':'deviationReport/getDeviationReportData',
                 'updateState':'violationRecord/updateState',
+				'messageCenter':'message/getList',
                 'findByTimeAndCode':'violationRecord/findByTimeAndCode',
                 'getFlightForTemporaryTask':'web/scheduling/getFlightForTemporaryTask', //航班搜索 post
                 'tempTaskModelList':'web/scheduling/tempTaskModelList', //临时任务获取接口 post
