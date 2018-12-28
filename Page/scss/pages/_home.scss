@@ -372,12 +372,17 @@
 				}
 			}
 		}
+		.table-main {
+			padding-right: 9px !important;
+		}
+
 		.el-main{
 			display: flex;
 			flex-direction:column;
 			padding-top:0;
 			// height: 100vh;
 			.flight-table {
+				margin-top: 15px;
 				.el-table {
 					background: transparent !important;
 				}
