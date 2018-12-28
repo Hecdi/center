@@ -57,7 +57,7 @@
       <ShowImg :picture ="getPic"/>
     </div>
     <div class="dialog">
-      <dialogEdit :editCheckData ="getCheckEditData"/>
+      <dialogEdit :editCheckData="getCheckEditData"/>
     </div>
      <!-- <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="totalSize" 
       @handleSizeChange="handleSizeChange"
