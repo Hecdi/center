@@ -9,7 +9,7 @@
           <span class="time">{{`${formatDate(t.scheduleTime,'DD HH:mm:ss','--')}`}}</span>
           <span class="staff-fromname">{{t.fromUserName}}</span>
           <span class="staff-toname">{{t.toUserName}}</span>
-          <span class="end-time">{{`${formatDate(t.associateTime,'DD HH:mm:ss','--')}`}}</span>
+          <span class="end-time">{{`${formatDate(t.createTime,'DD HH:mm:ss','--')}`}}</span>
         </div>
       </div>
       <div class="no-data" v-else>
@@ -25,7 +25,9 @@ import moment from "moment";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import { getNaturalDate } from "date";
 import { remote } from "electron";
-import {formatDate} from "date.js";
+// import {formatDate} from "date.js";
+import {formatDate }  from 'date';
+
 
 
 export default {
@@ -123,7 +125,8 @@ export default {
 		},
 		formatDate: function(val, opt, empty) {
 			return formatDate(val, opt, empty);
-		},
+    },
+    
 		submitSuccess() {
 			this.$message({
 				showClose: true,
