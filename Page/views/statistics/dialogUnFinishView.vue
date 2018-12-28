@@ -5,53 +5,70 @@
   >
     <el-row class="unfinish-table">
         <el-table
-            :data="tableData"
+            :data="unfinishList"
             border
             style="width: 100%">
             <el-table-column
-              type="index+1"
+              type="index"
               label="序号"
               width="80"
               class-name="font-One"
               >
             </el-table-column>
             <el-table-column
-              prop="status"
+              prop="taskState"
               label="状态"
               width="150">
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="flightNo"
               label="航班号"
               width="180"
               >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="routeName"
+              label="航线"
+              min-width="180"
+              >
+                <template slot-scope="scope">
+                  <span v-for="(a,index) in scope.row.routeName.split(',')" :key="index">
+                    <span>{{a}}</span><i v-if ="index !== scope.row.routeName.split(',').length-1" class="iconfont icon-hangxian"></i>
+                  </span>
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="aircraftNo"
+              label="飞机号"
+              width="180"
+              >
+            </el-table-column>
+            <el-table-column
+              prop="seat"
               label="机位"
               width="180"
               >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="aircraftType"
               label="机型"
               width="180"
               >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="projectName"
               label="任务名称"
               width="180"
               >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="scheduleTime"
               label="计划时间"
               width="180"
               >
             </el-table-column>
             <el-table-column
-              prop="address"
+              prop="guaranteeStaff"
               label="保障人员"
               width="180"
               >
@@ -64,8 +81,11 @@
 import { ajax } from "ajax";
 import moment from "moment";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import { getNaturalDate } from "date";
+// import { getNaturalDate } from "date";
+import { map, extend } from 'lodash';
 import { remote } from "electron";
+import { formatDate } from "date";
+
 
 export default {
   name: "dialogUnFinish",
@@ -91,6 +111,29 @@ export default {
         }],
     };
   },
+  methods:{
+    formatNull(value){
+      if(value){
+        return value;
+      } else {
+        return '--'
+      }
+    },
+    formatState(value){
+      if(value){
+        switch (value) {
+          case "R": 
+            return "领受";
+          case "A": 
+            return "到位";
+          case "S":
+            return "开始";
+        }
+      } else {
+        return '--';
+      }
+    }
+  },
   computed: {
     dialogUnFinish: {
       get() {
@@ -101,6 +144,21 @@ export default {
         dialogUnFinish: false
       });
       }
+    },
+    unfinishList: function(){
+      return map(this.unfinishData, item => {
+          return extend({},item,{
+            taskState: this.formatState(item.taskState),
+            flightNo: this.formatNull(item.flightNo),
+            scheduleTime: formatDate(item.scheduleTime,"HHmm(DD)", "--"),
+            aircraftNo:this.formatNull(item.aircraftNo),
+            aircraftType: this.formatNull(item.aircraftType),
+            seat: this.formatNull(item.seat),
+            projectName: this.formatNull(item.projectName),
+            guaranteeStaff: this.formatNull(item.guaranteeStaff),
+            // routeName:item.routeName.split(",")
+          })
+      })
     }
   },
 };

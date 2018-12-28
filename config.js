@@ -34,7 +34,9 @@ export default {
                 'getViolationByState': 'violationRecord/getViolationByState', //获取待审核的违规记录数据,get
                 'getViolationDataForLike': 'violationRecord/getViolationDataForLike', //过滤违规记录数据，即违规记录搜索, post
                 'exportExcel': 'violationRecord/exportExcel', //违规记录数据导出接口, post,get
-				'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
+                'getViolationCodeInfo':'violationRecord/getViolationCodeInfo', //获取违规记录码表接口
+                'updateViolation':'violationRecord/updateViolation', //违规记录编辑 post
+                'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
 				'rollCall.getModule':'attendance/findScheduleDetails',//获取模版，post,需要传token
 				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token
 				'urgentReport':'deviationReport/getDeviationReportData',

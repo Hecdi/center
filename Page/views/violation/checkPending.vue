@@ -223,8 +223,8 @@ export default {
     },
     openDialogEdit(value) {
       this.getCheckEditData = value;
-    //   console.log(this.getPic);
-      this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
+      console.log(this.getCheckEditData);
+      this.$store.dispatch(`violation/updateDialogCheckEdit`, { dialogCheckEdit: true });
     },
     getData(data) {
       this.$store.dispatch("violation/getData", data);

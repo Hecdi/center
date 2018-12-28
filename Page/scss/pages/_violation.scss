@@ -364,7 +364,9 @@
             font-family: $font-family-One; 
         }
     }
-    
+    .el-textarea__inner {
+        width: 60%;
+    }
     .violation-page-nations {
         display: block;
         text-align: center;

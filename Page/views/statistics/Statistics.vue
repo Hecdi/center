@@ -53,9 +53,15 @@
           <el-table-column label="未完成任务" min-width="80">
             <template slot-scope="scope">
               <el-button
+                v-if="scope.row.unfinishTask.length == 0"
+                size="mini"
+                type="info"
+              >查看</el-button>
+              <el-button
+                v-else
                 size="mini"
                 type="primary"
-                @click="openUnfinish(scope.row)"
+                @click="openUnfinish(scope.row.unfinishTask)"
               >查看</el-button>
             </template>
           </el-table-column>
@@ -146,7 +152,7 @@ export default {
       this.getData();
     },
     openUnfinish(value) {
-      // this.getUnfinish = value;
+      this.getUnfinish = value;
       // console.log(this.getUnfinish);
       this.$store.dispatch('statistics/updateTaskHandover', { dialogUnFinish: true });
     },
@@ -263,7 +269,12 @@ export default {
                     type:'dashed',
                     color:'#3A3A3A',
                     },
-                  onZero: true
+                  onZero: true,
+                  nameLocation:'end',//坐标轴名称显示位置。
+              axisLabel : {//坐标轴刻度标签的相关设置。
+                interval:0,
+                rotate:"45"
+              }
                 },
               }
             ],
