@@ -3,9 +3,9 @@
 		<section class="rowHead">
 			<div class="pic"></div>
 			<p>消息内容</p>
-			<el-input class="input" placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="search" clearable>
+			<el-input class="input" placeholder="输入关键词搜索" suffix-icon="el-icon-search" v-model="search" clearable @keyup.enter.native="exportOnsearch">
 			</el-input>
-			<el-date-picker class="date" v-model="time" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期">
+			<el-date-picker class="date" v-model="time" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch">
 			</el-date-picker>
 		</section>
 		<section class="rowBody">
@@ -14,12 +14,12 @@
 					<i class="iconfont icon-gaojing"></i>
 					警告
 					<div class="column3">
-						<div class="sum">86</div>
+						<div class="sum">{{alarmList.totalNum}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
 					<el-row v-for="(item,index) in computedAlarmList" :key = "index">
-						<el-col class="colA colB col1" :span = "2">{{index+1}}
+						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType1-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
 							<div>{{item.flightNo}}</div>
@@ -37,13 +37,12 @@
 					<el-pagination
 						background
 						small
-						@size-change="handleSizeChange"
-						@current-change="handleCurrentChange"
+						@current-change="handleCurrentChangeType1"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="PG"
+						:current-page="alarmList.currentPage"
 						:page-size="15"
-						:total="500">
+						:total="alarmList.totalNum">
 					</el-pagination>
 				</div>
 			</section>
@@ -52,12 +51,12 @@
 					<i class="iconfont icon-tongzhi"></i>
 					提醒
 					<div class="column3">
-						<div class="sum">86</div>
+						<div class="sum">{{remindList.totalNum}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
 					<el-row v-for="(item,index) in computedRemindlist" :key = "index">
-						<el-col class="colA colB col1" :span = "2">{{index+1}}
+						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType3-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
 							<div>{{item.flightNo}}</div>
@@ -72,13 +71,12 @@
 					<el-pagination
 						background
 						small
-						@size-change="handleSizeChange"
-						@current-change="handleCurrentChange"
+						@current-change="handleCurrentChangeType3"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="PG"
+						:current-page="remindList.currentPage"
 						:page-size="15"
-						:total="500">
+						:total="remindList.totalNum">
 					</el-pagination>
 				</div>
 			</section>
@@ -87,12 +85,12 @@
 					<i class="iconfont icon-log-a-04"></i>
 					日志
 					<div class="column3">
-						<div class="sum">86</div>
+						<div class="sum">{{recordeList.totalNum}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
 					<el-row v-for="(item,index) in computedRecordelist" :key = "index">
-						<el-col class="colA colB col1" :span = "2">{{index+1}}
+						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType4-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "4">
 							<div>{{item.flightNo}}</div>
@@ -107,13 +105,12 @@
 					<el-pagination
 						background
 						small
-						@size-change="handleSizeChange"
-						@current-change="handleCurrentChange"
+						@current-change="handleCurrentChangeType4"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="PG"
+						:current-page="recordeList.currentPage"
 						:page-size="15"
-						:total="500">
+						:total="recordeList.totalNum">
 					</el-pagination>
 				</div>
 			</section>
@@ -122,12 +119,12 @@
 					<i class="iconfont icon-chongtu"></i>
 					冲突
 					<div class="column3">
-						<div class="sum">86</div>
+						<div class="sum">{{conflictList.totalNum}}</div>
 					</div>
 				</div>
 				<div class="cardBody">
 					<el-row v-for="(item,index) in computedConflictlist" :key = "index">
-						<el-col class="colA colB col1" :span = "2">{{index+1}}
+						<el-col class="colA colB col1" :span = "2">{{index+1+(valPageType5-1)*valSize}}
 						</el-col>
 						<el-col class="colA colB col2" :span = "3">
 							{{item.staffName}}
@@ -142,13 +139,12 @@
 					<el-pagination
 						background
 						small
-						@size-change="handleSizeChange"
-						@current-change="handleCurrentChange"
+						@current-change="handleCurrentChangeType5"
 						:pager-count="5"
 						layout="prev,pager,next,jumper"
-						:current-page="PG"
+						:current-page="conflictList.currentPage"
 						:page-size="15"
-						:total="500">
+						:total="conflictList.totalNum">
 					</el-pagination>
 				</div>
 			</section>
@@ -166,7 +162,6 @@
 			return {
 				startTime:moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
 				endTime:moment(new Date()).format('YYYY-MM-DD') + ' 23:59:59',
-				searchCondition:'',
 				valSize:15,
 				valPageType1:1,
 				valPageType3:1,
@@ -176,19 +171,73 @@
 				remindList:{},
 				recordeList:{},
 				conflictList:{},
-
-
 				time:[],
 				search:'',
-				PG:1,
+
+
 			}
 		},
 		methods:{
-			handleSizeChange(val){
-				console.log(`每页${val}条`);
+			handleCurrentChangeType1(val){
+				this.valPageType1 = val ;
+				let param = this.getSendParams();
+				ajax.post('messageCenter',param).then((data) => {
+					this.setData(data);
+				})
 			},
-			handleCurrentChange(val){
-				console.log(`当前页:${val}`);
+			handleCurrentChangeType3(val){
+				this.valPageType3 = val ;
+				let param = this.getSendParams();
+				ajax.post('messageCenter',param).then((data) => {
+					this.setData(data);
+				})
+			},
+			handleCurrentChangeType4(val){
+				this.valPageType4 = val ;
+				let param = this.getSendParams();
+				ajax.post('messageCenter',param).then((data) => {
+					this.setData(data);
+				})
+			},
+			handleCurrentChangeType5(val){
+				this.valPageType5 = val ;
+				let param = this.getSendParams();
+				ajax.post('messageCenter',param).then((data) => {
+					this.setData(data);
+				})
+			},
+			exportOnsearch(){
+				this.valSize = 15;
+				this.valPageType1 = 1;
+				this.valPageType2 = 1;
+				this.valPageType3 = 1;
+				this.valPageType4 = 1;
+				let param = this.getSendParams();
+				ajax.post('messageCenter',param).then((data) => {
+					this.setData(data);
+				})
+			},
+			getSendParams(){
+				let timeArr = this.time;
+				let startDate;
+				let endDate;
+				if(timeArr && timeArr.length){
+					startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
+					endDate = moment(timeArr[1]).format("YYYY-MM-DD") + ' 23:59:59';
+				} else if(this.search != '' && !(timeArr && timeArr.length)) {
+					startDate = '';
+					endDate = '';
+				} else {
+					startDate = moment(new Date()).format("YYYY-MM-DD") + ' 00:00:00';
+					endDate = moment(new Date()).format("YYYY-MM-DD") + ' 23:59:59';
+				}
+				let params = {
+					'startTime':startDate,
+					'endTime':endDate,
+					'searchCondition':this.search,
+					'messages':`1&${this.valSize}&${this.valPageType1},3&${this.valSize}&${this.valPageType3},4&${this.valSize}&${this.valPageType4},5&${this.valSize}&${this.valPageType5}`
+				};
+				return params;
 			},
 			setData(data){
 				this.alarmList = data.alarmlist;
@@ -229,9 +278,9 @@
 		},
 		beforeMount(){
 			ajax.post('messageCenter',{
-				'startTime':this.starTime,
+				'startTime':this.startTime,
 				'endTime':this.endTime,
-				'searchCondition':this.searchCondition,
+				'searchCondition':this.search,
 				'messages':`1&${this.valSize}&${this.valPageType1},3&${this.valSize}&${this.valPageType3},4&${this.valSize}&${this.valPageType4},5&${this.valSize}&${this.valPageType5}`
 			}).then(data => {
 				this.setData(data);
