@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column
         label="标志"
-        width="150"
+        width="80"
       >
         <template slot-scope="scope">
                <span v-if="scope.row.disPlaceholder == 2">
@@ -35,7 +35,7 @@
       <el-table-column
         prop="areaName"
         label="区域"
-        width="150">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="seat"

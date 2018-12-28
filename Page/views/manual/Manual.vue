@@ -1,6 +1,6 @@
 <template>
 	<section class="manual" >
-		<img :src="`../../../public/manual/${index}.png`" v-for="index in imgs" :key="index"/>
+		<img :src="`manual/${index}.png`" v-for="index in imgs" :key="index"/>
 	</section>
 </template>
 
