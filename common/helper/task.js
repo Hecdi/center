@@ -90,18 +90,23 @@ const addDisplayField = (row) => {
 	let vipDisplay = {
 		displayVip: vipMap[row.vip]
 	};
+	let alarmMap = {
+		true : "iconfont icon-gaojingbiaoji",
+		false: "iconfont",
+	};
+	let record = row.taskAlarm == -1 ? true : false;
+	let alarmDisplay = {
+		displayAlarm: alarmMap[record]
+	};
 	let PlaceholderMap = {
-		true: true,
-		fasle: false
-	};
-	let Placeholder = {
-		disPlaceholder:PlaceholderMap[row.vip==row.quickFlag==row.alternate==row.delay==row.returnFliht==false]
-	};
-
-
+		true: 1,
+		false: 2,
+	}; 
 	
-
-	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay,vipDisplay,quickFlagDisplay,Placeholder);
+	let Placeholder = {
+		disPlaceholder:PlaceholderMap[!(row.vip ||row.quickFlag ||row.alternate || row.delay ||row.returnFliht||record)]
+	};
+	let mergedFields = concat([{}], upperRow, upperFirstRow,taskStatusDisplay,flightIndicatorDisplay, haveDeviatingDisplay, delayDisplay,returnFlihtDisplay,alternateDisplay,vipDisplay,quickFlagDisplay,alarmDisplay,Placeholder);
 	mergedFields = compact(mergedFields);
 	let result = extend.apply(null, mergedFields);
 	return extend({}, row, result);

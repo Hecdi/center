@@ -16,15 +16,16 @@
       </el-table-column>
       <el-table-column
         label="标志"
-        width="150"
+        width="80"
       >
         <template slot-scope="scope">
-               <span v-if="!scope.row.disPlaceholder">
-                 <i :class="scope.row.displayDelay"></i>
-                 <i :class="scope.row.displayAlternate"></i>
-                 <i :class="scope.row.displayReturnFliht"></i>
-                 <i :class="scope.row.displayQuickFlag"></i>
-                 <i :class="scope.row.displayVip"></i>
+               <span v-if="scope.row.disPlaceholder == 2">
+                 <i :class="scope.row.displayDelay" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
+                 <i :class="scope.row.displayAlternate" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
+                 <i :class="scope.row.displayReturnFliht" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
+                 <i :class="scope.row.displayQuickFlag" style="color: rgb(0, 101, 255); font-size: 16px;"></i>
+                 <i :class="scope.row.displayVip" style="color: rgb(51, 51, 51); font-size: 12px;"></i>
+                 <i :class="scope.row.displayAlarm" style="color: rgb(250, 0, 19); font-size: 16px;"></i>
               </span>
               <span v-else>
                 --
@@ -34,7 +35,7 @@
       <el-table-column
         prop="areaName"
         label="区域"
-        width="150">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="seat"
@@ -46,7 +47,7 @@
         prop="flightNo"
         label="航班号"
         class-name="font-One"
-        width="80">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="flightStatus"
@@ -57,7 +58,7 @@
         prop="aircraftNumber"
         label="飞机号"
         class-name="font-One"
-        width="80">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="aircraftType"
@@ -73,7 +74,7 @@
       <el-table-column
         label="航线"
         :show-overflow-tooltip="true"
-        min-width="180">
+        min-width="160">
         <template slot-scope="scope">
             <span v-for="(a,index) in scope.row.airRoute" :key="index">
               <span>{{a}}</span><i v-if ="index !== scope.row.airRoute.length-1" class="iconfont icon-hangxian"></i>
@@ -93,7 +94,7 @@
       <el-table-column
         prop="displayATAWithDate"
         label="实际"
-        width="180">
+        width="150">
         <template slot-scope="scope">
           <span class="ATDETD">
             <i v-if="scope.row.disPlayActuralTime!=='--'" :class="{'iconfont icon-shiji2': scope.row.disPlayActuralTime&&scope.row.disPlayActuralTime!=='--'}"></i>
@@ -105,7 +106,8 @@
       <el-table-column
         prop="taskBindingShiftNames"
         label="保障人员"
-        width="80">
+		show-overflow-tooltip="true"
+        width="100">
       </el-table-column>
       <el-table-column
         prop="displayTaskStatus"
