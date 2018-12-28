@@ -399,4 +399,27 @@
             content: "";
         }
     } 
+    .edit-dialog {
+        .el-textarea__inner {
+            border: 1px dashed #588fe5;
+            background: #f1f9fe;
+            margin-top: 10px;
+            width: 94%;
+            line-height: 2;
+        }
+    }
+    .dislog-picture {
+        .el-dialog__header {
+            background-color: #2e67f6;
+            padding: 2.2rem .9375rem .3125rem;
+        }
+        .load-picture, .picture-card {
+            width: 100px;
+            height: 100px;
+        }
+        .el-upload--picture-card {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    }
 }

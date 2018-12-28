@@ -171,7 +171,7 @@ export default {
       let startDate;
       let endDate;
       let that = this;
-      if (timeArr) {
+      if (timeArr && timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
           startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
           endDate = moment(timeArr[1]).format("YYYY-MM-DD");

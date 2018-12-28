@@ -20,7 +20,6 @@ export default {
         ajaxAPI:{
             path:`http://${location.hostname}:6070/dispatchforpc/`,
             // path:`http://${location.hostname}:6070/`,
-			// path:'http://173.100.1.52:9099/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
 				'personList':'web/scheduling/getAreaAndWorkerListAll',
@@ -36,6 +35,7 @@ export default {
                 'exportExcel': 'violationRecord/exportExcel', //违规记录数据导出接口, post,get
                 'getViolationCodeInfo':'violationRecord/getViolationCodeInfo', //获取违规记录码表接口
                 'updateViolation':'violationRecord/updateViolation', //违规记录编辑 post
+                "uploadImg":"violationRecord/uploadImg",//违规记录上传
                 'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
 				'rollCall.getModule':'attendance/findScheduleDetails',//获取模版，post,需要传token
 				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token

@@ -22,15 +22,23 @@
       <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
       <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
       <el-table-column prop="carNo" label="车牌号" width="130"/>
-      <el-table-column prop="violationDescription" label="情况说明" width="80"/>
+      <el-table-column prop="violationDescription" label="情况说明" min-width="130" :show-overflow-tooltip="true"
+/>
       <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
       <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">
           <el-button
-         
+            v-if = "scope.row.pictures"
             size="mini"
             type="primary"
-            @click="openShowImg(scope.row.picture)"
+            plain
+            @click="openShowImg(scope.row.pictures)"
+          >查看</el-button>
+         <el-button
+            v-else
+            size="mini"
+            type="info"
+            plain
           >查看</el-button>
         </template>
       </el-table-column>
@@ -50,8 +58,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="dialog">
-      <ShowImg :picture ="getPic"/>
+    <div class="dislog-picture">
+      <ShowImg :picture="getPic"/>
     </div>
     <div class="dialog">
       <dialogEdit :editCheckData="getCheckEditData"/>

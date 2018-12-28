@@ -250,6 +250,12 @@ export default {
                 fontSize: '14',
               }
             },
+        tooltip: {
+				  trigger: 'axis',
+				  axisPointer: { 
+				  	type: 'shadow'
+				  }
+				},
             legend: {
               itemWidth: 14,
               itemHeight: 14,
@@ -679,7 +685,7 @@ export default {
       let startDate;
       let endDate;
       let _this = this;
-      if(timeArr){
+      if(timeArr && timeArr.length){
           if(timeArr[0] == timeArr[1]){
               startDate = moment(timeArr[0]).format("YYYY-MM-DD");
               endDate = moment(timeArr[1]).format("YYYY-MM-DD");
@@ -690,9 +696,21 @@ export default {
               endDate = moment(endDate).format("YYYY-MM-DD")
           }  
       } else {
-          startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-          startDate = moment(startDate).format("YYYY-MM-DD");
-          endDate = startDate;
+
+        // let today = {};
+        // let  _today = moment();
+        // today.year = _today.format('yyyy'); /*现在的年*/
+        // today.date = _today.format('YYYY-MM-DD'); /*现在的时间*/
+        // today.yesterday = _today.subtract(1, 'days').format('YYYY-MM-DD'); /*前一天的时间*/
+
+          //endDate = moment(new Date()).format("YYYY-MM-DD");
+          // startDate = moment(new Date()).format("YYYY-MM-DD");
+          //startDate = today.yesterday;
+          // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
+          // startDate = moment(startDate).format("YYYY-MM-DD");
+          // endDate = startDate;
+          startDate = "2018-12-23";
+          endDate = "2018-12-29";
       }
       let params = {"startTime":startDate,"endTime":endDate};
       // let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};

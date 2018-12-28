@@ -1,16 +1,14 @@
 <template>
     <el-dialog
         :visible.sync="showImgDialog"
-        width="60%"
+        width="400px"
        >
-    <el-carousel indicator-position="outside">
-    <el-carousel-item v-for="(item, index) in modelImg" :key="item+index">
-      <!-- <h3>{{ item }}</h3> -->
-      <img :src ="item"/>
+    <el-carousel indicator-position="outside" height="600px">
+    <el-carousel-item v-for="(item, index) in img" :key="item+index">
+      <img :src ="item" style="width:100%;height:auto;"/>
     </el-carousel-item>
   </el-carousel>
     <span slot="footer" class="dialog-footer">
-      <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
       <el-button type="primary" @click="showImgDialog = false">关闭</el-button>
     </span>
 </el-dialog>
@@ -20,6 +18,7 @@
 <script>
   import { mapState } from "vuex";
   import img from "../../assets/logo.png";
+  import { each } from "lodash";
 
     export default {
         props:["dialogVisible","picture"],
@@ -42,6 +41,7 @@
           return {
             visibleSync: this.dialogVisible,
             modelImg: [img,img,img],
+            picUrl: [],
           }
         },
         computed:{
@@ -55,9 +55,14 @@
           }
         },
         img:function(){
-          console.log(this.picture);
-          console.log( this.picture ? this.picture.split(',') :[]);
-          return this.picture ? this.picture.split(',') :[];
+          let _this = this;
+          let arr=[];
+          each(this.picture,(item) => {
+            item = `http://173.101.1.30:6072/${item}`
+            arr.push(item);
+          });
+          console.log(arr);
+          return arr;
           },
         },
     }
