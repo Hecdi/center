@@ -26,7 +26,7 @@ import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import { getNaturalDate } from "date";
 import { remote } from "electron";
 // import {formatDate} from "date.js";
-import {formatDate }  from 'date';
+import {formatDate }  from 'date.js';
 
 
 
