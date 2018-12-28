@@ -113,7 +113,7 @@
 				searchFlight: "",
 				tempTaskType: '',
 				tempTaskTypeCode: '',
-				tempTaskTypeName: '引导车',
+				tempTaskTypeName: '',
 				templateRadio: '',
 				curentWorker: '',
 				activeName: '',
@@ -136,7 +136,6 @@
 					this.currentWorker='';
 					this.activeName='';
 					this.searchFlight = '';
-					this.tempTaskTypeName = '引导车';
 					this.handlGettTaskModelList();
 					this.handleSearchFlight();
 				} 
@@ -199,6 +198,8 @@
 					this.waiting = false;
 					this.tempWorkerList = data.workerList;
 					this.tempGuaranteeList= data.guaranteeList;
+					this.tempTaskTypeCode = data.guaranteeList && data.guaranteeList.length? data.guaranteeList[0].projectCode:'';
+					this.tempTaskTypeName = data.guaranteeList && data.guaranteeList.length? data.guaranteeList[0].projectName:'';
 				})
 			},
 			submitTempTask(){
