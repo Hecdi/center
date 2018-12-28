@@ -70,6 +70,14 @@
 .home {
 	clear:both;
 	position:relative;
+	section {
+		&>.dialog-footer{
+			display: block;
+			width: 100%;
+			text-align: center;
+			padding: 10px;	
+		}
+	}
 	.dialogPersonSetting{
 			.el-tabs__header, .el-tabs__nav{
 			border-bottom:1px dashed #289DFF;
