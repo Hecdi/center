@@ -101,7 +101,7 @@
 							<!--<el-button type="primary" size="mini"  >冲突检测</el-button>-->
 					</el-col>
 				</el-row>
-				<el-row class="legend-panel" v-if="!isTable" :gutter="20">
+				<el-row class="legend-panel" :gutter="20">
 					<el-col :span="12" style="text-align:left">
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
 							任务状态：
@@ -133,7 +133,7 @@
 			<el-main v-if="!isTable">
 				<MainList/>
 			</el-main>
-			<el-main v-else>
+			<el-main class="table-main" v-else>
 				<TableList/>
 			</el-main>
 		</el-container>

@@ -79,7 +79,7 @@
       <el-table-column prop="displayETD" label="预计起飞" min-width="160"/>
       <el-table-column prop="displaySTA" label="计划起飞" min-width="160"/>
     </el-table>
-	<page-nation style="width:100%;position:relative;margin:0;text-align:center;"
+	<page-nation style="left:0;width:100%;position:relative;margin:0;text-align:center;"
 				 :currentPage="currentPage" :pageSize="pageSize" :total="total"
 				 @handleCurrentChange = "handleCurrentChange"
 				 @handleSizeChange = "handleSizeChange"/>
