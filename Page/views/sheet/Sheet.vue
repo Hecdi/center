@@ -269,7 +269,14 @@ export default {
       this.currentPage = val;
       console.log(`currentPage:${this.currentPage}`);
       this.getSheetData();
-    }
+    },
+    formatNull(value){
+      if(value){
+        return value;
+      } else {
+        return '--'
+      }
+    },
   },
 
   judgeMovement(value,result){
@@ -299,6 +306,13 @@ export default {
           Staff: list.movement=="A"?list.arriveGuaranteeStaff:list.departmentGuaranteeStaff,
           FlightNo: list.movement=="A"?list.arriveFlightNo:list.departmentFlightNo,
           displayMove: list.movement=="A"?  "到港": "离港",
+          Staff: this.formatNull(list.Staff),
+          seat: this.formatNull(list.seat),
+          routeName: this.formatNull(list.routeName),
+          FlightNo: this.formatNull(list.flightType),
+          aircraftNo : this.formatNull(list.flightType),
+          aircraftType: this.formatNull(list.flightType),
+          flightType: this.formatNull(list.flightType),
         });
       });
     }
