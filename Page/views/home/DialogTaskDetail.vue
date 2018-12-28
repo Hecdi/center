@@ -120,7 +120,7 @@
 				if(!overTime){
 					return '';
 				}	
-				return ms2Time(overTime); 
+				return `任务超时${ms2Time(overTime)}`; 
 			},
 			release: function(val) {
 				this.waiting = true;
