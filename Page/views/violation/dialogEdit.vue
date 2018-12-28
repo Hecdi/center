@@ -123,37 +123,8 @@
 		},
 		methods: {
              ...mapActions({ 
-                getWaitData: "getWaitData",
+                getWaitData: "getWaitData"
             }),
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url;
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-            },
-            imgPreview (file, fileList) {
-                let fileName = file.name;
-                let regex = /(.jpg|.jpeg|.gif|.png|.bmp)$/;
-                let _this = this;
-                _this.form.files = file.raw;
-                // let reader = new FileReader();
-                // reader.readAsDataURL(file.raw);
-                if (regex.test(fileName.toLowerCase())) {
-                    // reader.onload= ()=>{
-                    //     _this.form.files = reader.result;
-                    //     console.log(_this.form.files);
-                    // }
-                } else {
-                    this.$message.error('请选择图片文件');
-                }
-            },
-			handleClose(done) {
-				this.$confirm('确认关闭？')
-					.then(_ => {
-						done();
-					})
-					.catch(_ => {});
-			},
 			//获取下拉框的数据
 			getSelectData(){
 				let _this = this;
@@ -177,7 +148,6 @@
 			//融合数据
 			getAllData(){
 				this.form = extend({}, this.form, this.editCheckData);
-				console.log(this.form);
             },
              getWaitData(value) {
                 this.$store.dispatch('violation/getWaitData',value);
@@ -204,7 +174,6 @@
                 axios.post(getImgUrl, formData, config)
                     .then(function(response) {
                         if(response.responseCode==1000){
-                            _this.picture == response.data;
                             this.$message({
 						        type: "success",
 						        message: response.responseMessage
@@ -249,65 +218,6 @@
 					}
 				})
             },
-			//提交违规记录编辑
-			submitEditForm(){
-                let param = ["violationCodeName","violationType","violationName","workOrgName","passNumber","driverLicenseNumber","carTypeName",
-                "carNo","violationDescription","deductionScore"];
-                var formData = new FormData();
-                each(param,(item)=>{
-                    let _this = this;
-                    formData.append(item,_this.form[item]);
-                });
-                formData.append('files[]', this.form.files);
-                let config = {
-                    'Content-Type': 'multipart/form-data'
-                }
-                axios.post('http://192.168.0.145/violationRecord/updateViolation', formData, config)
-                    .then(function(response) {
-                        if(response.responseCode==1000){
-                        this.getWaitData();
-						this.$store.dispatch(`violation/updateDialogCheckEdit`, {
-							dialogCheckEdit: false
-                        });
-                        this.$message({
-						    type: "success",
-						    message: response.responseMessage
-					    });
-					} else {
-                        this.$message({
-						    type: "error",
-						    message: response.responseMessage
-					    });
-						this.$store.dispatch(`violation/updateDialogCheckEdit`, {
-							dialogCheckEdit: false
-						});
-					}
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    })
-				// ajax.post('updateViolation',{files:this.form.files},(data)=> {
-				// 	if(data.responseCode==1000){
-				// 		this.getWaitData();
-				// 		this.$store.dispatch(`violation/updateDialogCheckEdit`, {
-				// 			dialogCheckEdit: false
-                //         });
-                //         this.$message({
-				// 		    type: "success",
-				// 		    message: data.responseMessage
-				// 	    });
-				// 	} else {
-                //         this.$message({
-				// 		    type: "error",
-				// 		    message: data.responseMessage
-				// 	    });
-				// 		this.$store.dispatch(`violation/updateDialogCheckEdit`, {
-				// 			dialogCheckEdit: false
-				// 		});
-				// 	}
-				// })
-			}
-
 		},
 		computed: {
 			dialogCheckEdit: {
@@ -320,11 +230,6 @@
 					});
 				}
 			},
-			// form :{
-			//     set(){
-			//         return  Object.assign({}, this.editCheckData)
-			//     }
-			// },
 		},
 		beforeMount(){
 			this.getSelectData();
