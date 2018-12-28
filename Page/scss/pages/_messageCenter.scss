@@ -70,7 +70,7 @@
 		}
 		.card1{
 			border-radius:8px;
-			width:465px;
+			width:26%;
 			height:680px;
 			.cardHeader{
 				position:relative;
@@ -102,6 +102,7 @@
 				}
 				.col2{
 					padding:11px 5px 0px 5px;
+					text-align:center;
 					div {
 						background-color:#3A3F43;
 						color:#FFFFFF;
@@ -110,7 +111,7 @@
 						text-overflow:ellipsis;
 						overflow:hidden;
 						white-space:nowrap;
-						text-indent:6px;
+						//text-indent:6px;
 					}
 				}
 				.col5{
@@ -159,7 +160,7 @@
 		}
 		.card2{
 			border-radius:8px;
-			width:375px;
+			width:24%;
 			height:680px;
 			.cardHeader{
 				position:relative;
@@ -230,7 +231,7 @@
 		}
 		.card3{
 			border-radius:8px;
-			width:375px;
+			width:24%;
 			height:680px;
 			.cardHeader{
 				position:relative;
@@ -301,7 +302,7 @@
 		}
 		.card4{
 			border-radius:8px;
-			width:375px;
+			width:24%;
 			height:680px;
 			.cardHeader{
 				position:relative;

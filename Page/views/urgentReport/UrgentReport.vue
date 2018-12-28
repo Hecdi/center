@@ -4,7 +4,7 @@
 		<el-row :gutter="50">
 			<el-col class="deptRow" :span="12">
 				<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1',1)">当前部门</el-button>
-				<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>
+				<!--<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>-->
 		   </el-col>
 		   <el-col class="dateRow" :span="6">
 				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch(1)">
@@ -55,16 +55,18 @@
 							<p class="Content" :title="site.remarks">{{site.remarks}}</p>
 						</section>
 						<section class="Row4">
-							<div v-if="site.imgFile" class="Yesphoto">
+							<div v-if="site.imgFile && site.imgFile != '{}'" class="Yesphoto">
 								<el-button type="text" @click="showPics(site.imgFile)">
 									图片详情
 								</el-button>
 								<el-dialog
 									title="提示"
+									width="400px"
+									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel :autoplay=false  height="300px" >
+									<el-carousel :autoplay=false  height="600px" >
 										<el-carousel-item  v-for = "(item,index) in imgArr" :key = "index">
-											<img :src = "item"  class="img" />
+											<img :src= "item"  class="img" />
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -137,11 +139,11 @@
 					<el-table-column class-name = "column7" label = "附件" min-width = "100px">
 						<template slot-scope="scope" >
 							<div>
-								<el-button style="padding:8px 16px" :type = "scope.row.imgFile?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
-								<el-dialog v-if = "scope.row.imgFile"  title="提示" :visible.sync="dialogVisible">
-									<el-carousel :autoplay=false height="300px" >
+								<el-button style="padding:8px 16px" :type = "scope.row.imgFile  && scope.row.imgFile != '{}'?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
+								<el-dialog placement="top"  width="400px" v-if = "scope.row.imgFile && scope.row.imgFile != '{}'"  title="提示" :visible.sync="dialogVisible">
+									<el-carousel :autoplay=false height="600px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-											<img :src = "item" class="img"/>
+											<img :src="item" class="img"/>
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -178,6 +180,7 @@
 	import {ajax} from "ajax";
 	import {formatDate} from "date.js";
 	import {remote} from "electron";
+	import { each } from "lodash";
 	export default {
 		name:"urgentReport",
 		data(){
@@ -260,8 +263,11 @@
 				})
 			},
 			showPics(picUrls){
-				if(!picUrls){return;}
+				if(!picUrls || picUrls == '{}'){return;}
 				this.imgArr = picUrls.split(',');
+				each(this.imgArr,(item,index) => {
+					this.imgArr[index] = `http://173.101.1.30:6072/${item}`;
+				});
 				this.dialogVisible = true;
 			},
 			getData(data){
