@@ -1,11 +1,10 @@
 <template>
   <el-dialog
-    class="dialogAddTask"
     title="添加临时任务"
     :visible.sync="dialogAddTaskVisible"
     width="1000px"
   >
-  <section v-loading="waiting" element-loading-text="拼命加载中。。。">
+  <section v-loading="waiting" element-loading-text="拼命加载中。。。" class="dialogAddTask">
     <el-row :gutter="10" class="personList">
       <el-col  v-for="worker in tempWorkerList" :key="worker.staffId+1" class="person-panel">
         <div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName ==worker.staffId  }" @click="show(worker.staffId)" :data-id="worker.staffId">
@@ -80,14 +79,14 @@
       <el-table-column prop="displayETD" label="预计起飞" min-width="160"/>
       <el-table-column prop="displaySTA" label="计划起飞" min-width="160"/>
     </el-table>
+	<page-nation style="left:0;width:100%;position:relative;margin:0;text-align:center;"
+				 :currentPage="currentPage" :pageSize="pageSize" :total="total"
+				 @handleCurrentChange = "handleCurrentChange"
+				 @handleSizeChange = "handleSizeChange"/>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="submitTempTask">提交</el-button>
       <el-button @click="dialogAddTaskVisible = false;">取 消</el-button>
     </span>
-	<page-nation style="bottom:-20px;left:200px;position:relative;margin:10px;text-align:center;"
-				 :currentPage="currentPage" :pageSize="pageSize" :total="total"
-				 @handleCurrentChange = "handleCurrentChange"
-				 @handleSizeChange = "handleSizeChange"/>
   </section>
   </el-dialog>
 </template>

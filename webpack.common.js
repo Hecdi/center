@@ -14,7 +14,7 @@ const extractSass = new ExtractTextPlugin({
 });
 
 const copyFiles = new CopyWebpackPlugin([
-    //{ from: 'public/iconfont/iconfont.*', to:  `${BUILD_DIR}/iconfont/`,flatten:true,force:true},
+	{ from: 'public/manual/*', to:  `${BUILD_DIR}/manual/`,flatten:true,force:true},
     //{ from: 'public/images/*', to:  `${BUILD_DIR}/images/`,flatten:true,force:true},
 	//{ from: 'widget/map-gl/src/sprites/*', to:  BUILD_DIR,flatten:true,force:true},
     //{ from: 'public/fonts/', to: `${BUILD_DIR}/fonts/`, toType: 'dir' , force:true}
@@ -169,7 +169,7 @@ module.exports = {
         ],
     },
     resolve: {
-        modules: [SRC_DIR, 'node_modules', 'common', 'lib','./Page/components']
+        modules: [SRC_DIR, 'node_modules', 'common', 'lib','./Page/components','public']
     },
     plugins: plugins,
     //stomp 报错 找不到 net 模块

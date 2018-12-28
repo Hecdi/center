@@ -24,6 +24,16 @@ div{
             margin:0;
         }
     }
+	.manual{
+		overflow:auto;
+		padding:10px;
+		height:auto;
+		img {
+			width:100%;
+			height:auto;
+			margin-bottom:10px;
+		}
+	}
 }
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
 	background-color:#0090ff !important;
