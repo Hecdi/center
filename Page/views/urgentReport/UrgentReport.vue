@@ -61,8 +61,10 @@
 								</el-button>
 								<el-dialog
 									title="提示"
+									width="400px"
+									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel :autoplay=false  height="900px" >
+									<el-carousel :autoplay=false  height="600px" >
 										<el-carousel-item  v-for = "(item,index) in imgArr" :key = "index">
 											<img :src= "item"  class="img" />
 										</el-carousel-item>
@@ -138,8 +140,8 @@
 						<template slot-scope="scope" >
 							<div>
 								<el-button style="padding:8px 16px" :type = "scope.row.imgFile  && scope.row.imgFile != '{}'?'primary':'info'" @click.native="showPics(scope.row.imgFile)">查看</el-button>
-								<el-dialog v-if = "scope.row.imgFile && scope.row.imgFile != '{}'"  title="提示" :visible.sync="dialogVisible">
-									<el-carousel :autoplay=false height="900px" >
+								<el-dialog placement="top"  width="400px" v-if = "scope.row.imgFile && scope.row.imgFile != '{}'"  title="提示" :visible.sync="dialogVisible">
+									<el-carousel :autoplay=false height="600px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
 											<img :src="item" class="img"/>
 										</el-carousel-item>
