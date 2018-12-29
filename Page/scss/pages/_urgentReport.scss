@@ -3,6 +3,9 @@
 	background-color:#E4E7EC;
 	overflow-x:hidden;
 	overflow-y:auto;
+	div.el-card.is-always-shadow{
+		overflow:auto;
+	}
 	.el-table td{
 		padding:5px 0;
 	}
@@ -128,6 +131,9 @@
 			line-height:15px;
 			font-size:14px;
 			padding-left:18px;
+			.el-carousel__item{
+				overflow:auto;
+			}
 		}
 		.Yesphoto{
 			color:#0064FF;
@@ -156,8 +162,8 @@
 		line-height:16px;
 	}
 	.img{
-		width:100%;
-		height:auto;
+		//width:100%;
+		//height:auto;
 	}
 	.deptBtn{
 		font-family:Microsoft YaHei;
@@ -273,6 +279,9 @@
 		.column7{
 			font-family:Microsoft YaHei;
 			color:#000000;
+			.el-carousel__item{
+				overflow:auto;
+			}
 		}
 }
 
