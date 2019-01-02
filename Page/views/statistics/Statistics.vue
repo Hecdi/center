@@ -328,6 +328,12 @@ export default {
                 fontSize: '14',
               }
             },
+        grid: {
+          top: 40,
+          left: 40,
+          right: 19,
+          bottom: 40
+        },
             legend: {
               itemWidth: 14,
               itemHeight: 14,
@@ -431,12 +437,12 @@ export default {
             data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
           },
           grid: {
-            // width: {totalWidth} - x - x2,
-            // height: {totalHeight} - y - y2,
             backgroundColor: '#E6EEF4',
             borderWidth: 1,
-            // borderColor: '#ccc',
-            // borderStyle: 'dashed',
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
           },
             xAxis:
               {
@@ -531,6 +537,12 @@ export default {
                 fontSize: '14',
               }
             },
+          grid: { 
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
           tooltip: {
 				  trigger: 'axis',
 				  axisPointer: { 
@@ -613,7 +625,13 @@ export default {
 				  axisPointer: { 
 				  	type: 'shadow'
 				  }
-				},
+        },
+        grid: { 
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
             legend: {
               itemWidth: 14,
               itemHeight: 14,
