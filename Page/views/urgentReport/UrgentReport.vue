@@ -267,7 +267,7 @@
 				if(!picUrls || picUrls == '{}'){return;}
 				this.imgArr = picUrls.split(',');
 				each(this.imgArr,(item,index) => {
-					this.imgArr[index] = `http://173.101.1.30:6072/${item}`;
+					this.imgArr[index] = `http://${location.hostname}:6072/${item}`;
 				});
 				this.dialogVisible = true;
 			},
