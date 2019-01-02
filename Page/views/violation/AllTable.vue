@@ -92,10 +92,9 @@
           >查看</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
-      <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
-      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
-      <el-table-column label="审核" width="100" fixed="right">
+      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180" fixed="right"/>
+      <el-table-column porp = "status" label="状态" :formatter="statusFormat" width="80"/>
+      <el-table-column label="审核" width="100" v-if="havePermission">
         <template slot-scope="scope">
             <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
         </template>
