@@ -6,7 +6,7 @@ import Sheet from "./views/sheet/Sheet.vue";
 import Violation from "./views/violation/ViolationRecord.vue";
 import UrgentReport from "./views/urgentReport/UrgentReport.vue";
 import MessageCenter from "./views/messageCenter/MessageCenter.vue";
-import Statistics from "./views/statistics/Statistics.vue";
+import Statistics from "./views/statistics/Statistics1.vue";
 import Manual from "./views/manual/Manual.vue";
 import Login from "./views/login/Login.vue";
 Vue.use(Router);
