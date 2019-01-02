@@ -1,6 +1,5 @@
 <template>
   <div class="statistics">
-    <!-- <el-button @click="handleClick1">图标渲染顺序测试</el-button> -->
     <el-row :gutter="0">
       <el-col :span="24">
         <el-date-picker
@@ -25,15 +24,13 @@
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card shadow="always">
-          <!-- <h2>违规类型统计</h2> -->
-          <div id="violation-type"></div>
+        <el-card shadow="hover">
+          <div id="violation-sum"></div>
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card shadow="hover">
-          <!-- <h2>违规统计</h2> -->
-          <div id="violation-sum"></div>
+        <el-card shadow="always">
+          <div id="violation-type"></div>
         </el-card>
       </el-col>
       <h4 class="table-title">数据统计汇总</h4>
@@ -69,11 +66,11 @@
       </el-col>
       <h4 class="table-title">每日完成工作量top5</h4>
       <el-col :span="24">
-        <div v-for="(w,index) in dateRange" v-bind:key="index" class="top-worker">
+        <div v-for="(w,index) in topStaff" v-bind:key="index" class="top-worker">
           <span class="time-col">
-            {{w}}
+            {{w.scheduleTime}}
           </span>
-          <span class="top-cell" v-for = "(s,index) in staffWorkCount.item1" v-bind:key="index">
+          <span class="top-cell" v-for = "(s,index) in w.topStaff" v-bind:key="index">
             {{s}}
           </span>
         </div>
@@ -96,45 +93,355 @@ import {extend} from "lodash";
 export default {
   name: "Statistics",
   components: {
-    // TopBar,
     dialogUnFinishView
   },
-  computed: {
-    ...mapGetters({ cards: "processedCards" })
-  },
   data() {
-    // debugger;
     return {
-      activeName: "second",
-      status: "全部",
-      currentView: "all",
       time: [],
       tableData1: [],
       staffWorkCount: [],
       getUnfinish: [],
-      getOption: {
-        title: {text: '进出港统计'},legend: {data: ['进港','离港']},
-        xAxis: [{data: []}],
-        yAxis : [{type : 'value'}],
-        series : [{name:'进港',type:'bar',data:[]},{name:'离港',type:'bar',data:[],},]
-      },
-      getOption1: {
-        title: {text: '工作量统计',},legend: {  data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']},
-        xAxis: [  {data: [],  }],
-        yAxis : [{type : 'value'}], 
-        series : [      {          name:'生成任务',          type:'bar',    data:[],},{    name:'不保障任务',    type:'bar',    data:[],},{    name:'操作任务',    type:'bar',    data:[],}, {    name:'自动排班任务',    type:'bar',    data:[],},{    name:'完成任务',    type:'bar',    data:[],},{    name:'操作数',    type:'bar',    data:[],},  ]
-      },
-      getOption3: {
-          title: {  text: '工作量统计',},legend: {  data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']},
-          xAxis: [  {    data: [],  }],yAxis : [      {          type : 'value'      }],
-             series : [     {         name:'生成任务',         type:'bar',         data:[],     },     {         name:'不保障任务',         type:'bar',         data:[],     },     {         name:'操作任务',         type:'bar',         data:[],     },      {         name:'自动排班任务',         type:'bar',         data:[],     },     {         name:'完成任务',         type:'bar',         data:[],     },     {         name:'操作数',         type:'bar',         data:[],     },   ]
+      getInOut:{
+        color: ['#194eff','#00a700'],
+        title: {
+            text: '进出港统计',
+            textStyle:{
+              color:'#333',
+              fontSize: '14',
+            }
+        },
+        tooltip: {
+			trigger: 'axis',
+			axisPointer: { 
+				type: 'shadow'
+			}
+		},
+        legend: {
+          itemWidth: 14,
+          itemHeight: 14,
+          itemGap: 30,
+          x: 'right',
+          icon: "circle", 
+          data: ['进港','离港']
+        },
+        xAxis: [
+          {
+            data: [],
+            splitLine: {show:true,lineStyle:{type:'dashed'}},
+            max:'4',
+            axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'#3A3A3A',
+                },
+              onZero: true,
+              nameLocation:'end',//坐标轴名称显示位置。
+              axisLabel : {
+                interval:0,
+                rotate:"45"
+              }
+            },
+          }
+        ],
+        yAxis : {
+          splitLine: {
+            show: true,
+            lineStyle:{type:'dashed'}
           },
-      getOption4: {
-          title: {  text: '工作量统计',},legend: {  data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']},
-          xAxis: [  {    data: [],  }],
-          yAxis : [      {          type : 'value'      }],
-          series : [{    name:'生成任务',    type:'bar',    data:[],},{    name:'不保障任务',    type:'bar',    data:[],},{    name:'操作任务',    type:'bar',    data:[],}, {    name:'自动排班任务',    type:'bar',    data:[],},{    name:'完成任务',    type:'bar',    data:[],},{    name:'操作数',    type:'bar',    data:[],},  ]
+          type : 'value',
+          axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'rgba(58,58,58,1)',
+                }
+            },
+          splitArea : {show : true,
+              areaStyle: {
+                  color: ['#f7faff'],
+              }},
+        },
+         series : [
+            {
+                name:'进港',
+                type:'line',
+                smooth: true, 
+                data: [],
+            },
+            {
+                name:'离港',
+                type:'line',
+                smooth: true, 
+                data:[],
+            },
+          ]
+      },
+      getWorkload: {
+        backgroundColor: '#fff',
+        color: ['#9dcae4','#fcca3d','#2fb1fe','#bea5f6','#7fe7dc','#ffa7a7'],
+        title: {
+            text: '工作量统计',
+            textStyle:{
+              color:'#333',
+              fontSize: '14',
+            } 
+        },
+        tooltip: {
+			trigger: 'axis',
+			axisPointer: { 
+				type: 'shadow'
+			}
+		},
+        legend: {
+          itemWidth: 14,
+          itemHeight: 14,
+          itemGap: 14,
+          x: 'right',
+          icon: "circle", 
+          data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
+        },
+        grid: {
+          backgroundColor: '#E6EEF4',
+          borderWidth: 1,
+          top: 40,
+          left: 40,
+          right: 19,
+          bottom: 40
+        },
+        xAxis:{
+            data: [],
+            splitLine: {show:true,lineStyle:{type:'dashed'}},
+            max:'4',
+            axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'#3A3A3A',
+                }
+            }
+        },
+        yAxis : {
+          splitLine: {
+            show: true,
+            lineStyle:{type:'dashed'}
           },
+          type : 'value',
+          axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'rgba(58,58,58,1)',
+                }
+            },
+          splitArea : {show : true,
+            areaStyle: {
+                  color: ['#f5f8fa'],
+            }}
+        },
+        series : [
+             {
+                 name:'生成任务',
+                 type:'bar',
+                 data:[],
+             },
+             {
+                 name:'不保障任务',
+                 type:'bar',
+                 data:[],
+             },
+             {
+                 name:'操作任务',
+                 type:'bar',
+                 data:[],
+             },
+              {
+                 name:'自动排班任务',
+                 type:'bar',
+                 data:[],
+             },
+             {
+                 name:'完成任务',
+                 type:'bar',
+                 data:[],
+             },
+             {
+                 name:'操作数',
+                 type:'bar',
+                 hoverAnimation:true,
+                 data:[],
+                 itemStyle: {
+                   emphasis: {
+                       barBorderRadius: [30,30,0,0]
+                   },
+                   normal: {
+                       barBorderRadius:[30, 30, 0, 0],
+                   }
+               },
+             }, 
+          ]
+      },
+      getViolationNum: {
+        color: ['#00a700','#677f94','#ff0000'],
+        title: {
+              text: '违规统计',
+              textStyle:{
+                color:'#333',
+                fontSize: '14',
+              }
+            },
+        grid: { 
+          top: 40,
+          left: 40,
+          right: 19,
+          bottom: 40
+        },
+        tooltip: {
+			trigger: 'axis',
+			axisPointer: { 
+				type: 'shadow'
+			}
+		},
+        legend: {
+          itemWidth: 14,
+            itemHeight: 14,
+            itemGap: 20,
+            x: 'right',
+            icon: "circle", 
+            data: ['审核通过','审核中','未通过']
+          },
+        xAxis: [
+          {
+            data: [],
+            splitLine: {show:true,lineStyle:{type:'dashed'}},
+            max:'4',
+            axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'#3A3A3A',
+                }
+            }
+          }
+        ],
+        yAxis : {
+          splitLine: {
+            show: true,
+            lineStyle:{type:'dashed'}
+          },
+          type : 'value',
+          axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'rgba(58,58,58,0.5)',
+                }
+            },
+          splitArea : {show : true,
+            areaStyle: {
+                  color: ['#f5f8fa'],
+                }}
+        },
+        series : [
+            {
+                name:'审核通过',
+                type:'line',
+                smooth: true, 
+                data: [],
+            },
+            {
+                name:'审核中',
+                type:'line',
+                smooth: true, 
+                data:[],
+            },
+            {
+                name:'未通过',
+                type:'line',
+                smooth: true, 
+                data:[],
+            },
+        ]
+      },
+      getViolationType: {
+        color: ['#ff7600','#386eff','#677f95','#a600ff'],
+        title: {
+            text: '违规类型统计',
+            textStyle:{
+              color:'#333',
+              fontSize: '14',
+            }
+        },
+        tooltip: {
+			  trigger: 'axis',
+			  axisPointer: { 
+			  	type: 'shadow'
+		     }
+        },
+        grid: { 
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
+       legend: {
+         itemWidth: 14,
+         itemHeight: 14,
+         itemGap: 20,
+         x: 'right',
+         icon: "circle", 
+         data: ['人员','车辆','设备','单位']
+       },
+        xAxis: [{
+            data: [],
+            splitLine: {show:true,lineStyle:{type:'dashed'}},
+            max:'4',
+            axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'#3A3A3A',
+                }
+            }
+          }],
+        yAxis : {
+          splitLine: {
+            show: true,
+            lineStyle:{type:'dashed'}
+          },
+          type : 'value',
+          axisLine: {
+              lineStyle: {
+                type:'dashed',
+                color:'rgba(58,58,58,0.5)',
+                }
+          },
+          splitArea : {
+              show : true,
+              areaStyle: {
+                color: ['#f5f8fa'],
+              }}//保留网格区域
+          },
+          series : [
+               {
+                   name:'人员',
+                   type:'line',
+                   smooth: true, 
+                   data: [],
+               },
+               {
+                   name:'车辆',
+                   type:'line',
+                   smooth: true, 
+                   data:[],
+               },
+               {
+                   name:'设备',
+                   type:'line',
+                   smooth: true, 
+                   data:[],
+               },
+               {
+                   name:'单位',
+                   type:'line',
+                   smooth: true, 
+                   data:[],
+               },
+          ]
+      },
       dateRange: [],
       movementD:[],
       movementA: [],
@@ -153,7 +460,6 @@ export default {
     },
     openUnfinish(value) {
       this.getUnfinish = value;
-      // console.log(this.getUnfinish);
       this.$store.dispatch('statistics/updateTaskHandover', { dialogUnFinish: true });
     },
     handleClick(tab, event) {
@@ -161,13 +467,6 @@ export default {
     },
     handleClick1(){
       this.refreshData();
-      // this.drawLine();
-    },
-    initData(){
-      let _this = this;
-      this.$nextTick(() => {
-        _this.getData();
-      })
     },
     getData(data) {
       this.list = data;
@@ -241,7 +540,7 @@ export default {
       this.car = car;
       this.device = device;
       this.people = people;
-      this.getOption = {
+      this.getInOutLine = {
         color: ['#194eff','#00a700'],
         title: {
               text: '进出港统计',
@@ -319,7 +618,7 @@ export default {
                   },
           ]
       }
-      this.getOption00 = {
+      this.getInOutBar = {
         color: ['#194eff','#00a700'],
         title: {
               text: '进出港统计',
@@ -344,7 +643,6 @@ export default {
             },
             xAxis: [
               {
-                // type: 'category',
                 data: this.dateRange,
                 splitLine: {show:true,lineStyle:{type:'dashed'}},
                 max:'4',
@@ -379,8 +677,8 @@ export default {
                   {
                       name:'进港',
                       type:'bar',
-                      smooth: true, 
                       data: this.movementA,
+                      barMaxWidth:20,
                       hoverAnimation:true,
                       itemStyle: {
                         emphasis: {
@@ -395,7 +693,7 @@ export default {
                   {
                       name:'离港',
                       type:'bar',
-                      smooth: true, 
+                      barMaxWidth:20,
                       data:this.movementD,
                       hoverAnimation:true,
                       itemStyle: {
@@ -409,9 +707,170 @@ export default {
                   },
           ]
       }
-      this.getOption = this.dateRange.length>7? this.getOption : this.getOption00;
+      this.getInOut = this.dateRange.length>7? this.getInOutLine : this.getInOutBar;
 
-      this.getOption1 = {
+      this.getWorkloadBar = {
+        backgroundColor: '#fff',
+        color: ['#9dcae4','#fcca3d','#2fb1fe','#bea5f6','#7fe7dc','#ffa7a7'],
+        title: {
+            text: '工作量统计',
+            textStyle:{
+              color:'#333',
+              fontSize: '14',
+            }
+            
+        },
+        tooltip: {
+				  trigger: 'axis',
+				  axisPointer: { 
+                    //   type: 'shadow',
+                      lineStyle: {
+                       backgroundColor:'#fff',
+                    },
+                  },
+                //    backgroundColor:'#fff',
+				},
+          legend: {
+            itemWidth: 14,
+            itemHeight: 14,
+            itemGap: 14,
+            x: 'right',
+            icon: "circle", 
+            data: ['生成任务','不保障任务','操作任务','自动排班任务','完成任务','操作数']
+          },
+          grid: {
+            backgroundColor: '#E6EEF4',
+            borderWidth: 1,
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
+            xAxis:
+              {
+                data: this.dateRange,
+                splitLine: {show:true,lineStyle:{type:'dashed'}},
+                max:'4',
+                axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'#3A3A3A',
+                    }
+                }
+              }
+            ,
+            yAxis : {
+              splitLine: {
+                show: true,
+                lineStyle:{type:'dashed'}
+              },
+              type : 'value',
+              axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'rgba(58,58,58,1)',
+                    }
+                },
+              splitArea : {show : true,
+                areaStyle: {
+                      color: ['#f5f8fa'],
+                    }}//保留网格区域
+            },
+             series : [
+                  {
+                      name:'生成任务',
+                      type:'bar',
+                      data:this.createTask,
+                      hoverAnimation:true,
+                      barMaxWidth:20,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'不保障任务',
+                      type:'bar',
+                      data:this.finishTask,
+                      hoverAnimation:true,
+                      barMaxWidth:20,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'操作任务',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.operateTask,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                   {
+                      name:'自动排班任务',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.automaticTask,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'完成任务',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.finishTask,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'操作数',
+                      type:'bar',
+                      barMaxWidth:20,
+                      hoverAnimation:true,
+                      data:this.operateTotal,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  }, 
+          ]
+        }
+
+        this.getWorkloadLine = {
         backgroundColor: '#fff',
         color: ['#9dcae4','#fcca3d','#2fb1fe','#bea5f6','#7fe7dc','#ffa7a7'],
         title: {
@@ -446,7 +905,6 @@ export default {
           },
             xAxis:
               {
-                // type: 'category',
                 data: this.dateRange,
                 splitLine: {show:true,lineStyle:{type:'dashed'}},
                 max:'4',
@@ -478,57 +936,47 @@ export default {
              series : [
                   {
                       name:'生成任务',
-                      type:'bar',
+                      type:'line',
                       data:this.createTask,
+                      smooth: true, 
                   },
                   {
                       name:'不保障任务',
-                      type:'bar',
+                      type:'line',
                       data:this.finishTask,
+                      smooth: true, 
                   },
                   {
                       name:'操作任务',
-                      type:'bar',
+                      type:'line',
                       data:this.operateTask,
+                      smooth: true, 
                   },
                    {
                       name:'自动排班任务',
-                      type:'bar',
+                      type:'line',
                       data:this.automaticTask,
+                      smooth: true, 
+
                   },
                   {
                       name:'完成任务',
-                      type:'bar',
+                      type:'line',
                       data:this.finishTask,
+                      smooth: true, 
+
                   },
                   {
                       name:'操作数',
-                      type:'bar',
+                      type:'line',
                       hoverAnimation:true,
                       data:this.operateTotal,
-                      itemStyle: {
-                        //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
-                        emphasis: {
-                            barBorderRadius: [30,30,0,0]
-                        },
-                        normal: {
-                            //柱形图圆角，初始化效果
-                            barBorderRadius:[30, 30, 0, 0],
-                            // label: {
-                            //     show: true,//是否展示
-                            //     textStyle: {
-                            //         fontWeight:'bolder',
-                            //         fontSize : '12',
-                            //         fontFamily : '微软雅黑',
-                            //     }
-                            // }
-                        }
-                    },
+                      smooth: true,
                   }, 
           ]
         }
 
-        this.getOption3 = {
+        this.getViolationNumLine = {
         color: ['#00a700','#677f94','#ff0000'],
         title: {
               text: '违规统计',
@@ -585,20 +1033,18 @@ export default {
               splitArea : {show : true,
                 areaStyle: {
                       color: ['#f5f8fa'],
-                    }}//保留网格区域
+                    }}
             },
              series : [
                   {
                       name:'审核通过',
                       type:'line',
-                      // symbol:'none',
                       smooth: true, 
                       data: this.pass,
                   },
                   {
                       name:'审核中',
                       type:'line',
-                      // symbol:'none',
                       smooth: true, 
                       data:this.checking,
                   },
@@ -611,7 +1057,115 @@ export default {
           ]
       }
 
-      this.getOption4 = {
+      this.getViolationNumBar = {
+        color: ['#00a700','#677f94','#ff0000'],
+        title: {
+              text: '违规统计',
+              textStyle:{
+                color:'#333',
+                fontSize: '14',
+              }
+            },
+          grid: { 
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
+          tooltip: {
+				  trigger: 'axis',
+				  axisPointer: { 
+				  	type: 'shadow'
+				  }
+				},
+            legend: {
+              itemWidth: 14,
+              itemHeight: 14,
+              itemGap: 20,
+              x: 'right',
+              icon: "circle", 
+              data: ['审核通过','审核中','未通过']
+            },
+            xAxis: [
+              {
+                data: this.dateRange,
+                splitLine: {show:true,lineStyle:{type:'dashed'}},
+                max:'4',
+                axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'#3A3A3A',
+                    }
+                }
+              }
+            ],
+            yAxis : {
+              splitLine: {
+                show: true,
+                lineStyle:{type:'dashed'}
+              },
+              type : 'value',
+              axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'rgba(58,58,58,0.5)',
+                    }
+                },
+              splitArea : {show : true,
+                areaStyle: {
+                      color: ['#f5f8fa'],
+                    }}
+            },
+             series : [
+                  {
+                      name:'审核通过',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data: this.pass,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'审核中',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.checking,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'未通过',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.unPass,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+          ]
+      }
+
+      this.getViolationTypeLine = {
         color: ['#ff7600','#386eff','#677f95','#a600ff'],
         title: {
               text: '违规类型统计',
@@ -668,7 +1222,7 @@ export default {
               splitArea : {show : true,
                 areaStyle: {
                       color: ['#f5f8fa'],
-                    }}//保留网格区域
+                    }}
             },
              series : [
                   {
@@ -697,6 +1251,133 @@ export default {
                   },
           ]
       }
+      this.getViolationTypeBar = {
+        color: ['#ff7600','#386eff','#677f95','#a600ff'],
+        title: {
+              text: '违规类型统计',
+              textStyle:{
+                color:'#333',
+                fontSize: '14',
+              }
+            },
+            tooltip: {
+				  trigger: 'axis',
+				  axisPointer: { 
+				  	type: 'shadow'
+				  }
+        },
+        grid: { 
+            top: 40,
+            left: 40,
+            right: 19,
+            bottom: 40
+          },
+            legend: {
+              itemWidth: 14,
+              itemHeight: 14,
+              itemGap: 20,
+              x: 'right',
+              icon: "circle", 
+              data: ['人员','车辆','设备','单位']
+            },
+            xAxis: [
+              {
+                data: this.dateRange,
+                splitLine: {show:true,lineStyle:{type:'dashed'}},
+                max:'4',
+                axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'#3A3A3A',
+                    }
+                }
+              }
+            ],
+            yAxis : {
+              splitLine: {
+                show: true,
+                lineStyle:{type:'dashed'}
+              },
+              type : 'value',
+              axisLine: {
+                  lineStyle: {
+                    type:'dashed',
+                    color:'rgba(58,58,58,0.5)',
+                    }
+                },
+              splitArea : {show : true,
+                areaStyle: {
+                      color: ['#f5f8fa'],
+                    }}
+            },
+             series : [
+                  {
+                      name:'人员',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data: this.people,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'车辆',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.car,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'设备',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.device,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+                  {
+                      name:'单位',
+                      type:'bar',
+                      barMaxWidth:20,
+                      data:this.company,
+                      hoverAnimation:true,
+                      itemStyle: {
+                        emphasis: {
+                            barBorderRadius: [30,30,0,0]
+                        },
+                        normal: {
+                            barBorderRadius:[30, 30, 0, 0],
+                        }
+                    },
+                  },
+          ]
+      }
+    //  this.getInOut = this.dateRange.length>7? this.getInOutLine : this.getInOutBar;
+     this.getWorkload = this.dateRange.length>7? this.getWorkloadLine : this.getWorkloadBar;
+     this.getViolationNum = this.dateRange.length>7? this.getViolationNumLine : this.getViolationNumBar;
+     this.getViolationType = this.dateRange.length>7? this.getViolationTypeLine : this.getViolationTypeBar;
+
     },
     refreshData() {
       let timeArr = this.time;
@@ -714,80 +1395,26 @@ export default {
               endDate = moment(endDate).format("YYYY-MM-DD")
           }  
       } else {
-
-        // let today = {};
-        // let  _today = moment();
-        // today.year = _today.format('yyyy'); /*现在的年*/
-        // today.date = _today.format('YYYY-MM-DD'); /*现在的时间*/
-        // today.yesterday = _today.subtract(1, 'days').format('YYYY-MM-DD'); /*前一天的时间*/
-
-          //endDate = moment(new Date()).format("YYYY-MM-DD");
-          // startDate = moment(new Date()).format("YYYY-MM-DD");
-          //startDate = today.yesterday;
-          // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-          // startDate = moment(startDate).format("YYYY-MM-DD");
-          // endDate = startDate;
           startDate = "2018-12-23";
           endDate = "2018-12-29";
       }
       let params = {"startTime":startDate,"endTime":endDate};
-      // let params = {"startTime":"2018-12-18","endTime":"2018-12-22"};
-      console.log(params);
       ajax.post("statistics",params).then(data => {
-        // let statistics = data;
-        //  _this.$nextTick((statistics) => {
-        //   _this.getData(statistics);
-        // })
         console.log(data);
         let statistics = data;
         this.getData(data);
       });
     },
-    setOption3() {
-      let _this = this;
-      let option3 = {
-        title: {
-          text: '进出港统计',
-        },
-        legend: {
-          data: ['进港','离港']
-        },
-        xAxis: [
-          {
-            data: _this.dateRange,
-          }
-        ],
-        yAxis : [
-              {
-                  type : 'value'
-              }
-        ],
-         series : [
-              {
-                  name:'进港',
-                  type:'bar',
-                  data:_this.movementA,
-              },
-              {
-                  name:'离港',
-                  type:'bar',
-                  data:_this.movementD,
-              },
-      ]
-        };
-        return option3;
-      },
     drawLine() {
       let _this = this;
-      console.log(_this.getOption1);
-      let myChart = echarts.init(document.getElementById("workload"));
-      let myChart1 = echarts.init(document.getElementById("in-out"));
-      let myChart2 = echarts.init(document.getElementById("violation-type"));
-      let myChart3 = echarts.init(document.getElementById("violation-sum"));
-      myChart.setOption(_this.getOption1);
-      myChart1.setOption(_this.getOption);
-      myChart2.setOption(_this.getOption3);
-      myChart3.setOption(_this.getOption4);
+      let workloadChart = echarts.init(document.getElementById("workload"));
+      let inOutChart = echarts.init(document.getElementById("in-out"));
+      let violationTypeChart = echarts.init(document.getElementById("violation-type"));
+      let violationNumChart = echarts.init(document.getElementById("violation-sum"));
+      workloadChart.setOption(_this.getWorkload);
+      inOutChart.setOption(_this.getInOut);
+      violationTypeChart.setOption(_this.getViolationType);
+      violationNumChart.setOption(_this.getViolationNum);
     }
   },
   updated(){
