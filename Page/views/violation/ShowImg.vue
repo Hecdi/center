@@ -62,8 +62,7 @@
           path = path.replace('/dispatchforpc/','/');
           let arr=[];
           each(this.picture,(item) => {
-            // item = `http://173.101.1.30:6072/${item}`
-            item = `${path}${item}`
+            item = `http://${location.hostname}:6072/${item}`
             console.log(item)
             arr.push(item);
           });
