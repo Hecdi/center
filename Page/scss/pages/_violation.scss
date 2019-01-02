@@ -365,6 +365,10 @@
         .el-table_1_column_1 {
             font-family: $font-family-One; 
         }
+        .el-dialog__wrapper .el-dialog .el-dialog__header {
+            background-color: #2e67f6;
+            padding: .625rem 0.9375rem 1.9125rem;
+        }
     }
     .el-textarea__inner {
         width: 60%;

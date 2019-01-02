@@ -19,6 +19,7 @@
   import { mapState } from "vuex";
   import img from "../../assets/logo.png";
   import { each } from "lodash";
+  import { remote } from 'electron';
 
     export default {
         props:["dialogVisible","picture"],
@@ -56,9 +57,14 @@
         },
         img:function(){
           let _this = this;
+          const ajaxAPI = remote.getGlobal('ajaxAPI');
+          let path = `${ajaxAPI.path}`;
+          path = path.replace('/dispatchforpc/','/');
           let arr=[];
           each(this.picture,(item) => {
-            item = `http://173.101.1.30:6072/${item}`
+            // item = `http://173.101.1.30:6072/${item}`
+            item = `${path}${item}`
+            console.log(item)
             arr.push(item);
           });
           console.log(arr);
