@@ -521,7 +521,12 @@ export default {
 
       this.dateRange = dateRange;
       this.movementA = movementA;
-      this.movementD = movementD;
+       var movementDReverse = [];
+      movementD.forEach((item,index) =>{
+        movementDReverse.push(item*-1);
+      });
+      this.movementD = movementDReverse;
+      
       this.createTask = createTask;
       this.finishTask = finishTask;
       this.notGuaranteeTask = notGuaranteeTask;
@@ -627,6 +632,25 @@ export default {
                 fontSize: '14',
               }
             },
+        tooltip: {
+				  trigger: 'axis',
+				  axisPointer: { 
+				  	type: 'shadow'
+          },
+          formatter : function(params){
+            console.log(params);
+            let res;
+            params.forEach((item,index) => {
+              if(item.value > 0){
+              res = item.axisValue + '<br/>' + item.marker + item.seriesName+' : ' + item.value+'<br/>';
+              } else {
+                res = item.axisValue + '<br/>' + item.marker + item.seriesName+' : ' + item.value*-1 +'<br/>';
+              }
+            });
+            return res;
+          },
+          // formatter: `{b0}<br/> {a0}: {c0}<br />{a1}: {-c1}`
+        },
         grid: {
           top: 40,
           left: 40,
@@ -648,7 +672,7 @@ export default {
                 max:'4',
                 axisLine: {
                   lineStyle: {
-                    type:'dashed',
+                    type:'solid',
                     color:'#3A3A3A',
                     },
                   onZero: true
@@ -672,6 +696,17 @@ export default {
                       color: ['#f7faff'],
                   }},//保留网格区域
               // inverse: true
+              axisLabel: {
+                formatter: function (value, index) {
+                  let result;
+                  if(value>0){
+                    result = value;
+                  }else {
+                    result = value * -1;
+                  }
+                  return result;
+                }
+              }
             },
              series : [
                   {
@@ -679,6 +714,7 @@ export default {
                       type:'bar',
                       data: this.movementA,
                       barMaxWidth:20,
+                      stack: 'one',
                       hoverAnimation:true,
                       itemStyle: {
                         emphasis: {
@@ -687,21 +723,26 @@ export default {
                         normal: {
                             barBorderRadius:[30, 30, 0, 0],
                         }
-                    },
-
+                      },
+                      label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                      },
                   },
                   {
                       name:'离港',
                       type:'bar',
                       barMaxWidth:20,
+                      stack: 'one',
                       data:this.movementD,
                       hoverAnimation:true,
                       itemStyle: {
                         emphasis: {
-                            barBorderRadius: [30,30,0,0]
+                            barBorderRadius: [0,0,30,30,]
                         },
                         normal: {
-                            barBorderRadius:[30, 30, 0, 0],
+                            barBorderRadius:[0, 0,30, 30,],
                         }
                     },
                   },
