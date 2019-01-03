@@ -73,8 +73,6 @@
 </template>
 
 <script>
-import ToolBar from "./ToolBar.vue";
-import TableDis from "./TableDis.vue";
 import { ajax } from "ajax";
 import { extend, map } from "lodash";
 import { formatDate } from "date";
@@ -85,8 +83,6 @@ import { remote } from 'electron';
 export default {
   name: "Sheet",
   components: {
-    ToolBar,
-    TableDis,
     PageNation
   },
   data() {
