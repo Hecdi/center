@@ -495,7 +495,6 @@ export default {
       let topStaff = [];
       data.topMam = {};
       data.forEach((item,index) => {
-        console.log(item);
         dateRange.push(item.scheduleTime);
         movementA.push(item.movementCount.movementA);
         movementD.push(item.movementCount.movementD);
