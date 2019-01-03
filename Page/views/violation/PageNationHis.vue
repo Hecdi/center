@@ -43,17 +43,10 @@ import { ajax } from 'ajax';
       },
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.newPageSize = val;
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.newCurrentPage = val;
-        // let page = {'pageSize':pageSize,'currentPage':currentPage};
-        // ajax.post('getViolationDataForLike',page).then((data) => {
-        //   // console.log(`当前页: ${val}`);
-        //   // console.log(this.currentPage);
-        // })
       }
     },
   }

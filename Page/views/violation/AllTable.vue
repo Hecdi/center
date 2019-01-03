@@ -1,50 +1,4 @@
 <template>
-  <!-- <div class="all-table">
-    <el-table :data="cardList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
-      <el-table-column label="序号" width="80" type="index" :index="indexMethod"/>
-      <el-table-column
-        prop="violationCodeName"
-        label="违规类型"
-        width="130"
-        filter-placement="bottom-end"
-      >
-        <template slot-scope="scope">
-          <el-tag
-            :type="violationTypeBg1(scope.row.violationCodeName)"
-            disable-transitions
-          >{{scope.row.violationCodeName}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="staffNumber" label="人员编号" width="180"/>
-      <el-table-column prop ="staffName" label="违规人员" width="180"/>
-      <el-table-column prop="carNumber" label="车辆编号" min-width="80"/>
-      <el-table-column prop="deviceNumber" label="设备编号" min-width="80"/>
-      <el-table-column prop="belongCompanyName" label="所属单位" width="180"/>
-      <el-table-column
-        prop="violationDescription"
-        label="违规描述"
-        min-width="180"
-        :show-overflow-tooltip="true"
-      />
-      <el-table-column label="图像记录" min-width="80">
-        <template slot-scope="scope">
-          <el-button
-         
-            size="mini"
-            type="primary"
-            @click="openShowImg(scope.row.picture)"
-          >查看</el-button>
-        </template>
-      </el-table-column>
-      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
-      <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/>
-      <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/>
-      <el-table-column label="操作" v-if="havePermission">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
-        </template>
-      </el-table-column>
-    </el-table> -->
 <div class="all-table">
     <el-table :data="cardList" stripe style="width: 100%" height="82vh" cell-class-name="violationTypeBg">
       <el-table-column label="序号" width="80" type="index" :index="indexMethod" class-name="font-One" fixed/>
@@ -72,11 +26,6 @@
       <el-table-column prop="deductionScore" label="扣分分值" width="80"/>
       <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">
-          <!-- <el-button
-            size="mini"
-            type="primary"
-            @click="openShowImg(scope.row.picture)"
-          >查看</el-button> -->
            <el-button
             v-if = "scope.row.pictures"
             size="mini"
@@ -112,13 +61,11 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import moment from "moment";
-// import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
 import { ajax } from "ajax";
 import { map, extend } from 'lodash';
 import PageNationHis from "./PageNationHis.vue";
-// import PageNation from 'PageNation.vue';
 
 
 
@@ -128,35 +75,22 @@ export default {
      PageNationHis,
   },
   data() {
-    console.log(this.img);
     return {
       props: "statusValue",
       status: "22",
       img: img,
       picture: '',
       getPic: '',
-      // totalSize: 100,
       pageSize: 10,
       currentPage:1,
       test: 0,
     };
   },
-  // computed: {
-  //     ...mapState("violation", ["cards","totalSize","allCondition"])
-  // },
   computed: {
     ...mapState("violation", ["cards","totalSize","allCondition",'havePermission']),
     cardList: function() {
       return map(this.cards, list => {
         return extend({}, list, {
-          // people: this.formatData(list.violationCode==1,list.violationName),
-          // car : this.formatData(list.violationCode==2,list.violationName),
-          // device: this.formatData(list.violationCode==3,list.violationName),
-          // staffNumber: this.formatNull(list.staffNumber),
-          // staffName: this.formatNull(list.staffName),
-          // carNumber: this.formatNull(list.carNumber),
-          // deviceNumber: this.formatNull(list.deviceNumber),
-          // belongCompanyName:this.formatNull(list.belongCompanyName),
           aviolationDescription:this.formatNull(list.violationDescription),
           violationName: this.formatNull(list.violationName),
           violationNoticeNum: this.formatNull(list.violationNoticeNum),
@@ -178,7 +112,6 @@ export default {
     }),
     handleChangeStatus(row, value) {
       this.changeStatus(value);
-      console.log(value);
     },
     ...mapActions({
       getData: "getData"
@@ -201,12 +134,10 @@ export default {
       return index + 1;
     },
     handleSizeChange(val){
-      console.log(val);
       this.pageSize = val;
       this.refreshData();
     },
     handleCurrentChange(val){
-      console.log(`当前${val}`)
       this.currentPage = val;
       this.refreshData();
     },
@@ -261,7 +192,6 @@ export default {
     },
     openShowImg(value) {
       this.getPic = value;
-      console.log(this.getPic);
       this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
     },
     getData(data) {
@@ -269,15 +199,10 @@ export default {
       this.total = data.length;
     },
     submitStatus(param, value) {
-      console.log(param);
       let id = param.id;
       let status = value;
-      let subParam = `{"id":"${id}","status":${status}}`;
       let subParams = { id: id, status: status };
-      console.log(subParam);
-      console.log(subParams);
       ajax.post("updateState", subParams).then(data => {
-        console.log(data);
         if (data) {
           this.refreshData();
           this.initWaitData();
@@ -299,7 +224,6 @@ export default {
       param = Object.assign({}, param, this.allCondition);
       ajax.post("getViolationDataForLike",param).then(data => {
         let violation = data;
-        console.log(violation);
         this.getData(data);
       });
     },
@@ -310,8 +234,5 @@ export default {
       this.picture = value;
     }
   },
-  // beforeMount(){
-  //     this.getData();
-  // }
 };
 </script>

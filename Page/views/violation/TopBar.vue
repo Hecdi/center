@@ -8,19 +8,7 @@
              <el-col :span="5" v-else>
                 <el-button class="tab-btn all font-Orb active-tab">历史记录</el-button>
             </el-col>
-            
             <el-col :span="19" class="topbar">
-                <el-form ref="form" label-width="80px" style="display:none">
-                    <el-form-item >
-                        <el-select v-model="area" placeholder="活动区域" v-on:change="changeSelectStatus">
-                          <el-option label="全部" value="1"></el-option>
-                          <el-option label="人员" value="2"></el-option>
-                          <el-option label="车辆" value="3"></el-option>
-                          <el-option label="设备" value="4"></el-option>
-                          <el-option label="公司" value="5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
                 <el-input
                     placeholder="请输入内容"
                     prefix-icon="el-icon-search"
@@ -53,17 +41,6 @@
             </el-col>
   
             <el-col :span="19" class="topbar">
-                <el-form ref="form" label-width="80px" style="display:none">
-                    <el-form-item >
-                        <el-select v-model="area" placeholder="活动区域" v-on:change="changeSelectStatus">
-                          <el-option label="全部" value="1"></el-option>
-                          <el-option label="人员" value="2"></el-option>
-                          <el-option label="车辆" value="3"></el-option>
-                          <el-option label="设备" value="4"></el-option>
-                          <el-option label="公司" value="5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
                 <el-input
                     placeholder="请输入内容"
                     prefix-icon="el-icon-search"
@@ -84,17 +61,11 @@
                     value-format="timestamp">
                 </el-date-picker>
                 <el-button @click="handleSearchWait" size="mini" type="primary" style="display:none;">查询</el-button>
-                <!-- <el-button size="mini">
-                    <a  :href="exportExcel()">导出</a>
-                </el-button> -->
             </el-col>
         </el-row>
         <div class="dialog">
             <ShowImg/>
         </div>
-        <!-- <div v-if="tabs!=='all'">
-            <Card/>
-        </div> -->
         <div v-if="tabs!=='all'">
             <checkPending/>
         </div>
@@ -106,7 +77,6 @@
 
 
 <script>
-    import Card from "./Card.vue";
     import AllTable from "./AllTable.vue";
     import ShowImg from "./ShowImg.vue";
     import checkPending from './checkPending.vue';
@@ -118,7 +88,6 @@
 
     export default {
         components: {
-          Card,
           AllTable,
           ShowImg,
           checkPending,
@@ -135,18 +104,6 @@
             currentView: 'Card',
             tabs:"all",
             exportLocation: '',
-            companys: [
-                {name:"四川航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"国际航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"东方航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"南方航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"祥鹏航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"海南航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"时际航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"深圳航空",code:"HK323",number:"028-88888888",isEdit:false},
-                {name:"西南航空",code:"HK323",number:"028-88882328",isEdit:false},
-                {name:"哈哈航空",code:"HK323",number:"028-12355678",isEdit:false},
-            ],
             getUrl:'',
           }
           
@@ -162,22 +119,6 @@
                     getAllCondition: "getAllCondition",
                     getWaitCondition: "getWaitCondition",
             }),
-            // onSubmit() {
-            //   console.log('submit!');
-            // },
-            // handleClose(done) {
-            //     this.$confirm('确认关闭？')
-            //         .then(_ => {
-            //           done();
-            //         })
-            //         .catch(_ => {});
-            // },
-            // handEdit(target){
-            //     target.isEdit = !target.isEdit;
-            // },
-            // closeEdit(item){
-            //     item.isEdit = false;
-            // },
             toggleTabs(value){
                 this.tabs=value;
                 this.tabActive = value;
@@ -192,9 +133,6 @@
 		    },
             changeSelectStatus($event){
                 this.setCurrentStatus(Number($event));
-            },
-            searchAll($event){
-                console.log($event.target.value);
             },
             getData(data) {
                 this.$store.dispatch("violation/getData", data);
@@ -227,17 +165,11 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
                     startDate='';
                     endDate = '';
                 }
                 let inputSearch = this.inputSearch;
-                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startDate":startDate,"endDate":endDate,"value":inputSearch,"title":'tttt'};
-                console.log(params);
                 let title = "违规记录历史数据";
                 const ajaxAPI = remote.getGlobal('ajaxAPI');
                 let path = `${ajaxAPI.path}${ajaxAPI.url.exportExcel}`;
@@ -262,22 +194,14 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
                     startDate = '';
                     endDate = '';
                 }
                 let inputSearch = this.inputSearch;
-                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
-                console.log(param);
-                console.log(params)
                 let condition = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
                 this.getAllCondition(condition);
                 ajax.post('getViolationDataForLike', params).then((data) => {
-                    console.log(data);
                     this.getData(data);
                 });
 
@@ -300,23 +224,14 @@
                         endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss")
                     }  
                 } else {
-                    // startDate = new Date(new Date(new Date().toLocaleDateString()).getTime());
-                    // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-                    // endDate = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
-                    // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
                     startDate = '';
                     endDate = '';
                 }
                 let inputSearch = this.inputSearch;
-                let param = `param:{"violationCode":${violationCode},"startDate":${startDate},"endDate":${endDate},"violationValue":"${inputSearch}"}`;
                 let params = {"startTime":startDate,"endTime":endDate,"value":inputSearch,"pageNumber":1,"pageSize":10};
-                console.log(param);
-                console.log(params)
                 let condition = {"startTime":startDate,"endTime":endDate,"value":inputSearch};
                 this.getWaitCondition(condition);
                 ajax.post('getViolationByState', params).then((data) => {
-                    console.log(data);
-                    // this.initWaitData(data);
                     _this.getWaitData(data);
                 });
 
@@ -324,7 +239,6 @@
             judgePermission(){
                 let userInfo = remote.getGlobal('userInfo');
                 userInfo = JSON.parse(userInfo);
-                console.log(userInfo);
                 let permission = userInfo.roleRS;
                 let _this = this;
                 permission.forEach(element => {
@@ -335,7 +249,6 @@
                         return _this.role = false;
                     }
                 });
-                console.log(_this.role);
             },
             refreshData() {
                 ajax.post("getViolationDataForLike",{"pageNumber":1,"pageSize":10}).then(data => {

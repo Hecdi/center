@@ -56,17 +56,11 @@
           }
         },
         img:function(){
-          let _this = this;
-          const ajaxAPI = remote.getGlobal('ajaxAPI');
-          let path = `${ajaxAPI.path}`;
-          path = path.replace('/dispatchforpc/','/');
           let arr=[];
           each(this.picture,(item) => {
             item = `http://${location.hostname}:6072/${item}`
-            console.log(item)
             arr.push(item);
           });
-          console.log(arr);
           return arr;
           },
         },

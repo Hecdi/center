@@ -1,6 +1,5 @@
 <template>
 <div>
-    <!-- <el-button type="text" @click="dialogCheckEdit = true">点击打开 Dialog</el-button> -->
     <el-dialog
       title="违规记录"
       :visible.sync="dialogCheckEdit"
@@ -113,7 +112,6 @@
                     pictures: '',
                     files: '',
                 },
-                // dialogImageUrl: '',
 			};
 		},
 		watch:{
@@ -125,12 +123,10 @@
              ...mapActions({ 
                 getWaitData: "getWaitData"
             }),
-			//获取下拉框的数据
 			getSelectData(){
 				let _this = this;
 				ajax.post('getViolationCodeInfo').then((data)=>{
 					if(data){
-						console.log(data);
 						let company = [];
 						let describe = [];
 						each(data, (element,index) => {
@@ -161,7 +157,6 @@
             },
             submitImg(param){
                 const token = remote.getGlobal('token');
-                console.log(token);
                 let formData = new FormData();
                 formData.append('files[]', param.file);
                 let config = {
@@ -184,8 +179,7 @@
 						    message: response.responseMessage
 					    });
 					}
-                    })
-                    .catch(function(error) {
+                    }).catch(function(error) {
                         console.log(error);
                     })
             },

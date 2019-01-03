@@ -43,8 +43,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
-      <!-- <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80" v-if="test==1"/> -->
-      <!-- <el-table-column v-else porp = "status" label="状态" :formatter="statusFormat" width="80"/> -->
       <el-table-column label="审核" width="200" >
         <template slot-scope="scope">
           <el-button size="mini" type="success" @click="submitStatus(scope.row,1)">通过</el-button>
@@ -54,7 +52,6 @@
        <el-table-column label="编辑" fixed="right">
         <template slot-scope="scope">
             <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i>
-          <!-- <el-button size="mini" @click="openDialogEdit(scope.row)">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -74,14 +71,12 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import moment from "moment";
-// import ajaxx from 'ajax';
 import img from "../../assets/logo.png";
 import ShowImg from "./ShowImg.vue";
 import dialogEdit from "./dialogEdit.vue";
 import { ajax } from "ajax";
 import { map, extend } from 'lodash';
 import PageNationHis from "./PageNationHis.vue";
-// import PageNation from 'PageNation.vue';
 
 
 
@@ -100,32 +95,17 @@ export default {
       picture: '',
       getPic: '',
       getCheckEditData: '',
-      // totalSize: 100,
       pageSize: 10,
       currentPage:1,
       test: 0,
     };
   },
-  // computed: {
-  //     ...mapState("violation", ["cards","totalSize","allCondition"])
-  // },
+  
   computed: {
-    // ...mapState("violation", ["cards","totalSize","allCondition",'havePermission']),
     ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize','waitCondition']),
     waitList: function() {
       return map(this.waitItems, list => {
         return extend({}, list, {
-        //   people: this.formatData(list.violationCode==1,list.violationName),
-        //   car : this.formatData(list.violationCode==2,list.violationName),
-        //   device: this.formatData(list.violationCode==3,list.violationName),
-        //   staffNumber: list.staffNumber!==null?list.staffNumber:'--',
-        //   staffName: list.staffName !== null ? list.staffName:'--',
-        //   staffNumber: this.formatNull(list.staffNumber),
-        //   staffName: this.formatNull(list.staffName),
-        //   carNumber: this.formatNull(list.carNumber),
-        //   deviceNumber: this.formatNull(list.deviceNumber),
-        //   belongCompanyName:this.formatNull(list.belongCompanyName),
-        //   violationDescription:this.formatNull(list.violationDescription),
          vaviolationDescription:this.formatNull(list.violationDescription),
           violationName: this.formatNull(list.violationName),
           violationNoticeNum: this.formatNull(list.violationNoticeNum),
@@ -170,12 +150,10 @@ export default {
       return index + 1;
     },
     handleSizeChange(val){
-      console.log(val);
       this.pageSize = val;
       this.refreshData();
     },
     handleCurrentChange(val){
-      console.log(`当前${val}`)
       this.currentPage = val;
       this.refreshData();
     },
@@ -230,12 +208,10 @@ export default {
     },
     openShowImg(value) {
       this.getPic = value;
-      console.log(this.getPic);
       this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: true });
     },
     openDialogEdit(value) {
       this.getCheckEditData = value;
-      console.log(this.getCheckEditData);
       this.$store.dispatch(`violation/updateDialogCheckEdit`, { dialogCheckEdit: true });
     },
     getData(data) {
@@ -243,17 +219,11 @@ export default {
       this.total = data.length;
     },
     submitStatus(param, value) {
-      console.log(param);
       let id = param.id;
       let status = value;
-      let subParam = `{"id":"${id}","status":${status}}`;
       let subParams = { id: id, status: status };
-      console.log(subParam);
-      console.log(subParams);
       ajax.post("updateState", subParams).then(data => {
-        console.log(data);
         if (data) {
-        //   this.refreshData();
           this.initWaitData();
         }
       });
@@ -273,7 +243,6 @@ export default {
       param = Object.assign({}, param, this.allCondition);
       ajax.post("getViolationDataForLike",param).then(data => {
         let violation = data;
-        console.log(violation);
         this.getData(data);
       });
     },
@@ -284,8 +253,5 @@ export default {
       this.picture = value;
     }
   },
-  // beforeMount(){
-  //     this.getData();
-  // }
 };
 </script>
