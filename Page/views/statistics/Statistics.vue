@@ -633,7 +633,6 @@ export default {
 				  	type: 'shadow'
           },
           formatter : function(params){
-            console.log(params);
             let res = '';
             params.forEach((item,index) => {
               res += item.marker + item.seriesName+' : ' + Math.abs(item.value)+'<br/>';
