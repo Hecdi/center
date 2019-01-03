@@ -74,7 +74,7 @@
       </el-table-column>
       <el-table-column
         label="航线"
-        :show-overflow-tooltip="true"
+        show-overflow-tooltip
         min-width="160">
         <template slot-scope="scope">
             <span v-for="(a,index) in scope.row.airRoute" :key="index">
@@ -107,7 +107,7 @@
       <el-table-column
         prop="taskBindingShiftNames"
         label="保障人员"
-		show-overflow-tooltip="true"
+		    show-overflow-tooltip
         width="100">
       </el-table-column>
       <el-table-column
