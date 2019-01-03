@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="dialogUnFinish" title="未完成任务" :visible.sync="dialogUnFinish" width="1000px"
+  <el-dialog class="dialog-unfinish" title="未完成任务" :visible.sync="dialogUnFinish" width="1000px"
   :append-to-body="true"
   :modal-append-to-body="false"
   >
@@ -18,18 +18,18 @@
             <el-table-column
               prop="taskState"
               label="状态"
-              width="150">
+              width="80">
             </el-table-column>
             <el-table-column
               prop="flightNo"
               label="航班号"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="routeName"
               label="航线"
-              min-width="180"
+              min-width="150"
               >
                 <template slot-scope="scope">
                   <span v-for="(a,index) in scope.row.routeName.split(',')" :key="index">
@@ -40,37 +40,37 @@
             <el-table-column
               prop="aircraftNo"
               label="飞机号"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="seat"
               label="机位"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="aircraftType"
               label="机型"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="projectName"
               label="任务名称"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="scheduleTime"
               label="计划时间"
-              width="180"
+              width="100"
               >
             </el-table-column>
             <el-table-column
               prop="guaranteeStaff"
               label="保障人员"
-              width="180"
+              width="100"
               >
             </el-table-column>
         </el-table>
@@ -81,7 +81,6 @@
 import { ajax } from "ajax";
 import moment from "moment";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-// import { getNaturalDate } from "date";
 import { map, extend } from 'lodash';
 import { remote } from "electron";
 import { formatDate } from "date";
@@ -156,7 +155,6 @@ export default {
             seat: this.formatNull(item.seat),
             projectName: this.formatNull(item.projectName),
             guaranteeStaff: this.formatNull(item.guaranteeStaff),
-            // routeName:item.routeName.split(",")
           })
       })
     }

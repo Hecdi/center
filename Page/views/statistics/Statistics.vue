@@ -10,7 +10,7 @@
           end-placeholder="结束日期"
           format="yyyy 年 MM 月 dd 日"
           value-format="timestamp"
-          @change = "handleClick1"
+          @change = "handleClick"
         ></el-date-picker>
       </el-col>
       <el-col :span="12">
@@ -65,7 +65,7 @@
         </el-table>
       </el-col>
       <h4 class="table-title">每日完成工作量top5</h4>
-      <el-col :span="24">
+      <el-col :span="24" v-if="topStaff && topStaff.length>0">
         <div v-for="(w,index) in topStaff" v-bind:key="index" class="top-worker">
           <span class="time-col">
             {{w.scheduleTime}}
@@ -75,8 +75,11 @@
           </span>
         </div>
       </el-col>
+      <el-col v-else>
+        <h3 style="text-align:center;">暂无数据</h3>
+      </el-col>
     </el-row>
-    <div class="dialog">
+    <div class="dialog-unfinish">
         <dialogUnFinishView :unfinishData ="getUnfinish"/>
     </div>
   </div>
@@ -101,6 +104,7 @@ export default {
       tableData1: [],
       staffWorkCount: [],
       getUnfinish: [],
+      topStaff: [{scheduleTime:'2019-01-01'},{topStaff:[]}],
       getInOut:{
         color: ['#194eff','#00a700'],
         title: {
@@ -111,11 +115,11 @@ export default {
             }
         },
         tooltip: {
-			trigger: 'axis',
-			axisPointer: { 
-				type: 'shadow'
-			}
-		},
+		    	trigger: 'axis',
+		    	axisPointer: { 
+		    		type: 'shadow'
+		    	}
+		    },
         legend: {
           itemWidth: 14,
           itemHeight: 14,
@@ -186,11 +190,11 @@ export default {
             } 
         },
         tooltip: {
-			trigger: 'axis',
-			axisPointer: { 
-				type: 'shadow'
-			}
-		},
+			    trigger: 'axis',
+			    axisPointer: { 
+			    	type: 'shadow'
+			    }
+		    },
         legend: {
           itemWidth: 14,
           itemHeight: 14,
@@ -445,6 +449,7 @@ export default {
       dateRange: [],
       movementD:[],
       movementA: [],
+
     };
   },
   created(){
@@ -462,12 +467,10 @@ export default {
       this.getUnfinish = value;
       this.$store.dispatch('statistics/updateTaskHandover', { dialogUnFinish: true });
     },
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClick() {
+        this.refreshData();
     },
-    handleClick1(){
-      this.refreshData();
-    },
+   
     getData(data) {
       this.list = data;
       let _this = this;
@@ -516,7 +519,6 @@ export default {
         staffWorkCount.item1 = (item.staffWorkCount);
         item.topMam = extend({},{topStaff:item.staffWorkCount},{scheduleTime:item.scheduleTime})
         topStaff.push( item.topMam );
-        // staffWorkCount[index].push(item.scheduleTime);
       })  
 
       this.dateRange = dateRange;
@@ -534,10 +536,7 @@ export default {
       this.operateTotal = operateTotal;
       this.tableData1 = taskDataCount1;
       this.topStaff = topStaff;
-      console.log(this.topStaff);
       this.staffWorkCount = staffWorkCount;
-      console.log(this.dateRange);
-      console.log(this.staffWorkCount);
       this.pass = pass;
       this.unPass = unPass;
       this.checking = checking;
@@ -603,21 +602,18 @@ export default {
               splitArea : {show : true,
                   areaStyle: {
                       color: ['#f7faff'],
-                  }},//保留网格区域
-              // inverse: true
+                  }},
             },
              series : [
                   {
                       name:'进港',
                       type:'line',
-                      // symbol:'none',
                       smooth: true, 
                       data: this.movementA,
                   },
                   {
                       name:'离港',
                       type:'line',
-                      // symbol:'none',
                       smooth: true, 
                       data:this.movementD,
                   },
@@ -639,17 +635,12 @@ export default {
           },
           formatter : function(params){
             console.log(params);
-            let res;
+            let res = '';
             params.forEach((item,index) => {
-              if(item.value > 0){
-              res = item.axisValue + '<br/>' + item.marker + item.seriesName+' : ' + item.value+'<br/>';
-              } else {
-                res = item.axisValue + '<br/>' + item.marker + item.seriesName+' : ' + item.value*-1 +'<br/>';
-              }
-            });
-            return res;
+              res += item.marker + item.seriesName+' : ' + Math.abs(item.value)+'<br/>';
+             });
+            return res = params[0].axisValue + '<br/>' + res;
           },
-          // formatter: `{b0}<br/> {a0}: {c0}<br />{a1}: {-c1}`
         },
         grid: {
           top: 40,
@@ -695,7 +686,6 @@ export default {
                   areaStyle: {
                       color: ['#f7faff'],
                   }},//保留网格区域
-              // inverse: true
               axisLabel: {
                 formatter: function (value, index) {
                   let result;
@@ -764,12 +754,11 @@ export default {
         tooltip: {
 				  trigger: 'axis',
 				  axisPointer: { 
-                    //   type: 'shadow',
+                      type: 'shadow',
                       lineStyle: {
                        backgroundColor:'#fff',
                     },
                   },
-                //    backgroundColor:'#fff',
 				},
           legend: {
             itemWidth: 14,
@@ -1422,6 +1411,7 @@ export default {
     },
     refreshData() {
       let timeArr = this.time;
+      console.log(timeArr);
       let startDate;
       let endDate;
       let _this = this;
@@ -1436,12 +1426,15 @@ export default {
               endDate = moment(endDate).format("YYYY-MM-DD")
           }  
       } else {
-          startDate = "2018-12-23";
-          endDate = "2018-12-29";
+          const end = new Date()
+          const start = new Date()
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+          const date = [start, end]
+          startDate = moment(date[0]).format("YYYY-MM-DD");
+          endDate = moment(date[1]).format("YYYY-MM-DD");
       }
       let params = {"startTime":startDate,"endTime":endDate};
       ajax.post("statistics",params).then(data => {
-        console.log(data);
         let statistics = data;
         this.getData(data);
       });
