@@ -1,6 +1,5 @@
 <template>
   <div class="sheet-container">
-    <!-- <ToolBar /> -->
     <el-container class="sheet">
       <el-row :gutter="0">
         <el-col :span="8">
@@ -8,9 +7,6 @@
         </el-col>
         <el-col :span="16" class="right-col">
           <span>时间段:</span>
-          <!-- <el-date-picker v-model="value1" type="date" placeholder="开始日期"/>
-          <span>-</span>
-          <el-date-picker v-model="value2" type="date" placeholder="结束日期"/>-->
           <el-date-picker
             v-model="time"
             type="daterange"
@@ -32,7 +28,6 @@
           <el-button type="primary" size="small" class="export-excel">
             <a :href="exportExcel()">
               导出
-              <!-- <i class="el-icon-upload el-icon--right"/> -->
             </a>
           </el-button>
         </el-col>
@@ -65,9 +60,6 @@
         <el-table-column prop="Receive" label="领受" width="120"/>
         <el-table-column prop="Place" label="到位" width="120"/>
         <el-table-column prop="Finish" label="完成" width="120" fixed="right"/>
-
-        <!-- <el-table-column prop="projectName" label="引导车" width="120"/>
-        <el-table-column prop="departmentGuaranteeStaff" label="引导人员" width="80"/> -->
       </el-table>
     </div>
     <PageNation
@@ -117,9 +109,6 @@ export default {
       this.totalSize = value.totalNum;
     },
     getSheetData() {
-      // let vm = this;
-      // console.log({"pageSize":this.pageSize,"currentPage":this.currentPage});
-      // let _this = this;
       let violationCode = this.area;
       let timeArr = this.time;
       let startDate;
@@ -136,16 +125,6 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        // startDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime()
-        // );
-        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        // endDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime() +
-        //     24 * 60 * 60 * 1000 -
-        //     1
-        // );
-        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         startDate = '';
         endDate = '';
       }
@@ -159,9 +138,7 @@ export default {
         pageNumber: this.currentPage
       };
       ajax.post("getDataList", params).then(data => {
-        console.log(data);
         this.getListData(data);
-        // this.getTotalNum(data);
       });
     },
     exportExcel() {
@@ -183,16 +160,6 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        // startDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime()
-        // );
-        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        // endDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime() +
-        //     24 * 60 * 60 * 1000 -
-        //     1
-        // );
-        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         startDate = '';
         endDate = '';
       }
@@ -205,16 +172,11 @@ export default {
         title: "tttt"
       };
       const ajaxAPI = remote.getGlobal('ajaxAPI');
-      console.log(ajaxAPI);
       let path = `${ajaxAPI.path}/${ajaxAPI.url.sheetExportExcel}`;
-      console.log(path);
       let title = "报表统计数据";
       let exportLocation = `http://173.101.1.52:80/statement/exportExcel?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
       let exportLocation1 = `${ajaxAPI.path}${ajaxAPI.url.sheetExportExcel}?title=${title}&value=${inputSearch}&startTime=${startDate}&endTime=${endDate}`;
-    //  console.log(exportLocation1);
      return exportLocation1;
-      // console.log(exportLocation);
-      // return (_this.exportUrl = exportLocation);
     },
     handleSearch() {
       let violationCode = this.area;
@@ -233,15 +195,6 @@ export default {
           endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         }
       } else {
-        // startDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime()
-        // );
-        // startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
-        // endDate = new Date(
-        //   new Date(new Date().toLocaleDateString()).getTime() +
-        //     24 * 60 * 60 * 1000 -1
-        // );
-        // endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
         startDate = '';
         endDate = '';
       }
@@ -254,10 +207,7 @@ export default {
         "pageSize": this.pageSize,
         "pageNumber": 1
       };
-      console.log(param);
-      console.log(params);
       ajax.post("getDataList", params).then(data => {
-        console.log(data);
         this.getListData(data);
       });
     },
@@ -267,7 +217,6 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      console.log(`currentPage:${this.currentPage}`);
       this.getSheetData();
     },
     formatNull(value){
@@ -295,7 +244,6 @@ export default {
           displaySTD: formatDate(list.std, "HHmm(DD)", "--"),
           displayETD: formatDate(list.etd, "HHmm(DD)", "--"),
           displayATA: formatDate(list.ata, "HHmm(DD)", "--"	),
-          // displaySTD:formatDate(list.std,'HHmm(DD)','--'),
           displayCTOT: formatDate(list.ctot, "HHmm(DD)", "--"),
           displatPreAtd: formatDate(list.preAtd, "HHmm(DD)", "--"),
           displayBoardingTime: formatDate(list.boardingTime, "HHmm(DD)", "--"),
@@ -306,12 +254,10 @@ export default {
           Staff: this.formatNull(list.movement=="A"?list.arriveGuaranteeStaff:list.departmentGuaranteeStaff),
           FlightNo: this.formatNull(list.movement=="A"?list.arriveFlightNo:list.departmentFlightNo),
           displayMove: list.movement=="A"?  "到港": "离港",
-          // Staff: this.formatNull(list.Staff),
           seat: this.formatNull(list.seat),
           routeName: this.formatNull(list.routeName),
-          // FlightNo: this.formatNull(list.flightType),
-          aircraftNo : this.formatNull(list.flightType),
-          aircraftType: this.formatNull(list.flightType),
+          aircraftNo : this.formatNull(list.aircraftNo),
+          aircraftType: this.formatNull(list.aircraftType),
           flightType: this.formatNull(list.flightType),
         });
       });
