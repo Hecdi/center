@@ -19,6 +19,7 @@ export default {
 		}],
         ajaxAPI:{
             path:`http://${location.hostname}:6070/dispatchforpc/`,
+            // path:`http://${location.hostname}:6070/webpush/`,
             // path:`http://${location.hostname}:6070/`,
             url:{
                 'taskList':'web/scheduling/getTaskList',
