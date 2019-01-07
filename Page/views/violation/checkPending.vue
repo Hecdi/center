@@ -70,7 +70,7 @@
     <div class="dislog-picture">
       <ShowImg :picture="getPic"/>
     </div>
-    <div class="dialog">
+    <div class="edit-dialog">
       <dialogEdit :editCheckData="getCheckEditData"/>
     </div>
       <page-nation-his :currentPage="currentPage" :pageSize="pageSize" :total="waitTotalSize" 

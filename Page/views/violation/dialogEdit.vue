@@ -51,6 +51,14 @@
                   <el-option v-for="(pos,index) in form.positionSelect" :key="index" :label="pos.value" :value="pos.id"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="违规时间">
+                 <el-date-picker
+                    v-model="form.reportTime"
+                    type="datetime"
+                    placeholder="选择日期时间"
+                    format="yyyy-MM-dd HH:mm">
+                </el-date-picker>
+            </el-form-item>
             <el-form-item label="违规区域">
                 <el-select  placeholder="请选择违规区域" v-model="form.violationAreaName">
                   <el-option v-for="(area,index) in form.violationAreaSelect" :key="index" :label="area.value" :value="area.id"></el-option>
@@ -135,6 +143,7 @@
                     pictures: '',
                     files: '',
                 },
+                value1: '',
 			};
 		},
 		watch:{
