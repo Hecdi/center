@@ -388,7 +388,7 @@ export default {
          itemGap: 20,
          x: 'right',
          icon: "circle", 
-         data: ['人员','车辆','设备','单位']
+         data: ['人员','车辆','设备','其他']
        },
         xAxis: [{
             data: [],
@@ -439,7 +439,7 @@ export default {
                    data:[],
                },
                {
-                   name:'单位',
+                   name:'其他',
                    type:'line',
                    smooth: true, 
                    data:[],
@@ -1220,7 +1220,7 @@ export default {
               itemGap: 20,
               x: 'right',
               icon: "circle", 
-              data: ['人员','车辆','设备','单位']
+              data: ['人员','车辆','设备','其他']
             },
             xAxis: [
               {
@@ -1272,7 +1272,7 @@ export default {
                       data:this.device,
                   },
                   {
-                      name:'单位',
+                      name:'其他',
                       type:'line',
                       smooth: true, 
                       data:this.company,
@@ -1306,7 +1306,7 @@ export default {
               itemGap: 20,
               x: 'right',
               icon: "circle", 
-              data: ['人员','车辆','设备','单位']
+              data: ['人员','车辆','设备','其他']
             },
             xAxis: [
               {
@@ -1385,7 +1385,7 @@ export default {
                     },
                   },
                   {
-                      name:'单位',
+                      name:'其他',
                       type:'bar',
                       barMaxWidth:20,
                       data:this.company,
