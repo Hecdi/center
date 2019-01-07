@@ -55,6 +55,12 @@
           <el-button size="mini" type="danger" @click="submitStatus(scope.row,2)">不通过</el-button>
         </template>
       </el-table-column>
+      <el-table-column label="打印">
+        <template slot-scope="scope">
+            <!-- <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i> -->
+            <el-button size="mini" @click="submitStatus(scope.row,300)">打印</el-button>
+        </template>
+      </el-table-column>
        <el-table-column label="编辑" fixed="right">
         <template slot-scope="scope">
             <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i>
