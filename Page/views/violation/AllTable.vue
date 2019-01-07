@@ -25,7 +25,7 @@
       <el-table-column prop="violationRulesName" label="违规条例" width="130"/>
       <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
       <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
-      <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
+      <el-table-column prop="seat" label="机位" width="130"/>
       <el-table-column prop="carNo" label="车牌号" width="130"/>
       <el-table-column prop="violationDescription" label="情况说明" min-width="130"  :show-overflow-tooltip="true"/>
       <el-table-column prop="deductionScore" label="扣分分值" width="80"/>

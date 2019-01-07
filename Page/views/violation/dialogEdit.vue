@@ -42,12 +42,12 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="违规来源">
-                <el-select  placeholder="请选择违规来源" v-model="form.violationSource">
+                <el-select  placeholder="请选择违规来源" v-model="form.violationSourceName">
                   <el-option v-for="(source,index) in form.violationSourceSelect" :key="index" :label="source.value" :value="source.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="职位/岗位">
-                <el-select  placeholder="请选择职位/岗位" v-model="form.position">
+                <el-select  placeholder="请选择职位/岗位" v-model="form.positionName">
                   <el-option v-for="(pos,index) in form.positionSelect" :key="index" :label="pos.value" :value="pos.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -64,6 +64,9 @@
                   <el-option v-for="(area,index) in form.violationAreaSelect" :key="index" :label="area.value" :value="area.id"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="机位">
+                <el-input v-model="form.seat"></el-input>
+            </el-form-item>
             <el-form-item label="联系电话">
                 <el-input v-model="form.phone"></el-input>
             </el-form-item>
@@ -77,12 +80,10 @@
                 <el-input v-model="form.carTypeName"></el-input>
             </el-form-item>
             <el-form-item label="车牌号" v-if="form.violationCodeName.indexOf('车') !=-1">
+            <!-- <el-form-item label="车牌号"> -->
                 <el-input v-model="form.carNo"></el-input>
             </el-form-item>
             <el-form-item label="情况说明">
-                <el-select v-model="form.violationDescription" placeholder="请选择活动区域" >
-                    <el-option :label="decribe.value" v-for="(decribe,index) in form.describeSelect" :key="index" :value="decribe.value"></el-option>
-                </el-select>
                 <el-input
                   type="textarea"
                   autosize
@@ -101,6 +102,9 @@
             </el-form-item>
             <el-form-item label="扣分分值">
                 <el-input v-model="form.deductionScore"></el-input>
+            </el-form-item>
+             <el-form-item label="备注">
+                <el-input v-model="form.remark"></el-input>
             </el-form-item>
             
             
@@ -154,6 +158,7 @@
                     files: '',
                     state4: '',
                     textCode: '',
+                    seat: '',
                 },
                 value1: '',
                 restaurants: [],
@@ -163,8 +168,12 @@
 		},
 		watch:{
 			editCheckData:function(n,o){
-				this.getAllData();
-			}
+                this.getAllData();
+            },
+            dialogCheckEdit:function(n,o){
+                this.getSelectData();
+                this.getOrdinancesData();
+            }
 		},
 		methods: {
              ...mapActions({ 
@@ -214,9 +223,6 @@
                         _this.form.violationAreaSelect = violationArea;
                         _this.form.violationObjectSelect = violationObject;
                         _this.form.violationSourceSelect = violationSource;
-                        console.log(describe);
-                        console.log(position);
-                        console.log(violationObject);
 					}
 				});
 			},
@@ -274,7 +280,14 @@
                 delete param.violationObjectSelect;
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
-
+                delete param.state4;
+                param.violationCode = param.violationCodeName;
+                param.workOrg = param.workOrgName;
+                param.position = param.positionName;
+                param.violationArea = param.violationAreaName;
+                param.violationSource = param.violationSourceName;
+                param.violationRules = param.textCode;
+                
                 console.log(param);
                 ajax.post('updateViolation',param,(data)=> {
 					if(data.responseCode==1000){
