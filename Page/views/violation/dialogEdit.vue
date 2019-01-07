@@ -10,12 +10,17 @@
             <el-form-item label ="编号">
 				{{form.violationNoticeNum}}
             </el-form-item>
-            <el-form-item label="违规主体">
+            <!-- <el-form-item label="违规主体">
                 <el-select v-model="form.violationCodeName" placeholder="请选择活动区域">
                   <el-option label="人员" value="1"></el-option>
                   <el-option label="车辆" value="2"></el-option>
                   <el-option label="设备" value="3"></el-option>
                   <el-option label="其他" value="5"></el-option>
+                </el-select>
+            </el-form-item> -->
+            <el-form-item label="违规主体">
+                <el-select  placeholder="请选择违规主体" v-model="form.violationCodeName">
+                  <el-option v-for="(obj,index) in form.violationObjectSelect" :key="index" :label="obj.value" :value="obj.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="责任人/责任单位">
@@ -35,6 +40,24 @@
                 <el-select  placeholder="请选择活动区域" v-model="form.workOrgName">
                   <el-option v-for="(company,index) in form.companySelect" :key="index" :label="company.value" :value="company.id"></el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="违规来源">
+                <el-select  placeholder="请选择违规来源" v-model="form.violationSource">
+                  <el-option v-for="(source,index) in form.violationSourceSelect" :key="index" :label="source.value" :value="source.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="职位/岗位">
+                <el-select  placeholder="请选择职位/岗位" v-model="form.position">
+                  <el-option v-for="(pos,index) in form.positionSelect" :key="index" :label="pos.value" :value="pos.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="违规区域">
+                <el-select  placeholder="请选择违规区域" v-model="form.violationAreaName">
+                  <el-option v-for="(area,index) in form.violationAreaSelect" :key="index" :label="area.value" :value="area.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="联系电话">
+                <el-input v-model="form.phone"></el-input>
             </el-form-item>
             <el-form-item label="隔离区通行证号" v-if="form.violationType==1">
                 <el-input v-model="form.passNumber"></el-input>
@@ -128,16 +151,48 @@
 				ajax.post('getViolationCodeInfo').then((data)=>{
 					if(data){
 						let company = [];
-						let describe = [];
+                        let describe = [];
+                        let violationArea = [];
+                        let position = [];
+                        let violationSource = [];
+                        let violationObject = [];
 						each(data, (element,index) => {
-							if(element.type =="workType") {
-								company.push(element);
-							} else if(element.type == "descType") {
-								describe.push(element);
-							}
+							// if(element.type =="workType") {
+							// 	company.push(element);
+							// } else if(element.type == "descType") {
+							// 	describe.push(element);
+                            // }
+                            let type = element.type;
+                            switch(type){
+                                case "workType": 
+                                    return company.push(element);
+                                case "descType":
+                                    return describe.push(element);
+                                case "position":
+                                    return position.push(element);
+                                case "violationArea":
+                                    return violationArea.push(element);
+                                case "violationSource":
+                                    return violationSource.push(element);
+                                case "violationObject1": 
+                                    return violationObject.push(element);
+                                case "violationObject2":
+                                    return violationObject.push(element);
+                                case "violationObject3": 
+                                    return violationObject.push(element);
+                                case "violationObject4":
+                                    return violationObject.push(element);
+                            }
 						});
 						_this.form.companySelect = company;
-						_this.form.describeSelect = describe;
+                        _this.form.describeSelect = describe;
+                        _this.form.positionSelect = position;
+                        _this.form.violationAreaSelect = violationArea;
+                        _this.form.violationObjectSelect = violationObject;
+                        _this.form.violationSourceSelect = violationSource;
+                        console.log(describe);
+                        console.log(position);
+                        console.log(violationObject);
 					}
 				});
 			},

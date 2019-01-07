@@ -18,6 +18,11 @@
       </el-table-column>
       <el-table-column prop="violationName" label="责任人/单位" width="130"/>
       <el-table-column prop="workOrgName" label="工作单位" width="130"/>
+      <el-table-column prop="violationSourceName" label="违规来源" width="130"/>
+      <el-table-column prop="violationAreaName" label="违规区域" width="130"/>
+      <el-table-column prop="phone" label="电话号码" width="130"/>
+      <el-table-column prop="positionName" label="职位" width="130"/>
+      <el-table-column prop="violationRulesName" label="违规条例" width="130"/>
       <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
       <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
       <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
