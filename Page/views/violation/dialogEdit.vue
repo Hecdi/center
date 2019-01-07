@@ -76,7 +76,7 @@
             <el-form-item label="车辆类型" v-if="form.violationCodeName==2">
                 <el-input v-model="form.carTypeName"></el-input>
             </el-form-item>
-            <el-form-item label="车牌号" v-if="form.violationCodeName==2">
+            <el-form-item label="车牌号" v-if="form.violationCodeName.indexOf('车') !=-1">
                 <el-input v-model="form.carNo"></el-input>
             </el-form-item>
             <el-form-item label="情况说明">
@@ -90,9 +90,19 @@
                   v-model="form.violationDescription">
                 </el-input>
             </el-form-item>
+            <el-form-item label="违规条例" class="violation-item" style="width:534px;">
+                <el-autocomplete
+                  v-model="form.state4"
+                  :fetch-suggestions="querySearchAsync"
+                  placeholder="请输入内容"
+                  @select="handleSelect"
+                  style="width:534px;"
+                ></el-autocomplete>
+            </el-form-item>
             <el-form-item label="扣分分值">
                 <el-input v-model="form.deductionScore"></el-input>
             </el-form-item>
+            
             
             <!-- <el-form-item label ="照片" style="display:inline">
                 <div class="load-picture" v-if="this.form.pictures">
@@ -142,8 +152,13 @@
                     textarea: '',
                     pictures: '',
                     files: '',
+                    state4: '',
+                    textCode: '',
                 },
                 value1: '',
+                restaurants: [],
+               
+                timeout:  null
 			};
 		},
 		watch:{
@@ -255,6 +270,12 @@
                 delete param.files;
                 delete param.picture;
                 delete param.reportTime;
+                delete param.violationSourceSelect;
+                delete param.violationObjectSelect;
+                delete param.violationAreaSelect;
+                delete param.positionSelect;
+
+                console.log(param);
                 ajax.post('updateViolation',param,(data)=> {
 					if(data.responseCode==1000){
 						this.initWaitData();
@@ -276,6 +297,36 @@
 					}
 				})
             },
+            querySearchAsync(queryString, cb) {
+                var restaurants = this.restaurants;
+                var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+                 var result = [];
+                results.forEach((item,index) => {
+                        // result.push(item.value = item.context); 
+                        item.value = item.context;
+                })
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(() => {
+                  cb(results);
+                }, 3000 * Math.random());
+              },
+              createStateFilter(queryString) {
+                return (state) => {
+                  return (state.context.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+              },
+              handleSelect(item) {
+                console.log(item);
+                this.form.textCode = item.textCode;
+              },
+            getOrdinancesData(){
+                let condition = this.ordinancesCondition;
+                let _this = this;
+                ajax.post('ordinances',condition,data => {
+                    console.log(data);
+                    return _this.restaurants = data.data;
+                })
+            }
 		},
 		computed: {
 			dialogCheckEdit: {
@@ -290,7 +341,8 @@
 			},
 		},
 		beforeMount(){
-			this.getSelectData();
+            this.getSelectData();
+            this.getOrdinancesData();
 		}
 	};
 </script>
