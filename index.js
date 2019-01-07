@@ -10,6 +10,7 @@ import {smartSchedulingRouter} from './Page/router';
 
 let router = smartSchedulingRouter;
 Vue.config.productionTip = false;
+Vue.config.slient = process.env.NODE_ENV != 'development';
 Vue.use(ElementUI);
 let app = config.smartScheduling.App;
 export const ajaxAPI={...config.smartScheduling.ajaxAPI};
