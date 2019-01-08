@@ -1,0 +1,130 @@
+
+.violationNotice{
+	display: flex;
+	padding: 0px 10px;
+	width:100%;
+	.noprint{
+		width:50px;
+		height:30px;
+		position:relative;
+		top:100px;
+		background-color:rgb(211, 212, 214);
+	}
+	.leftPart{
+		margin-left: 30px;
+		margin-right: 30px;
+		padding-right: 30px;
+		border-right: 1px dotted black;
+	}
+	.rightPart{
+		margin-left: 30px;
+		padding-right: 30px;
+	}
+	.title{
+		font-size: 22px;
+		text-align: center;
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	.num{
+		font-size: 18px;
+		margin-bottom: 5px;
+		text-align: center;
+	}
+	.num span{
+		display: inline-block;
+		min-width: 80px;
+		text-align: center;
+		border-bottom: 1px solid black;
+		line-height: 18px;
+	}
+	.tab{
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+	}
+	.tab p{
+		width: 16px;
+		font-size: 14px;
+		line-height: 24px;
+		margin-left: 10px;
+		white-space: pre-line;
+		padding-bottom: 40px;
+	}
+	table{
+		border-collapse: collapse;
+		width:605px;
+	}
+	td{
+		padding: 0;
+		border: 1px solid black;
+	}
+	tr{
+		height: 32px;
+	}
+	.tr3,.tr4,.tr6,.tr7,.tr8{
+		height: 34px;
+		font-size: 18px;
+		line-height: 18px;
+	}
+	.tr5{
+		text-indent: 2em;
+		text-align: left;
+		height: 300px;
+	}
+	.tr8{
+		height: 120px;
+	}
+	.tr8-2{
+		height:155px;
+	}
+	.tr9{
+		font-size: 15px;
+	}
+	tbody{
+		font-size: 16px;
+		text-align: center;
+	}
+	.col1{
+		width: 165px;
+	}		
+	.col2{
+		width: 135px;
+	}
+	.col3{
+		width: 165px;
+	}
+	.mainDescription{
+		position: relative;
+	}
+	.description{
+		position: absolute;
+		top:0;
+		line-height: 35px;
+		padding: 5px 10px;
+		letter-spacing: 2px;
+	}
+	.description span{
+		text-decoration: underline;
+	}
+	.date{
+		position: absolute;
+		bottom: 0;
+		right: 10px;
+		margin-bottom: 30px;
+	}
+	.footer{
+		border: none;
+		position: relative;
+	}
+	.footer div{
+		position: absolute;
+		top: 2px;
+		right: 5px;
+	}
+	@media print {
+		.noprint{
+			display: none;
+		}
+	}
+}

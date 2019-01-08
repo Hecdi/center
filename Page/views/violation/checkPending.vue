@@ -58,7 +58,7 @@
       <el-table-column label="打印">
         <template slot-scope="scope">
             <!-- <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i> -->
-            <el-button size="mini" @click="submitStatus(scope.row,300)">打印</el-button>
+            <el-button size="mini" @click="print(scope.row)">打印</el-button>
         </template>
       </el-table-column>
        <el-table-column label="编辑" fixed="right">
@@ -90,13 +90,14 @@ import { ajax } from "ajax";
 import { map, extend } from 'lodash';
 import PageNationHis from "./PageNationHis.vue";
 
-
+import ViolationNotice from "./ViolationNotice.vue";
 
 export default {
   components: {
-    ShowImg,
-    PageNationHis,
-    dialogEdit
+	  ShowImg,
+	  PageNationHis,
+	  dialogEdit,
+	  ViolationNotice,
   },
   data() {
     console.log(this.img);
@@ -137,6 +138,10 @@ export default {
      ...mapActions({ 
       getWaitData: "getWaitData",
     }),
+	  print(obj){
+		  let routeData = this.$router.resolve({ path:'/violationNotice',query: obj });
+		  window.open(routeData.href,'_blank');
+	  },
     handleChangeStatus(row, value) {
       this.changeStatus(value);
       console.log(value);
