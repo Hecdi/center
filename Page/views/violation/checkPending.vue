@@ -6,7 +6,7 @@
     <el-table-column
         prop="violationCodeName"
         label="违规主体"
-        width="130"
+        width="150"
         filter-placement="bottom-end"
       >
         <template slot-scope="scope">
@@ -17,19 +17,18 @@
         </template>
       </el-table-column>
       <el-table-column prop="violationName" label="责任人/单位" width="130"/>
-      <el-table-column prop="workOrgName" label="工作单位" width="130"/>
+      <el-table-column prop="workOrgName" label="工作单位" width="130" show-overflow-tooltip/>
       <el-table-column prop="violationSourceName" label="违规来源" width="130"/>
       <el-table-column prop="violationAreaName" label="违规区域" width="130"/>
       <el-table-column prop="phone" label="电话号码" width="130"/>
       <el-table-column prop="positionName" label="职位" width="130"/>
-      <el-table-column prop="violationRulesName" label="违规条例" width="130"/>
+      <el-table-column prop="violationRulesName" label="违规条例" min-width="130" show-overflow-tooltip/>
 
       <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
       <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
-      <el-table-column prop="carTypeName" label="车辆类型" width="130"/>
+      <el-table-column prop="seat" label="机位" width="130"/>
       <el-table-column prop="carNo" label="车牌号" width="130"/>
-      <el-table-column prop="violationDescription" label="情况说明" min-width="130" :show-overflow-tooltip="true"
-/>
+      <el-table-column prop="violationDescription" label="情况说明" min-width="130" show-overflow-tooltip/>
       <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
       <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">
@@ -129,6 +128,7 @@ export default {
           carNo: this.formatNull(list.carNo),
           deductionScore: this.formatNull(list.deductionScore),
           driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
+          seat: this.formatNull(list.seat),
           })
         });
       }
@@ -188,32 +188,55 @@ export default {
       // debugger;
       let value = row.violationCodeName;
       if (value && columnIndex == 2) {
-        switch (value) {
-          case "人员":
+        if(value == "人员"){
             return "vl-people";
-          case "车辆":
-            return "vl-car";
-          case "设备":
-            return "vl-tool";
-          case "公司":
-            return "vl-company";
+        } else if (value == "其他"){
+             return "vl-company";
+        } else if (value.indexOf('车' !== '-1' )){
+          return "vl-car";
+        } else {
+          return "vl-tool";
         }
+        // switch (value) {
+        //   case "人员":
+        //     return "vl-people";
+        //   case "车辆":
+        //     return "vl-car";
+        //   case "设备":
+        //     return "vl-tool";
+        //   case "其他":
+        //     return "vl-company";
+        // }
       }
     },
     violationTypeBg1(value) {
+      // if (value) {
+      //   switch (value) {
+      //     case "人员":
+      //       return "vl-people";
+      //     case "车辆":
+      //       return "vl-car";
+      //     case "设备":
+      //       return "vl-tool";
+      //     case "公司":
+      //       return "vl-company";
+      //   }
+      // }
       if (value) {
-        switch (value) {
-          case "人员":
+        if(value == "人员"){
             return "vl-people";
-          case "车辆":
+        } else if (value == "其他"){
+             return "vl-company";
+        } else {
+          if (value.indexOf('车' == -1 )){
             return "vl-car";
-          case "设备":
+          } else {
             return "vl-tool";
-          case "公司":
-            return "vl-company";
+          }
         }
       }
     },
+
     statusFormat(row, column) {
       if (row.status == 1) {
         return "通过";

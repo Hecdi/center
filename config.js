@@ -37,6 +37,7 @@ export default {
                 'getViolationCodeInfo':'violationRecord/getViolationCodeInfo', //获取违规记录码表接口
                 'updateViolation':'violationRecord/updateViolation', //违规记录编辑 post
                 "uploadImg":"violationRecord/uploadImg",//违规记录上传
+                'ordinances':'ordinances/selectKey',//违规条例数据获取接口,post
                 'rollCall.getPersons':'attendance/findStaffState',//点到人员列表，post,,需要传token
 				'rollCall.getModule':'attendance/findScheduleDetails',//获取模版，post,需要传token
 				'rollCall.save':'attendance/saveScheduling',//提交点到，post,需要传token
