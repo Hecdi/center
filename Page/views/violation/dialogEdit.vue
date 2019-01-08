@@ -93,15 +93,15 @@
             </el-form-item>
             <el-form-item label ="照片" style="display:inline">
                 <div class="load-picture" v-if="this.form.pictures">
-                    <img v-for="(picture,index) in form.pictures" :key="index" :src="`http:173.1.101.1.30:6072/${picture}`"/>  
+                    <img class="el-upload-list__item-thumbnail" v-for="(picture,index) in form.pictures" :key="index" :src="`http://${location.hostname}:6072/${picture}`"/>  
                 </div>
+               
 				<el-upload
                     action = ""
                     list-type="picture-card"
                     :http-request="submitImg"
                     multiple
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove">
+                >
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
@@ -228,21 +228,31 @@
             submitImg(param){
                 const token = remote.getGlobal('token');
                 let formData = new FormData();
-                formData.append('files[]', param.file);
+                formData.append('files', param.file);
                 let config = {
                     'Content-Type': 'multipart/form-data',
                     'token': token,
                 };
                 const ajaxAPI = remote.getGlobal('ajaxAPI');
                 let getImgUrl = `${ajaxAPI.path}${ajaxAPI.url.uploadImg}`;
-                 let _this = this;
+                let _this = this;
                 axios.post(getImgUrl, formData, config)
                     .then(function(response) {
+                        console.log(response);
                         if(response.responseCode==1000){
-                            this.$message({
+                            _this.$message({
 						        type: "success",
 						        message: response.responseMessage
-					        });
+                            });
+                            let backPicture = response.data;
+                            console.log(backPicture);
+                            if(Array.isArray(backPicture)) {
+                                backPicture.forEach((item,index)=> {
+                                    _this.form.pictures = _this.form.pictures.push(`http://${location.hostname}:6072/${item}`);
+                                })
+                            } else {
+                               _this.form.pictures = `${backPicture}`;
+                            }     
 					} else {
                         this.$message({
 						    type: "error",
@@ -315,14 +325,12 @@
                 };
               },
               handleSelect(item) {
-                console.log(item);
                 this.form.textCode = item.textCode;
               },
             getOrdinancesData(){
                 let condition = this.ordinancesCondition;
                 let _this = this;
                 ajax.post('ordinances',condition,data => {
-                    console.log(data);
                     return _this.restaurants = data.data;
                 })
             }
