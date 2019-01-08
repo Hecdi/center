@@ -10,7 +10,7 @@ export default {
 			name: 'schedule',
 			host: location.hostname,
 			//host: '173.100.1.52',
-			//host: '192.168.1.50',
+			// host: '192.168.1.50',
 			port: '6070',
 			channel: 'webpush/intelligent_scheduling',
 			headers: {
@@ -21,6 +21,7 @@ export default {
             path:`http://${location.hostname}:6070/dispatchforpc/`,
             // path:`http://${location.hostname}:6070/webpush/`,
             // path:`http://${location.hostname}:6070/`,
+            // path:'http://192.168.1.50/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
 				'personList':'web/scheduling/getAreaAndWorkerListAll',

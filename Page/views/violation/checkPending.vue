@@ -129,6 +129,8 @@ export default {
           deductionScore: this.formatNull(list.deductionScore),
           driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
           seat: this.formatNull(list.seat),
+          phone: this.formatNull(list.phone),
+          positionName: this.formatNull(list.positionName),
           })
         });
       }
