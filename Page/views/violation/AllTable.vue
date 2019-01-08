@@ -6,7 +6,7 @@
     <el-table-column
         prop="violationCodeName"
         label="违规主体"
-        width="130"
+        width="150"
         filter-placement="bottom-end"
       >
         <template slot-scope="scope">
@@ -28,7 +28,7 @@
       <el-table-column prop="seat" label="机位" width="130"/>
       <el-table-column prop="carNo" label="车牌号" width="130"/>
       <el-table-column prop="violationDescription" label="情况说明" min-width="130"  show-overflow-tooltip/>
-      <el-table-column prop="deductionScore" label="扣分分值" width="80"/>
+      <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
       <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">
            <el-button
@@ -112,6 +112,7 @@ export default {
           carNo: this.formatNull(list.carNo),
           deductionScore: this.formatNull(list.deductionScore),
           driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
+          seat: this.formatNull(list.seat),
           })
         });
       }
@@ -179,16 +180,17 @@ export default {
       }
     },
     violationTypeBg1(value) {
-      if (value) {
-        switch (value) {
-          case "人员":
+       if (value) {
+        if(value == "人员"){
             return "vl-people";
-          case "车辆":
+        } else if (value == "其他"){
+             return "vl-company";
+        } else {
+          if (value.indexOf('车' == -1 )){
             return "vl-car";
-          case "设备":
+          } else {
             return "vl-tool";
-          case "公司":
-            return "vl-company";
+          }
         }
       }
     },

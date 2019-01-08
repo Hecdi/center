@@ -252,19 +252,19 @@
         background-color:#ff8500; 
     }
     .el-tag--vl-car {
-        width:48px;
+        // width:48px;
         // height:20px;
         color: #fff;
         background-color:#0096ff; 
     }
     .el-tag--vl-company {
-        width:48px;
+        // width:48px;
         // height:20px;
         color: #fff;
         background-color:#a346bc; 
     }
     .el-tag--vl-tool {
-        width:48px;
+        // width:48px;
         // height:20px;
         color: #fff;
         background-color:#677f95; 
@@ -329,19 +329,19 @@
             background-color:#ff8500; 
         }
         .el-tag--vl-car {
-            width:48px;
+            // width:48px;
             // height:20px;
             color: #fff;
             background-color:#0096ff; 
         }
         .el-tag--vl-company {
-            width:48px;
+            // width:48px;
             // height:20px;
             color: #fff;
             background-color:#a346bc; 
         }
         .el-tag--vl-tool {
-            width:48px;
+            // width:48px;
             // height:20px;
             color: #fff;
             background-color:#677f95; 
@@ -422,6 +422,17 @@
                 width: 600px;
             }
             
+        }
+        .el-upload--picture-card {
+            background-color: #fbfdff;
+            border: .0625rem dashed #c0ccda;
+            border-radius: .375rem;
+            box-sizing: border-box;
+            width: 6.25rem;
+            height: 6.25rem;
+            cursor: pointer;
+            line-height: 6.125rem;
+            vertical-align: top;
         }
     }
     .dislog-picture {

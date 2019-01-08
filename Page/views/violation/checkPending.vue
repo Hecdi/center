@@ -6,7 +6,7 @@
     <el-table-column
         prop="violationCodeName"
         label="违规主体"
-        width="130"
+        width="150"
         filter-placement="bottom-end"
       >
         <template slot-scope="scope">
@@ -127,6 +127,7 @@ export default {
           carNo: this.formatNull(list.carNo),
           deductionScore: this.formatNull(list.deductionScore),
           driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
+          seat: this.formatNull(list.seat),
           })
         });
       }
@@ -182,32 +183,55 @@ export default {
       // debugger;
       let value = row.violationCodeName;
       if (value && columnIndex == 2) {
-        switch (value) {
-          case "人员":
+        if(value == "人员"){
             return "vl-people";
-          case "车辆":
-            return "vl-car";
-          case "设备":
-            return "vl-tool";
-          case "公司":
-            return "vl-company";
+        } else if (value == "其他"){
+             return "vl-company";
+        } else if (value.indexOf('车' !== '-1' )){
+          return "vl-car";
+        } else {
+          return "vl-tool";
         }
+        // switch (value) {
+        //   case "人员":
+        //     return "vl-people";
+        //   case "车辆":
+        //     return "vl-car";
+        //   case "设备":
+        //     return "vl-tool";
+        //   case "其他":
+        //     return "vl-company";
+        // }
       }
     },
     violationTypeBg1(value) {
+      // if (value) {
+      //   switch (value) {
+      //     case "人员":
+      //       return "vl-people";
+      //     case "车辆":
+      //       return "vl-car";
+      //     case "设备":
+      //       return "vl-tool";
+      //     case "公司":
+      //       return "vl-company";
+      //   }
+      // }
       if (value) {
-        switch (value) {
-          case "人员":
+        if(value == "人员"){
             return "vl-people";
-          case "车辆":
+        } else if (value == "其他"){
+             return "vl-company";
+        } else {
+          if (value.indexOf('车' == -1 )){
             return "vl-car";
-          case "设备":
+          } else {
             return "vl-tool";
-          case "公司":
-            return "vl-company";
+          }
         }
       }
     },
+
     statusFormat(row, column) {
       if (row.status == 1) {
         return "通过";

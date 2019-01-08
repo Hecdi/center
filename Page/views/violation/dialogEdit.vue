@@ -57,7 +57,7 @@
                 <el-input v-model="form.seat"></el-input>
             </el-form-item>
             <el-form-item label="联系电话">
-                <el-input v-model="form.phone"></el-input>
+                <el-input v-model.number="form.phone"></el-input>
             </el-form-item>
             <el-form-item label="隔离区通行证号" v-if="form.violationType==1">
                 <el-input v-model="form.passNumber"></el-input>
@@ -78,14 +78,14 @@
             </el-form-item>
             <el-form-item label="违规条例" class="violation-item" style="width:534px;">
                 <el-autocomplete
-                  v-model="form.state4"
+                  v-model="form.violationRulesName"
                   :fetch-suggestions="querySearchAsync"
                   placeholder="请输入内容"
                   @select="handleSelect"
                   style="width:534px;"
                 ></el-autocomplete>
             </el-form-item>
-            <el-form-item label="扣分分值">
+            <el-form-item label="扣分分值" >
                 <el-input v-model="form.deductionScore"></el-input>
             </el-form-item>
              <el-form-item label="备注">
@@ -174,11 +174,6 @@
                         let violationSource = [];
                         let violationObject = [];
 						each(data, (element,index) => {
-							// if(element.type =="workType") {
-							// 	company.push(element);
-							// } else if(element.type == "descType") {
-							// 	describe.push(element);
-                            // }
                             let type = element.type;
                             switch(type){
                                 case "workType": 
@@ -205,7 +200,6 @@
                         _this.form.describeSelect = describe;
                         _this.form.positionSelect = position;
                         _this.form.violationAreaSelect = violationArea;
-                        console.log(violationObject);
                         _this.form.violationObjectSelect = violationObject;
                         _this.form.violationSourceSelect = violationSource;
 					}
@@ -278,12 +272,6 @@
                 delete param.violationObjectSelect;
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
-                delete param.state4;
-                // param.violationCode =this.getNumber(param.violationCodeName)? param.violationCodeName:violationCode;
-                // param.workOrg = this.getNumber(param.workOrgName)?param.workOrgName : param.workOrg;
-                // param.position = this.getNumber(param.positionName) ? param.positionName :  param.position ;
-                // param.violationArea = this.getNumber(param.violationAreaName)?param.violationAreaName : violationArea;
-                // param.violationSource = this.getNumber(param.violationSourceName)?param.violationSourceName : param.violationSource;
                 param.violationRules = param.textCode;
                 
                 console.log(param);
@@ -313,7 +301,6 @@
                 var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
                  var result = [];
                 results.forEach((item,index) => {
-                        // result.push(item.value = item.context); 
                         item.value = item.textCode + item.context;
                 })
                 clearTimeout(this.timeout);
