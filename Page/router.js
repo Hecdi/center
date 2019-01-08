@@ -6,6 +6,7 @@ import Sheet from "./views/sheet/Sheet.vue";
 import Violation from "./views/violation/ViolationRecord.vue";
 import UrgentReport from "./views/urgentReport/UrgentReport.vue";
 import MessageCenter from "./views/messageCenter/MessageCenter.vue";
+import ViolationNotice from "./views/violation/ViolationNotice.vue";
 import Statistics from "./views/statistics/Statistics.vue";
 import Manual from "./views/manual/Manual.vue";
 import Login from "./views/login/Login.vue";
@@ -78,6 +79,15 @@ export const smartSchedulingRouter = new Router({
 			path: "/messageCenter",
 			name: "messageCenter",
 			component:MessageCenter,
+			meta: {
+				title: '',
+				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+			}
+		},
+		{
+			path: "/violationNotice",
+			name: "violationNotice",
+			component:ViolationNotice,
 			meta: {
 				title: '',
 				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
