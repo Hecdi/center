@@ -154,12 +154,6 @@
 	<!--endprint-->
 </template>
 
-<style>
-.el-header{
-	display:none !important;
-}
-</style>
-
 <script>
 	export default {
 		name:"violationNotice",
@@ -205,6 +199,10 @@
 		beforeMount(){
 			this.getDate();
 			this.getVioTime();
+		},
+		mounted(){
+			let header = document.getElementsByClassName('el-header')[0];
+			header.style['display'] = 'none';
 		}
 	}
 </script>
