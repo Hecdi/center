@@ -17,19 +17,18 @@
         </template>
       </el-table-column>
       <el-table-column prop="violationName" label="责任人/单位" width="130"/>
-      <el-table-column prop="workOrgName" label="工作单位" width="130"/>
+      <el-table-column prop="workOrgName" label="工作单位" width="130" show-overflow-tooltip/>
       <el-table-column prop="violationSourceName" label="违规来源" width="130"/>
       <el-table-column prop="violationAreaName" label="违规区域" width="130"/>
       <el-table-column prop="phone" label="电话号码" width="130"/>
       <el-table-column prop="positionName" label="职位" width="130"/>
-      <el-table-column prop="violationRulesName" label="违规条例" width="130"/>
+      <el-table-column prop="violationRulesName" label="违规条例" min-width="130" show-overflow-tooltip/>
 
       <el-table-column prop="passNumber" label="隔离区通行证号" width="130"/>
       <el-table-column prop="driverLicenseNumber" label="驾驶证号" width="130"/>
       <el-table-column prop="seat" label="机位" width="130"/>
       <el-table-column prop="carNo" label="车牌号" width="130"/>
-      <el-table-column prop="violationDescription" label="情况说明" min-width="130" :show-overflow-tooltip="true"
-/>
+      <el-table-column prop="violationDescription" label="情况说明" min-width="130" show-overflow-tooltip/>
       <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
       <el-table-column label="照片" min-width="80">
         <template slot-scope="scope">

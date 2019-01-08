@@ -10,16 +10,8 @@
             <el-form-item label ="编号">
 				{{form.violationNoticeNum}}
             </el-form-item>
-            <!-- <el-form-item label="违规主体">
-                <el-select v-model="form.violationCodeName" placeholder="请选择活动区域">
-                  <el-option label="人员" value="1"></el-option>
-                  <el-option label="车辆" value="2"></el-option>
-                  <el-option label="设备" value="3"></el-option>
-                  <el-option label="其他" value="5"></el-option>
-                </el-select>
-            </el-form-item> -->
             <el-form-item label="违规主体">
-                <el-select  placeholder="请选择违规主体" v-model="form.violationCodeName">
+                <el-select  placeholder="请选择违规主体" v-model="form.violationCode">
                   <el-option v-for="(obj,index) in form.violationObjectSelect" :key="index" :label="obj.value" :value="obj.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -33,21 +25,18 @@
                   <el-option v-for="(company,index) in form.companySelect" :key="index" :label="company.value" :value="company.id"></el-option>
                 </el-select>
             </el-form-item> 
-            <!-- <el-form-item label="责任单位描述">
-                <el-input v-model="form.name" value="111"></el-input>
-            </el-form-item> -->
             <el-form-item label="工作单位">
-                <el-select  placeholder="请选择活动区域" v-model="form.workOrgName">
+                <el-select  placeholder="请选择活动区域" v-model="form.workOrg">
                   <el-option v-for="(company,index) in form.companySelect" :key="index" :label="company.value" :value="company.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="违规来源">
-                <el-select  placeholder="请选择违规来源" v-model="form.violationSourceName">
+                <el-select  placeholder="请选择违规来源" v-model="form.violationSource">
                   <el-option v-for="(source,index) in form.violationSourceSelect" :key="index" :label="source.value" :value="source.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="职位/岗位">
-                <el-select  placeholder="请选择职位/岗位" v-model="form.positionName">
+                <el-select  placeholder="请选择职位/岗位" v-model="form.position">
                   <el-option v-for="(pos,index) in form.positionSelect" :key="index" :label="pos.value" :value="pos.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -60,7 +49,7 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="违规区域">
-                <el-select  placeholder="请选择违规区域" v-model="form.violationAreaName">
+                <el-select  placeholder="请选择违规区域" v-model="form.violationArea">
                   <el-option v-for="(area,index) in form.violationAreaSelect" :key="index" :label="area.value" :value="area.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -76,11 +65,7 @@
             <el-form-item label="内场驾驶证号" v-if="form.violationType==1">
                 <el-input v-model="form.driverLicenseNumber"></el-input>
             </el-form-item>
-            <el-form-item label="车辆类型" v-if="form.violationCodeName==2">
-                <el-input v-model="form.carTypeName"></el-input>
-            </el-form-item>
-            <el-form-item label="车牌号" v-if="form.violationCodeName.indexOf('车') !=-1">
-            <!-- <el-form-item label="车牌号"> -->
+            <el-form-item label="车牌号" v-if="form.violationCode>=33&&form.violationCode<=45">
                 <el-input v-model="form.carNo"></el-input>
             </el-form-item>
             <el-form-item label="情况说明">
@@ -106,21 +91,20 @@
              <el-form-item label="备注">
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
-            
-            
-            <!-- <el-form-item label ="照片" style="display:inline">
+            <el-form-item label ="照片" style="display:inline">
                 <div class="load-picture" v-if="this.form.pictures">
                     <img v-for="(picture,index) in form.pictures" :key="index" :src="`http:173.1.101.1.30:6072/${picture}`"/>  
                 </div>
 				<el-upload
-                list-type="picture-card"
-                :http-request="submitImg"
-                multiple
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove">
-                <i class="el-icon-plus"></i>
-            </el-upload>
-            </el-form-item> -->
+                    action = ""
+                    list-type="picture-card"
+                    :http-request="submitImg"
+                    multiple
+                    :on-preview="handlePictureCardPreview"
+                    :on-remove="handleRemove">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
         </el-form>  
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogCheckEdit = false">取 消</el-button>
@@ -221,11 +205,18 @@
                         _this.form.describeSelect = describe;
                         _this.form.positionSelect = position;
                         _this.form.violationAreaSelect = violationArea;
+                        console.log(violationObject);
                         _this.form.violationObjectSelect = violationObject;
                         _this.form.violationSourceSelect = violationSource;
 					}
 				});
-			},
+            },
+             handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
 			//融合数据
 			getAllData(){
 				this.form = extend({}, this.form, this.editCheckData);
@@ -268,6 +259,13 @@
                         console.log(error);
                     })
             },
+            getNumber(value) {
+                if(typeof value=='number'){ 
+                    return true;
+                } else {
+                    return false;
+                }    
+            },
             submitForm(){
                 let param = this.form;
                 delete param.companySelect;
@@ -281,11 +279,11 @@
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
                 delete param.state4;
-                param.violationCode = param.violationCodeName;
-                param.workOrg = param.workOrgName;
-                param.position = param.positionName;
-                param.violationArea = param.violationAreaName;
-                param.violationSource = param.violationSourceName;
+                // param.violationCode =this.getNumber(param.violationCodeName)? param.violationCodeName:violationCode;
+                // param.workOrg = this.getNumber(param.workOrgName)?param.workOrgName : param.workOrg;
+                // param.position = this.getNumber(param.positionName) ? param.positionName :  param.position ;
+                // param.violationArea = this.getNumber(param.violationAreaName)?param.violationAreaName : violationArea;
+                // param.violationSource = this.getNumber(param.violationSourceName)?param.violationSourceName : param.violationSource;
                 param.violationRules = param.textCode;
                 
                 console.log(param);
@@ -316,7 +314,7 @@
                  var result = [];
                 results.forEach((item,index) => {
                         // result.push(item.value = item.context); 
-                        item.value = item.context;
+                        item.value = item.textCode + item.context;
                 })
                 clearTimeout(this.timeout);
                 this.timeout = setTimeout(() => {
@@ -325,7 +323,8 @@
               },
               createStateFilter(queryString) {
                 return (state) => {
-                  return (state.context.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                  state.search = state.textCode + state.context; 
+                  return (state.search.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
               },
               handleSelect(item) {
