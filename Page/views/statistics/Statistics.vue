@@ -39,7 +39,17 @@
           <el-table-column type="index" label="序号" width="50"/>
           <el-table-column prop="scheduleTime" label="日期" width="120"/>
           <el-table-column prop="clickRate" label="点击率" min-width="80"/>
-          <el-table-column prop="createTask" label="生成任务" min-width="180"/>
+          <el-table-column prop="createTask" label="生成任务" min-width="100"/>
+            <el-table-column prop="createTask" label="不保障任务" min-width="120"/>
+            <el-table-column prop="createTask" label="完成任务" min-width="100"/>
+            <el-table-column prop="createTask" label="自动排班" min-width="100"/>
+            <el-table-column prop="createTask" label="生成任务" min-width="100"/>
+            <el-table-column prop="people" label="人员违规" min-width="100"/>
+            <el-table-column prop="car" label="车辆违规" min-width="100"/>
+            <el-table-column prop="device" label="设备违规" min-width="100"/>
+            <el-table-column prop="company" label="其他违规" min-width="100"/>
+             <el-table-column prop="device" label="审核通过" min-width="100"/>
+            <el-table-column prop="company" label="审核中" min-width="100"/>
           <el-table-column prop="finishRate" label="完成率" min-width="180"/>
           <el-table-column prop="finishTask" label="完成任务" min-width="120"/>
           <el-table-column prop="movementA" label="进港航班" width="120"/>
