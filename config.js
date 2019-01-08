@@ -12,7 +12,7 @@ export default {
 			//host: '173.100.1.52',
 			// host: '192.168.1.50',
 			port: '6070',
-			channel: 'webpush/intelligent_scheduling',
+			// channel: 'webpush/intelligent_scheduling',
 			headers: {
 				//userId: 'aoc',
 			},

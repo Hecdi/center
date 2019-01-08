@@ -92,10 +92,9 @@
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item label ="照片" style="display:inline">
-                <div class="load-picture" v-if="this.form.pictures">
-                    <img class="el-upload-list__item-thumbnail" v-for="(picture,index) in form.pictures" :key="index" :src="`http://${location.hostname}:6072/${picture}`"/>  
-                </div>
-               
+                <el-row class="load-picture" v-if="pictureMyUrl.length>0">
+                    <img class="el-upload-list__item-thumbnail" v-for="(picture,index) in pictureMyUrl" :key="index" :src="`${picture}`"/>  
+                </el-row>
 				<el-upload
                     action = ""
                     list-type="picture-card"
@@ -138,7 +137,7 @@
 					companySelect: [],
 					describeSelect: [],
                     textarea: '',
-                    pictures: '',
+                    pictures: [],
                     files: '',
                     state4: '',
                     textCode: '',
@@ -146,6 +145,7 @@
                 },
                 value1: '',
                 restaurants: [],
+                pictureMyUrl: [],
                
                 timeout:  null
 			};
@@ -239,10 +239,11 @@
                 axios.post(getImgUrl, formData, config)
                     .then(function(response) {
                         console.log(response);
-                        if(response.responseCode==1000){
+                        let data = response.data;
+                        if(data.responseCode==1000){
                             _this.$message({
 						        type: "success",
-						        message: response.responseMessage
+						        message: data.responseMessage
                             });
                             let backPicture = response.data;
                             console.log(backPicture);
@@ -251,12 +252,15 @@
                                     _this.form.pictures = _this.form.pictures.push(`http://${location.hostname}:6072/${item}`);
                                 })
                             } else {
-                               _this.form.pictures = `${backPicture}`;
+                                let arr = new Array();
+                                arr.push(`http://${location.hostname}:6072/${backPicture.data}`);
+                                _this.pictureMyUrl = arr;
+                               console.log(_this.pictureMyUrl);
                             }     
 					} else {
                         this.$message({
 						    type: "error",
-						    message: response.responseMessage
+						    message: data.responseMessage
 					    });
 					}
                     }).catch(function(error) {
@@ -274,7 +278,7 @@
                 let param = this.form;
                 delete param.companySelect;
                 delete param.describeSelect;
-                delete param.pictures;
+                // delete param.pictures;
                 delete param.files;
                 delete param.picture;
                 delete param.reportTime;
@@ -283,6 +287,7 @@
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
                 param.violationRules = param.textCode;
+                param.pictures = this.form.pictures;
                 
                 console.log(param);
                 ajax.post('updateViolation',param,(data)=> {
