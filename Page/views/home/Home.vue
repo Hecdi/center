@@ -208,7 +208,7 @@
 	import DialogPersonSetting from "./DialogPersonSetting.vue";
 	import DialogAlert from "./DialogAlert.vue";
 	import TableList from "./TableList.vue";
-	import dialogTaskHandover from "./dialogTaskHandover.vue";
+	import dialogTaskHandover from "./DialogTaskHandover.vue";
 	import { sub, removeSub, pub } from "postalControl";
 	import {filter, each} from 'lodash';
 	import { remote } from 'electron';
