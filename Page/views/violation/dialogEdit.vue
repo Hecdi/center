@@ -152,6 +152,7 @@
                 this.getAllData();
             },
             dialogCheckEdit:function(n,o){
+                this.getAllData();
                 this.getSelectData();
                 this.getOrdinancesData();
             }
