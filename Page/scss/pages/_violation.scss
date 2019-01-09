@@ -465,6 +465,9 @@
             border-radius: .375rem;
             margin: 0 8px 8px 0;
         } 
+        .is-ready {
+            display: none !important;
+        }
     }
     .dislog-picture {
         .el-dialog__header {

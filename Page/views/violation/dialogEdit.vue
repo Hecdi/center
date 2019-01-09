@@ -92,7 +92,7 @@
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item label ="照片" style="display:inline">
-                <el-row class="load-picture" v-if="form.picture!=null">
+                <el-row class="load-picture" v-if="form.pictures!=null">
                     <img class="el-upload-list__item-thumbnail upload-picture" v-for="(picture,index) in form.pictures" :key="index" :src="`http://173.100.1.74/${picture}`"/>  
                 </el-row>
 				<el-upload
@@ -141,13 +141,8 @@
                     state4: '',
                     textCode: '',
                     seat: '',
-                    pictureMyUrl:[],
                 },
-                value1: '',
                 restaurants: [],
-                pictureMyUrl: [],
-                getPictures: [],
-               
                 timeout:  null
 			};
 		},
@@ -214,10 +209,6 @@
             },
 			//融合数据
 			getAllData(){
-                // if(this.form.picutes == null){
-                //     this.form.picutes = new Array();
-                // }
-                // console.log(this.form);
 				this.form = extend({}, this.form, this.editCheckData);
             },
              getWaitData(value) {
@@ -229,6 +220,14 @@
                     this.getWaitData(data);
                     }
                 })
+            },
+            switchToArr(value){
+                let arr = [];
+                if(value == null) {
+                    return value = arr;
+                } else {
+                    return value;
+                }
             },
             submitImg(param){
                 const token = remote.getGlobal('token');
@@ -243,7 +242,6 @@
                 let _this = this;
                 axios.post(getImgUrl, formData, config)
                     .then(function(response) {
-                        console.log(response);
                         let data = response.data;
                         if(data.responseCode==1000){
                             _this.$message({
@@ -251,21 +249,8 @@
 						        message: data.responseMessage
                             });
                             let backPicture = response.data;
-                            console.log(backPicture);
-                            if(Array.isArray(backPicture)) {
-                                backPicture.forEach((item,index)=> {
-                                    _this.form.pictures = _this.form.pictures.push(`http://${location.hostname}:6072/${item}`);
-                                })
-                            } else {
-                                
-                                // _this.form.pictureMyUrl.push(`http://${location.hostname}:6072/${backPicture.data}`);
-                                _this.form.pictures.push(`${backPicture.data}`);
-                                _this.getPictures.push(`${backPicture.data}`);
-                                
-                                console.log( _this.form.picutes);
-                                // _this.pictureMyUrl = arr;
-                               console.log(_this.pictureMyUrl);
-                            }     
+                            _this.form.pictures = _this.switchToArr(_this.form.pictures);
+                            _this.form.pictures.push(`${backPicture.data}`);
 					} else {
                         this.$message({
 						    type: "error",
@@ -276,18 +261,10 @@
                         console.log(error);
                     })
             },
-            getNumber(value) {
-                if(typeof value=='number'){ 
-                    return true;
-                } else {
-                    return false;
-                }    
-            },
             submitForm(){
                 let param = this.form;
                 delete param.companySelect;
                 delete param.describeSelect;
-                // delete param.pictures;
                 delete param.files;
                 delete param.picture;
                 delete param.reportTime;
@@ -296,11 +273,8 @@
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
                 param.violationRules = param.textCode;
-                // param.pictures = this.form.pictures;
-                param.pictures = this.getPictures;
-                param.picture = this.getPictures.join(',');
+                param.picture = param.pictures==null? param.picture: param.pictures.join(',');
                 
-                console.log(param);
                 ajax.post('updateViolation',param,(data)=> {
 					if(data.responseCode==1000){
 						this.initWaitData();
