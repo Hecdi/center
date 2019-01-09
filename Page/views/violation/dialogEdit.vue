@@ -92,8 +92,8 @@
                 <el-input v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item label ="照片" style="display:inline">
-                <el-row class="load-picture" v-if="pictureMyUrl.length>0">
-                    <img class="el-upload-list__item-thumbnail" v-for="(picture,index) in pictureMyUrl" :key="index" :src="`${picture}`"/>  
+                <el-row class="load-picture" v-if="form.picture!=null">
+                    <img class="el-upload-list__item-thumbnail upload-picture" v-for="(picture,index) in form.pictures" :key="index" :src="`http://173.100.1.74/${picture}`"/>  
                 </el-row>
 				<el-upload
                     action = ""
@@ -137,15 +137,16 @@
 					companySelect: [],
 					describeSelect: [],
                     textarea: '',
-                    pictures: [],
                     files: '',
                     state4: '',
                     textCode: '',
                     seat: '',
+                    pictureMyUrl:[],
                 },
                 value1: '',
                 restaurants: [],
                 pictureMyUrl: [],
+                getPictures: [],
                
                 timeout:  null
 			};
@@ -213,6 +214,10 @@
             },
 			//融合数据
 			getAllData(){
+                // if(this.form.picutes == null){
+                //     this.form.picutes = new Array();
+                // }
+                // console.log(this.form);
 				this.form = extend({}, this.form, this.editCheckData);
             },
              getWaitData(value) {
@@ -252,9 +257,13 @@
                                     _this.form.pictures = _this.form.pictures.push(`http://${location.hostname}:6072/${item}`);
                                 })
                             } else {
-                                let arr = new Array();
-                                arr.push(`http://${location.hostname}:6072/${backPicture.data}`);
-                                _this.pictureMyUrl = arr;
+                                
+                                // _this.form.pictureMyUrl.push(`http://${location.hostname}:6072/${backPicture.data}`);
+                                _this.form.pictures.push(`${backPicture.data}`);
+                                _this.getPictures.push(`${backPicture.data}`);
+                                
+                                console.log( _this.form.picutes);
+                                // _this.pictureMyUrl = arr;
                                console.log(_this.pictureMyUrl);
                             }     
 					} else {
@@ -287,7 +296,9 @@
                 delete param.violationAreaSelect;
                 delete param.positionSelect;
                 param.violationRules = param.textCode;
-                param.pictures = this.form.pictures;
+                // param.pictures = this.form.pictures;
+                param.pictures = this.getPictures;
+                param.picture = this.getPictures.join(',');
                 
                 console.log(param);
                 ajax.post('updateViolation',param,(data)=> {
