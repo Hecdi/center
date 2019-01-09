@@ -1,4 +1,4 @@
-@import "../components/personSelect";
+@import "../components/personselect";
  .rollCall{
 	 flex:1;
 	 padding:10px;
@@ -7,7 +7,7 @@
 		 height:40px;
 		 .el-col{
 			 height:40px;
-			 color:#333333;	
+			 color:#333333;
 			 font-size:14px;
 			 font-weight:bold;
 			 .stick {
@@ -41,7 +41,7 @@
 				 i {
 					 font-size:20px;
 					 color:#fff;
-				 }	
+				 }
 				 span {
 					 vertical-align: text-top;
 				 }
@@ -52,11 +52,11 @@
 		 }
 		 .is-active {
 			 .el-button{
-				 background-color:#0566FF; 
+				 background-color:#0566FF;
 				 color:#fff;
 				 i {
 					 font-size:20px;
-				 }	
+				 }
 			 }
 		 }
 		 .el-tabs__content{
@@ -112,7 +112,7 @@
 				top:19px;
 			}
 			.module-head{
-				height:30px;	
+				height:30px;
 				line-height:30px;
 			}
 			.module-content{
@@ -123,7 +123,7 @@
 					border-right:1px solid #fff;
 				}
 				.workContent{
-					border-left:1px solid #fff; 
+					border-left:1px solid #fff;
 					border-top: 1px solid #fff;
 					font-size:12px;
 					text-align:center;
@@ -139,7 +139,7 @@
 				}
 			}
 			.addPerson{
-				cursor:pointer;	
+				cursor:pointer;
 			}
 			.ruler {
 				color:#fff;
