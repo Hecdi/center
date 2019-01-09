@@ -8,7 +8,8 @@
     "dev.deploy": "scp -r release/website/* root@173.100.1.50:/var/www/schedule/",
     "test.deploy": "scp -r release/website/* root@173.101.1.83:/var/www/schedule/",
     "dev.release.deploy": "yarn release && yarn dev.deploy",
-    "test.release.deploy": "yarn release && yarn test.deploy"
+    "test.release.deploy": "yarn release && yarn test.deploy",
+    "build": "yarn test.release.deploy"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.6",
