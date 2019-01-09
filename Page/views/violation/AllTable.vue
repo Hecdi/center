@@ -111,8 +111,11 @@
 						carTypeName:this.formatNull(list.carTypeName),
 						carNo: this.formatNull(list.carNo),
 						deductionScore: this.formatNull(list.deductionScore),
-						driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
-						seat: this.formatNull(list.seat),
+            driverLicenseNumber: this.formatNull(list.driverLicenseNumber),
+            phone: this.formatNull(list.phone),
+            positionName: this.formatNull(list.positionName),
+            seat: this.formatNull(list.seat),
+            violationRulesName: this.formatNull(list.violationRulesName),
 					})
 				});
 			}
@@ -136,7 +139,7 @@
 				}
 			},
 			formatNull(value){
-				if(value){
+				if(value && value!==""){
 					return value;
 				} else {
 					return '--'

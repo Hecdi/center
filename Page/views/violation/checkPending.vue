@@ -131,6 +131,7 @@ export default {
           seat: this.formatNull(list.seat),
           phone: this.formatNull(list.phone),
           positionName: this.formatNull(list.positionName),
+          violationRulesName: this.formatNull(list.violationRulesName),
           })
         });
       }
@@ -159,7 +160,7 @@ export default {
       }
     },
     formatNull(value){
-      if(value){
+      if(value && value!==""){
         return value;
       } else {
         return '--'
