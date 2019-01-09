@@ -118,7 +118,7 @@
 <script>
     import { ajax } from "ajax";
     import axios from 'axios'; 
-    import { each,extend } from "lodash";
+    import { each,extend,cloneDeep } from "lodash";
     import { mapActions } from 'vuex';
     import { remote } from 'electron';
 
@@ -211,7 +211,9 @@
             },
 			//融合数据
 			getAllData(){
-				this.form = extend({}, this.form, this.editCheckData);
+                let allData = extend({}, this.form, this.editCheckData);
+                this.form = cloneDeep(allData);
+                
             },
              getWaitData(value) {
                 this.$store.dispatch('violation/getWaitData',value);
