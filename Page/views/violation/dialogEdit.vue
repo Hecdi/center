@@ -42,7 +42,7 @@
             </el-form-item>
             <el-form-item label="违规时间">
                  <el-date-picker
-                    v-model="form.reportTime"
+                    v-model="form.violationTime"
                     type="datetime"
                     placeholder="选择日期时间"
                     format="yyyy-MM-dd HH:mm">
@@ -121,6 +121,7 @@
     import { each,extend,cloneDeep } from "lodash";
     import { mapActions } from 'vuex';
     import { remote } from 'electron';
+    import moment from "moment";
 
 	export default {
 		name: "dialogCheckEdit",
@@ -267,6 +268,7 @@
             },
             submitForm(){
                 let param = this.form;
+                param.violationTime = moment(param.violationTime).format('YYYY-MM-DD HH:mm');
                 delete param.companySelect;
                 delete param.describeSelect;
                 delete param.files;
