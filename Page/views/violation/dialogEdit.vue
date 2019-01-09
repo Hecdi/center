@@ -93,7 +93,7 @@
             </el-form-item>
             <el-form-item label ="照片" style="display:inline">
                 <el-row class="load-picture" v-if="form.pictures!=null">
-                    <img class="el-upload-list__item-thumbnail upload-picture" v-for="(picture,index) in form.pictures" :key="index" :src="`http://173.100.1.74/${picture}`"/>  
+                    <img class="el-upload-list__item-thumbnail upload-picture" v-for="(picture,index) in form.pictures" :key="index" :src="`${path}/${picture}`"/>  
                 </el-row>
 				<el-upload
                     action = ""
@@ -143,7 +143,8 @@
                     seat: '',
                 },
                 restaurants: [],
-                timeout:  null
+                timeout:  null,
+                path: `http://${location.hostname}:6072`,
 			};
 		},
 		watch:{
