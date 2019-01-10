@@ -5,8 +5,8 @@
 				<div class='stick'></div>工作人员点到分配
 			</el-col>
 			<el-col :span=12 class='option'>
-			 <el-button type="success" style="background-color:#25b346;" @click="onSubmit" size="mini">提交</el-button>
-			 <el-button style="background-color:#c33030;" type="danger" @click="onClickReset" size="mini">重新点到</el-button>				
+			 <el-button v-if="isHavePermission" type="success" style="background-color:#25b346;" @click="onSubmit" size="mini">提交</el-button>
+			 <el-button v-if="isHavePermission" style="background-color:#c33030;" type="danger" @click="onClickReset" size="mini">重新点到</el-button>				
 			</el-col>
 		</el-row>
 		<div class="content">
@@ -28,11 +28,13 @@
 	import PersonList from "PersonList.vue";
 	import ModuleList from "./ModuleList.vue";
 	import Promise from 'bluebird';
+	import {isHavePermission} from 'helper/permission';
 	export default {
 		name: 'RollCall',
 		data(){
 			return {
 				card:'',
+				isHavePermission:false,
 			}
 		},
 		methods:{
@@ -107,6 +109,7 @@
 		},
 		beforeMount(){
 			this.init(false);
+			this.isHavePermission = isHavePermission('pointTo_schdule');
 		},
 		components:{
 			DialogPersonDetail,
