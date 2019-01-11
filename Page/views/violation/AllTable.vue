@@ -29,7 +29,7 @@
       <el-table-column prop="carNo" label="车牌号" width="130"/>
       <el-table-column prop="violationDescription" label="情况说明" min-width="130"  show-overflow-tooltip/>
       <el-table-column prop="deductionScore" label="扣分分值" width="130"/>
-      <el-table-column label="照片" min-width="80">
+      <el-table-column label="照片" min-width="80" fixed="right">
         <template slot-scope="scope">
            <el-button
             v-if = "scope.row.pictures"
@@ -46,17 +46,17 @@
           >查看</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180" fixed="right"/>
+      <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180" />
       <el-table-column porp = "status" label="状态" :formatter="statusFormat" width="80"/>
-      <el-table-column label="打印">
+      <el-table-column label="打印" fixed="right">
         <template slot-scope="scope">
             <!-- <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i> -->
         <el-button size="mini" @click="print(scope.row)">打印</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="审核" width="100" v-if="havePermission">
+      <el-table-column label="审核" width="100" v-if="havePermission" fixed="right">
         <template slot-scope="scope">
-            <el-button size="mini" @click="submitStatus(scope.row,3)">撤回</el-button>
+            <el-button size="mini" @click="submitStatus(scope.row,3)" type="danger" plain>撤回</el-button>
         </template>
       </el-table-column>
     </el-table>
