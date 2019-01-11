@@ -161,9 +161,26 @@
 		height:34px;
 		line-height:16px;
 	}
-	.img{
-		//width:100%;
+	#pic1 {
+		//min-height:100px;
+		//max-height:600px;
+	    //height:100%;
+		//height:500px;
+	}
+	#pic2 {
+		//min-height:500px;
 		//height:auto;
+		//height:100%;
+	}
+	#pic3 {
+		//height:auto;
+	}
+	.img{
+		width:100%;
+		//height:100%;
+		//height:auto;
+		//max-height:1000px;
+		//min-height:500px;
 	}
 	.deptBtn{
 		font-family:Microsoft YaHei;
