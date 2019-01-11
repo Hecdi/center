@@ -3,8 +3,8 @@
 	<section class="outermostheader" v-if="currentBtn == 'p1'">
 		<el-row :gutter="50">
 			<el-col class="deptRow" :span="12">
-				<el-button class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1',1)">当前部门</el-button>
-				<el-button class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>
+				<el-button v-if="false" class="deptBtn deptBtn1" :type="currentBtn == 'p1'?'primary':''" round @click="showSector('p1',1)">当前部门</el-button>
+				<el-button v-if="false" class="deptBtn deptBtn2" :type="currentBtn == 'p2'?'primary':''" round @click="showSector('p2',0)">所有部门</el-button>
 		   </el-col>
 		   <el-col class="dateRow" :span="6">
 				<el-date-picker class="datePicker" v-model="time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="exportOnsearch(1)">
@@ -16,7 +16,7 @@
 		   </el-col>
 		</el-row>
 	</section>
-	<section v-else class="allDeptsection">
+	<section v-if="false" class="allDeptsection">
 		<el-row :gutter="20">
 			<el-col :span="16" :offset="4">
 				<el-row :gutter="50">
@@ -60,14 +60,15 @@
 									图片详情
 								</el-button>
 								<el-dialog
+									id="pic3"
 									title="提示"
-									height="100%"
-									width="100%"
+									
+									width="550px"
 									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel :autoplay=false  height="600px" >
-										<el-carousel-item  v-for = "(item,index) in imgArr" :key = "index">
-											<img :src= "item"  class="img" />
+									<el-carousel id="pic1" :autoplay=false :height="height" @change="changeItem">
+										<el-carousel-item id="pic2"  v-for = "(item,index) in imgArr" :key = "index">
+											<img :src= "item"  style="width:100%;height:`${height}`;"/>
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -144,7 +145,7 @@
 								<el-dialog placement="top"  width="100%" v-if = "scope.row.imgFile && scope.row.imgFile != '{}'"  title="提示" :visible.sync="dialogVisible">
 									<el-carousel :autoplay=false height="600px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-											<img :src="item" class="img"/>
+											<img :src="item" class="img" />
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -199,10 +200,27 @@
 				valSize:22,
 				valPage:1,
 				dept:1,
-				currentPage:1
+				currentPage:1,
+				height:'',
 			}
 		},
 		methods:{
+			getHeight(active){
+				let img = new Image();
+				let that = this;
+				img.onload = function() {
+					console.log(this);
+					let ration = 550/this.width;
+					that.height = this.height > 300?this.height * ration +'px':'300px';
+				}
+				console.log(that.height);
+				img.src = this.img[active];
+			},
+			changeItem(active,pre){
+				this.active = active;
+				this.getHeight(active);
+			},
+
 			indexMethod(index){
 				return index+1+(this.valPage-1)*this.valSize;
 			},
@@ -300,6 +318,11 @@
 				})
 			},
 		},
+		
+		mounted(){
+			this.getHeight()
+		},
+	
 		beforeMount(){
 			ajax.post('urgentReport',{
 					startTime:moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
