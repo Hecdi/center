@@ -63,12 +63,12 @@
 									id="pic3"
 									title="提示"
 									
-									width="700px"
+									width="550px"
 									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel id="pic1" :autoplay=false height="400px">
+									<el-carousel id="pic1" :autoplay=false :height="height" @change="changeItem">
 										<el-carousel-item id="pic2"  v-for = "(item,index) in imgArr" :key = "index">
-											<img :src= "item"  class="img" />
+											<img :src= "item"  style="width:100%;height:`${height}`;"/>
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -145,7 +145,7 @@
 								<el-dialog placement="top"  width="100%" v-if = "scope.row.imgFile && scope.row.imgFile != '{}'"  title="提示" :visible.sync="dialogVisible">
 									<el-carousel :autoplay=false height="600px" >
 										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
-											<img :src="item" class="img"/>
+											<img :src="item" class="img" />
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -201,9 +201,26 @@
 				valPage:1,
 				dept:1,
 				currentPage:1,
+				height:'',
 			}
 		},
 		methods:{
+			getHeight(active){
+				let img = new Image();
+				let that = this;
+				img.onload = function() {
+					console.log(this);
+					let ration = 550/this.width;
+					that.height = this.height > 300?this.height * ration +'px':'300px';
+				}
+				console.log(that.height);
+				img.src = this.img[active];
+			},
+			changeItem(active,pre){
+				this.active = active;
+				this.getHeight(active);
+			},
+
 			indexMethod(index){
 				return index+1+(this.valPage-1)*this.valSize;
 			},
@@ -302,6 +319,9 @@
 			},
 		},
 		
+		mounted(){
+			this.getHeight()
+		},
 	
 		beforeMount(){
 			ajax.post('urgentReport',{
