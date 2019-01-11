@@ -100,7 +100,7 @@
             form: {
                 name: 'placeholder',
             },
-            tabActive: 'all',
+            tabActive: 'wait',
             currentView: 'Card',
             tabs:"all",
             exportLocation: '',
