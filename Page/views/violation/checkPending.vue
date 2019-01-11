@@ -48,7 +48,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="reportTime" :formatter="dateFormat" label="上报时间" width="180"/>
-      <el-table-column label="审核" width="200" fixed="right" >
+      <el-table-column label="审核" width="200" fixed="right" v-if="havePermission">
         <template slot-scope="scope" >
           <el-button size="mini" type="success" @click="submitStatus(scope.row,1)">通过</el-button>
           <el-button size="mini" type="danger" @click="submitStatus(scope.row,2)">不通过</el-button>
@@ -60,7 +60,7 @@
             <el-button size="mini" @click="print(scope.row)">打印</el-button>
         </template>
       </el-table-column>
-       <el-table-column label="编辑" fixed="right">
+       <el-table-column label="编辑" fixed="right" v-if="havePermission">
         <template slot-scope="scope">
             <i class="iconfont icon-bianji" @click="openDialogEdit(scope.row)" style="color:#0064FF"></i>
         </template>
@@ -114,7 +114,7 @@ export default {
   },
   
   computed: {
-    ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize','waitCondition']),
+    ...mapState('violation',['filterCards','waitItems','showImgDialog','waitTotalSize','waitCondition','havePermission']),
     waitList: function() {
       return map(this.waitItems, list => {
         return extend({}, list, {
