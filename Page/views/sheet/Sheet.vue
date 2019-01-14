@@ -59,6 +59,7 @@
         <el-table-column prop="Staff" label="保障人员" width="120"/>
         <el-table-column prop="Receive" label="领受" width="120"/>
         <el-table-column prop="Place" label="到位" width="120"/>
+         <el-table-column prop="Start" label="开始" width="120"/>
         <el-table-column prop="Finish" label="完成" width="120" fixed="right"/>
       </el-table>
     </div>
@@ -247,6 +248,7 @@ export default {
           Receive: list.movement=="A"?formatDate(list.arriveReceive,"HHmm(DD)", "--"):formatDate(list.departmentReceive,"HHmm(DD)", "--"),
           Finish: list.movement=="A"?formatDate(list.arriveFinish,"HHmm(DD)", "--"	):formatDate(list.departmentFinish,"HHmm(DD)", "--"),
           Place: list.movement=="A"?formatDate(list.arriveInPlace,"HHmm(DD)", "--"):formatDate(list.departmentInPlace,"HHmm(DD)", "--"),
+          Start: list.movement=="A"?formatDate(list.arriveStart,"HHmm(DD)", "--"):formatDate(list.departmentStart,"HHmm(DD)", "--"),
           Staff: this.formatNull(list.movement=="A"?list.arriveGuaranteeStaff:list.departmentGuaranteeStaff),
           FlightNo: this.formatNull(list.movement=="A"?list.arriveFlightNo:list.departmentFlightNo),
           displayMove: list.movement=="A"?  "到港": "离港",
