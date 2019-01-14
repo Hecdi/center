@@ -483,6 +483,9 @@
             height: 100px !important;
         }
     }
+    .el-carousel__item {
+        overflow: scroll !important;
+    }
 }
 .el-autocomplete-suggestion .el-popper {
     width: 600px !important;

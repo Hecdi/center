@@ -23,6 +23,9 @@
           visibleSync (val) {
             this.$emit('update:dialogVisible', val)
           },
+          showImgDialog(n,o){
+            this.getHeight(0);
+          }
         },
         methods: {
           handleChangeVisible(){ 
@@ -38,12 +41,16 @@
             let that = this;
             img.src = this.img[active];
             img.onload = function(){
-              let ration = 550/this.width;
-              that.height = this.height>300?this.height*ration+'px':'300px';
+              let ration = 520/this.width;
+              // that.height = this.height>300?this.height*ration+'px':'300px';
+              let getHeight = this.height>300?this.height*ration+'px':'300px';
+              getHeight = parseInt(getHeight);
+              // getHeight = getHeight>750?750+'px':getHeight+'px';
+              that.height = getHeight>750?750+'px':getHeight+'px';
             }
           },
           changeItem(active, pre) {
-            this.active = active
+            this.active = active;
             this.getHeight(active);
           }
         },
