@@ -18,13 +18,13 @@ import {remote} from 'electron';
             TopBar,
         },
         computed:{
-            ...mapState("violation", ["filterCards","totalSize","allCondition",]),
+            ...mapState("violation", ["filterCards","totalSize","allCondition","waitTotalSize"]),
         },
         data() {
             return {
                 activeName: 'second',
                 status: "全部",
-                currentView: 'all',
+                currentView: 'wait',
                 havePermission: false,
             };
         },

@@ -104,7 +104,7 @@
             },
             tabActive: 'wait',
             currentView: 'Card',
-            tabs:"all",
+            tabs:"wait",
             exportLocation: '',
             getUrl:'',
           }
