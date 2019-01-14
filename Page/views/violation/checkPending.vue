@@ -171,11 +171,11 @@ export default {
     },
     handleSizeChange(val){
       this.pageSize = val;
-      this.refreshData();
+      this.initWaitData();
     },
     handleCurrentChange(val){
       this.currentPage = val;
-      this.refreshData();
+      this.initWaitData();
     },
     dateFormat: function(row, column) {
       var date = row[column.property];
@@ -275,22 +275,22 @@ export default {
         this.$store.dispatch('violation/getWaitData',value);
     },
     initWaitData(){
-        ajax.post("getViolationByState", {pageSize:10, pageNumber:1}).then((data)=>{
+        ajax.post("getViolationByState", {"pageNumber":this.currentPage,"pageSize":this.pageSize}).then((data)=>{
             if(data){
                 this.getWaitData(data);
             }
         })
     },
-    refreshData() {
-      let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize}
-      param = Object.assign({}, param, this.allCondition);
-      ajax.post("getViolationDataForLike",param).then(data => {
-        let violation = data;
-        this.getData(data);
-      });
-    },
+    // refreshData() {
+    //   let param = {"pageNumber":this.currentPage,"pageSize":this.pageSize}
+    //   param = Object.assign({}, param, this.allCondition);
+    //   ajax.post("getViolationDataForLike",param).then(data => {
+    //     let violation = data;
+    //     this.getData(data);
+    //   });
+    // },
     created() {
-      this.refreshData();
+      this.initWaitData();
     },
     getImg(value){
       this.picture = value;
