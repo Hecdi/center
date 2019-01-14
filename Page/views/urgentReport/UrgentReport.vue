@@ -66,9 +66,9 @@
 									width="550px"
 									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel id="pic1" :autoplay=false :height="height" @change="changeItem">
+									<el-carousel id="pic1" :autoplay=false :height="height" @change="getHeight">
 										<el-carousel-item id="pic2"  v-for = "(item,index) in imgArr" :key = "index">
-											<img :src= "item"  style="width:100%;height:`${height}`;"/>
+											<img :src= "item"  style="width:100%"/>
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -92,7 +92,7 @@
 				</el-pagination>
 			</div>
 	</section>
-	<section v-else class="sectionP2">
+	<section v-if="false" class="sectionP2">
 		<el-row :gutter="20">
 			<el-col :span="16" :offset="4">
 				<el-table
@@ -204,6 +204,11 @@
 				height:'',
 			}
 		},
+		watch:{
+			dialogVisible:function(n,old){
+				this.getHeight(0);
+			}
+		},
 		methods:{
 			getHeight(active){
 				let img = new Image();
@@ -211,14 +216,16 @@
 				img.onload = function() {
 					console.log(this);
 					let ration = 550/this.width;
-					that.height = this.height > 300?this.height * ration +'px':'300px';
+					if(this.height * ration > 600){
+						that.height = '600px';
+					} else if(this.height * ration > 300){
+						that.height = this.height * ration + 'px';
+					} else {
+						that.height = '300px';
+					}
 				}
+				img.src = this.imgArr[active];
 				console.log(that.height);
-				img.src = this.img[active];
-			},
-			changeItem(active,pre){
-				this.active = active;
-				this.getHeight(active);
 			},
 
 			indexMethod(index){
@@ -319,9 +326,6 @@
 			},
 		},
 		
-		mounted(){
-			this.getHeight()
-		},
 	
 		beforeMount(){
 			ajax.post('urgentReport',{
