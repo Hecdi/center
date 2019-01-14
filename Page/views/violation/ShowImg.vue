@@ -1,18 +1,14 @@
 <template>
     <el-dialog
         :visible.sync="showImgDialog"
-        width="400px"
+        width="550px"
        >
-    <el-carousel indicator-position="outside" height="600px">
-    <el-carousel-item v-for="(item, index) in img" :key="item+index">
-      <img :src ="item" style="width:100%;height:auto;"/>
-    </el-carousel-item>
-  </el-carousel>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="showImgDialog = false">关闭</el-button>
-    </span>
+    <el-carousel indicator-position="outside" :height="height" :interval=2000 @change="changeItem">
+      <el-carousel-item v-for="(item, index) in img" :key="item+index">
+        <img  :src ="item" style="width:100%;height:`${height}`;"/>
+      </el-carousel-item>
+    </el-carousel>
 </el-dialog>
-
 </template>
 
 <script>
@@ -26,7 +22,7 @@
         watch: {
           visibleSync (val) {
             this.$emit('update:dialogVisible', val)
-          }
+          },
         },
         methods: {
           handleChangeVisible(){ 
@@ -36,15 +32,34 @@
           },
           getEveryImg(value){
             this.everyImg = this.value;
+          },
+          getHeight(active) {
+            let img = new Image();
+            let that = this;
+            img.src = this.img[active];
+            img.onload = function(){
+              let ration = 550/this.width;
+              that.height = this.height>300?this.height*ration+'px':'300px';
+            }
+          },
+          changeItem(active, pre) {
+            this.active = active
+            this.getHeight(active);
           }
+        },
+         mounted() {
+          this.getHeight()
         },
         data () {
           return {
             visibleSync: this.dialogVisible,
             modelImg: [img,img,img],
             picUrl: [],
+            imgHeight: '500',
+            height: '',
           }
         },
+       
         computed:{
             ...mapState('violation', ['showImgDialog']),
           showImgDialog: {
@@ -53,8 +68,9 @@
           },
           set() {
             this.$store.dispatch(`violation/updateShowImg`, { showImgDialog: false });
-          }
+          },
         },
+        
         img:function(){
           let arr=[];
           each(this.picture,(item) => {
