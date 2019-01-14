@@ -701,7 +701,7 @@
 							i,p,div {
 								color:#bfbfbf !important;
 							}
-							.el-main,.flight-status{
+							.flight-status{
 								background-color:#bfbfbf !important;
 								color:white !important;
 							}
@@ -886,10 +886,10 @@
 										background-color:#aa67f3;
 									}
 									&.bg-6{
-										background-color:#0065ff;
+										background-color:#bfbfbf;
 									}
 									&.bg-8,&.bg--1{
-										background-color:#bfbfbf;
+										background-color:white;
 									}
 									div{
 										width:10px;

@@ -111,9 +111,9 @@
 						<Legend data="已领受" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="已到位" iconColor="#00d859" iconSize="16px" fontSize="12px" color="#333"/>
 						<Legend data="进行中" iconColor="#aa67f3" iconSize="16px" fontSize="12px" color="#333"/>
-						<Legend data="已完成" iconColor="#0065ff" iconSize="16px" fontSize="12px" color="#333"/>
-						<Legend data="取消" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>
-						<Legend data="不保障" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>
+						<Legend data="已完成" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>
+						<!--<Legend data="取消" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/>-->
+						<Legend data="取消/不保障" iconColor="#ef8c8f" height="16px" type="circle" iconSize="16px" fontSize="12px" color="#333"/>
 					</el-col>
 					<el-col :span="12" style="text-align:left">
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;">
