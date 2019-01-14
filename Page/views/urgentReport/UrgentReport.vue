@@ -66,9 +66,9 @@
 									width="550px"
 									placement="top"
 									:visible.sync="dialogVisible">
-									<el-carousel id="pic1" :autoplay=false :height="height" @change="getHeight">
-										<el-carousel-item id="pic2"  v-for = "(item,index) in imgArr" :key = "index">
-											<img :src= "item"  style="width:100%"/>
+									<el-carousel id="pic1" :autoplay=false :height="height" @change="changeItem">
+										<el-carousel-item v-for = "(item,index) in imgArr" :key = "index">
+											<img :src= "item"  style="width:100%;height:`${height}`;"/>
 										</el-carousel-item>
 									</el-carousel>
 								</el-dialog>
@@ -204,15 +204,19 @@
 				height:'',
 			}
 		},
-		watch:{
+		watch: {
 			dialogVisible:function(n,old){
-				this.getHeight(0);
+				// if(n){
+					this.getHeight(0);
+					this.changeItem();
+				// }
 			}
 		},
 		methods:{
 			getHeight(active){
 				let img = new Image();
 				let that = this;
+				img.src = that.imgArr[active];
 				img.onload = function() {
 					console.log(this);
 					let ration = 550/this.width;
@@ -226,6 +230,11 @@
 				}
 				img.src = this.imgArr[active];
 				console.log(that.height);
+				
+			},
+			changeItem(active,pre){
+				this.active = active;
+				this.getHeight(active);
 			},
 
 			indexMethod(index){
@@ -286,6 +295,7 @@
 				console.log(dept);
 				ajax.post('urgentReport', param).then((data) => {
 					this.getData(data);
+					this.getHeight();
 				})
 			},
 			showPics(picUrls){
@@ -325,8 +335,9 @@
 				})
 			},
 		},
-		
-	
+		mounted(){
+			this.getHeight(0);
+		},
 		beforeMount(){
 			ajax.post('urgentReport',{
 					startTime:moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00',
