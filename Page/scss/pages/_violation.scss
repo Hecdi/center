@@ -485,6 +485,7 @@
     }
     .el-carousel__item {
         overflow-y: auto !important;
+        overflow-x: hidden !important;
     }
 }
 .el-autocomplete-suggestion .el-popper {
