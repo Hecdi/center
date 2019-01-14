@@ -136,6 +136,7 @@
 					this.currentWorker='';
 					this.activeName='';
 					this.searchFlight = '';
+					this.currentPage = 1;
 					this.handlGettTaskModelList();
 					this.handleSearchFlight();
 				} 
