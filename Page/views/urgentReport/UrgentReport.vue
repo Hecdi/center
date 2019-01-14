@@ -220,8 +220,8 @@
 				img.onload = function() {
 					console.log(this);
 					let ration = 520/this.width;
-					if(this.height * ration > 750){
-						that.height = '750px';
+					if(this.height * ration > 600){
+						that.height = '600px';
 					} else if(this.height * ration > 300){
 						that.height = this.height * ration + 'px';
 					} else {
