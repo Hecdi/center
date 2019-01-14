@@ -132,7 +132,8 @@
 			font-size:14px;
 			padding-left:18px;
 			.el-carousel__item{
-				overflow:auto;
+				overflow-x:hidden;
+				overflow-y:auto;
 			}
 		}
 		.Yesphoto{

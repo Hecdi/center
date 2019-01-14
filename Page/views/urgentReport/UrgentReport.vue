@@ -63,7 +63,7 @@
 									id="pic3"
 									title="提示"
 									
-									width="550px"
+									width="530px"
 									placement="top"
 									:visible.sync="dialogVisible">
 									<el-carousel id="pic1" :autoplay=false :height="height" @change="getHeight">
@@ -215,9 +215,9 @@
 				let that = this;
 				img.onload = function() {
 					console.log(this);
-					let ration = 520/this.width;
-					if(this.height * ration > 600){
-						that.height = '600px';
+					let ration = 500/this.width;
+					if(this.height * ration > 720){
+						that.height = '720px';
 					} else if(this.height * ration > 300){
 						that.height = this.height * ration + 'px';
 					} else {
