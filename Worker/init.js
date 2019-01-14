@@ -3,10 +3,9 @@ import postal from 'postal';
 import uuid from 'uuid/v4';
 import { get, truncate } from 'lodash';
 import Logger from '../common/logger';
-import { ajaxAPI, socketAPI } from "../index";
+import { ajaxAPI, socketAPI, myVue } from "../index";
 import { remote } from 'electron';
 import {sub, pub,  removeSub} from "postalControl";
-
 const log = new Logger('Worker:init:');
 
 import Worker from './smartScheduling.worker.js';
@@ -29,6 +28,11 @@ export const init = () => {
             log.info(`received WorkerPage message ${channel} ${topic}`);
 			if(topic == 'All.ready'){
 				remote.setGlobal('workerInit',true);
+			}
+			if(topic == 'System.LogOut'){
+				localStorage.clear();
+				myVue.$router.push('/login');
+				return;
 			}
             postal.publish({
                 channel: 'UI',
