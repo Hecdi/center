@@ -215,9 +215,9 @@
 				let that = this;
 				img.onload = function() {
 					console.log(this);
-					let ration = 550/this.width;
-					if(this.height * ration > 600){
-						that.height = '600px';
+					let ration = 520/this.width;
+					if(this.height * ration > 750){
+						that.height = '750px';
 					} else if(this.height * ration > 300){
 						that.height = this.height * ration + 'px';
 					} else {
