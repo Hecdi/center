@@ -484,7 +484,7 @@
         }
     }
     .el-carousel__item {
-        overflow: scroll !important;
+        overflow-y: auto !important;
     }
 }
 .el-autocomplete-suggestion .el-popper {

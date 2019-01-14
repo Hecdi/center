@@ -2,10 +2,11 @@
     <el-dialog
         :visible.sync="showImgDialog"
         width="550px"
+        :height="height"
        >
-    <el-carousel indicator-position="outside" :height="height" :interval=2000 @change="changeItem">
+    <el-carousel :height="height" :interval=2000 @change="changeItem">
       <el-carousel-item v-for="(item, index) in img" :key="item+index">
-        <img  :src ="item" style="width:100%;height:`${height}`;"/>
+        <img  :src ="item" style="width:100%;height:`${height}`;" />
       </el-carousel-item>
     </el-carousel>
 </el-dialog>
@@ -43,10 +44,10 @@
             img.onload = function(){
               let ration = 520/this.width;
               // that.height = this.height>300?this.height*ration+'px':'300px';
-              let getHeight = this.height>300?this.height*ration+'px':'300px';
+              let getHeight = this.height*ration>300?this.height*ration+'px':'300px';
               getHeight = parseInt(getHeight);
               // getHeight = getHeight>750?750+'px':getHeight+'px';
-              that.height = getHeight>750?750+'px':getHeight+'px';
+              that.height = getHeight>600?600+'px':getHeight+'px';
             }
           },
           changeItem(active, pre) {
