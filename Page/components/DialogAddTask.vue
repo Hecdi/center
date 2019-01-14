@@ -77,7 +77,7 @@
       <el-table-column prop="displayETA" label="预计到达" min-width="160"/>
       <el-table-column prop="displaySTA" label="计划到达" min-width="160"/>
       <el-table-column prop="displayETD" label="预计起飞" min-width="160"/>
-      <el-table-column prop="displaySTA" label="计划起飞" min-width="160"/>
+      <el-table-column prop="displaySTD" label="计划起飞" min-width="160"/>
     </el-table>
 	<page-nation style="left:0;width:100%;position:relative;margin:0;text-align:center;"
 				 :currentPage="currentPage" :pageSize="pageSize" :total="total"
@@ -261,7 +261,7 @@
 						displaySTA:formatDate(flight.scheduleArriveTime,'HHmm(DD)','--'),
 						displayETD:formatDate(flight.estimatedDepartureTime,'HHmm(DD)','--'),
 						displaySTD:formatDate(flight.scheduleDepartureTime,'HHmm(DD)','--'),
-					});
+					});														 
 				});
 			},
 			dialogAddTaskVisible: {
