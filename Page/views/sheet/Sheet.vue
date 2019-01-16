@@ -36,7 +36,8 @@
     <div class="sheet-table">
       <el-table :data="sheetList1" stripe style="width: 100%" height="80vh">
         <el-table-column type="index" label="序号" width="80"  class-name="font-One" fixed/>
-        <el-table-column prop="FlightNo" label="航班号" width="120" class-name="font-One"/>
+        <el-table-column prop="arriveFlightNo" label="进港航班号" width="120" class-name="font-One"/>
+        <el-table-column prop="departmentFlightNo" label="离港航班号" width="120" class-name="font-One"/>
         <el-table-column prop="aircraftNo" label="飞机号" width="120"/>
         <el-table-column prop="aircraftType" label="机型" width="60"/>
         <el-table-column prop="flightType" label="机类" width="60" class-name="font-One"/>
@@ -250,7 +251,9 @@ export default {
           Place: list.movement=="A"?formatDate(list.arriveInPlace,"HHmm(DD)", "--"):formatDate(list.departmentInPlace,"HHmm(DD)", "--"),
           Start: list.movement=="A"?formatDate(list.arriveStart,"HHmm(DD)", "--"):formatDate(list.departmentStart,"HHmm(DD)", "--"),
           Staff: this.formatNull(list.movement=="A"?list.arriveGuaranteeStaff:list.departmentGuaranteeStaff),
-          FlightNo: this.formatNull(list.movement=="A"?list.arriveFlightNo:list.departmentFlightNo),
+          arriveFlightNo: this.formatNull(list.arriveFlightNo),
+          departmentFlightNo: this.formatNull(list.departmentFlightNo),
+          // FlightNo: this.formatNull(list.movement=="A"?list.arriveFlightNo:list.departmentFlightNo),
           displayMove: list.movement=="A"?  "到港": "离港",
           seat: this.formatNull(list.seat),
           routeName: this.formatNull(list.routeName),
