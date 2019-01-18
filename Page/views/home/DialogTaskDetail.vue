@@ -3,7 +3,7 @@
     class="dialogTaskDetail"
     :title="title"
     :visible.sync="dialogTaskDetailVisible"
-    width="600px"
+    width="800px"
 	  >
    <!-- <section class="row1">-->
 		<!--<section>-->
@@ -37,7 +37,7 @@
 			<div class="city">{{currentTask.iata?currentTask.iata[1]:''}}</div>
 			<div class="airport">{{currentTask.airRoute?currentTask.airRoute[1]:''}}</div>
 		</el-col>
-		<el-col :span="10" class="column4">
+		<el-col :span="10" class="column4" style="padding-left:40px;">
 			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
 			<div>机号/机型/机类：<b>{{`${currentTask.aircraftNumber}/${currentTask.aircraftType}/${currentTask.aircraftFlightType}`}}</b></div>
 		</el-col>
@@ -61,7 +61,7 @@
               icon="iconfont icon-user"
             >{{`${person.staffName}${person.workerName?'/'+person.workerName:''}`}}</el-button>
           </el-col>
-		  <el-col :span="3">
+		  <el-col class="feiji" :span="3">
 			  <i class="iconfont icon-fenpei"></i>
 		  </el-col>
           <el-col class="selectedStaff" :span="8">

@@ -495,6 +495,9 @@
 			}
 			.mainList, .flight-table{
 				.dialogTaskDetail{
+					.dialog-footer{
+						margin-top: 20px;
+					}
 					.el-dialog_body{
 						max-height:400px;
 						overflow:auto;
@@ -548,11 +551,14 @@
 							color:#FFFFFF;
 							background-color:#289DFF;
 						}
+						.feiji{
+							display: flex;
+							height: 200px;
+							align-items: center;
+							justify-content: center;
+						}
 						.icon-fenpei{
 							font-size:40px;
-							position:relative;
-							top:30px;
-							left:15px;
 							color:#2C569E;
 						}
 						.el-tabs__nav-scroll{
@@ -568,7 +574,7 @@
 							padding:10px 14px;
 							border:1px solid #CBDDED;
 							background-color:#F8FCFF;
-							height:140px;
+							height:200px;
 							overflow-y:auto;
 							div{
 								margin-bottom:10px;
@@ -579,7 +585,7 @@
 						.selectedStaff{
 							border:1px solid #CBDDED;
 							background-color:#F8FCFF;
-							height:140px;
+							height:200px;
 							overflow-y:auto;
 							div{
 								margin:0 0 10px 10px;
