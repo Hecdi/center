@@ -659,6 +659,7 @@
 					margin-bottom:20px;
 					.region{
 						margin-top:10px;
+						width:40px;
 						.el-card{
 							height:100%;
 							background-color:#182738;
@@ -668,7 +669,8 @@
 								flex-direction: column;
 								align-items: center;
 								height: 100%;
-								justify-content: center;
+								justify-content: flex-start;
+								padding-top:10px;
 							}
 							.areaName{
 								font-size:18px;
@@ -683,6 +685,7 @@
 						}
 					}
 					.task{
+						flex:1;
 						.poper{
 							position:absolute;
 							right:10px;
