@@ -535,7 +535,7 @@ export default {
         movementDReverse.push(item*-1);
       });
       this.movementD = movementDReverse;
-      
+      this.automaticTask = automaticTask;
       this.createTask = createTask;
       this.finishTask = finishTask;
       this.notGuaranteeTask = notGuaranteeTask;
@@ -1417,7 +1417,7 @@ export default {
     },
     refreshData() {
       let timeArr = this.time;
-      console.log(timeArr);
+      // console.log(timeArr);
       let startDate;
       let endDate;
       let _this = this;
