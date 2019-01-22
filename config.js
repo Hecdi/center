@@ -22,6 +22,7 @@ export default {
             // path:`http://${location.hostname}:6070/webpush/`,
             // path:`http://${location.hostname}:6070/`,
             // path:'http://192.168.1.50/',
+            // path:'http://192.168.0.145:80/',
             url:{
                 'taskList':'web/scheduling/getTaskList',
 				'personList':'web/scheduling/getAreaAndWorkerListAll',

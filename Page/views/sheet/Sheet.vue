@@ -113,14 +113,14 @@ export default {
       let endDate;
       if (timeArr && timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
-          startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
-          endDate = moment(timeArr[1]).format("YYYY-MM-DD");
-          endDate = `${endDate} 23:59:59`;
+          startDate = moment(timeArr[0]).format("YYYY-MM-DD");
+          endDate = moment(timeArr[1]+24*60*60*1000).format("YYYY-MM-DD");
+          // endDate = `${endDate} 23:59:59`;
         } else {
           startDate = timeArr[0];
-          startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+          startDate = moment(startDate).format("YYYY-MM-DD");
           endDate = timeArr[1];
-          endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+          endDate = moment(endDate).format("YYYY-MM-DD");
         }
       } else {
         startDate = '';
@@ -148,14 +148,14 @@ export default {
       let that = this;
       if (timeArr && timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
-          startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
-          endDate = moment(timeArr[1]).format("YYYY-MM-DD");
-          endDate = `${endDate} 23:59:59`;
+          startDate = moment(timeArr[0]).format("YYYY-MM-DD");
+          endDate = moment(timeArr[1]+24*60*60*1000).format("YYYY-MM-DD");
+          // endDate = `${endDate} 23:59:59`;
         } else {
           startDate = timeArr[0];
-          startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+          startDate = moment(startDate).format("YYYY-MM-DD");
           endDate = timeArr[1];
-          endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+          endDate = moment(endDate).format("YYYY-MM-DD");
         }
       } else {
         startDate = '';
@@ -183,14 +183,14 @@ export default {
       let endDate;
       if (timeArr&&timeArr.length) {
         if (timeArr[0] == timeArr[1]) {
-          startDate = moment(timeArr[0]).format("YYYY-MM-DD HH:mm:ss");
-          endDate = moment(timeArr[1]).format("YYYY-MM-DD");
-          endDate = `${endDate} 23:59:59`;
+          startDate = moment(timeArr[0]).format("YYYY-MM-DD");
+          endDate = moment(timeArr[1]+24*60*60*1000).format("YYYY-MM-DD");
+          // endDate = `${endDate} 23:59:59`;
         } else {
           startDate = timeArr[0];
-          startDate = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+          startDate = moment(startDate).format("YYYY-MM-DD");
           endDate = timeArr[1];
-          endDate = moment(endDate).format("YYYY-MM-DD HH:mm:ss");
+          endDate = moment(endDate).format("YYYY-MM-DD");
         }
       } else {
         startDate = '';
