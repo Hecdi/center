@@ -40,8 +40,8 @@
 						</div>
 						<div><i class="iconfont icon-hangxian"></i></div>
 						<div>
-							<p>{{task && task.iata ? task.iata[1]:''}}</p>
-							<p :title="task.airRoute[1]">{{task && task.airRoute ? task.airRoute[1]: ''}}</p>
+							<p>{{task && task.iata ? task.iata[task.iata.length-1]:''}}</p>
+							<p :title="task.airRoute[1]">{{task && task.airRoute ? task.airRoute[task.airRoute.length-1]: ''}}</p>
 						</div>
                     </el-col>
                     <el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">
@@ -69,7 +69,7 @@
 				<div :class="`flight-status bg-${task.flightStatusCode}`">{{task.flightStatus}}</div>
               </el-container>
             </el-card>
-			<div class='poper'v-if="task.taskStatus == -1 || task.taskStatus == 8" >
+			<div class='poper' v-if="task.taskStatus == -1 || task.taskStatus == 8" >
 				{{task.displayTaskStatus}}
 			</div>
           </el-col>

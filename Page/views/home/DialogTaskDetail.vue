@@ -34,8 +34,8 @@
 			<i class="iconfont icon-hangxian"></i>
 		</el-col>
 		<el-col :span="3">
-			<div class="city">{{currentTask.iata?currentTask.iata[1]:''}}</div>
-			<div class="airport">{{currentTask.airRoute?currentTask.airRoute[1]:''}}</div>
+			<div class="city">{{currentTask.iata?currentTask.iata[currentTask.iata.length-1]:''}}</div>
+			<div class="airport">{{currentTask.airRoute?currentTask.airRoute[currentTask.airRoute.length-1]:''}}</div>
 		</el-col>
 		<el-col :span="10" class="column4" style="padding-left:40px;">
 			<div>机位/登机口：<b>{{`${currentTask.seat}/${currentTask.gate}`}}</b></div>
