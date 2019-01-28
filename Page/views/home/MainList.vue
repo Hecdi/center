@@ -1,6 +1,6 @@
 <template>
   <div class="mainList">
-    <el-row :gutter="10" v-for="item in mainList" :key="item.areaName">
+    <el-row :gutter="10" v-for="(item,index) in mainList" :key="index">
       <el-col :span="2" class="region">
         <el-card shadow="always">
           <div class="areaName">{{ item.areaName }}</div>

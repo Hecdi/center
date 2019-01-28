@@ -143,6 +143,13 @@
 			}
 		},
 		methods: {
+			formatNull(value){
+      	if(value && value!==""){
+        	return value;
+      	} else {
+        	return '--'
+      	}
+    	},
 			handleCurrentChange1(val){
 				if(val){
 					this.templateRadio = val.flightId;
@@ -257,6 +264,10 @@
 			displayFlights:function(){
 				return map(this.flights, flight=>{
 					return extend({},flight,{
+						flightNo:this.formatNull(flight.flightNo),
+						aircraftNumber: this.formatNull(flight.aircraftNumber),
+						aircraftType: this.formatNull(flight.aircraftType),
+						seat: this.formatNull(flight.seat),
 						displayETA:formatDate(flight.estimatedArriveTime,'HHmm(DD)','--'),
 						displaySTA:formatDate(flight.scheduleArriveTime,'HHmm(DD)','--'),
 						displayETD:formatDate(flight.estimatedDepartureTime,'HHmm(DD)','--'),
