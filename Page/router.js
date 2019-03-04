@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Router from "vue-router";
+import Router from 'vue-router';
 import Home from "./views/home/Home.vue";
 import RollCall from "./views/rollCall/RollCall.vue";
 import Sheet from "./views/sheet/Sheet.vue";
@@ -9,35 +9,53 @@ import MessageCenter from "./views/messageCenter/MessageCenter.vue";
 import ViolationNotice from "./views/violation/ViolationNotice.vue";
 import Statistics from "./views/statistics/Statistics.vue";
 import Manual from "./views/manual/Manual.vue";
-import Login from "./views/login/Login.vue";
+import Login from './views/login/Login.vue';
+
+// 货运
+// import FreightMainList from './views/home/MainList.vue';
+
+// 机坪运行
+import JPMainList from './views/home/MainList.vue';
+import JPPeopleList from './views/home/freight/peopleList.vue';
+
 Vue.use(Router);
 
 export const smartSchedulingRouter = new Router({
-	//mode: "history",
+	// mode: "history",
 	routes: [
 		{
-			path: "/",
+			path: '/',
 			redirect: {
 				name: 'login',
-			}
-		},
-		{
-			path: "/home",
-			name: "home",
-			component: Home,
-			meta: {
-				title: '',
-				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
 			},
 		},
 		{
-			path: "/rollCall",
-			name: "rollCall",
+			path: '/home',
+			name: 'home',
+			component: Home,
+			meta: {
+				title: '',
+				requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+			},
+			children: [
+				{
+					path: '/',
+					components: {
+						// freightMainList: FreightMainList,
+						jpMainList: JPMainList,
+						jpPeopleList: JPPeopleList,
+					},
+				},
+			],
+		},
+		{
+			path: '/rollCall',
+			name: 'rollCall',
 			component: RollCall,
 			meta: {
 				title: '',
-				requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
-			}
+				requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+			},
 		},
 		{
 			path: "/report",

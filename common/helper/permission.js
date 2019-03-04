@@ -1,20 +1,44 @@
 import {remote} from 'electron';
-import {get, each} from 'lodash';
+import {each, get} from 'lodash';
 
 let getPermission = () => {
 	let userInfo = JSON.parse(remote.getGlobal('userInfo'));
-	let permission = get(userInfo, 'roleRS', []);
-	return permission;
-}
+	return get(userInfo, 'roleRS', []);
+};
 
-export const isHavePermission = (p) =>{
-	let permission = getPermission(); 
+let depCode = null;
+
+export const isHavePermission = (p) => {
+	let permission = getPermission();
 	let flag = false;
-	each(permission, item => {
-		if(get(item, 'roleCode') == p){
+	each(permission, (item) => {
+		if (get(item, 'roleCode') === p) {
 			flag = true;
 		}
 	});
 	return flag;
-}
+};
 
+export const getCompontsNameByPosition = (pos) => {
+	if (!depCode) {
+		depCode = remote.getGlobal('deptCode');
+	}
+	return get(compontsMap, depCode + '.' + pos);
+};
+
+const compontsMap = {
+	Freight_transport: {
+		// 货运
+		home: {
+			peopleList: '123',
+			taskList: 'freightMainList',
+		},
+	},
+	jpyxzh: {
+		// 机坪
+		home: {
+			peopleList: 'jpPeopleList',
+			taskList: 'jpMainList',
+		},
+	},
+}

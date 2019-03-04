@@ -1,57 +1,6 @@
 <template>
 	<el-container class="home" >
-		<el-aside :style="{ width: asideWith }">
-			<el-row v-if="!isHidden">
-				<el-col :span="24">
-					<el-input v-model="searchPerson" placeholder>
-						<i slot="suffix" class="el-input__icon el-icon-search"/>
-					</el-input>
-				</el-col>
-			</el-row>
-			<div class="panel" v-if="!isHidden">
-				<el-row :gutter="20" v-for="(person,index) in persons" :key="person.areaId+index" class="persons-panel"
-					style="margin:0;">
-					<el-col
-						:span="24"
-						v-if="person.workerList && person.workerList.length"
-						class="area-panel"
-						>{{ person.areaName }}
-					</el-col>
-					<el-row :gutter="20" style="margin:0;" class="personList">
-						<el-col
-							:span="24"
-							v-for="worker in person.workerList"
-							:key="worker.staffId"
-							class="person-panel"
-							:class="{'online':worker.memberState == 1}"
-							style="float:none"
-							>
-							<el-tooltip effect="light" :disabled="!worker.phone" :content="worker.phone" placement="right">
-								<div
-									class="grid-content bg-person person"
-									:class="{active:currentPerson && (currentPerson.staffId == worker.staffId)}"
-									@dblclick="showSetting(worker,person.areaName)"
-									@click="setPersonSearch(worker)"
-									:data-id="worker.staffId"
-									>
-									{{formatPerson(worker)}}
-									<!--{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}-->
-									<!--{{worker.staffName + `${worker.nonArrivalReason?}` }}-->
-									<div class="taskNum">{{ worker.taskNumber }}</div>
-								</div>
-							</el-tooltip>
-							<div style="font-size:12px;line-height:30px;" v-if="person.areaId == 'jpyxzh_O'" >
-								{{worker.workContent}}
-							</div>
-						</el-col>
-					</el-row>
-				</el-row>
-				<div class="placeHolder"/>
-				</div>
-				<div @click="handleToggle" class="toggleBtn">
-					<i :class="isHidden?'icon-zhankai':'icon-shouqi'" class="iconfont"/>
-				</div>
-		</el-aside>
+        <router-view :name="peopleListName" ref="peopleList"></router-view>
 		<el-container>
 			<el-header class="home-mian-header" height="auto">
 				<el-row :gutter="0">
@@ -131,7 +80,8 @@
 				</el-row>
 			</el-header>
 			<el-main v-if="!isTable">
-				<MainList/>
+				<!--<MainList/>-->
+				<router-view :name="mainListName"></router-view>
 			</el-main>
 			<el-main class="table-main" v-else>
 				<TableList/>
@@ -193,7 +143,6 @@
 		<!--<MessageBtn :message-num="getTotal()" @click="showMessageBox"/>-->
 		<DialogAddTask/>
 		<dialogTaskHandover/>
-		<DialogPersonSetting :currentAreaName="currentAreaName" :currentPerson="currentPerson"/>
 		<DialogAlert :messages="messageAlerts"/>
 	</el-container>
 </template>
@@ -202,10 +151,9 @@
 	// @ is an alias to /src
 	/*import SearchInput from '../../components/SearchInput.vue';*/
 	import Legend from "Legend.vue";
-	import MainList from "./MainList.vue";
+	// import MainList from "./MainList.vue";
 	import MessageBtn from "MessageBtn.vue";
 	import DialogAddTask from "DialogAddTask.vue";
-	import DialogPersonSetting from "./DialogPersonSetting.vue";
 	import DialogAlert from "./DialogAlert.vue";
 	import TableList from "./TableList.vue";
 	import dialogTaskHandover from "./DialogTaskHandover.vue";
@@ -223,7 +171,6 @@
 				isHidden: false,
 				isTable: false,
 				isDoubleClick: false,
-				currentPerson: null,
 				visible: false,
 				messages:[],
 				currentAreaName:'',
@@ -255,16 +202,6 @@
 					});
 				}
 			},
-			formatPerson(worker){
-				let workerName = worker.staffName;
-				let reason = worker.nonArrivalReason;
-				let tmp ='';
-				if(reason){
-					tmp = `(${reason == 5 ? worker.workerName : this.getReason(reason)})`;  
-				}
-				return workerName + tmp;
-				
-			},
 			openAddTask() {
 				this.$store.dispatch(`home/update`, { dialogAddTaskVisible: true });
 			},
@@ -272,14 +209,10 @@
 				this.$store.dispatch(`home/updateTaskHandover`, {dialogTaskHandover: true});
 			},
 			showMessageBox() {
-				console.log(123);
 				this.visible = !this.visible;
 			},
 			getTotal() {
 				return 100;
-			},
-			handleToggle() {
-				this.isHidden = !this.isHidden;
 			},
 			handleTable() {
 				this.isTable = !this.isTable;
@@ -299,36 +232,7 @@
 			getMainListData(data) {
 				this.$store.dispatch("home/getMainListData", data);
 			},
-			showSetting(worker, areaName) {
-				this.isDoubleClick = true;
-				this.currentPerson = worker;
-				this.currentAreaName = areaName;
-				this.$store.dispatch(`home/update`, { dialogPersonSettingVisible: true });
-			},
-			setPersonSearch(worker) {
-				let _this = this;
-				console.log(worker);
-				_this.isDoubleClick = false;
-				window.setTimeout(function() {
-					if (!_this.isDoubleClick) {
-						if(_this.currentPerson && _this.currentPerson.staffId == worker.staffId){
-							_this.currentPerson = null;	
-							_this.$store.dispatch("home/updateFilter", {
-								name: "searchPersonKey",
-								filterOption: '',
-							});
-						}else{
-							_this.currentPerson = worker;
-							_this.$store.dispatch("home/updateFilter", {
-								name: "searchPersonKey",
-								filterOption: worker.workerName
-								? worker.workerName
-								: worker.staffName
-							});
-						}
-					}
-				}, 300);
-			},
+			
 			getHomeTableData(data) {
 				this.$store.dispatch("home/getHomeTableData", data);
 			},
@@ -336,7 +240,7 @@
 				this.$store.dispatch("home/getHomeTableTotal", data);
 			},
 			reset() {
-				this.currentPerson = null;
+				this.$refs.peopleList.reset && this.$refs.peopleList.reset();
 				this.$store.dispatch(`home/resetFilter`, null);
 			},
 			sendTaskListFilter() {
@@ -349,6 +253,12 @@
 			},
 		},
 		computed: {
+			mainListName:function(){
+				return this.$getCompontsNameByPosition('home.taskList');
+			},
+			peopleListName:function(){
+				return this.$getCompontsNameByPosition('home.peopleList');
+			},
 			warnings:function(){
 				return this.getFilterMessages('type', 1);	
 			},
@@ -361,9 +271,6 @@
 			logs:function(){
 				return this.getFilterMessages('type', 4);	
 			},
-			asideWith() {
-				return this.isHidden ? "0" : "300px";
-			},
 			search: {
 				get() {
 					return this.$store.state.home.filterOption.searchKey;
@@ -373,14 +280,6 @@
 						name: "searchKey",
 						filterOption: filterOption
 					});
-				}
-			},
-			searchPerson: {
-				get() {
-					return this.$store.state.home.personSearchKey;
-				},
-				set(personSearchKey) {
-					pub("Worker", "Home.Area.SetPersonSearchKey", personSearchKey);
 				}
 			},
 			taskStatus: {
@@ -443,13 +342,12 @@
 		},
 		components: {
 			/*SearchInput,*/
-			MainList,
+			// MainList,
 			MessageBtn,
 			DialogAddTask,
 			dialogTaskHandover,
 			Legend,
 			TableList,
-			DialogPersonSetting,
 			DialogAlert,
 		},
 		beforeMount() {

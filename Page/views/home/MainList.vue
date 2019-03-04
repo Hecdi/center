@@ -90,7 +90,6 @@ export default {
   computed: mapState("home", ["mainList"]),
   methods: {
     showDeatil(task) {
-      console.log(task);
       this.$store.commit("home/setCurrentTask", task);
       /*ajax.post('home.taskDetail', { flightTaskId: e.taskId }).then((data) => {
 				console.log(data);

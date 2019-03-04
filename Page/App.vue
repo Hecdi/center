@@ -53,6 +53,7 @@
 	import {remote} from "electron";
 	import {isNumber} from 'lodash';
 	import { mapState} from "vuex";
+	
 	export default {
 		name: "app",
 		data(){

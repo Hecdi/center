@@ -6,12 +6,15 @@ import {init as initWorker} from "./Worker/init";
 import { remote } from 'electron';
 // import router from "vue-router";
 import {smartSchedulingRouter} from './Page/router';
+import { isHavePermission, getCompontsNameByPosition } from "helper/permission";
 
 
 let router = smartSchedulingRouter;
 Vue.config.productionTip = false;
 Vue.config.slient = process.env.NODE_ENV != 'development';
 Vue.use(ElementUI);
+Vue.prototype.$isHavePermission = isHavePermission;
+Vue.prototype.$getCompontsNameByPosition = getCompontsNameByPosition;
 let app = config.smartScheduling.App;
 export const ajaxAPI={...config.smartScheduling.ajaxAPI};
 export const socketAPI={...config.smartScheduling.socketAPI};
