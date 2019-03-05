@@ -14,10 +14,12 @@ import Login from './views/login/Login.vue';
 // 货运
 import FreightTaskList from './views/home/freight/taskList.vue';
 import FreightPeopleList from './views/home/freight/peopleList.vue';
+import FreightAddTask from 'FreightAddTask.vue';
 
 // 机坪运行
 import JPMainList from './views/home/apron/MainList.vue';
 import JPPeopleList from './views/home/apron/PeopleList.vue';
+import JPAddTask from 'DialogAddTask.vue';
 
 Vue.use(Router);
 
@@ -44,8 +46,10 @@ export const smartSchedulingRouter = new Router({
 					components: {
 						freightTaskList: FreightTaskList,
 						freightPeopleList: FreightPeopleList,
+						freightAddTask: FreightAddTask,
 						jpMainList: JPMainList,
 						jpPeopleList: JPPeopleList,
+						jpAddTask: JPAddTask,
 					},
 				},
 			],

@@ -1,6 +1,9 @@
 <template>
 	<el-dialog title="添加临时任务" :visible.sync="dialogAddTaskVisible" width="1000px">
 		<section v-loading="waiting" element-loading-text="拼命加载中。。。" class="dialogAddTask">
+			<el-row>
+				<el-col :span="3" style="text-align: right;padding-right: 20px;"><label>选择领受人</label></el-col>
+			</el-row>
 			<el-row :gutter="10" class="personList">
 				<el-col v-for="worker in tempWorkerList" :key="worker.staffId + 1" class="person-panel">
 					<div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName == worker.staffId }" @click="show(worker.staffId);" :data-id="worker.staffId">
@@ -10,29 +13,43 @@
 				</el-col>
 			</el-row>
 			<div class="line" />
-			<el-row :gutter="0">
-				<el-col class="addTaskType" :span="3"> <i class="el-icon-tickets" /> <span style="line-height:32px;">临时任务类型</span> </el-col>
-				<el-col :span="12">
-					<div class="task-group" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode">
-						<span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName == g.projectName }" @click="handleTaskType(g);">{{ g.projectName }}</span>
-					</div>
-				</el-col>
-				<el-col :span="6" style="display:none;"> <el-input size="small" style="width:180px;" placeholder="自定义临时任务类型" v-model="temporaryTaskType" clearable /> </el-col>
+			<!-- <el-row :gutter="0"> -->
+			<!-- <el-col class="addTaskType" :span="3"> <i class="el-icon-tickets" /> <span style="line-height:32px;">临时任务类型</span> </el-col> -->
+			<!-- <el-col :span="12"> -->
+			<!-- <div class="task-group" v-for="g in tempGuaranteeList" v-bind:key="g.projectCode"> -->
+			<!-- <span class="task-type" v-bind:class="{ 'active-task': tempTaskTypeName == g.projectName }" @click="handleTaskType(g);">{{ g.projectName }}</span> -->
+			<!-- </div> -->
+			<!-- </el-col> -->
+			<!-- <el-col :span="6" style="display:none;"> <el-input size="small" style="width:180px;" placeholder="自定义临时任务类型" v-model="temporaryTaskType" clearable /> </el-col> -->
+			<!-- </el-row> -->
+			<!-- <div class="line" /> -->
+			<el-row :gutter="10">
+				<el-col :span="3" style="text-align: right">任务类型： </el-col>
+				<el-col :span="6">
+					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+				></el-col>
 			</el-row>
-			<div class="line" />
-			<el-row :gutter="40">
-				<el-col :span="10"> <el-input size="small" style="width:400px;" placeholder="航班号或者机位号" v-model="searchFlight" suffix-icon="el-icon-search" @keyup.native.enter="handleSearchFlight" /> </el-col>
-				<el-col :span="8" style="display:none">
-					<span style="color:#939393">任务时限:</span>
-					<el-select v-model="timeLimitValue" size="small" placeholder="请选择"> <el-option v-for="item in timeLimitOpts" :key="item.value" :label="item.label" :value="item.value" /> </el-select>
-				</el-col>
+			<el-row :gutter="10">
+				<el-col :span="3" style="text-align: right">板车类型： </el-col>
+				<el-col :span="6">
+					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+				></el-col>
+				<el-col :span="3" style="text-align: right">板车数量： </el-col>
+				<el-col :span="6">
+					<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="searchFlight" @keyup.native.enter="handleSearchFlight" /> </el-col>
+					></el-col
+				>
+			</el-row>
+			<el-row :gutter="10">
+				<el-col :span="3" style="text-align: right">航班号： </el-col>
+				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="searchFlight" suffix-icon="el-icon-search" @keyup.native.enter="handleSearchFlight" /> </el-col>
 			</el-row>
 			<el-table class="add-task-table" highlight-current-row :data="displayFlights" height="250" width="100%" @current-change="handleCurrentChange1">
 				<!--
 					<el-table-column label="单选" width="65" >
-						<template scope="scope">
-							<el-radio v-model="templateRadio" :value="scope.row" ></el-radio>
-						</template>
+					    <template scope="scope">
+					        <el-radio v-model="templateRadio" :value="scope.row" ></el-radio>
+					    </template>
 					</el-table-column>
 				-->
 				<el-table-column prop="flightNo" label="航班号" />
@@ -61,12 +78,13 @@ import { map, extend } from 'lodash';
 import PageNation from 'PageNation.vue';
 
 export default {
-	name: 'DialogAddTask',
+	name: 'freightAddTask',
 	components: {
 		PageNation,
 	},
 	data() {
 		return {
+			boardType: null,
 			timeLimitValue: '',
 			multipleSelection: [],
 			input10: '',
@@ -85,6 +103,28 @@ export default {
 			currentPage: 1,
 			total: 0,
 			waiting: false,
+			boardTypes: [
+				{
+					value: '选项1',
+					label: '黄金糕',
+				},
+				{
+					value: '选项2',
+					label: '双皮奶',
+				},
+				{
+					value: '选项3',
+					label: '蚵仔煎',
+				},
+				{
+					value: '选项4',
+					label: '龙须面',
+				},
+				{
+					value: '选项5',
+					label: '北京烤鸭',
+				},
+			],
 		};
 	},
 	watch: {
@@ -248,3 +288,12 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.dialogAddTask {
+	.el-row {
+		height: 40px;
+		line-height: 40px;
+	}
+}
+</style>

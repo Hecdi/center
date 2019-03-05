@@ -119,7 +119,8 @@
 			<MessageBtn slot="reference" @click="showMessageBox" />
 		</el-popover>
 		<!-- <MessageBtn :message-num="getTotal()" @click="showMessageBox"/> -->
-		<DialogAddTask />
+		<!--<DialogAddTask />-->
+		<router-view :name="addTaskName"></router-view>
 		<dialogTaskHandover />
 		<DialogAlert :messages="messageAlerts" />
 	</el-container>
@@ -133,7 +134,6 @@
 	import Legend from "Legend.vue";
 	// import MainList from "./MainList.vue";
 	import MessageBtn from "MessageBtn.vue";
-	import DialogAddTask from "DialogAddTask.vue";
 	import DialogAlert from "./DialogAlert.vue";
 	import TableList from "./TableList.vue";
 	import dialogTaskHandover from "./DialogTaskHandover.vue";
@@ -239,6 +239,9 @@
 			peopleListName:function(){
 				return this.$getCompontsNameByPosition('home.peopleList');
 			},
+			addTaskName: function(){
+				return this.$getCompontsNameByPosition('home.addTask');
+			},
 			warnings:function(){
 				return this.getFilterMessages('type', 1);	
 			},
@@ -324,7 +327,7 @@
 			/* SearchInput, */
 			// MainList,
 			MessageBtn,
-			DialogAddTask,
+			// DialogAddTask,
 			dialogTaskHandover,
 			Legend,
 			TableList,

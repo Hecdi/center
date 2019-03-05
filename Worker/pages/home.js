@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import postal from 'postal';
 import { sub, pub, removeSub } from 'postalControl';
 import { remote } from 'electron';
-import { personDB, saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB } from '../../lib/storage';
+import { saveToPersonDB, getSearchPersons, saveToTaskDB, getTaskListFromDB, saveHomeTableDB, getHomeTableFromDB } from '../../lib/storage';
 import { ajax } from 'ajaxForWorker';
 import { get } from 'http';
 import { cloneDeep } from 'lodash';
@@ -13,6 +13,7 @@ var homeFilter = {
 	tableList: {},
 };
 const homeInit = () => {
+	let depCode = remote.getGlobal('depCode');
 	pub('UI', 'Home.Loading', true);
 	Promise.map(
 		[
@@ -108,6 +109,7 @@ export const destroy = () => {
 export const initSocket = (client) => {
 	let token = remote.getGlobal('token');
 	let userId = remote.getGlobal('clientId');
+	let depCode = remote.getGlobal('depCode');
 	console.log('token:', token);
 	console.log('userId:', userId);
 	client.sub(

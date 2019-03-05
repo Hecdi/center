@@ -39,6 +39,7 @@ const compontsMap = {
 		home: {
 			peopleList: 'freightPeopleList',
 			taskList: 'freightTaskList',
+			addTask: 'freightAddTask',
 		},
 	},
 	jpyxzh: {
@@ -46,6 +47,7 @@ const compontsMap = {
 		home: {
 			peopleList: 'jpPeopleList',
 			taskList: 'jpMainList',
+			addTask: 'jpAddTask',
 		},
 	},
 }
