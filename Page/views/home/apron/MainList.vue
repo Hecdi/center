@@ -80,8 +80,8 @@ export default {
 		showDeatil(task) {
 			this.$store.commit('home/setCurrentTask', task);
 			/* ajax.post('home.taskDetail', { flightTaskId: e.taskId }).then((data) => {
-                          console.log(data);
-                      }); */
+				console.log(data);
+			}); */
 		},
 	},
 	components: {

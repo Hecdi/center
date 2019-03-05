@@ -19,6 +19,13 @@ export const isHavePermission = (p) => {
 	return flag;
 };
 
+export const isDep = (p) => {
+	if (!depCode) {
+		depCode = remote.getGlobal('deptCode');
+	}
+	return depCode === p;
+};
+
 export const getCompontsNameByPosition = (pos) => {
 	if (!depCode) {
 		depCode = remote.getGlobal('deptCode');
@@ -30,8 +37,8 @@ const compontsMap = {
 	Freight_transport: {
 		// 货运
 		home: {
-			peopleList: '123',
-			taskList: 'freightMainList',
+			peopleList: 'freightPeopleList',
+			taskList: 'freightTaskList',
 		},
 	},
 	jpyxzh: {

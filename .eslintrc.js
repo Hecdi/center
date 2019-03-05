@@ -56,6 +56,6 @@ module.exports = {
         "no-mixed-spaces-and-tabs": 0,
 		"vue/no-unused-components": 0,
   }
-}
+};
 
 
