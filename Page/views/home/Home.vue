@@ -47,25 +47,25 @@
 				<el-row class="legend-panel" :gutter="20">
 					<el-col :span="12" style="text-align:left">
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;"> 任务状态： </span>
-						<legend data="未发布" iconColor="white" iconSize="16px" fontSize="12px" color="#333" />
-						<legend data="已发布" iconColor="#ffac00" iconSize="16px" fontSize="12px" color="#333" />
-						<legend data="已领受" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333" />
-						<legend data="已到位" iconColor="#00d859" iconSize="16px" fontSize="12px" color="#333" />
-						<legend data="进行中" iconColor="#aa67f3" iconSize="16px" fontSize="12px" color="#333" />
-						<legend data="已完成" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="未发布" iconColor="white" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="已发布" iconColor="#ffac00" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="已领受" iconColor="#00a0ff" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="已到位" iconColor="#00d859" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="进行中" iconColor="#aa67f3" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="已完成" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333" />
 						<!-- <Legend data="取消" iconColor="#bfbfbf" iconSize="16px" fontSize="12px" color="#333"/> -->
-						<legend data="取消/不保障" iconColor="#ef8c8f" type="circle" iconSize="16px" fontSize="12px" color="#333" />
+						<Legend data="取消/不保障" iconColor="#ef8c8f" type="circle" iconSize="16px" fontSize="12px" color="#333" />
 					</el-col>
 					<el-col :span="12" style="text-align:left">
 						<span style="padding-left:10px;font-weight:bold;font-size:14px;"> 标记说明： </span>
-						<legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
-						<legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
-						<legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
-						<legend data="快速过站" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
-						<legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
-						<legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
-						<legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
-						<legend data="偏离上报" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
+						<Legend data="延误" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
+						<Legend data="重点" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
+						<Legend data="VIP" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
+						<Legend data="快速过站" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
+						<Legend data="备降" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
+						<Legend data="返航" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
+						<Legend data="告警" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
+						<Legend data="偏离上报" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
 					</el-col>
 				</el-row>
 			</el-header>

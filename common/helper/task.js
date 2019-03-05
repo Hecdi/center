@@ -1,4 +1,4 @@
-import {toUpper, upperFirst, get,flow,filter,map ,has, concat,compact, extend} from 'lodash';
+import {toUpper, upperFirst, get,flow,filter,map ,has, concat,compact, extend, each, set} from 'lodash';
 import { getNaturalDate, getOperationDate, formatDate, getTime } from 'date';
 
 const DISPLAYNULL = '--';
@@ -158,6 +158,26 @@ export const process = (rows) => {
 		fixNull,
 	]);
 	return map(rows, (f) => {
+		return processer(f);
+	});
+};
+
+export const freightProcess = (rows) => {
+	let processer = flow([
+		actExp,
+		addDisplayField,
+		fixNull,
+	]);
+	let arr = [];
+	map(rows, item => {
+		each(get(item, 'taskRS', []), (i) =>{
+			set(i, 'mainTaskId', get(item, 'taskId'));
+			set(i, 'mainStaffId', get(item, 'staffId'));
+			set(i, 'mainStaffName', get(item, 'staffName'));
+			arr.push(i);
+		});
+	});
+	return map(arr, (f) => {
 		return processer(f);
 	});
 }
