@@ -9,7 +9,7 @@
 			<el-row :gutter="20" v-for="(person, index) in persons" :key="person.areaId + index" class="persons-panel" style="margin:0;">
 				<el-col :span="24" v-if="person.workerList && person.workerList.length" class="area-panel">{{ person.areaName }} </el-col>
 				<el-row :gutter="20" style="margin:0;" class="personList">
-					<el-col :span="24" v-for="worker in person.workerList" :key="worker.staffId" class="person-panel" :class="{ online: worker.memberState == 1 }" style="float:none">
+					<el-col v-for="worker in person.workerList" :key="worker.staffId" style="width:auto;" class="person-panel" :class="{ online: worker.memberState == 1 }" >
 						<el-tooltip effect="light" :disabled="!worker.phone" :content="worker.phone" placement="right">
 							<div class="grid-content bg-person person" :class="{ active: currentPerson && currentPerson.staffId == worker.staffId }" @dblclick="showSetting(worker, person.areaName);" @click="setPersonSearch(worker);" :data-id="worker.staffId">
 								{{ formatPerson(worker) }}

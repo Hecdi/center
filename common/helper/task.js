@@ -174,6 +174,10 @@ export const freightProcess = (rows) => {
 			set(i, 'mainTaskId', get(item, 'taskId'));
 			set(i, 'mainStaffId', get(item, 'staffId'));
 			set(i, 'mainStaffName', get(item, 'staffName'));
+			set(i, 'mainTaskStatus', get(item, 'taskStatus'));
+			set(i, 'transfortType', get(item, 'transfortType'));
+			set(i, 'projectCode', get(item, 'projectCode'));
+			set(i, 'taskNumber', get(item, 'taskNumber'));
 			arr.push(i);
 		});
 	});

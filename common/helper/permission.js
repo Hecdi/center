@@ -6,7 +6,7 @@ let getPermission = () => {
 	return get(userInfo, 'roleRS', []);
 };
 
-let depCode = null;
+let deptCode = null;
 
 export const isHavePermission = (p) => {
 	let permission = getPermission();
@@ -20,17 +20,17 @@ export const isHavePermission = (p) => {
 };
 
 export const isDep = (p) => {
-	if (!depCode) {
-		depCode = remote.getGlobal('deptCode');
+	if (!deptCode) {
+		deptCode = remote.getGlobal('deptCode');
 	}
-	return depCode === p;
+	return deptCode === p;
 };
 
 export const getCompontsNameByPosition = (pos) => {
-	if (!depCode) {
-		depCode = remote.getGlobal('deptCode');
+	if (!deptCode) {
+		deptCode = remote.getGlobal('deptCode');
 	}
-	return get(compontsMap, depCode + '.' + pos);
+	return get(compontsMap, deptCode + '.' + pos);
 };
 
 const compontsMap = {

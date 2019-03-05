@@ -1,7 +1,7 @@
 <template>
 	<el-dialog title="添加临时任务" :visible.sync="dialogAddTaskVisible" width="1000px">
 		<section v-loading="waiting" element-loading-text="拼命加载中。。。" class="dialogAddTask">
-			<el-row :gutter="10" class="personList">
+			<el-row :gutter="10" class="personList" style="height:auto;">
 				<el-col v-for="worker in tempWorkerList" :key="worker.staffId + 1" class="person-panel">
 					<div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName == worker.staffId }" @click="show(worker.staffId);" :data-id="worker.staffId">
 						{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
