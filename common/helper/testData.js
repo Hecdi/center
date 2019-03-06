@@ -1256,7 +1256,7 @@ export const testData = {
 					cobt: 1551750000000,
 					ctot: 1551750840000,
 					movement: 'D',
-					taskStatus: 8,
+					taskStatus: -1,
 					flightStatus: '起飞',
 					taskServiceCode: 'CargoOutTransport',
 					taskBindingShiftNames: null,

@@ -48,6 +48,7 @@ const homeInit = () => {
 						});
 					}
 					if (deptCode == 'Freight_transport') {
+						// return saveToFreightTaskDB(true, data, {}).then((result) => {
 						return saveToFreightTaskDB(true, testData.taskList, {}).then((result) => {
 							postal.channel('UI').publish('Home.Task.Sync', result);
 							return Promise.resolve();

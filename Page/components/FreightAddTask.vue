@@ -26,11 +26,11 @@
 			<el-row :gutter="10">
 				<el-col :span="3" style="text-align: right">任务类型： </el-col>
 				<el-col :span="6">
-					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+					<el-select v-model="taskTypeCode" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in tempGuaranteeList" :key="item.projectCode" :label="item.projectName" :value="item.projectCode"> </el-option> </el-select
 				></el-col>
 				<el-col :span="3" style="text-align: right">板车类型： </el-col>
 				<el-col :span="6">
-					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+					<el-select v-model="boardTypeCode" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
 				></el-col>
 			</el-row>
 			<el-row :gutter="10" v-for="(item, index) in flightsInput" :key="index">
@@ -50,10 +50,10 @@
 				<el-table-column prop="aircraftNumber" label="机尾号" />
 				<el-table-column prop="seat" label="机位" />
 				<el-table-column prop="aircraftType" label="机型" />
-				<el-table-column prop="displayETA" label="预计到达" min-width="160" />
-				<el-table-column prop="displaySTA" label="计划到达" min-width="160" />
-				<el-table-column prop="displayETD" label="预计起飞" min-width="160" />
-				<el-table-column prop="displaySTD" label="计划起飞" min-width="160" />
+				<el-table-column prop="displayETA" label="预计到达" min-width="150" />
+				<el-table-column prop="displaySTA" label="计划到达" min-width="150" />
+				<el-table-column prop="displayETD" label="预计起飞" min-width="150" />
+				<el-table-column prop="displaySTD" label="计划起飞" min-width="150" />
 			</el-table>
 			<page-nation style="left:0;width:100%;position:relative;margin:0;text-align:center;" :currentPage="currentPage" :pageSize="pageSize" :total="total" @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange" />
 			<span slot="footer" class="dialog-footer">
@@ -78,15 +78,12 @@ export default {
 	},
 	data() {
 		return {
-			boardType: null,
+			boardTypeCode: null,
+          	taskTypeCode:null,
 			timeLimitValue: '',
 			multipleSelection: [],
 			input10: '',
-			temporaryTaskType: '',
 			searchFlight: '',
-			tempTaskType: '',
-			tempTaskTypeCode: '',
-			tempTaskTypeName: '',
 			templateRadio: '',
 			curentWorker: '',
 			activeName: '',
@@ -237,12 +234,6 @@ export default {
 			let type;
 			let typeName;
 			let typeCode;
-			if (this.temporaryTaskType) {
-				type = this.temporaryTaskType;
-			} else {
-				typeCode = this.tempTaskTypeCode;
-				typeName = this.tempTaskTypeName;
-			}
 			let code = `"projectName":${typeName},"projectCode":${typeCode}`;
 			let flightId = this.templateRadio;
 			let params = {
@@ -258,7 +249,6 @@ export default {
 				params.projectCode = typeCode;
 			}
 
-			console.log(params);
 			this.waiting = true;
 			ajax.post('taskSubmit', params, (data) => {
 				this.waiting = false;
@@ -315,6 +305,9 @@ export default {
 		height: 40px;
 		line-height: 40px;
 		overflow: hidden;
+	}
+	.el-radio__label{
+		display: none;
 	}
 }
 </style>

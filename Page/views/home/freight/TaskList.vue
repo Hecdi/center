@@ -69,6 +69,7 @@
 											<div :class="`flight-status bg-${task.flightStatusCode}`">{{ task.flightStatus }}</div>
 										</el-container>
 									</el-card>
+									<div class="poper" v-if="task.taskStatus == -1 || task.taskStatus == 8">{{ task.displayTaskStatus }}</div>
 								</div>
 							</el-collapse-item>
 							
