@@ -48,7 +48,7 @@
 		</el-col>
 	</el-row>
     <el-tabs class="taskPersonList" v-model="activeName" >
-	  <el-tab-pane label="任务人员" name="first">
+	  <el-tab-pane label="任务人员" name="first" v-if="isJP">
         <el-row :gutter="0">
           <el-col class="currentRegion" :span="13">
             <div >当前区域全部人员：</div>
@@ -189,7 +189,7 @@
 				this.taskWorkerList.clear();
 				this.guaranteeDataList= [];
 				if(!val || !val.taskId){return;}
-				this.waiting = true;
+				// this.waiting = true;
 				ajax.post("home.taskDetail", { flightTaskId: val.taskId }).then(data => {
 					this.workerList = new Set(data.workerList);
 					this.taskWorkerList = new Set(data.taskWorkerList);
@@ -215,6 +215,9 @@
 			title: function() {
 				return `${this.currentTask.flightNo}`;
 			},
+          	isJP: function() {
+				return this.$isDep('jpyxzh');
+			},
 			dialogTaskDetailVisible: {
 				get() {
 					return this.$store.state.home.dialogTaskDetailVisible;
@@ -235,7 +238,7 @@
 					this.workerList=new Set();
 					this.guaranteeDataList=[];
 					this.getTaskDetail(this.currentTask);
-					this.activeName='first';
+					this.activeName= this.isJP ? 'first' : 'second';
 				}
 			}
 		},

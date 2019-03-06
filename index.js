@@ -14,7 +14,7 @@ Vue.config.slient = process.env.NODE_ENV != 'development';
 Vue.use(ElementUI);
 Vue.prototype.$isHavePermission = isHavePermission;
 Vue.prototype.$getCompontsNameByPosition = getCompontsNameByPosition;
-Vue.prototype.$isDe = isDep;
+Vue.prototype.$isDep = isDep;
 let app = config.smartScheduling.App;
 export const ajaxAPI = { ...config.smartScheduling.ajaxAPI };
 export const socketAPI = { ...config.smartScheduling.socketAPI };
