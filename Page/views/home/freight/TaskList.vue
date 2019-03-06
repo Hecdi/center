@@ -18,7 +18,7 @@
 										<el-col :span="8" style="text-align: right;padding-right: 5px;">{{ `${mainTask.projectCode}/${mainTask.transfortType}` }}</el-col>
 									</el-row>
 								</template>
-								<div v-for="(task, index) in mainTask.taskList" :key="index" style="padding-top: 8px;">
+								<div v-for="(task, index) in mainTask.taskList" :key="index" style="position: relative;padding-top: 8px;">
 									<el-card shadow="always" :class="task.taskStatus == -1 || task.taskStatus == 8 ? 'greyPanel' : ''" :v-id="task.taskId" @click.native="showDeatil(task);">
 										<el-container>
 											<el-main :class="`bg-${task.taskStatus}`"> </el-main>
@@ -28,14 +28,14 @@
 														<span class="b-black t-white">{{ `${task.auto == true ? '自' : '手'}` }}</span> <span class="b-black t-white">{{ task.flightNo }}</span> <span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span> <span style="font-weight:bold;">{{ task.seat }}</span>
 													</el-col>
 													<el-col :span="11" style="padding-right:30px;padding-left:0;text-align:right;">
-														<legend v-if="task.delay != '--'" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
-														<legend v-if="task.keyMaintaince != '--'" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
-														<legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
-														<legend v-if="task.quickFlag != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
-														<legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
-														<legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
-														<legend v-if="task.taskAlarm == -1" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
-														<legend v-if="task.haveDeviating != '--'" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
+														<Legend v-if="task.delay != '--'" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
+														<Legend v-if="task.keyMaintaince != '--'" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
+														<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
+														<Legend v-if="task.quickFlag != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
+														<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
+														<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
+														<Legend v-if="task.taskAlarm == -1" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
+														<Legend v-if="task.haveDeviating != '--'" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
 													</el-col>
 												</el-row>
 												<el-row :gutter="0" class="second-row">
@@ -147,7 +147,6 @@ export default {
 	},
 	watch:{
 		activeTask: function(n, o){
-			console.log(n,o)
 			if(n.length > 1){
 				this.activeTask = [];
 				this.activeTask.push(n.pop());
@@ -224,11 +223,11 @@ export default {
 				background-color: #bfbfbf;
 			}
 		}
-		.bgh7{
-			.el-collapse-item__header{
-				background-color: #b239d8;
-			}
-		}
+		/*.bgh7{*/
+			/*.el-collapse-item__header{*/
+				/*background-color: #b239d8;*/
+			/*}*/
+		/*}*/
 		.el-collapse-item__arrow{
 			border: 1px solid white;
 			border-radius: 20px;

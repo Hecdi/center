@@ -26,11 +26,11 @@
 			<el-row :gutter="10">
 				<el-col :span="3" style="text-align: right">任务类型： </el-col>
 				<el-col :span="6">
-					<el-select v-model="taskTypeCode" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in tempGuaranteeList" :key="item.projectCode" :label="item.projectName" :value="item.projectCode"> </el-option> </el-select
+					<el-select v-model="projectCode" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in tempGuaranteeList" :key="item.projectCode" :label="item.projectName" :value="item.projectCode"> </el-option> </el-select
 				></el-col>
 				<el-col :span="3" style="text-align: right">板车类型： </el-col>
 				<el-col :span="6">
-					<el-select v-model="boardTypeCode" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+					<el-select v-model="boradType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
 				></el-col>
 			</el-row>
 			<el-row :gutter="10" v-for="(item, index) in flightsInput" :key="index">
@@ -78,9 +78,8 @@ export default {
 	},
 	data() {
 		return {
-			boardTypeCode: null,
-          	taskTypeCode:null,
-			timeLimitValue: '',
+			boradType: null,
+			projectCode: null,
 			multipleSelection: [],
 			input10: '',
 			searchFlight: '',
@@ -229,28 +228,16 @@ export default {
 			});
 		},
 		submitTempTask() {
-			let time = this.timeLimitValue;
-			let workerId = this.curentWorker;
-			let type;
-			let typeName;
-			let typeCode;
-			let code = `"projectName":${typeName},"projectCode":${typeCode}`;
-			let flightId = this.templateRadio;
 			let params = {
-				// "taskTime": time,
-				staffIds: workerId,
-				flightId: flightId,
+				staffIds: this.curentWorker,
+				projectCode: this.projectCode,
+				boradType: this.boradType,
+				aaa: this.flightsInput,
 			};
-
-			if (type) {
-				params.projectName = type;
-			} else {
-				params.projectName = typeName;
-				params.projectCode = typeCode;
-			}
-
+			console.log(params);
+			return;
 			this.waiting = true;
-			ajax.post('taskSubmit', params, (data) => {
+			ajax.post('taskSubmitForCargo', params, (data) => {
 				this.waiting = false;
 				let code = data.responseCode;
 				if (code == 1000) {
