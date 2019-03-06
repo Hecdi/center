@@ -35,19 +35,17 @@
 			</el-row>
 			<el-row :gutter="10" v-for="(item, index) in flightsInput" :key="index">
 				<el-col :span="3" style="text-align: right">航班号： </el-col>
-				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="item.flightNo" suffix-icon="el-icon-search" @keyup.native.enter="handleSearchFlight" /> </el-col>
+				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="item.flightNo" suffix-icon="el-icon-search" @keyup.native.enter="setFlightSearch(index)" /> </el-col>
 				<el-col :span="3" style="text-align: right">板车数量： </el-col>
 				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="item.number" /> </el-col>
 				<el-col :span="1"><el-button size="mini" @click="rowCtrl(index)" >{{`${index !== flightsInput.length - 1 ? '删除' : '增加'}`}}</el-button></el-col>
 			</el-row>
 			<el-table class="add-task-table" highlight-current-row :data="displayFlights" height="250" width="100%" @current-change="handleCurrentChange1">
-				<!--
-					<el-table-column label="单选" width="65" >
-					    <template scope="scope">
-					        <el-radio v-model="templateRadio" :value="scope.row" ></el-radio>
-					    </template>
-					</el-table-column>
-				-->
+				<el-table-column label="选择" width="65" >
+					<template scope="scope">
+						<el-radio v-model="templateRadio" :label="scope.row.flightId" ></el-radio>
+					</template>
+				</el-table-column>
 				<el-table-column prop="flightNo" label="航班号" />
 				<el-table-column prop="aircraftNumber" label="机尾号" />
 				<el-table-column prop="seat" label="机位" />
@@ -127,6 +125,7 @@ export default {
 					number: 0,
 				},
 			],
+			currentRow: {},
 		};
 	},
 	watch: {
@@ -145,6 +144,12 @@ export default {
 		},
 	},
 	methods: {
+		setFlightSearch(index) {
+			let row = this.flightsInput[index];
+			this.currentRow = row;
+			this.searchFlight = row.flightNo;
+			this.handleSearchFlight();
+		},
 		rowCtrl(index){
 			if(index != this.flightsInput.length - 1){
 				this.flightsInput.splice(index, 1);
@@ -166,6 +171,8 @@ export default {
 		handleCurrentChange1(val) {
 			if (val) {
 				this.templateRadio = val.flightId;
+				this.currentRow.flightId = val.flightId;
+				this.currentRow.flightNo= val.flightNo;
 			}
 		},
 		show(value) {
