@@ -23,8 +23,7 @@ const homeInit = () => {
 					if (d == 'error' || (d.response && d.response.status != 200)) {
 						return Promise.resolve();
 					}
-					return saveToPersonDB(testData.peopleData).then((data) => {
-						// return saveToPersonDB(d).then((data) => {
+					return saveToPersonDB(d).then((data) => {
 						return getSearchPersons().then((result) => {
 							pub('UI', 'Home.Area.All', result);
 							return Promise.resolve();

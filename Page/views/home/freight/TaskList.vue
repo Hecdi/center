@@ -188,7 +188,7 @@ export default {
 		.el-collapse-item__header{
 			color: white;
 		}
-		.bgh1{
+		.bgh8, .bgh1, .bgh-1{
 			.el-collapse-item__header{
 				background-color: #fff;
 				color: black;
@@ -203,7 +203,31 @@ export default {
 				background-color: #ffac00;
 			}
 		}
-  
+		.bgh3{
+			.el-collapse-item__header{
+				background-color: #00a0ff;
+			}
+		}
+		.bgh4{
+			.el-collapse-item__header{
+				background-color: #00d859;
+			}
+		}
+		.bgh5{
+			.el-collapse-item__header{
+				background-color: #aa67f3;
+			}
+		}
+		.bgh6{
+			.el-collapse-item__header{
+				background-color: #bfbfbf;
+			}
+		}
+		.bgh7{
+			.el-collapse-item__header{
+				background-color: #b239d8;
+			}
+		}
 		.el-collapse-item__arrow{
 			border: 1px solid white;
 			border-radius: 20px;

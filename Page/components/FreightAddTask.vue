@@ -28,21 +28,17 @@
 				<el-col :span="6">
 					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择任务类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
 				></el-col>
-			</el-row>
-			<el-row :gutter="10">
 				<el-col :span="3" style="text-align: right">板车类型： </el-col>
 				<el-col :span="6">
 					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
 				></el-col>
-				<el-col :span="3" style="text-align: right">板车数量： </el-col>
-				<el-col :span="6">
-					<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="searchFlight" @keyup.native.enter="handleSearchFlight" /> </el-col>
-					></el-col
-				>
 			</el-row>
-			<el-row :gutter="10">
+			<el-row :gutter="10" v-for="(item, index) in flightsInput" :key="index">
 				<el-col :span="3" style="text-align: right">航班号： </el-col>
-				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="searchFlight" suffix-icon="el-icon-search" @keyup.native.enter="handleSearchFlight" /> </el-col>
+				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="item.flightNo" suffix-icon="el-icon-search" @keyup.native.enter="handleSearchFlight" /> </el-col>
+				<el-col :span="3" style="text-align: right">板车数量： </el-col>
+				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="item.number" /> </el-col>
+				<el-col :span="1"><el-button size="mini" @click="rowCtrl(index)" >{{`${index !== flightsInput.length - 1 ? '删除' : '增加'}`}}</el-button></el-col>
 			</el-row>
 			<el-table class="add-task-table" highlight-current-row :data="displayFlights" height="250" width="100%" @current-change="handleCurrentChange1">
 				<!--
@@ -74,7 +70,7 @@ import { ajax } from 'ajax';
 import moment from 'moment';
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 import { formatDate } from 'date';
-import { map, extend } from 'lodash';
+import { map, extend, remove } from 'lodash';
 import PageNation from 'PageNation.vue';
 
 export default {
@@ -125,6 +121,12 @@ export default {
 					label: '北京烤鸭',
 				},
 			],
+			flightsInput: [
+				{
+					flightNo: '',
+					number: 0,
+				},
+			],
 		};
 	},
 	watch: {
@@ -143,6 +145,17 @@ export default {
 		},
 	},
 	methods: {
+		rowCtrl(index){
+			if(index != this.flightsInput.length - 1){
+				this.flightsInput.splice(index, 1);
+				// remove(this.flightsInput, (item, i) => index === i);
+			} else {
+				this.flightsInput.push({
+					flightNo: '',
+					number: 0,
+				});
+			}
+		},
 		formatNull(value) {
 			if (value && value !== '') {
 				return value;
@@ -294,6 +307,7 @@ export default {
 	.el-row {
 		height: 40px;
 		line-height: 40px;
+		overflow: hidden;
 	}
 }
 </style>
