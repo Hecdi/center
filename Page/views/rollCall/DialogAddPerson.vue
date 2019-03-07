@@ -1,8 +1,8 @@
 <template>
 	<el-dialog class="dialogAddPerson" center :title="this.currentRow && this.currentRow.staffId ? '修改人员':'添加人员'"
 	 :visible.sync="dialogAddPersonVisible" width="1000px" >
-		<PersonSelect :team="team"  @selected="getChecked" :currentTeamId="currentTeam"
-		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" :showTeamId="currentTeam" />
+		<PersonSelect :team="sendTeam()"  @selected="getChecked" :currentTeamId="getCurrentTeam()"
+		:checkedWorkerId="this.currentRow?this.currentRow.staffId : ''" />
 		<span slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="submit" >确定</el-button>
 			<el-button @click="dialogAddPersonVisible = false;">取 消</el-button>
@@ -11,9 +11,8 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import moment from 'moment';
 import PersonSelect from 'PersonSelect.vue';
-import {pick, extend, identity} from 'lodash';
+import {cloneDeep , filter, get} from 'lodash';
 
 export default {
 	name: 'dialogAddPerson',
@@ -27,6 +26,28 @@ export default {
 		}
 	},
 	methods: {
+		sendTeam(){
+			let tmp = cloneDeep(this.team);
+			if(this.$isDep('Freight_transport')){
+				tmp =  filter(tmp, (item)=>{
+					return item.squadId != this.currentTeam;
+				});
+			}
+			if(this.$isDep('jpyxzh')){
+				tmp =  filter(tmp, (item)=>{
+					return item.squadId == this.currentTeam;
+				})
+			}
+			return tmp;
+		},
+		getCurrentTeam(){
+			if(this.$isDep('Freight_transport')){
+				return get(this.sendTeam(), '[0].squadId');
+			}
+			if(this.$isDep('jpyxzh')){
+				return this.currentTeam;
+			}
+		},
 		submit(){
 			this.$store.commit('rollCall/updateObj',{currentRow:{
 				staffId:this.currentStaffId,

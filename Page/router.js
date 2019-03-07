@@ -15,11 +15,14 @@ import Login from './views/login/Login.vue';
 import FreightTaskList from './views/home/freight/taskList.vue';
 import FreightPeopleList from './views/home/freight/peopleList.vue';
 import FreightAddTask from 'FreightAddTask.vue';
+import FreightPersonList from 'FreightPersonList.vue';
 
 // 机坪运行
 import JPMainList from './views/home/apron/MainList.vue';
 import JPPeopleList from './views/home/apron/PeopleList.vue';
 import JPAddTask from 'DialogAddTask.vue';
+import PersonList from 'PersonList.vue';
+import ModuleList from './views/rollCall/ModuleList.vue';
 
 Vue.use(Router);
 
@@ -62,6 +65,16 @@ export const smartSchedulingRouter = new Router({
 				title: '',
 				requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
 			},
+			children: [
+				{
+					path: '/',
+					components: {
+						jpPeopleList: PersonList,
+						jpModuleList: ModuleList,
+						freightPeopleList: FreightPersonList,
+					},
+				},
+			],
 		},
 		{
 			path: "/report",

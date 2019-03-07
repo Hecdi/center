@@ -2,7 +2,7 @@
 	<el-row :gutter="10" class="personSelect">
 		<el-tabs v-model="currentTeam" type="card">
 			<el-tab-pane v-for="item in teamArry" :key="item.squadId" :label="item.squadName" :name="item.squadId">
-				<el-button :class="{active:currentStaffId==person.staffId}" @click="setWorker(person.staffId,person.staffName,person.workerName,person.workerId)" 
+				<el-button :class="{active:currentStaffId==person.staffId}" @click="setWorker(person.staffId,person.staffName,person.workerName,person.workerId)"
 						 v-for="person in getPersons(item.organization)" :key="person.staffId"  icon="iconfont icon-user">
 					{{`${person.staffName}${person.workerName?'('+person.workerName+')':''}`}}</el-button>
 			</el-tab-pane>

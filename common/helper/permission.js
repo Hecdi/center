@@ -6,8 +6,6 @@ let getPermission = () => {
 	return get(userInfo, 'roleRS', []);
 };
 
-let deptCode = null;
-
 export const isHavePermission = (p) => {
 	let permission = getPermission();
 	let flag = false;
@@ -20,16 +18,12 @@ export const isHavePermission = (p) => {
 };
 
 export const isDep = (p) => {
-	if (!deptCode) {
-		deptCode = remote.getGlobal('deptCode');
-	}
+	let deptCode = remote.getGlobal('deptCode');
 	return deptCode === p;
 };
 
 export const getCompontsNameByPosition = (pos) => {
-	if (!deptCode) {
-		deptCode = remote.getGlobal('deptCode');
-	}
+	let deptCode = remote.getGlobal('deptCode');
 	return get(compontsMap, deptCode + '.' + pos);
 };
 
@@ -41,6 +35,9 @@ const compontsMap = {
 			taskList: 'freightTaskList',
 			addTask: 'freightAddTask',
 		},
+		rollCall: {
+			peopleList: 'freightPeopleList',
+		},
 	},
 	jpyxzh: {
 		// 机坪
@@ -48,6 +45,10 @@ const compontsMap = {
 			peopleList: 'jpPeopleList',
 			taskList: 'jpMainList',
 			addTask: 'jpAddTask',
+		},
+    rollCall: {
+			peopleList: 'jpPeopleList',
+			moduleList: 'jpModuleList',
 		},
 	},
 }

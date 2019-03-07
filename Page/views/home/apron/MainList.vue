@@ -18,14 +18,14 @@
 											<span class="b-black t-white">{{ `${task.auto == true ? '自' : '手'}` }}</span> <span class="b-black t-white">{{ task.flightNo }}</span> <span :class="`t-white aft b-${task.aircraftFlightType}`">{{ task.aircraftFlightType }}</span> <span style="font-weight:bold;">{{ task.seat }}</span>
 										</el-col>
 										<el-col :span="11" style="padding-right:30px;padding-left:0;text-align:right;">
-											<legend v-if="task.delay != '--'" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
-											<legend v-if="task.keyMaintaince != '--'" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
-											<legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
-											<legend v-if="task.quickFlag != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
-											<legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
-											<legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
-											<legend v-if="task.taskAlarm == -1" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
-											<legend v-if="task.haveDeviating != '--'" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
+											<Legend v-if="task.delay != '--'" iconColor="#f00025" iconSize="16px" icon="iconfont icon-yanwu" fontSize="12px" color="#333" />
+											<Legend v-if="task.keyMaintaince != '--'" iconColor="#009a51" iconSize="16px" icon="iconfont icon-zhongdian" fontSize="12px" color="#333" />
+											<Legend v-if="task.vip != '--'" iconColor="#ff7100" iconSize="16px" icon="iconfont icon-VIP" fontSize="12px" color="#333" />
+											<Legend v-if="task.quickFlag != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-kuaisu" fontSize="12px" color="#333" />
+											<Legend v-if="task.alternate != '--'" iconColor="#0065ff" iconSize="16px" icon="iconfont icon-beijiang" fontSize="12px" color="#333" />
+											<Legend v-if="task.returnFliht != '--'" iconColor="#009beb" iconSize="16px" icon="iconfont icon-fanhang" fontSize="12px" color="#333" />
+											<Legend v-if="task.taskAlarm == -1" iconColor="#fa0013" iconSize="16px" icon="iconfont icon-gaojingbiaoji" fontSize="12px" color="#333" />
+											<Legend v-if="task.haveDeviating != '--'" iconColor="#14407f" iconSize="16px" icon="iconfont icon-pianlishangbao1" fontSize="12px" color="#333" />
 										</el-col>
 									</el-row>
 									<el-row :gutter="0" class="second-row">
