@@ -2,7 +2,7 @@
 	<el-row :gutter="10" class="personSelect">
 		<el-tabs v-model="currentTeam" type="card">
 			<el-tab-pane v-for="item in teamArry" :key="item.squadId" :label="item.squadName" :name="item.squadId">
-				<el-button :class="{active:currentStaffId==person.staffId}" @click="setWorker(person.staffId,person.staffName,person.workerName,person.workerId)"
+				<el-button :class="{active:currentStaffId==person.staffId}" @click="setWorker(person.staffId,person.staffName,person.workerName,person.workerId,person)"
 						 v-for="person in getPersons(item.organization)" :key="person.staffId"  icon="iconfont icon-user">
 					{{`${person.staffName}${person.workerName?'('+person.workerName+')':''}`}}</el-button>
 			</el-tab-pane>
@@ -23,16 +23,18 @@ import { cloneDeep , filter} from 'lodash';
 			}
 		},
 		methods:{
-			setWorker(id,name,wn,wd){
+			setWorker(id,name,wn,wd, person){
 				this.currentStaffId= id;
 				this.currentStaffName = name;
 				this.currentWorkerId = wd;
 				this.currentWorkerName = wn;
+				this.person = person;
 				this.$emit('selected',{
 					staffId:this.currentStaffId,
 					staffName:this.currentStaffName,
 					workerName:this.currentWorkerName,
 					workerId:this.currentWorkerId,
+					person,
 				});
 			},
 			getPersons(persons){
@@ -46,6 +48,9 @@ import { cloneDeep , filter} from 'lodash';
 			},
 		},
 		watch:{
+			currentTeamId(val){
+				this.currentTeam= val;
+			},
 			checkedWorkerId(){
 				this.currentWorkerId = this.checkedWorkerId;
 				this.currentTeam=this.currentTeamId;

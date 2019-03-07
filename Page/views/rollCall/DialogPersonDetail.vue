@@ -12,6 +12,8 @@
 				<el-radio :label="4">下班</el-radio>
 				<el-radio :label="5">代班</el-radio>
 				<el-radio label="">正常上班</el-radio>
+				<el-radio :label="6" v-if="isFreight()" >就餐</el-radio>
+				<el-radio :label="7" v-if="isFreight()" >办事</el-radio>
 			</el-radio-group>
 		</el-row>
 		<el-row v-if="nonArrivalReason == 5">
@@ -53,6 +55,9 @@ export default {
 		}
 	},
 	methods: {
+		isFreight(){
+			return this.$isDep('Freight_transport');
+		},
 		submit(){
 			if((this.nonArrivalReason == 1 || this.nonArrivalReason ==2)
 			&& (!this.currentPerson.leaveEndTime || !this.currentPerson.leaveStartTime)){

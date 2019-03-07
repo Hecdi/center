@@ -22,6 +22,7 @@ export default {
 			currentStaffName: '',
 			currentWorkerName: '',
 			currentWorkerId: '',
+          	person:{},
 			newCurrentPerson: this.currentPerson,
 		}
 	},
@@ -42,6 +43,7 @@ export default {
 		},
 		getCurrentTeam(){
 			if(this.$isDep('Freight_transport')){
+				console.log(get(this.sendTeam(), '[0].squadId'));
 				return get(this.sendTeam(), '[0].squadId');
 			}
 			if(this.$isDep('jpyxzh')){
@@ -49,19 +51,30 @@ export default {
 			}
 		},
 		submit(){
-			this.$store.commit('rollCall/updateObj',{currentRow:{
-				staffId:this.currentStaffId,
-				staffName:this.currentStaffName,
-				workerId:this.currentWorkerId,
-				workerName:this.currentWorkerName,
-			}})
+			if(this.$isDep('jpyxzh')) {
+				this.$store.commit('rollCall/updateObj', {
+					currentRow: {
+						staffId: this.currentStaffId,
+						staffName: this.currentStaffName,
+						workerId: this.currentWorkerId,
+						workerName: this.currentWorkerName,
+					}
+				})
+			}
+			if(this.$isDep('Freight_transport')){
+				this.$store.commit('rollCall/addPersonToTeam', {
+					teamId: this.currentTeam,
+					person: this.person,
+				});
+			}
 			this.dialogAddPersonVisible = false;
 		},
-		getChecked({staffId,staffName,workerName,workerId}){
-			this.currentStaffId = staffId;
-			this.currentStaffName = staffName;
-			this.currentWorkerId = workerId;
-			this.currentWorkerName = workerName;
+		getChecked({staffId,staffName,workerName,workerId, person}){
+				this.currentStaffId = staffId;
+				this.currentStaffName = staffName;
+				this.currentWorkerId = workerId;
+				this.currentWorkerName = workerName;
+				this.person = person;
 			console.log(workerName,workerId);
 		},
 		handleClose(done) {
