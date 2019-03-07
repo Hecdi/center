@@ -8,7 +8,7 @@
 				<el-col v-for="worker in tempWorkerList" :key="worker.staffId + 1" class="person-panel">
 					<div class="grid-content bg-person person" v-bind:class="{ 'active-person': activeName == worker.staffId }" @click="show(worker.staffId);" :data-id="worker.staffId">
 						{{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }}
-						<div class="taskNum">{{ worker.taskNumber }}</div>
+						<div class="taskNum">{{ worker.taskNumber ? worker.taskNumber : 0 }}</div>
 					</div>
 				</el-col>
 			</el-row>
@@ -30,14 +30,14 @@
 				></el-col>
 				<el-col :span="3" style="text-align: right">板车类型： </el-col>
 				<el-col :span="6">
-					<el-select v-model="boradType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
+					<el-select v-model="boardType" size="mini" style="width:200px;" placeholder="选择板车类型"> <el-option v-for="item in boardTypes" :key="item.value" :label="item.label" :value="item.value"> </el-option> </el-select
 				></el-col>
 			</el-row>
 			<el-row :gutter="10" v-for="(item, index) in flightsInput" :key="index">
 				<el-col :span="3" style="text-align: right">航班号： </el-col>
 				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入航班号或者机位号" v-model="item.flightNo" suffix-icon="el-icon-search" @keyup.native.enter="setFlightSearch(index)" /> </el-col>
 				<el-col :span="3" style="text-align: right">板车数量： </el-col>
-				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="item.number" /> </el-col>
+				<el-col :span="6"> <el-input size="small" style="width:200px;" placeholder="输入板车数量" v-model="item.boardNumber" /> </el-col>
 				<el-col :span="1"><el-button size="mini" @click="rowCtrl(index)" >{{`${index !== flightsInput.length - 1 ? '删除' : '增加'}`}}</el-button></el-col>
 			</el-row>
 			<el-table class="add-task-table" highlight-current-row :data="displayFlights" height="250" width="100%" @current-change="handleCurrentChange1">
@@ -78,7 +78,7 @@ export default {
 	},
 	data() {
 		return {
-			boradType: null,
+			boardType: null,
 			projectCode: null,
 			multipleSelection: [],
 			input10: '',
@@ -118,7 +118,7 @@ export default {
 			flightsInput: [
 				{
 					flightNo: '',
-					number: 0,
+					boardNumber: 0,
 				},
 			],
 			currentRow: {},
@@ -134,6 +134,15 @@ export default {
 				this.activeName = '';
 				this.searchFlight = '';
 				this.currentPage = 1;
+				this.projectCode = '';
+				this.boardType = '';
+				this.flightsInput = [
+					{
+						flightNo: '',
+						boardNumber: 0,
+						flightId: '',
+					},
+				];
 				this.handlGettTaskModelList();
 				this.handleSearchFlight();
 			}
@@ -153,7 +162,8 @@ export default {
 			} else {
 				this.flightsInput.push({
 					flightNo: '',
-					number: 0,
+					boardNumber: 0,
+					flight: '',
 				});
 			}
 		},
@@ -173,7 +183,6 @@ export default {
 		},
 		show(value) {
 			this.curentWorker = value;
-			console.log(this.curentWorker);
 			this.activeName = value;
 		},
 		handleSelectionChange(val) {
@@ -228,14 +237,14 @@ export default {
 			});
 		},
 		submitTempTask() {
+			let flightInfo = map(this.flightsInput, (i) => JSON.stringify(i));
 			let params = {
-				staffIds: this.curentWorker,
+				staffId: this.curentWorker ? this.curentWorker : 'u9bca020ce9204662b9902386fd648e86',
 				projectCode: this.projectCode,
-				boradType: this.boradType,
-				aaa: this.flightsInput,
+				boardType: this.boardType ? this.boardType : 1,
+				flightInfo: flightInfo.join('&'),
 			};
 			console.log(params);
-			return;
 			this.waiting = true;
 			ajax.post('taskSubmitForCargo', params, (data) => {
 				this.waiting = false;

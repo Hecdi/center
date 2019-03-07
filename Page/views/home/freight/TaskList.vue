@@ -13,7 +13,7 @@
 							<el-collapse-item :name="mainTask.mainTaskId" :class="`bgh${mainTask.mainTaskStatus}`">
 								<template slot="title" calss="aaa" style="background-color: green;">
 									<el-row :gutter="2" class="mainTaskPanel">
-										<el-col :span="3">{{ mainTask.taskNumber }}</el-col>
+										<el-col class="taskNumPanel" :span="3">{{ mainTask.taskNumber }}</el-col>
 										<el-col :span="13" style="text-align: left;">{{ mainTask.mainTaskId }}</el-col>
 										<el-col :span="8" style="text-align: right;padding-right: 5px;">{{ `${mainTask.projectCode}/${mainTask.transfortType}` }}</el-col>
 									</el-row>
@@ -176,17 +176,24 @@ export default {
 		.areaName{
 			word-wrap: break-word;
 			word-break: break-all;
+			font-size: 14px !important;
+			margin: auto 0 ;
 		}
 		.mainTaskPanel{
 			width:100%;
+			height: 50px;
 			.el-col{
-				height:58px;
+				height:50px;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				margin-top:0 !important;
 			}
 		}
 		.el-collapse-item__header{
 			color: white;
+            height:50px;
+			line-height: 50px;
+			overflow: hidden;
 		}
 		.bgh8, .bgh1, .bgh-1{
 			.el-collapse-item__header{
@@ -198,29 +205,52 @@ export default {
 				}
 			}
 		}
+		.bgh1{
+			.el-collapse-item__header{
+				background-color: #ffa800;
+				.taskNumPanel{
+					background-color: #ffb700;
+				}
+			}
+		}
 		.bgh2{
 			.el-collapse-item__header{
-				background-color: #ffac00;
+				background-color: #ffa800;
+				.taskNumPanel{
+					background-color: #ffb700;
+				}
 			}
 		}
 		.bgh3{
 			.el-collapse-item__header{
 				background-color: #00a0ff;
+				.taskNumPanel{
+					background-color: #00b0ff;
+				}
 			}
 		}
 		.bgh4{
 			.el-collapse-item__header{
 				background-color: #00d859;
+				.taskNumPanel{
+					background-color: #00f859;
+				}
 			}
 		}
 		.bgh5{
 			.el-collapse-item__header{
 				background-color: #aa67f3;
+				.taskNumPanel{
+					background-color: #aa77f3;
+				}
 			}
 		}
 		.bgh6{
 			.el-collapse-item__header{
 				background-color: #bfbfbf;
+				.taskNumPanel{
+					background-color: #bfcfbf;
+				}
 			}
 		}
 		/*.bgh7{*/
@@ -232,6 +262,15 @@ export default {
 			border: 1px solid white;
 			border-radius: 20px;
 			padding: 3px;
+		}
+		.el-collapse-item__content{
+			padding-bottom: 0 !important;
+		}
+        .region {
+			.el-card__body{
+				padding-top: 0 !important;
+				padding-bottom: 0 !important;
+			}
 		}
 	}
 </style>

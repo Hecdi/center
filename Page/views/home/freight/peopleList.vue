@@ -15,7 +15,7 @@
 								{{ formatPerson(worker) }}
 								<!-- {{ worker.staffName + (worker.workerName ? '(' + worker.workerName + ')' : '') }} -->
 								<!-- {{worker.staffName + `${worker.nonArrivalReason?}` }} -->
-								<div class="taskNum">{{ worker.taskNumber }}</div>
+								<div class="taskNum">{{ `${worker.taskNumber ? worker.taskNumber : 0 }` }}</div>
 							</div>
 						</el-tooltip>
 						<div style="font-size:12px;line-height:30px;" v-if="person.areaId == 'jpyxzh_O'">{{ worker.workContent }}</div>

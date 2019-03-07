@@ -33,9 +33,9 @@ const homeInit = () => {
 			},
 			() => {
 				return ajax.post('taskList').then((data) => {
-					// if (data == 'error' || (data.response && data.response.status != 200)) {
-					// 	return Promise.resolve();
-					// }
+					if (data == 'error' || (data.response && data.response.status != 200)) {
+						return Promise.resolve();
+					}
 					if(deptCode == 'jpyxzh'){
 						saveHomeTableDB(true, data).then((value) => {
 							getHomeTableFromDB(homeFilter.tableList).then((result) => {
@@ -48,8 +48,8 @@ const homeInit = () => {
 						});
 					}
 					if (deptCode == 'Freight_transport') {
-						// return saveToFreightTaskDB(true, data, {}).then((result) => {
-						return saveToFreightTaskDB(true, testData.taskList, {}).then((result) => {
+						return saveToFreightTaskDB(true, data, {}).then((result) => {
+						// return saveToFreightTaskDB(true, testData.taskList, {}).then((result) => {
 							postal.channel('UI').publish('Home.Task.Sync', result);
 							return Promise.resolve();
 						});

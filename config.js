@@ -52,7 +52,7 @@ export default {
 				getFlightForTemporaryTask: 'web/scheduling/getFlightForTemporaryTask', // 航班搜索 post
 				tempTaskModelList: 'web/scheduling/tempTaskModelList', // 临时任务获取接口 post
 				taskSubmit: 'web/scheduling/createTempTaskSubmit', // 临时任务提交接口 post
-				taskSubmitForCargo: 'createTempTaskSubmitForCargo', // 货运临时任务提交接口 post
+				taskSubmitForCargo: 'web/scheduling/createTempTaskSubmitForCargo', // 货运临时任务提交接口 post
 				login: 'web/login', // 登陆接口， post
 				getAssociateReportList: 'associate/getAssociateReportList', // 任务交接，post
 				getDataList: 'statement/getDataList', // 报表列表数据获取接口, post
