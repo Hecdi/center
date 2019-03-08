@@ -32,12 +32,12 @@
 										<el-col :span="10" class="route-panel">
 											<div>
 												<p>{{ task && task.iata ? task.iata[0] : '' }}</p>
-												<p :title="task.airRoute[0]">{{ task && task.airRoute ? task.airRoute[0] : '' }}</p>
+												<p :title="task && task.airRoute ? task.airRoute[0] : ''">{{ task && task.airRoute ? task.airRoute[0] : '' }}</p>
 											</div>
 											<div><i class="iconfont icon-hangxian"></i></div>
 											<div>
 												<p>{{ task && task.iata ? task.iata[task.iata.length - 1] : '' }}</p>
-												<p :title="task.airRoute[1]">{{ task && task.airRoute ? task.airRoute[task.airRoute.length - 1] : '' }}</p>
+												<p :title="task && task.airRoute ? task.airRoute[task.airRoute.length - 1] : ''">{{ task && task.airRoute ? task.airRoute[task.airRoute.length - 1] : '' }}</p>
 											</div>
 										</el-col>
 										<el-col :span="4" style="border-left:1px dashed #BDBFC3;border-right:1px dashed #BDBFC3;font-size:14px;">

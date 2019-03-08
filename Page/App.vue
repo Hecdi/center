@@ -67,8 +67,9 @@
 		methods:{
 			logOut(){
 				localStorage.clear();
+				// stopWorker();
+				window.location.reload();
 				this.$router.push('/login');
-				stopWorker();
 			},
 			getUserName(){
 				return remote.getGlobal('username');	
