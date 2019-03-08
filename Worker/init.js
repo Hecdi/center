@@ -13,11 +13,14 @@ import Worker from './smartScheduling.worker.js';
 // let worker = new myWorker;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
-let inited= false;
+var worker = null;
+export const stopWorker = () => {
+  worker.terminate();
+  worker = null;
+}
 export const init = () => {
-	if(inited){return;}
-	inited =true;
-    var worker = new Worker();
+	if(worker){return;}
+    worker = new Worker();
     worker.onmessage = (event) =>{
         let content = decoder.decode(event.data);
         try {

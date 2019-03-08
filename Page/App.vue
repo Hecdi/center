@@ -53,6 +53,7 @@
 	import {remote} from "electron";
 	import {isNumber} from 'lodash';
 	import { mapState} from "vuex";
+	import { stopWorker } from "../Worker/init";
 	
 	export default {
 		name: "app",
@@ -67,6 +68,7 @@
 			logOut(){
 				localStorage.clear();
 				this.$router.push('/login');
+				stopWorker();
 			},
 			getUserName(){
 				return remote.getGlobal('username');	
