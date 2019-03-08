@@ -77,7 +77,7 @@
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="任务详情" name="second">
+      <el-tab-pane label="任务详情" name="second" v-if="isJP">
 		  <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
 		  <span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
 		  <span class="span2">{{step.operationName}}</span>
@@ -85,8 +85,41 @@
 		  <span class="span4" v-if="step.overTime">{{formatOverTime(step.overTime)}} </span>
 		  </p>
       </el-tab-pane>
+	  
+	  <el-tab-pane label="任务详情" name="second" v-else>
+		  <p v-for="(step, index) in guaranteeDataList" class="taskDetailList" :key="index">
+		  <span class="span1">{{`${formatDate(step.operationTime,'DD HH:mm:ss','--')}`}}</span>
+		  <span class="span2">{{step.operationName}}</span>
+		  <span class="span3">{{step.staffName}}</span>
+		  <span class="span4" v-if="step.overTime">{{formatOverTime(step.overTime)}} </span>
+		  </p>
+		  <el-row>
+			<el-col :span="6">
+				<div class="freight-item">
+					<div v-for="(item,index) in listDetail" :key="index">
+						<span class="freight-status font-YaheiBold">{{item.status}}</span>
+						<span class="freight-time font-Yahei">{{item.time}}</span>
+					</div>
+				</div>
+			</el-col>
+			<el-col :span="18">
+				<div class="huoyun-item">
+				<div v-for ="(item,index) in paramDetail" :key="index">
+					<div class="huoyunStatus">
+						<!-- <i class="iconfont icon-hangxian"></i> -->
+						<span class="small">{{item.one}}</span>
+						<span class="text-gray">{{item.two}}</span>
+						<span class="text-gray cangwei">{{item.three}}</span>
+						<span class="text-gray">{{item.four}}</span>
+					</div>
+				</div>
+				</div>
+			</el-col>
+		</el-row>
+      </el-tab-pane>
     </el-tabs>
-    <span slot="footer" class="dialog-footer">
+
+    <span slot="footer" class="dialog-footer" v-if="isJP">
       <el-button type="danger" v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="release(8)">不保障该航班</el-button>
 	  <el-button type="success" @click="release(2)" v-if=" originTaskWorkerList.size != 0 && !isTaskWorkerListChange() && this.currentTask.taskStatus == 1">发布</el-button>
       <el-button type="primary"  v-if="this.currentTask.taskStatus != -1 && this.currentTask.taskStatus != 6 && this.currentTask.taskStatus != 8" @click="submit">提交
@@ -113,6 +146,23 @@
 				workerList: new Set(),
 				guaranteeDataList: [],
 				waiting:false,
+				listDetail:[
+					{status:'到位',time:'08:31'},
+					{status:'领受',time:'08:31'},
+					{status:'开始',time:'09:31'},
+					{status:'结束',time:'18:31'},
+					{status:'好的',time:'21:31'},
+					{status:'到位',time:'08:31'},
+				],
+				paramDetail: [
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+					{one:'小滚筒1829',two:'3件/400kg/5.2m',three:'1H舱位',four:'待运区->暂存区'},
+				]
+
 			};
 		},
 		methods: {	

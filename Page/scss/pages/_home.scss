@@ -634,6 +634,51 @@
 								}
 							}
 						}
+						.freight-item {
+							background:rgba(235,245,251,1); 
+							text-align: center;
+							margin-right: 15px;
+							padding: 22px 2px;
+							min-height: 186px;
+							max-height: 186px;
+							overflow-y: scroll;
+							.freight-status {
+								color: #333333;
+								font-size: 14px;
+								padding-right: 5px;
+								line-height: 30px;
+								padding: 20px 10px
+							}
+							.freight-time {
+								color: #333333;
+								font-size: 14px;
+								padding-left: 5px;
+								line-height: 30px;
+								padding: 20px 10px;
+							}
+
+						}
+						.huoyun-item {
+							min-height: 186px;
+							max-height: 186px;
+							overflow-y: scroll;
+						}
+						.huoyunStatus {
+							background:rgba(236,236,236,1);
+							margin-bottom: 4px;
+							padding: 10px;
+							.small{
+								color: #333333;
+								padding:0 7px;
+							}
+							.text-gray {
+								color: #666;
+								padding:0 7px;
+							}
+							.cangwei {
+								border-right: 1px solid #666;
+							}
+						}
 					}
 				}
 
