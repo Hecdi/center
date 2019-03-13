@@ -1,0 +1,20 @@
+.contact-container {
+    .el-row {
+        width: 100%;
+    }
+}
+.company-tree-container {
+    .el-row {
+        width: 100%;
+    }
+    .el-tree {
+        background:#fff;
+        color: #333;
+        .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+            background:#ccc;
+        }
+        .el-tree-node__content:hover {
+            background:#ccc; 
+        }
+    }
+}

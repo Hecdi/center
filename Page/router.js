@@ -24,6 +24,11 @@ import JPAddTask from 'DialogAddTask.vue';
 import PersonList from 'PersonList.vue';
 import ModuleList from './views/rollCall/ModuleList.vue';
 
+//配置中心
+import Tree from './views/tree/Tree.vue';
+import Hanger from './views/tree/Hanger.vue';
+import Contact from './views/contact/Contact.vue';
+
 Vue.use(Router);
 
 export const smartSchedulingRouter = new Router({
@@ -144,5 +149,22 @@ export const smartSchedulingRouter = new Router({
 			name: "login",
 			component:Login,
 		},
+		//配置中心
+		{
+			path:"/tree",
+			name:'tree',
+			component:Tree,
+		},
+		{
+			path:"/hanger",
+			name:'hanger',
+			component:Hanger,
+		},
+		{
+			path:"/contact",
+			name:'contact',
+			component:Contact,
+		}
+
 	]
 });

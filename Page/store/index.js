@@ -6,7 +6,7 @@ import rollCall  from './modules/rollCall';
 import sheet from './modules/sheet';
 import violation from './modules/violation';
 import statistics from './modules/statistics';
-
+import hanger from './modules/hanger';
 
 Vue.use(Vuex);
 
@@ -19,6 +19,7 @@ export const smartSchedulingStore =  new Vuex.Store({
     sheet,
     violation,
     statistics,
+    hanger,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

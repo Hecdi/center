@@ -213,8 +213,7 @@
 			//融合数据
 			getAllData(){
                 let allData = extend({}, this.form, this.editCheckData);
-                this.form = cloneDeep(allData);
-                
+                this.form = cloneDeep(allData);   
             },
              getWaitData(value) {
                 this.$store.dispatch('violation/getWaitData',value);
