@@ -7,6 +7,7 @@ import sheet from './modules/sheet';
 import violation from './modules/violation';
 import statistics from './modules/statistics';
 import hanger from './modules/hanger';
+import contact from './modules/contact';
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export const smartSchedulingStore =  new Vuex.Store({
     violation,
     statistics,
     hanger,
+    contact,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

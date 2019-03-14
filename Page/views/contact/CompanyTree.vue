@@ -20,6 +20,7 @@
                   :props="defaultProps"
                   default-expand-all
                   :filter-node-method="filterNode"
+                  @node-click="handleNodeClick"
                   ref="tree2">
                 </el-tree>
             </el-col>
@@ -39,7 +40,10 @@
       filterNode(value, data) {
         if (!value) return true;
         return data.label.indexOf(value) !== -1;
-      }
+      },
+      handleNodeClick(data) {
+        console.log(data);
+			},
     },
 
     data() {
